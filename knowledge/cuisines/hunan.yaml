@@ -1,0 +1,154 @@
+id: hunan
+status: reviewed
+reviewed_by: nalaxu
+reviewed_at: 2026-11-16
+name: {zh: 湘菜, en: Hunan}
+group: chinese
+
+overview: >-
+  湘菜以香辣、酸辣、咸辣为主，突出辣椒本身的鲜辣与香辣，而不是花椒的麻。
+  善用剁辣椒、豆豉、腊味等发酵与烟熏风味；家常菜以小炒和蒸为多，油重色浓，极其下饭。
+
+flavor_tags: [sour-spicy, smoky, umami-fermented, rich]
+
+flavor_profiles:
+  - name: 鲜辣
+    how: 新鲜辣椒（螺丝椒、小米椒）先煸出焦香虎皮，再与肉同炒
+  - name: 剁椒酸辣
+    how: 发酵剁辣椒的咸、酸、辣，常用于蒸鱼头、蒸芋头
+  - name: 腊香
+    how: 烟熏腊肉、腊鱼的咸香与烟熏味，常与辣椒、豆豉同炒或合蒸
+  - name: 豆豉辣
+    how: 浏阳豆豉与辣椒同炒，咸香带发酵味
+
+core_seasonings:
+  - zh: 剁辣椒
+    en: Fermented chopped chilies
+    role: 酸辣咸鲜，湘菜标志性调料
+  - zh: 新鲜辣椒
+    en: Fresh chilies
+    role: 螺丝椒、杭椒提供香辣，小米椒提供猛辣
+  - zh: 浏阳豆豉
+    en: Liuyang fermented black beans
+    role: 发酵咸香
+  - zh: 腊肉
+    en: Chinese cured pork belly
+    role: 烟熏咸香，本身也是主料
+  - zh: 酸豆角
+    en: Pickled long beans
+    role: 酸爽，与肉末同炒
+  - zh: 茶油
+    en: Camellia oil
+    role: 传统用油，香气独特，可用普通油代替
+
+techniques:
+  - name: 小炒
+    key_points: 辣椒先下干锅或少油煸至起虎皮出香，盛出；再炒肉出油，最后合炒
+  - name: 剁椒蒸
+    key_points: 剁辣椒铺满表面，旺火蒸，出锅淋热油
+  - name: 腊味处理
+    key_points: 腊肉先用温水洗净或煮 10–20 分钟去咸，再切片
+  - name: 干锅
+    key_points: 主料先炸或煸至干香，再与辣椒、豆瓣、蒜同炒，上桌用小火保温
+
+common_ingredients: [猪肉, 五花肉, 鱼, 鸡肉, 卷心菜, 豆角, 茄子, 鸡蛋]
+
+representative_dishes:
+  - zh: 农家小炒肉
+    en: Hunan stir-fried pork with chilies
+    key: 五花与瘦肉分开处理，五花煸出油再下瘦肉，辣椒先煸虎皮，豆豉提香
+    flavors: [rich]
+    scenes: [rice-companion, quick]
+    difficulty: 1
+  - zh: 剁椒鱼头
+    en: Steamed fish head with chopped chilies
+    key: 鱼头对半剖开腌一下，铺满剁辣椒蒸 10–12 分钟，泼热油
+    flavors: [sour-spicy]
+    scenes: [entertaining]
+    difficulty: 1
+  - zh: 毛氏红烧肉
+    en: Hunan red-braised pork
+    key: 不放酱油，用糖色上色，加干辣椒、八角，小火焖至软糯后收汁
+    flavors: [rich, sweet]
+    scenes: [rice-companion, entertaining]
+    difficulty: 2
+  - zh: 腊味合蒸
+    en: Steamed medley of cured meats
+    key: 腊肉、腊鱼、腊鸡切片码碗，加豆豉、辣椒蒸透
+    flavors: [smoky]
+    scenes: [entertaining]
+    difficulty: 1
+  - zh: 酸豆角炒肉末
+    en: Pickled long beans with minced pork
+    key: 酸豆角切碎挤干，肉末炒干香，加小米椒、蒜同炒
+    flavors: [sour-spicy]
+    scenes: [rice-companion, quick, meal-prep]
+    difficulty: 1
+  - zh: 手撕包菜
+    en: Hand-torn cabbage
+    key: 包菜手撕成块，大火快炒，干辣椒、蒜、少许醋，保持脆嫩
+    flavors: [sour-spicy, garlicky]
+    scenes: [quick, clear-fridge]
+    difficulty: 1
+  - zh: 擂辣椒皮蛋
+    en: Pounded roasted chilies with century eggs
+    key: 青椒干锅烙至起焦斑，与蒜一起擂碎，拌皮蛋、酱油、醋
+    flavors: [sour-spicy, smoky]
+    scenes: [quick]
+    difficulty: 1
+  - zh: 豆豉辣椒炒腊肉
+    en: Cured pork with chilies and black beans
+    key: 腊肉先煮去咸再切片煸出油，豆豉、辣椒同炒
+    flavors: [smoky, umami-fermented]
+    scenes: [rice-companion]
+    difficulty: 1
+  - zh: 干锅花菜
+    en: Dry-pot cauliflower
+    key: 花菜掰小朵（散花菜最佳），与五花肉片煸至边缘焦香，加干辣椒、蒜
+    flavors: [smoky]
+    scenes: [rice-companion]
+    difficulty: 1
+  - zh: 口味虾
+    en: Spicy crayfish (or shrimp)
+    key: 小龙虾或大虾大火爆炒，加紫苏、啤酒或水焖煮入味
+    flavors: [sour-spicy]
+    scenes: [entertaining]
+    difficulty: 2
+  - zh: 辣椒炒肉
+    en: Pork with green chilies
+    key: 同农家小炒肉思路，只用前腿肉与青椒，更家常
+    flavors: [savory]
+    scenes: [rice-companion, quick]
+    difficulty: 1
+  - zh: 剁椒蒸芋头
+    en: Steamed taro with chopped chilies
+    key: 小芋头去皮，拌剁辣椒与油蒸至软糯
+    flavors: [sour-spicy]
+    scenes: [one-pot]
+    difficulty: 1
+
+overseas:
+  - item: 剁辣椒
+    where: 亚洲超市瓶装
+    substitute: 印尼的 sambal oelek；或红辣椒、蒜、盐剁碎密封发酵 5–7 天
+    difference: sambal oelek 发酵味较弱，偏酸辣
+  - item: 螺丝椒、杭椒
+    where: 亚洲超市
+    substitute: Anaheim、匈牙利蜡椒（Hungarian wax）或青尖椒，加 1–2 个墨西哥辣椒（jalapeño）调辣度
+    difference: 香气不同，辣度需尝过再调
+  - item: 腊肉
+    where: 亚洲超市
+    substitute: 烟熏厚培根（slab bacon）
+    difference: 更软、更咸甜，缺少腊肉风干后的紧实口感
+  - item: 酸豆角
+    where: 亚洲超市
+    substitute: 四季豆加盐与白醋腌 1–2 天
+    difference: 缺少乳酸发酵香
+  - item: 鱼头
+    where: 亚洲超市鱼档
+    substitute: 整条鱼或厚鱼排
+    difference: 失去鱼头的胶质口感
+
+review_notes:
+  - 口味虾的小龙虾在不同国家的可得性差异大，可考虑从代表菜中换成更易做的菜
+  - 毛氏红烧肉的“不放酱油”是常见说法，但各家做法不一，请确认是否这样写

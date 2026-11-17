@@ -1,0 +1,169 @@
+id: italian
+status: reviewed
+reviewed_by: nalaxu
+reviewed_at: 2026-11-16
+name: {zh: 意大利菜, en: Italian}
+group: europe-americas
+
+overview: >-
+  意大利家常菜强调少数优质食材与简单做法：橄榄油、番茄、大蒜、硬质奶酪与新鲜香草。
+  地区差异明显：北部多黄油、奶油、烩饭，南部多橄榄油、番茄、干意面；意面讲究酱汁与面型搭配，以及用煮面水把酱汁乳化。
+
+flavor_tags: [savory, garlicky, rich, creamy, herby]
+
+flavor_profiles:
+  - name: 番茄罗勒
+    how: 罐装整番茄与橄榄油、大蒜慢煮，出锅加罗勒
+  - name: 蒜香橄榄油
+    how: 大蒜在橄榄油中小火煎至浅金，加辣椒碎与欧芹
+  - name: 奶酪胡椒与蛋黄
+    how: 佩科里诺或帕玛森奶酪、黑胡椒、蛋黄与煮面水乳化成浓滑酱汁，不用奶油
+  - name: 青酱
+    how: 罗勒、松子、帕玛森、大蒜、橄榄油捣成或打成酱
+  - name: 慢炖肉酱（ragù）
+    how: 洋葱胡萝卜西芹慢炒，加肉末、牛奶、葡萄酒、番茄小火炖 2 小时以上
+  - name: 奶油蘑菇
+    how: 蘑菇煎香，加黄油与奶酪（北部风味）
+
+core_seasonings:
+  - zh: 特级初榨橄榄油
+    en: Extra virgin olive oil
+    role: 主要用油与收尾
+  - zh: 帕玛森奶酪
+    en: Parmigiano-Reggiano
+    role: 咸鲜与浓郁
+  - zh: 佩科里诺奶酪
+    en: Pecorino Romano
+    role: 更咸、更冲的羊奶酪，罗马意面必备
+  - zh: 罐装整番茄
+    en: Canned whole tomatoes (San Marzano)
+    role: 番茄酱汁的基础
+  - zh: 大蒜
+    en: Garlic
+    role: 香气基础
+  - zh: 罗勒、欧芹、牛至
+    en: Basil, flat-leaf parsley, oregano
+    role: 香草
+  - zh: 干白葡萄酒
+    en: Dry white wine
+    role: 去锅底精华、增加酸度
+  - zh: 风干猪颊肉
+    en: Guanciale
+    role: 卡邦尼与阿马特里切的油脂与咸香
+
+techniques:
+  - name: 煮意面
+    key_points: 大量水加盐（约 1%），比包装时间少 1–2 分钟捞出，留一杯煮面水
+  - name: 乳化收尾（mantecatura）
+    key_points: 面在锅中与酱汁、煮面水、奶酪快速翻拌，奶酪类酱汁要离火操作防止结块
+  - name: 烩饭
+    key_points: 米先用油炒至半透明，加葡萄酒，再逐勺加热高汤并不停搅拌，约 18 分钟；最后离火加黄油与奶酪
+  - name: 慢炒底料（soffritto）
+    key_points: 洋葱、胡萝卜、西芹细丁小火慢炒 10 分钟以上，炒软不上色
+  - name: 慢炖
+    key_points: 肉酱保持极小的微沸，炖 2–3 小时，干了加少量水或牛奶
+
+common_ingredients: [意面, 番茄, 鸡蛋, 牛肉末, 猪肉, 鸡肉, 蘑菇, 茄子, 西葫芦, 米]
+
+representative_dishes:
+  - zh: 番茄罗勒意面
+    en: Spaghetti with tomato and basil
+    original: Spaghetti al pomodoro
+    key: 罐装番茄压碎与橄榄油、大蒜煮 20 分钟，面与酱和煮面水翻拌，撒罗勒
+    flavors: [savory, herby]
+    scenes: [quick, clear-fridge]
+    difficulty: 1
+  - zh: 蒜香辣椒意面
+    en: Spaghetti aglio e olio
+    original: Spaghetti aglio, olio e peperoncino
+    key: 蒜片小火煎至浅金，加辣椒碎，与面和煮面水快速乳化，撒欧芹
+    flavors: [garlicky]
+    scenes: [quick, late-night, clear-fridge]
+    difficulty: 1
+  - zh: 卡邦尼意面
+    en: Spaghetti carbonara
+    original: Spaghetti alla carbonara
+    key: 猪颊肉煎出油，蛋黄、奶酪、黑胡椒调成糊，离火与热面和煮面水拌匀，不加奶油
+    flavors: [rich, creamy]
+    scenes: [quick]
+    difficulty: 2
+  - zh: 黑胡椒奶酪意面
+    en: Cacio e pepe
+    original: Cacio e pepe
+    key: 佩科里诺与少量凉水先调成糊，再与热面和煮面水离火拌匀，防止结块
+    flavors: [creamy, savory]
+    scenes: [quick, late-night]
+    difficulty: 2
+  - zh: 博洛尼亚肉酱
+    en: Ragù alla bolognese
+    original: Ragù alla bolognese
+    key: 慢炒底料，加牛肉与猪肉末、牛奶、白葡萄酒、少量番茄，小火炖 2 小时以上，配宽面
+    flavors: [rich]
+    scenes: [meal-prep, one-pot]
+    difficulty: 2
+  - zh: 蘑菇烩饭
+    en: Mushroom risotto
+    original: Risotto ai funghi
+    key: 蘑菇另煎香，米逐勺加高汤搅拌，最后加黄油与帕玛森
+    flavors: [creamy, savory]
+    scenes: [one-pot]
+    difficulty: 2
+  - zh: 青酱意面
+    en: Pesto pasta
+    original: Trofie al pesto genovese
+    key: 罗勒、松子、帕玛森、大蒜、橄榄油打酱（加冰块防氧化变黑），与面和煮面水拌匀
+    flavors: [herby, garlicky]
+    scenes: [quick, meal-prep]
+    difficulty: 1
+  - zh: 千层面
+    en: Lasagne
+    original: Lasagne alla bolognese
+    key: 肉酱、白酱、面皮与帕玛森分层，烤 40 分钟，静置 15 分钟再切
+    flavors: [rich, creamy]
+    scenes: [entertaining, meal-prep]
+    difficulty: 3
+  - zh: 猎人炖鸡
+    en: Chicken cacciatore
+    original: Pollo alla cacciatora
+    key: 带骨鸡块煎上色，加洋葱、甜椒、蘑菇、番茄、葡萄酒与迷迭香炖 40 分钟
+    flavors: [savory, herby]
+    scenes: [one-pot, meal-prep]
+    difficulty: 1
+  - zh: 意式蔬菜汤
+    en: Minestrone
+    original: Minestrone
+    key: 慢炒底料后加各种时令蔬菜、豆子与小意面炖，可放帕玛森硬皮增鲜
+    flavors: [savory, light]
+    scenes: [soup, clear-fridge, meal-prep]
+    difficulty: 1
+  - zh: 焗茄子
+    en: Eggplant parmigiana
+    original: Parmigiana di melanzane
+    key: 茄子片煎或烤软，与番茄酱、马苏里拉、帕玛森分层烤至起泡
+    flavors: [rich]
+    scenes: [entertaining, meal-prep]
+    difficulty: 2
+  - zh: 阿马特里切意面
+    en: Bucatini all'amatriciana
+    original: Bucatini all'amatriciana
+    key: 猪颊肉煎出油，加番茄与辣椒煮成酱，佩科里诺收尾
+    flavors: [savory, rich]
+    scenes: [quick]
+    difficulty: 1
+
+overseas:
+  - item: 风干猪颊肉（guanciale）
+    where: 意大利食品店、大型超市熟食柜
+    substitute: 意式培根（pancetta）或厚切未烟熏培根
+    difference: 油脂香气稍逊；烟熏培根会带入烟熏味
+  - item: 佩科里诺奶酪
+    where: 大多数西方超市
+    substitute: 帕玛森
+    difference: 更温和，需多加盐
+  - item: 意大利食材
+    where: 西方超市普遍可买到
+    substitute: 无需替代
+    difference: 无
+
+review_notes:
+  - 卡邦尼与黑胡椒奶酪意面对乳化技巧要求高，标为难度 2，教程需写清楚离火操作

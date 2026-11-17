@@ -1,0 +1,169 @@
+id: sichuan
+status: reviewed
+reviewed_by: nalaxu
+reviewed_at: 2026-11-16
+name: {zh: 川菜, en: Sichuan}
+group: chinese
+
+overview: >-
+  川菜（含重庆菜）以“一菜一格，百菜百味”著称，味型丰富，麻辣只是其中一类，鱼香、宫保、怪味、家常等同样常见。
+  善用郫县豆瓣、花椒、干辣椒与泡椒；家常菜多用小炒、干煸，讲究急火短炒、一锅成菜，口味重而下饭。
+
+flavor_tags: [numbing-spicy, sour-spicy, sweet-spicy, garlicky]
+
+flavor_profiles:
+  - name: 麻辣
+    how: 花椒带来麻，辣椒（干辣椒、辣椒面、豆瓣）带来辣，常以热油激香
+  - name: 家常
+    how: 以郫县豆瓣为主，咸鲜微辣，略带回甜
+  - name: 鱼香
+    how: 泡椒、葱姜蒜加糖醋，咸甜酸辣兼备，菜里并没有鱼
+  - name: 煳辣（宫保）
+    how: 干辣椒与花椒在油中炸至棕红出煳香，配酸甜口的小荔枝汁
+  - name: 红油
+    how: 辣椒油加酱油、糖，香辣回甜，多用于凉菜
+  - name: 蒜泥
+    how: 大量蒜泥加复制酱油（甜酱油）、红油，用于凉拌白肉等
+  - name: 怪味
+    how: 咸甜麻辣酸鲜香并重，加芝麻酱，多用于凉菜
+
+core_seasonings:
+  - zh: 郫县豆瓣
+    en: Pixian doubanjiang (broad bean chili paste)
+    role: 川菜之魂，提供咸、辣、酱香和红亮的颜色；需小火炒出红油
+  - zh: 花椒
+    en: Sichuan peppercorn
+    role: 带来麻感与清香；红花椒香气浓，青花椒更清新、麻感更冲
+  - zh: 干辣椒
+    en: Dried red chilies
+    role: 炝锅出煳辣香，也用于干煸与水煮
+  - zh: 泡椒
+    en: Pickled chilies
+    role: 鱼香味的关键，带乳酸发酵的酸香
+  - zh: 豆豉
+    en: Fermented black beans
+    role: 增加发酵鲜香，常与豆瓣同用
+  - zh: 醋（保宁醋或香醋）
+    en: Chinese black vinegar
+    role: 鱼香、宫保、酸辣的酸味来源
+  - zh: 红油
+    en: Chili oil
+    role: 凉菜和水煮类菜的香辣底味
+
+techniques:
+  - name: 小炒
+    key_points: 不过油、不换锅，急火短炒；提前把调料兑成碗汁，最后一次下锅，一锅成菜
+  - name: 干煸
+    key_points: 中火慢煸去水分至表面起皱焦香，再下调料；在电炉上分批煸效果更好
+  - name: 水煮
+    key_points: 肉片上浆后在麻辣汤中短煮至刚熟，铺上辣椒面、花椒和蒜末，最后淋热油激香
+  - name: 炝锅
+    key_points: 干辣椒、花椒用温油炸至棕红出香即下主料，炸黑就会发苦
+  - name: 炒豆瓣
+    key_points: 小火慢炒至油色红亮、无生酱味，大火易糊
+
+common_ingredients: [猪肉, 牛肉, 鸡肉, 豆腐, 茄子, 四季豆, 土豆, 鱼]
+
+representative_dishes:
+  - zh: 麻婆豆腐
+    en: Mapo tofu
+    key: 嫩豆腐先在淡盐水中焯过不易碎，豆瓣炒出红油，分次勾芡，出锅撒花椒面
+    flavors: [numbing-spicy]
+    scenes: [rice-companion, quick]
+    difficulty: 1
+  - zh: 回锅肉
+    en: Twice-cooked pork
+    key: 猪五花先煮至刚熟再切薄片，下锅煸到微卷出油（灯盏窝），再下豆瓣与蒜苗
+    flavors: [rich]
+    scenes: [rice-companion]
+    difficulty: 2
+  - zh: 鱼香肉丝
+    en: Yu-xiang shredded pork
+    key: 肉丝上浆滑炒，泡椒末炒香，碗汁预先调好糖醋比例，一次下锅收汁
+    flavors: [sweet-spicy]
+    scenes: [rice-companion, quick]
+    difficulty: 2
+  - zh: 鱼香茄子
+    en: Yu-xiang eggplant
+    key: 茄子先煎或少油烤软，减少吸油；鱼香汁同鱼香肉丝
+    flavors: [sweet-spicy, garlicky]
+    scenes: [rice-companion]
+    difficulty: 1
+  - zh: 宫保鸡丁
+    en: Kung Pao chicken
+    key: 鸡腿肉丁上浆，干辣椒花椒炝出煳辣香，荔枝口碗汁（略酸甜），最后下花生保持酥脆
+    flavors: [sweet-spicy]
+    scenes: [rice-companion, quick]
+    difficulty: 2
+  - zh: 水煮牛肉
+    en: Sichuan boiled beef
+    key: 牛肉片上浆，汤里只煮到变色，铺辣椒面、花椒面、蒜末后淋大量热油
+    flavors: [numbing-spicy]
+    scenes: [rice-companion]
+    difficulty: 2
+  - zh: 干煸四季豆
+    en: Dry-fried green beans
+    key: 四季豆煸至表皮起皱，加肉末与芽菜（或榨菜）炒香；必须彻底熟透
+    flavors: [savory]
+    scenes: [rice-companion]
+    difficulty: 1
+  - zh: 口水鸡
+    en: Mouthwatering chicken
+    key: 鸡腿浸煮后冰水过凉，淋红油、花椒油、糖、醋、蒜水调成的汁
+    flavors: [numbing-spicy]
+    scenes: [entertaining, meal-prep]
+    difficulty: 1
+  - zh: 酸菜鱼
+    en: Fish with pickled mustard greens
+    key: 鱼片上浆，酸菜炒香后加水熬出酸味再下鱼片，最后淋油激香泡椒与花椒
+    flavors: [sour-spicy]
+    scenes: [soup]
+    difficulty: 2
+  - zh: 担担面
+    en: Dan dan noodles
+    key: 碗底调料（芝麻酱、红油、酱油、醋、花椒面）加炸至酥香的芽菜肉末
+    flavors: [numbing-spicy]
+    scenes: [quick, late-night]
+    difficulty: 1
+  - zh: 蒜泥白肉
+    en: Garlic pork slices
+    key: 五花肉或后腿肉煮熟切极薄片，淋蒜泥、复制酱油与红油
+    flavors: [garlicky]
+    scenes: [entertaining]
+    difficulty: 2
+  - zh: 辣子鸡
+    en: Chongqing chili chicken
+    key: 小块鸡肉腌后炸至干香，与大量干辣椒、花椒同炒；辣椒主要用于提香
+    flavors: [numbing-spicy]
+    scenes: [entertaining]
+    difficulty: 2
+
+overseas:
+  - item: 郫县豆瓣
+    where: 亚洲超市、网购
+    substitute: 韩式辣椒酱加少量味噌
+    difference: 更甜、缺少豆瓣特有的酱香与红油，只能近似
+  - item: 花椒
+    where: 亚洲超市；部分西方超市香料区有售（Sichuan pepper）
+    substitute: 无可替代
+    difference: 没有花椒就没有麻感，建议改选其他味型的菜
+  - item: 二荆条等干辣椒
+    where: 亚洲超市；拉美超市的 chile de árbol 也可用
+    substitute: chile de árbol（更辣，减量）；需要颜色时加少量甜椒粉（paprika）
+    difference: 香气偏单一
+  - item: 泡椒
+    where: 亚洲超市
+    substitute: 新鲜红辣椒加盐、少量醋腌半天
+    difference: 缺少发酵的乳酸香
+  - item: 芽菜
+    where: 亚洲超市（宜宾芽菜）
+    substitute: 榨菜切末
+    difference: 更脆更咸，甜香略少
+  - item: 保宁醋
+    where: 较难买到
+    substitute: 镇江香醋（亚洲超市常见）
+    difference: 略甜，可减少用糖
+
+review_notes:
+  - 辣子鸡属重庆江湖菜，归入川菜是常见做法，但若希望区分川渝可再拆分
+  - 鱼香汁的糖醋比例各家差异大，教程生成时应给出范围而不是唯一值

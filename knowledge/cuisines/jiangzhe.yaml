@@ -1,0 +1,162 @@
+id: jiangzhe
+status: reviewed
+reviewed_by: nalaxu
+reviewed_at: 2026-11-16
+name: {zh: 江浙菜, en: Jiangsu-Zhejiang & Shanghai}
+group: chinese
+
+overview: >-
+  江浙菜涵盖苏菜（含淮扬）、浙菜（含杭帮）与上海本帮菜，口味偏甜鲜，清淡与浓油赤酱并存。
+  本帮菜浓油赤酱、糖色重；杭帮与淮扬讲究时令鲜、刀工与火候；黄酒、酱油、糖、香醋是调味骨架。
+
+flavor_tags: [sweet, savory, rich, light, sour]
+
+flavor_profiles:
+  - name: 浓油赤酱
+    how: 酱油（老抽上色）、冰糖、黄酒长时间焖烧后收汁，色泽红亮、甜咸
+  - name: 糖醋
+    how: 香醋与糖调成酸甜汁，多用于排骨、鱼
+  - name: 清鲜
+    how: 时令食材清炖或清炒，只用盐、黄酒，如腌笃鲜、清炒虾仁
+  - name: 糟香/醉
+    how: 用糟卤或黄酒浸泡熟食，凉吃，酒香浓
+  - name: 葱油
+    how: 小火熬葱至焦黄出香，配面或拌菜
+
+core_seasonings:
+  - zh: 绍兴黄酒（花雕）
+    en: Shaoxing wine
+    role: 去腥增香，红烧与醉菜的基础
+  - zh: 老抽
+    en: Dark soy sauce
+    role: 红烧上色
+  - zh: 生抽
+    en: Light soy sauce
+    role: 咸鲜
+  - zh: 冰糖
+    en: Rock sugar
+    role: 红烧回甜并使汤汁红亮
+  - zh: 镇江香醋
+    en: Chinkiang black vinegar
+    role: 糖醋与蘸料
+  - zh: 糟卤
+    en: Fermented rice wine marinade
+    role: 糟货凉菜
+
+techniques:
+  - name: 红烧
+    key_points: 肉先焯水，煸出油或炒糖色，加黄酒、酱油、冰糖与热水，小火焖 1 小时左右，最后大火收汁
+  - name: 糖醋
+    key_points: 主料先炸或煎至表面干香，糖醋汁熬至起泡浓稠后快速翻匀
+  - name: 清炖
+    key_points: 小火保持微沸，汤清不浑；咸肉与鲜肉同炖取其鲜
+  - name: 醉/糟
+    key_points: 食材煮熟放凉后浸入黄酒或糟卤，冷藏一夜以上
+  - name: 熬葱油
+    key_points: 小葱段冷油下锅，小火慢熬至焦黄而不黑
+
+common_ingredients: [五花肉, 排骨, 虾, 鱼, 鸡肉, 竹笋, 毛豆, 青菜, 豆腐]
+
+representative_dishes:
+  - zh: 红烧肉
+    en: Shanghai red-braised pork belly
+    key: 五花肉焯水，冰糖炒糖色或直接加冰糖，黄酒酱油焖 1 小时，大火收汁至红亮
+    flavors: [rich, sweet]
+    scenes: [rice-companion, entertaining]
+    difficulty: 2
+  - zh: 糖醋小排
+    en: Sweet and sour spare ribs
+    key: 小排焯水后加黄酒、酱油、糖、醋焖熟，收汁至挂在排骨上，冷热都可吃
+    flavors: [sweet, sour]
+    scenes: [entertaining, meal-prep]
+    difficulty: 1
+  - zh: 东坡肉
+    en: Dongpo pork
+    key: 方块五花肉捆扎，以黄酒代水小火焖 2 小时以上，入口即化
+    flavors: [rich, sweet]
+    scenes: [entertaining]
+    difficulty: 2
+  - zh: 腌笃鲜
+    en: Salted and fresh pork soup with bamboo shoots
+    key: 咸肉与鲜肉同炖至汤白，加春笋与百叶结
+    flavors: [light, savory]
+    scenes: [soup]
+    difficulty: 1
+  - zh: 葱油拌面
+    en: Scallion oil noodles
+    key: 熬葱油时加生抽、老抽、糖做成酱汁，与煮好的细面拌匀
+    flavors: [savory]
+    scenes: [quick, late-night]
+    difficulty: 1
+  - zh: 狮子头
+    en: Lion's head meatballs
+    key: 肥瘦三七，刀切成粒再略剁，摔打上劲；清炖或红烧，小火慢煮
+    flavors: [savory]
+    scenes: [entertaining, soup]
+    difficulty: 2
+  - zh: 油焖笋
+    en: Braised bamboo shoots
+    key: 春笋切块，较多油煸炒，加酱油、糖焖至入味收汁
+    flavors: [sweet]
+    scenes: [rice-companion]
+    difficulty: 1
+  - zh: 醉鸡
+    en: Drunken chicken
+    key: 鸡腿卷紧蒸熟或浸熟，放凉后浸入花雕与鸡汤调的醉汁，冷藏一夜
+    flavors: [light]
+    scenes: [entertaining, meal-prep]
+    difficulty: 2
+  - zh: 油爆虾
+    en: Shanghai-style crispy shrimp
+    key: 带壳虾高温油炸两次至壳脆，与酱油、糖、醋调的汁快速翻炒
+    flavors: [sweet]
+    scenes: [entertaining]
+    difficulty: 2
+  - zh: 龙井虾仁
+    en: Shrimp with Longjing tea
+    key: 虾仁上浆滑熟，以龙井茶叶与少量茶汤翻炒，清香
+    flavors: [light]
+    scenes: [entertaining, quick]
+    difficulty: 2
+  - zh: 雪菜毛豆
+    en: Edamame with pickled mustard greens
+    key: 雪菜切碎与毛豆同炒，可加肉丝或百叶
+    flavors: [savory]
+    scenes: [quick, meal-prep]
+    difficulty: 1
+  - zh: 上海菜饭
+    en: Shanghai vegetable rice
+    key: 咸肉丁与青菜炒香后与生米一起焖，拌入猪油
+    flavors: [savory]
+    scenes: [one-pot]
+    difficulty: 1
+
+overseas:
+  - item: 绍兴黄酒
+    where: 亚洲超市
+    substitute: 干型雪莉酒（dry sherry）
+    difference: 最接近的替代；味醂太甜，不建议
+  - item: 镇江香醋
+    where: 亚洲超市普遍有
+    substitute: 米醋加少量意大利香醋（balsamic）
+    difference: 果香更明显
+  - item: 冰糖
+    where: 亚洲超市
+    substitute: 白砂糖
+    difference: 光泽稍差，用量相同
+  - item: 鲜笋
+    where: 亚洲超市冷冻或真空包装笋
+    substitute: 罐装笋（需焯水去罐头味）
+    difference: 鲜度与脆度不如春笋
+  - item: 咸肉
+    where: 亚洲超市
+    substitute: 意大利咸猪肉（pancetta）或未烟熏的培根
+    difference: 香料味不同，咸度需调整
+  - item: 雪菜
+    where: 亚洲超市罐装
+    substitute: 无理想替代
+    difference: 可省略，改为清炒
+
+review_notes:
+  - 江浙菜合并了苏、浙、沪三地风格，概括难免以偏概全；如需更细可再拆分
+  - 龙井虾仁对茶叶要求高，海外是否保留为代表菜请确认

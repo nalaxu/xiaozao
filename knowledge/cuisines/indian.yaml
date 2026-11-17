@@ -1,0 +1,183 @@
+id: indian
+status: reviewed
+reviewed_by: nalaxu
+reviewed_at: 2026-11-16
+name: {zh: 印度菜, en: Indian}
+group: south-asia-middle-east
+
+overview: >-
+  印度菜地域差异极大：北印多奶油、酸奶、馕与小麦饼，南印多椰子、米、罗望子与咖喱叶。
+  共同核心是香料的层次运用：整颗香料热油爆香，洋葱姜蒜番茄炒成酱底，粉状香料在油中炒熟；家常以咖喱、豆类、米饭和饼为主，素食比例高。
+
+flavor_tags: [spiced, rich, creamy]
+
+flavor_profiles:
+  - name: 番茄奶油（makhani）
+    how: 番茄酱底加黄油、奶油与葫芦巴叶，浓郁温和
+  - name: 洋葱番茄香料底（masala）
+    how: 洋葱炒至深金黄，加姜蒜番茄与粉状香料炒至出油，大多数咖喱的基础
+  - name: 酸奶腌烤（tandoori）
+    how: 酸奶、柠檬与香料腌肉，高温烤出焦边
+  - name: 椰香（南印）
+    how: 椰奶、咖喱叶、芥末籽与罗望子，酸辣带椰香
+  - name: 豆类温和（dal）
+    how: 豆子煮软，出锅前淋上爆香香料的热油（tadka）
+
+core_seasonings:
+  - zh: 孜然
+    en: Cumin
+    role: 整颗爆香或粉状入酱
+  - zh: 芫荽籽
+    en: Coriander seed
+    role: 温和的柑橘香，多为粉状
+  - zh: 姜黄
+    en: Turmeric
+    role: 颜色与土香
+  - zh: 克什米尔辣椒粉
+    en: Kashmiri chili powder
+    role: 鲜红色、辣度温和
+  - zh: 葛拉姆马萨拉
+    en: Garam masala
+    role: 混合香料，出锅前加
+  - zh: 小豆蔻、丁香、肉桂、月桂叶
+    en: Cardamom, cloves, cinnamon, bay leaf
+    role: 整颗香料，炖菜与香饭的香气
+  - zh: 芥末籽、咖喱叶
+    en: Mustard seeds, curry leaves
+    role: 南印 tadka 的标志
+  - zh: 印度酥油
+    en: Ghee
+    role: 爆香与增香
+  - zh: 原味酸奶
+    en: Plain yogurt
+    role: 腌料与酱汁的酸与稠
+
+techniques:
+  - name: 香料爆香（tadka / tempering）
+    key_points: 热油或酥油中先下整颗香料至爆裂出香（孜然变深色、芥末籽跳动），几秒内加下一样，防止焦苦
+  - name: 炒酱底（bhuna）
+    key_points: 洋葱需耐心炒 10–15 分钟至深金黄，粉状香料下锅后加少量水防糊，炒至油从酱中分离
+  - name: 酸奶腌烤
+    key_points: 肉划刀，先用柠檬盐腌，再用酸奶香料腌 2 小时以上；烤箱最高温或上火烤出焦斑
+  - name: 煮豆
+    key_points: 小扁豆不需浸泡，约 20–30 分钟煮烂；鹰嘴豆与芸豆需浸泡过夜或用罐头
+  - name: 香饭（biryani）
+    key_points: 米煮至七成熟，与腌好的肉分层，封盖小火焖（dum）
+
+common_ingredients: [鸡肉, 羊肉, 鹰嘴豆, 小扁豆, 菠菜, 土豆, 花菜, 番茄, 洋葱, 米饭]
+
+representative_dishes:
+  - zh: 黄油鸡
+    en: Butter chicken
+    original: Murgh makhani
+    key: 鸡腿以酸奶香料腌后烤或煎，放入番茄黄油奶油酱中，加葫芦巴叶
+    flavors: [creamy, rich, spiced]
+    scenes: [rice-companion, entertaining]
+    difficulty: 2
+  - zh: 印度烤鸡
+    en: Tandoori chicken
+    original: Tandoori murgh
+    key: 带骨鸡腿划刀，酸奶、柠檬与香料腌过夜，烤箱高温烤出焦边
+    flavors: [spiced, smoky]
+    scenes: [entertaining, meal-prep]
+    difficulty: 1
+  - zh: 鹰嘴豆咖喱
+    en: Chana masala
+    original: Chana masala
+    key: 洋葱番茄香料底加罐头鹰嘴豆炖，压碎部分豆子使汤汁浓稠，加芒果粉或柠檬提酸
+    flavors: [spiced, sour]
+    scenes: [one-pot, meal-prep, clear-fridge]
+    difficulty: 1
+  - zh: 黄扁豆汤
+    en: Dal tadka
+    original: Dal tadka
+    key: 黄扁豆加姜黄煮烂，淋入酥油爆香的孜然、蒜、干辣椒
+    flavors: [spiced]
+    scenes: [soup, meal-prep, one-pot]
+    difficulty: 1
+  - zh: 菠菜奶酪
+    en: Palak paneer
+    original: Palak paneer
+    key: 菠菜焯水后过冰水再打泥保持翠绿，与香料底同煮，加煎过的印度奶酪块
+    flavors: [creamy, spiced]
+    scenes: [rice-companion]
+    difficulty: 2
+  - zh: 印度鸡肉香饭
+    en: Chicken biryani
+    original: Murgh biryani
+    key: 酸奶腌鸡与炸洋葱、香草分层铺在七成熟的印度香米上，封盖小火焖
+    flavors: [spiced, rich]
+    scenes: [entertaining, one-pot]
+    difficulty: 3
+  - zh: 土豆花菜
+    en: Aloo gobi
+    original: Aloo gobi
+    key: 土豆花菜与姜黄、孜然、芫荽粉少水焖熟，或用烤箱烤后拌香料
+    flavors: [spiced]
+    scenes: [one-pot, meal-prep, clear-fridge]
+    difficulty: 1
+  - zh: 克什米尔羊肉咖喱
+    en: Rogan josh
+    original: Rogan josh
+    key: 羊肉与整颗香料、克什米尔辣椒粉、酸奶小火慢炖至软烂，色红而辣度温和
+    flavors: [spiced, rich]
+    scenes: [entertaining, meal-prep]
+    difficulty: 2
+  - zh: 喀拉拉椰子鱼咖喱
+    en: Kerala fish curry
+    original: Meen curry
+    key: 芥末籽、咖喱叶爆香，加椰奶、罗望子与辣椒粉，鱼块后下小火煮熟
+    flavors: [sour-spicy, spiced]
+    scenes: [rice-companion]
+    difficulty: 2
+  - zh: 肉末豌豆
+    en: Keema matar
+    original: Keema matar
+    key: 羊肉或牛肉末与洋葱番茄香料底炒干香，加豌豆，配饼或米饭
+    flavors: [spiced]
+    scenes: [quick, rice-companion, meal-prep]
+    difficulty: 1
+  - zh: 芸豆咖喱
+    en: Rajma
+    original: Rajma
+    key: 芸豆（可用罐头）与香料底小火炖至浓稠，配米饭
+    flavors: [spiced]
+    scenes: [one-pot, meal-prep]
+    difficulty: 1
+  - zh: 印度炒蛋
+    en: Egg bhurji
+    original: Anda bhurji
+    key: 洋葱、番茄、青椒、姜黄炒软后加蛋液炒散，撒芫荽
+    flavors: [spiced]
+    scenes: [quick, late-night, clear-fridge]
+    difficulty: 1
+
+overseas:
+  - item: 印度香料
+    where: 印度杂货店价格最低；大型超市香料区多数可买到
+    substitute: 无需替代
+    difference: 无
+  - item: 印度奶酪（paneer）
+    where: 印度杂货店
+    substitute: 老豆腐，或哈罗米奶酪（halloumi，较咸，需泡水）
+    difference: 豆腐口感更软，需先煎定型
+  - item: 咖喱叶
+    where: 印度杂货店（新鲜或冷冻）
+    substitute: 省略
+    difference: 无可替代的特殊香气
+  - item: 克什米尔辣椒粉
+    where: 印度杂货店
+    substitute: 甜椒粉 3 份加卡宴辣椒粉 1 份
+    difference: 接近
+  - item: 印度酥油（ghee）
+    where: 大型超市、印度杂货店
+    substitute: 黄油（爆香时混一点植物油防焦）
+    difference: 烟点较低，香气略弱
+  - item: 葫芦巴叶（kasuri methi）
+    where: 印度杂货店
+    substitute: 省略
+    difference: 黄油鸡缺少特征香气
+
+review_notes:
+  - 印度菜地区差异很大，概述只能取最大公约数；若用户群中南亚背景者多，可考虑拆分南北
+  - 黄油鸡与芸豆咖喱都偏北印，南印代表菜目前仅有椰子鱼咖喱，可再补充

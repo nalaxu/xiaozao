@@ -1,0 +1,183 @@
+id: levant-turkish
+status: reviewed
+reviewed_by: nalaxu
+reviewed_at: 2026-11-16
+name: {zh: 地中海/中东菜, en: Levantine & Turkish}
+group: south-asia-middle-east
+
+overview: >-
+  地中海东岸（黎巴嫩、叙利亚、巴勒斯坦、以色列）与土耳其的家常菜，以橄榄油、柠檬、大蒜、新鲜香草与芝麻酱为基调，香料温和而多层。
+  烤肉、豆类、酸奶酱与多种冷盘和沙拉（meze）是日常；既能清爽健康，也能浓郁下饭。
+
+flavor_tags: [herby, garlicky, sour, spiced, smoky]
+
+flavor_profiles:
+  - name: 柠檬大蒜橄榄油
+    how: 柠檬汁、蒜泥与橄榄油调的汁，配沙拉、烤肉、蔬菜
+  - name: 芝麻酱（tahini）
+    how: 芝麻酱加柠檬汁、蒜与冷水搅成顺滑酱汁，配豆泥、烤茄子、法拉费
+  - name: 酸奶清爽
+    how: 原味酸奶加蒜、薄荷或黄瓜，配烤肉与米饭
+  - name: 温暖香料
+    how: 孜然、多香果、肉桂、七香粉（baharat）用于烤肉与炖菜
+  - name: 漆树果酸香
+    how: 漆树果（sumac）带柠檬般的酸，撒在沙拉、烤肉与洋葱上
+  - name: 番茄红椒
+    how: 番茄与红椒或红椒酱慢煮，带阿勒颇辣椒的温和辣
+
+core_seasonings:
+  - zh: 特级初榨橄榄油
+    en: Extra virgin olive oil
+    role: 主要用油，也直接淋在成品上
+  - zh: 柠檬
+    en: Lemon
+    role: 主要酸味来源
+  - zh: 芝麻酱
+    en: Tahini
+    role: 豆泥与酱汁的基础
+  - zh: 原味酸奶
+    en: Plain yogurt
+    role: 腌料与酱汁
+  - zh: 漆树果
+    en: Sumac
+    role: 酸香与紫红色
+  - zh: 扎塔尔
+    en: Za'atar
+    role: 百里香、芝麻、漆树果的混合香料
+  - zh: 阿勒颇辣椒
+    en: Aleppo pepper (pul biber)
+    role: 果香、温和的辣
+  - zh: 多香果 / 七香粉
+    en: Allspice / baharat
+    role: 烤肉与米饭的温暖香气
+  - zh: 石榴糖浆
+    en: Pomegranate molasses
+    role: 酸甜，用于沙拉汁与烤菜
+  - zh: 欧芹、薄荷
+    en: Flat-leaf parsley, mint
+    role: 大量使用的新鲜香草
+
+techniques:
+  - name: 打豆泥
+    key_points: 先把芝麻酱与柠檬汁、冰水打至发白顺滑，再加鹰嘴豆；鹰嘴豆煮得越烂越顺滑
+  - name: 炙烤与烤串
+    key_points: 肉以酸奶或橄榄油香料腌制，高温烤架或烤箱上火烤出焦边
+  - name: 整盘烤
+    key_points: 肉与蔬菜在一个烤盘中烤，适合在家做沙威玛或烤蔬菜
+  - name: 焦烤茄子
+    key_points: 整个茄子直接放在炉火或烤箱上火下烤至表皮焦黑、内部软塌，取肉做泥
+  - name: 切碎香草沙拉
+    key_points: 欧芹等香草要彻底擦干再切，避免出水变黑
+
+common_ingredients: [鸡肉, 羊肉, 牛肉, 鹰嘴豆, 茄子, 番茄, 黄瓜, 小扁豆, 鸡蛋, 洋葱]
+
+representative_dishes:
+  - zh: 鹰嘴豆泥
+    en: Hummus
+    original: حمص
+    key: 芝麻酱与柠檬冰水先打发，加煮烂的鹰嘴豆打至顺滑，淋橄榄油
+    flavors: [garlicky, sour]
+    scenes: [quick, meal-prep, entertaining]
+    difficulty: 1
+  - zh: 烤箱鸡肉沙威玛
+    en: Sheet-pan chicken shawarma
+    original: شاورما
+    key: 鸡腿肉以酸奶、柠檬与沙威玛香料腌制，烤箱高温烤后切条，配芝麻酱与饼
+    flavors: [spiced, garlicky]
+    scenes: [entertaining, meal-prep, one-pot]
+    difficulty: 1
+  - zh: 塔布勒沙拉
+    en: Tabbouleh
+    original: تبولة
+    key: 以欧芹为主、少量布格麦，加番茄、薄荷、柠檬与橄榄油
+    flavors: [herby, sour]
+    scenes: [quick]
+    difficulty: 1
+  - zh: 番茄炖蛋
+    en: Shakshuka
+    key: 洋葱、红椒、番茄与孜然、辣椒炖成浓酱，打入鸡蛋盖锅焖至蛋白凝固
+    flavors: [spiced]
+    scenes: [one-pot, quick, clear-fridge]
+    difficulty: 1
+  - zh: 法拉费
+    en: Falafel
+    original: فلافل
+    key: 必须用泡软的生鹰嘴豆（不能用罐头），与香草洋葱打碎，成团后炸
+    flavors: [herby, spiced]
+    scenes: [entertaining]
+    difficulty: 2
+  - zh: 土耳其烤肉丸
+    en: Köfte
+    original: Köfte
+    key: 羊肉或牛肉末加洋葱、欧芹、孜然、阿勒颇辣椒，捏成长条煎或烤
+    flavors: [spiced, smoky]
+    scenes: [quick, meal-prep]
+    difficulty: 1
+  - zh: 烤茄子泥
+    en: Baba ganoush
+    original: بابا غنوج
+    key: 茄子烤至焦黑软塌，取肉与芝麻酱、柠檬、蒜拌匀
+    flavors: [smoky, garlicky]
+    scenes: [entertaining, meal-prep]
+    difficulty: 1
+  - zh: 土耳其酸奶蛋
+    en: Çılbır (Turkish eggs)
+    original: Çılbır
+    key: 水波蛋放在蒜味酸奶上，淋阿勒颇辣椒黄油
+    flavors: [creamy, garlicky]
+    scenes: [quick, late-night]
+    difficulty: 1
+  - zh: 土耳其红扁豆汤
+    en: Turkish red lentil soup
+    original: Mercimek çorbası
+    key: 红扁豆与洋葱、胡萝卜煮烂打成浓汤，淋红椒黄油，挤柠檬
+    flavors: [spiced]
+    scenes: [soup, meal-prep, one-pot]
+    difficulty: 1
+  - zh: 法图什沙拉
+    en: Fattoush
+    original: فتوش
+    key: 混合蔬菜与烤脆的皮塔饼片，漆树果、柠檬、石榴糖浆调汁
+    flavors: [sour, herby]
+    scenes: [quick, clear-fridge]
+    difficulty: 1
+  - zh: 扁豆饭
+    en: Mujaddara
+    original: مجدرة
+    key: 小扁豆与米同煮，铺上大量炸至深褐酥脆的洋葱，配酸奶
+    flavors: [savory, spiced]
+    scenes: [one-pot, meal-prep]
+    difficulty: 1
+  - zh: 土耳其镶茄子
+    en: Imam bayıldı
+    original: İmam bayıldı
+    key: 茄子煎软后填入洋葱、番茄、蒜，大量橄榄油慢烤，常温食用
+    flavors: [rich, garlicky]
+    scenes: [entertaining, meal-prep]
+    difficulty: 2
+
+overseas:
+  - item: 漆树果
+    where: 中东杂货店、大型超市香料区
+    substitute: 柠檬皮屑加少许盐
+    difference: 缺少紫红色与果酸
+  - item: 扎塔尔
+    where: 中东杂货店
+    substitute: 干百里香、烤芝麻与柠檬皮屑混合
+    difference: 接近
+  - item: 阿勒颇辣椒
+    where: 中东或土耳其杂货店
+    substitute: 甜椒粉 4 份加卡宴辣椒粉 1 份
+    difference: 缺少果香与油润感
+  - item: 石榴糖浆
+    where: 中东杂货店
+    substitute: 意大利香醋（balsamic）收浓后加少许柠檬汁
+    difference: 更甜，果香不同
+  - item: 芝麻酱（tahini）
+    where: 大多数超市
+    substitute: 中式芝麻酱
+    difference: 中式芝麻酱用烘焙过的芝麻，颜色更深、味更浓，需减量
+
+review_notes:
+  - 这个条目合并了黎凡特与土耳其两地，菜名原文分别用阿拉伯语与土耳其语；以色列菜的归属较敏感，概述中只按地理列出
+  - 番茄炖蛋（shakshuka）起源说法不一，未填原文名

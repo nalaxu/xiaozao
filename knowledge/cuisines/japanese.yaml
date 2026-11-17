@@ -1,0 +1,174 @@
+id: japanese
+status: reviewed
+reviewed_by: nalaxu
+reviewed_at: 2026-11-16
+name: {zh: 日本料理, en: Japanese}
+group: east-southeast-asia
+
+overview: >-
+  日本家常料理强调食材本味与季节感，调味以“出汁 + 酱油 + 味醂 + 清酒”为骨架，咸甜平衡、清爽。
+  日常形式是米饭配汤与主菜、配菜；技法包括烧、煮、炸、蒸，丼饭和咖喱饭是最常见的一碗料理。
+
+flavor_tags: [savory, light, sweet, umami-fermented]
+
+flavor_profiles:
+  - name: 出汁鲜味
+    how: 昆布与鲣鱼花熬出的高汤，是煮物、味噌汤、茶碗蒸的底味
+  - name: 照烧
+    how: 酱油、味醂、清酒、糖收汁至浓稠发亮，甜咸
+  - name: 甘辛（煮物）
+    how: 出汁加酱油、味醂、糖煮至入味，甜咸
+  - name: 味噌
+    how: 发酵大豆酱的咸鲜，用于汤、腌烤
+  - name: 醋物与柚子醋
+    how: 米醋或柚子醋（ponzu）的清爽酸味
+  - name: 日式咖喱
+    how: 咖喱块调出浓稠、偏甜、不太辣的酱汁
+
+core_seasonings:
+  - zh: 酱油
+    en: Japanese soy sauce (shoyu)
+    role: 主要咸鲜来源
+  - zh: 味醂
+    en: Mirin
+    role: 甜味与光泽
+  - zh: 清酒（料理酒）
+    en: Sake (cooking sake)
+    role: 去腥增鲜
+  - zh: 出汁
+    en: Dashi
+    role: 日料的鲜味基础
+  - zh: 味噌
+    en: Miso
+    role: 汤与腌料
+  - zh: 米醋
+    en: Rice vinegar
+    role: 醋物、寿司饭
+  - zh: 柚子醋
+    en: Ponzu
+    role: 蘸料与淋汁
+
+techniques:
+  - name: 熬出汁
+    key_points: 昆布冷水浸泡 30 分钟后小火加热，将沸时取出；再放鲣鱼花，关火静置 2 分钟后过滤，不要挤压
+  - name: 煮物
+    key_points: 用落盖（otoshibuta，可用剪了孔的烘焙纸代替）小火煮，汤汁少而均匀入味
+  - name: 照烧
+    key_points: 先把肉皮面朝下煎至金黄出油，倒掉多余油，再下酱汁收至浓稠
+  - name: 油炸（唐扬、炸猪排）
+    key_points: 唐扬用片栗粉（土豆淀粉），先 160°C 炸熟，静置后 180°C 复炸至酥脆
+  - name: 丼
+    key_points: 酱汁与配料在小锅中煮好，淋蛋液半凝固后滑到米饭上
+
+common_ingredients: [鸡肉, 猪肉, 三文鱼, 豆腐, 鸡蛋, 土豆, 洋葱, 胡萝卜, 卷心菜, 菠菜]
+
+representative_dishes:
+  - zh: 照烧鸡腿
+    en: Teriyaki chicken
+    original: 照り焼きチキン
+    key: 鸡腿皮面朝下煎出油，倒掉余油，酱油、味醂、清酒、糖收汁
+    flavors: [sweet, savory]
+    scenes: [quick, rice-companion, meal-prep]
+    difficulty: 1
+  - zh: 亲子丼
+    en: Oyakodon (chicken and egg rice bowl)
+    original: 親子丼
+    key: 洋葱与鸡肉在出汁酱汁中煮熟，蛋液分两次淋入，半凝固即盖饭
+    flavors: [savory, sweet]
+    scenes: [quick, one-pot]
+    difficulty: 1
+  - zh: 姜烧猪肉
+    en: Ginger pork
+    original: 豚の生姜焼き
+    key: 薄猪肉片快速煎，淋姜汁、酱油、味醂调的汁，配卷心菜丝
+    flavors: [savory, sweet]
+    scenes: [quick, rice-companion]
+    difficulty: 1
+  - zh: 土豆炖肉
+    en: Nikujaga (meat and potato stew)
+    original: 肉じゃが
+    key: 薄牛肉或猪肉片与土豆、洋葱、胡萝卜用出汁甘辛调味，落盖小火煮
+    flavors: [sweet, savory]
+    scenes: [one-pot, meal-prep]
+    difficulty: 1
+  - zh: 味噌汤
+    en: Miso soup
+    original: 味噌汁
+    key: 豆腐与海带芽在出汁中煮，关火后化入味噌，不再煮沸
+    flavors: [umami-fermented, light]
+    scenes: [quick, soup]
+    difficulty: 1
+  - zh: 日式炸鸡
+    en: Karaage
+    original: 唐揚げ
+    key: 鸡腿肉以酱油、姜、蒜腌 30 分钟，裹土豆淀粉，两次油炸；也可用空气炸锅
+    flavors: [savory, garlicky]
+    scenes: [entertaining]
+    difficulty: 2
+  - zh: 日式咖喱饭
+    en: Japanese curry rice
+    original: カレーライス
+    key: 肉与蔬菜炒后加水煮软，关火放入咖喱块溶化，再小火煮至浓稠
+    flavors: [rich, sweet]
+    scenes: [one-pot, meal-prep]
+    difficulty: 1
+  - zh: 炸猪排
+    en: Tonkatsu
+    original: とんかつ
+    key: 猪里脊断筋拍松，依次沾面粉、蛋液、日式面包糠，170°C 炸至金黄
+    flavors: [savory]
+    scenes: [entertaining]
+    difficulty: 2
+  - zh: 茶碗蒸
+    en: Chawanmushi (savory egg custard)
+    original: 茶碗蒸し
+    key: 蛋液与出汁约 1:3，过筛，盖上小火蒸，表面平滑无孔
+    flavors: [light]
+    scenes: [entertaining]
+    difficulty: 2
+  - zh: 盐烤三文鱼
+    en: Salt-grilled salmon
+    original: 鮭の塩焼き
+    key: 三文鱼抹盐静置 15 分钟擦干，烤箱或平底锅煎至表面焦香
+    flavors: [light, savory]
+    scenes: [quick, meal-prep]
+    difficulty: 1
+  - zh: 日式炒面
+    en: Yakisoba
+    original: 焼きそば
+    key: 蒸面与猪肉、卷心菜大火炒，用炒面酱（伍斯特酱类）调味，撒青海苔与红姜
+    flavors: [savory, sweet]
+    scenes: [quick, clear-fridge, late-night]
+    difficulty: 1
+  - zh: 筑前煮
+    en: Chikuzenni (simmered chicken and root vegetables)
+    original: 筑前煮
+    key: 鸡肉与莲藕、牛蒡、胡萝卜、香菇、魔芋先炒后煮，甘辛收汁
+    flavors: [sweet, savory]
+    scenes: [meal-prep, one-pot]
+    difficulty: 2
+
+overseas:
+  - item: 味醂
+    where: 亚洲超市、多数西方超市国际食品区
+    substitute: 1 汤匙清酒或干雪莉酒加 1 茶匙糖
+    difference: 光泽与圆润度略差
+  - item: 出汁
+    where: 亚洲超市（昆布、鲣鱼花、颗粒高汤）
+    substitute: 颗粒高汤（hondashi）；素食可用昆布加干香菇
+    difference: 颗粒高汤偏咸，需减少酱油
+  - item: 薄切肉片
+    where: 亚洲超市冷冻区
+    substitute: 猪里脊或牛肉冷冻 30–40 分钟后自己切薄
+    difference: 无明显差别
+  - item: 清酒
+    where: 酒类商店
+    substitute: 干雪莉酒，或省略
+    difference: 省略后去腥效果稍差
+  - item: 牛蒡、莲藕
+    where: 亚洲超市
+    substitute: 省略或用胡萝卜、土豆补足
+    difference: 失去特有的口感与土香
+
+review_notes:
+  - 日式咖喱以咖喱块为前提，海外容易买到；若希望从头调咖喱粉可再补充

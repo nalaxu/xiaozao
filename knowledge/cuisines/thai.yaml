@@ -1,0 +1,184 @@
+id: thai
+status: reviewed
+reviewed_by: nalaxu
+reviewed_at: 2026-11-16
+name: {zh: 泰国菜, en: Thai}
+group: east-southeast-asia
+
+overview: >-
+  泰国菜追求酸、辣、咸、甜在一道菜里的平衡，香茅、南姜、青柠叶、泰国罗勒、芫荽等鲜香草，以及鱼露和青柠汁是灵魂。
+  咖喱酱以香料香草捣制，配椰奶带来浓郁；凉拌、快炒、汤与咖喱构成日常。
+
+flavor_tags: [sour-spicy, spiced, herby, sweet-spicy, sour, umami-fermented]
+
+flavor_profiles:
+  - name: 酸辣（冬阴）
+    how: 香茅、南姜、青柠叶煮汤，加鱼露、青柠汁与辣椒，青柠汁关火后放
+  - name: 椰香咖喱
+    how: 咖喱酱在椰浆中炒至出油，再加椰奶、鱼露、棕榈糖，有红、绿、黄、玛莎曼等
+  - name: 酸甜咸辣平衡
+    how: 鱼露（咸）、青柠或罗望子（酸）、棕榈糖（甜）、辣椒（辣）调和，如泰式炒河粉、凉拌
+  - name: 罗勒辣炒
+    how: 蒜与辣椒舂碎爆香，大火炒肉，加鱼露、蚝油与大把罗勒
+  - name: 椰香温和
+    how: 椰奶汤加南姜、香茅，酸度较低，如椰汁鸡汤
+
+core_seasonings:
+  - zh: 鱼露
+    en: Fish sauce
+    role: 主要咸鲜来源
+  - zh: 青柠
+    en: Lime
+    role: 酸味来源，最后加
+  - zh: 棕榈糖
+    en: Palm sugar
+    role: 圆润的甜味
+  - zh: 香茅
+    en: Lemongrass
+    role: 柠檬清香，用前拍裂
+  - zh: 南姜
+    en: Galangal
+    role: 松木般的辛香，与生姜不同
+  - zh: 青柠叶
+    en: Kaffir lime leaves (makrut)
+    role: 独特的柑橘香
+  - zh: 泰国罗勒 / 圣罗勒
+    en: Thai basil / holy basil
+    role: 炒菜与咖喱的香草
+  - zh: 咖喱酱
+    en: Thai curry paste
+    role: 咖喱的风味基础
+  - zh: 椰奶
+    en: Coconut milk
+    role: 咖喱与汤的浓郁感
+  - zh: 罗望子
+    en: Tamarind
+    role: 果酸，用于泰式炒河粉
+
+techniques:
+  - name: 炒咖喱酱
+    key_points: 先用椰浆（罐头上层浓稠部分）把咖喱酱炒至出油出香，再加其余椰奶
+  - name: 调味平衡
+    key_points: 最后按酸、咸、甜、辣逐项尝味调整，不追求固定配比
+  - name: 大火快炒
+    key_points: 蒜与辣椒舂碎再爆香，主料少量分批大火炒
+  - name: 煮冬阴类汤
+    key_points: 香茅、南姜、青柠叶拍裂下锅煮出香，海鲜后下，青柠汁关火后加以保鲜香
+  - name: 凉拌（yam）与舂（som tam）
+    key_points: 汁先调好再拌；青木瓜沙拉用臼轻舂使入味而不出水过多
+
+common_ingredients: [鸡肉, 猪肉, 虾, 牛肉, 鸡蛋, 茄子, 豆角, 河粉, 米饭]
+
+representative_dishes:
+  - zh: 冬阴功汤
+    en: Tom yum goong
+    original: ต้มยำกุ้ง
+    key: 香料煮出香，下虾刚熟即关火，加鱼露、青柠汁、辣椒；可加淡奶做浓汤版
+    flavors: [sour-spicy, herby]
+    scenes: [soup, quick]
+    difficulty: 1
+  - zh: 绿咖喱鸡
+    en: Green curry chicken
+    original: แกงเขียวหวานไก่
+    key: 绿咖喱酱以椰浆炒出油，加鸡肉、椰奶、泰国茄子，鱼露棕榈糖调味，出锅前放罗勒
+    flavors: [spiced, sweet-spicy]
+    scenes: [rice-companion, one-pot]
+    difficulty: 1
+  - zh: 泰式炒河粉
+    en: Pad Thai
+    original: ผัดไทย
+    key: 干河粉温水泡软不煮，罗望子、鱼露、棕榈糖调汁，加虾、蛋、豆腐、豆芽、花生
+    flavors: [sweet, sour]
+    scenes: [quick]
+    difficulty: 2
+  - zh: 打抛猪肉饭
+    en: Pad kra pao (holy basil stir-fry)
+    original: ผัดกะเพรา
+    key: 蒜椒舂碎爆香，肉末大火炒，鱼露、蚝油、少许糖，大把罗勒，配煎蛋盖饭
+    flavors: [sweet-spicy, herby]
+    scenes: [quick, rice-companion, late-night]
+    difficulty: 1
+  - zh: 椰汁鸡汤
+    en: Tom kha gai
+    original: ต้มข่าไก่
+    key: 椰奶与高汤加大量南姜、香茅、青柠叶煮鸡肉与蘑菇，鱼露青柠调味
+    flavors: [sour, herby]
+    scenes: [soup]
+    difficulty: 1
+  - zh: 青木瓜沙拉
+    en: Som tam (green papaya salad)
+    original: ส้มตำ
+    key: 蒜椒舂碎，加鱼露、青柠、棕榈糖，再下青木瓜丝、番茄、豆角轻舂
+    flavors: [sour-spicy]
+    scenes: [quick]
+    difficulty: 1
+  - zh: 泰式红咖喱
+    en: Red curry
+    original: แกงเผ็ด
+    key: 同绿咖喱做法，红咖喱酱更香辣，常配鸭肉或牛肉
+    flavors: [spiced]
+    scenes: [rice-companion, one-pot]
+    difficulty: 1
+  - zh: 玛莎曼咖喱
+    en: Massaman curry
+    original: แกงมัสมั่น
+    key: 带肉桂、豆蔻等干香料的温和咖喱，牛肉或鸡腿与土豆、花生小火慢炖
+    flavors: [spiced, sweet, rich]
+    scenes: [one-pot, meal-prep, entertaining]
+    difficulty: 2
+  - zh: 泰式炒饭
+    en: Thai fried rice
+    original: ข้าวผัด
+    key: 隔夜饭大火炒，鱼露与少许糖调味，配青柠角与黄瓜片
+    flavors: [savory]
+    scenes: [quick, clear-fridge]
+    difficulty: 1
+  - zh: 泰式肉末沙拉
+    en: Larb
+    original: ลาบ
+    key: 肉末少水煮熟，拌鱼露、青柠、辣椒粉、炒米粉与大量薄荷、芫荽、红葱
+    flavors: [sour-spicy, herby]
+    scenes: [quick]
+    difficulty: 1
+  - zh: 青柠蒸鱼
+    en: Steamed fish with lime and chili
+    original: ปลานึ่งมะนาว
+    key: 鱼蒸熟后淋青柠汁、鱼露、蒜、辣椒调的酸辣汁
+    flavors: [sour-spicy]
+    scenes: [entertaining]
+    difficulty: 1
+  - zh: 泰式沙爹鸡串
+    en: Chicken satay with peanut sauce
+    key: 鸡肉以姜黄、椰奶、香茅腌后烤，配花生酱汁
+    flavors: [spiced, sweet]
+    scenes: [entertaining]
+    difficulty: 2
+
+overseas:
+  - item: 南姜
+    where: 亚洲超市新鲜或冷冻
+    substitute: 生姜
+    difference: 更辛辣，缺少南姜的松木香
+  - item: 青柠叶
+    where: 亚洲超市冷冻
+    substitute: 青柠皮屑
+    difference: 香气更弱
+  - item: 泰国罗勒 / 圣罗勒
+    where: 亚洲超市
+    substitute: 意大利甜罗勒加几片薄荷
+    difference: 缺少八角般的香气
+  - item: 棕榈糖
+    where: 亚洲超市
+    substitute: 红糖
+    difference: 焦糖味更重
+  - item: 青木瓜
+    where: 亚洲超市
+    substitute: 大头菜（kohlrabi）、凉薯（jicama）或青芒果切丝
+    difference: 口感接近，味道略不同
+  - item: 咖喱酱
+    where: 亚洲超市（如 Mae Ploy、Maesri）
+    substitute: 西方超市的泰式咖喱酱
+    difference: 西方品牌通常香气偏弱、偏咸
+
+review_notes:
+  - 沙爹源自印尼与马来西亚，泰国也很常见；如需更纯粹的泰菜可替换

@@ -1,0 +1,62 @@
+# 场景标签：用户单选，可不选
+# constraints 为程序可检查的硬约束；guidance 随请求交给模型
+
+status: reviewed
+reviewed_by: nalaxu
+reviewed_at: 2026-11-16
+
+scenes:
+  - id: quick
+    zh: 快手
+    en: Quick
+    constraints:
+      max_total_minutes: 20
+      max_steps: 6
+    guidance: 总时间 20 分钟内（含备料），步骤不超过 6 步，不需要腌制过夜或长时间炖煮。
+
+  - id: rice-companion
+    zh: 下饭
+    en: Great with rice
+    constraints: {}
+    guidance: 味道偏重，有汤汁或酱汁，适合拌米饭；份量按配一碗米饭设计。
+
+  - id: one-pot
+    zh: 一锅出
+    en: One pot
+    constraints:
+      max_vessels: 1
+    guidance: 全程只用一口锅或一个烤盘，少洗碗；可以是炖菜、焖饭、烤盘菜或一锅面。
+
+  - id: clear-fridge
+    zh: 清冰箱
+    en: Use what I have
+    constraints:
+      extra_purchase: none
+    guidance: 只用用户已有的食材和常备调料，不需另买；若缺少关键调料，改用已有调料调整做法，并说明风味差异。
+
+  - id: entertaining
+    zh: 宴客
+    en: For guests
+    constraints:
+      min_servings: 4
+    guidance: 卖相好，份量 4 人以上，尽量可以提前准备、上桌前少操作；注明哪些步骤可以提前做。
+
+  - id: meal-prep
+    zh: 带饭/备餐
+    en: Meal prep
+    constraints: {}
+    guidance: 冷藏 3 天内风味不明显下降，微波复热后口感不垮；避免绿叶菜炒菜、炸物和需现吃的菜；注明保存与复热方法。
+
+  - id: late-night
+    zh: 夜宵
+    en: Late-night bite
+    constraints:
+      max_total_minutes: 15
+      max_servings: 2
+    guidance: 份量小，15 分钟内，不油腻；优先面、粥、蛋、小食。
+
+  - id: soup
+    zh: 汤水
+    en: Soups & stews
+    constraints: {}
+    guidance: 汤、炖菜、粥类；若需长时间炖煮，注明可用电压力锅或慢炖锅的做法。

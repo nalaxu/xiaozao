@@ -1,0 +1,106 @@
+# 味型标签（面向用户，跨菜系）
+# tier: primary 为首屏显示的 8 个；more 在“更多”中
+# cuisines: 擅长这种味道的菜系，推荐时用于让结果跨菜系。顺序代表典型程度。
+
+status: reviewed
+reviewed_by: nalaxu
+reviewed_at: 2026-11-16
+
+flavors:
+  - id: sour-spicy
+    zh: 酸辣
+    en: Sour & spicy
+    tier: primary
+    description: 酸味和辣味同时突出，开胃
+    cuisines: [hunan, sichuan, thai, korean, vietnamese, mexican]
+
+  - id: numbing-spicy
+    zh: 麻辣
+    en: Numbing & spicy
+    tier: primary
+    description: 花椒的麻加辣椒的辣
+    cuisines: [sichuan]
+
+  - id: savory
+    zh: 咸鲜
+    en: Savory
+    tier: primary
+    description: 以咸味和鲜味为主，不辣不甜，最家常
+    cuisines: [cantonese, northern-home, jiangzhe, japanese, italian, french]
+
+  - id: light
+    zh: 清淡
+    en: Light
+    tier: primary
+    description: 少油少盐，突出食材本味
+    cuisines: [cantonese, japanese, vietnamese, jiangzhe]
+
+  - id: garlicky
+    zh: 蒜香
+    en: Garlicky
+    tier: primary
+    description: 大蒜是主角
+    cuisines: [cantonese, italian, levant-turkish, korean, sichuan, french]
+
+  - id: sweet
+    zh: 甜口
+    en: Sweet-savory
+    tier: primary
+    description: 咸中带甜或酸甜，如红烧、照烧、糖醋
+    cuisines: [jiangzhe, cantonese, japanese, northern-home]
+
+  - id: rich
+    zh: 浓郁
+    en: Rich
+    tier: primary
+    description: 酱汁厚重、油脂丰富，适合配饭配面包
+    cuisines: [jiangzhe, french, italian, indian, northern-home, hunan]
+
+  - id: spiced
+    zh: 香料浓郁
+    en: Warmly spiced
+    tier: primary
+    description: 多种香料层层叠加，如咖喱
+    cuisines: [indian, thai, levant-turkish, mexican]
+
+  - id: sour
+    zh: 酸
+    en: Tangy
+    tier: more
+    description: 以醋、柠檬、青柠、罗望子带来的酸为主
+    cuisines: [vietnamese, thai, levant-turkish, northern-home, jiangzhe]
+
+  - id: sweet-spicy
+    zh: 甜辣
+    en: Sweet & spicy
+    tier: more
+    description: 甜和辣并重，如韩式辣酱、鱼香
+    cuisines: [korean, thai, sichuan]
+
+  - id: smoky
+    zh: 烟熏/炙烤
+    en: Smoky & charred
+    tier: more
+    description: 烟熏、腊味或明火炙烤的焦香
+    cuisines: [hunan, korean, mexican, levant-turkish, cantonese]
+
+  - id: herby
+    zh: 香草清新
+    en: Fresh & herby
+    tier: more
+    description: 大量新鲜香草，清爽
+    cuisines: [vietnamese, thai, levant-turkish, italian, mexican]
+
+  - id: creamy
+    zh: 奶香
+    en: Creamy
+    tier: more
+    description: 黄油、奶油、奶酪或酸奶带来的奶香
+    cuisines: [french, italian, indian]
+
+  - id: umami-fermented
+    zh: 发酵鲜味
+    en: Funky & fermented
+    tier: more
+    description: 酱、味噌、鱼露、泡菜、豆豉等发酵调料的深层鲜味
+    cuisines: [korean, japanese, vietnamese, thai, hunan]

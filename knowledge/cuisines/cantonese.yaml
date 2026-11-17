@@ -1,0 +1,168 @@
+id: cantonese
+status: reviewed
+reviewed_by: nalaxu
+reviewed_at: 2026-11-16
+name: {zh: 粤菜, en: Cantonese}
+group: chinese
+
+overview: >-
+  粤菜讲究食材新鲜，追求“清、鲜、嫩、滑、爽”，调味克制以突出本味。
+  蒸、白切、小炒、煲汤、烧腊都很擅长；小炒讲究“镬气”，汤讲究慢火久煲，酱料多用豉汁、蚝油、姜葱。
+
+flavor_tags: [light, savory, garlicky, sweet, smoky]
+
+flavor_profiles:
+  - name: 清蒸
+    how: 葱姜去腥，蒸熟后淋蒸鱼豉油，再泼热油激香葱丝
+  - name: 豉汁
+    how: 豆豉与蒜蓉炒香或拌入，咸香带发酵味
+  - name: 蚝油
+    how: 蚝油加生抽，咸鲜微甜，多用于炒菜和淋汁
+  - name: 姜葱
+    how: 姜葱爆香，或做成姜葱蓉蘸料（配白切鸡）
+  - name: 蜜汁（叉烧）
+    how: 叉烧酱、蜂蜜、南乳、玫瑰露酒，甜咸焦香
+  - name: 老火汤
+    how: 肉骨与瓜菜、药材慢煲 2–3 小时，只用盐调味，取其清甜
+
+core_seasonings:
+  - zh: 生抽
+    en: Light soy sauce
+    role: 主要咸鲜来源
+  - zh: 老抽
+    en: Dark soy sauce
+    role: 上色，少量即可
+  - zh: 蚝油
+    en: Oyster sauce
+    role: 增鲜增稠，带微甜
+  - zh: 豆豉
+    en: Fermented black beans
+    role: 豉汁类菜的核心
+  - zh: 蒸鱼豉油
+    en: Seasoned soy sauce for seafood
+    role: 清蒸菜的淋汁
+  - zh: 绍兴酒
+    en: Shaoxing wine
+    role: 去腥增香
+  - zh: 南乳
+    en: Red fermented bean curd
+    role: 叉烧、南乳排骨的特殊香味与红色
+  - zh: 沙姜
+    en: Sand ginger
+    role: 白切鸡、盐焗鸡蘸料的特殊香气
+
+techniques:
+  - name: 清蒸
+    key_points: 水大开后再放入，旺火短时间；鱼按厚度计时（约 2.5 厘米厚蒸 8–10 分钟），蒸出的腥水倒掉
+  - name: 白切（浸）
+    key_points: 整鸡或鸡腿在微沸不滚的水中浸熟，立即过冰水使皮爽滑
+  - name: 小炒（镬气）
+    key_points: 锅要烧到冒烟，少量分批炒；家用电炉火力不足，每批食材不超过锅底一层
+  - name: 上浆（嫩滑）
+    key_points: 肉片用少量小苏打或蛋清、生粉、油腌制，使肉质嫩滑
+  - name: 煲汤
+    key_points: 肉骨先焯水，冷水下料，大火煮开转小火 2–3 小时，最后再放盐
+  - name: 焗烤（烧腊家庭版）
+    key_points: 叉烧用烤箱分段烤，中途刷酱，最后高温或上火烤出焦边
+
+common_ingredients: [鸡肉, 猪肉, 牛肉, 鱼, 虾, 排骨, 菜心, 生菜, 鸡蛋]
+
+representative_dishes:
+  - zh: 白切鸡
+    en: White-cut chicken
+    key: 鸡在微沸水中浸熟，冰水过凉，配姜葱蓉蘸料
+    flavors: [light]
+    scenes: [entertaining]
+    difficulty: 2
+  - zh: 清蒸鱼
+    en: Steamed whole fish
+    key: 旺火短蒸，倒掉腥水，淋蒸鱼豉油，铺葱丝泼热油
+    flavors: [light]
+    scenes: [entertaining, quick]
+    difficulty: 1
+  - zh: 豉汁蒸排骨
+    en: Steamed spare ribs with black bean sauce
+    key: 小块排骨冲去血水，用豉汁、蒜、生粉、油腌 30 分钟，旺火蒸 15–20 分钟
+    flavors: [savory, garlicky]
+    scenes: [rice-companion]
+    difficulty: 1
+  - zh: 叉烧
+    en: Char siu (barbecue pork)
+    key: 选梅头肉，腌过夜，烤箱分段烤并刷蜜汁
+    flavors: [sweet, smoky]
+    scenes: [entertaining, meal-prep]
+    difficulty: 2
+  - zh: 蚝油生菜
+    en: Lettuce with oyster sauce
+    key: 生菜快速焯水沥干，淋蚝油蒜蓉汁
+    flavors: [savory, garlicky]
+    scenes: [quick]
+    difficulty: 1
+  - zh: 干炒牛河
+    en: Beef chow fun
+    key: 河粉提前抖散，大火分批炒，酱油量少以免糊烂，追求镬气
+    flavors: [savory, smoky]
+    scenes: [quick, late-night]
+    difficulty: 3
+  - zh: 滑蛋虾仁
+    en: Shrimp with silky scrambled eggs
+    key: 虾仁上浆滑熟，蛋液加少许生粉水，小火推至半凝固即出锅
+    flavors: [light]
+    scenes: [quick]
+    difficulty: 1
+  - zh: 咕噜肉
+    en: Sweet and sour pork
+    key: 肉块挂粉炸两次至酥脆，糖醋汁（番茄酱、白醋、糖）勾芡后快速翻匀
+    flavors: [sweet, sour]
+    scenes: [entertaining]
+    difficulty: 2
+  - zh: 腊味煲仔饭
+    en: Claypot rice with Chinese sausage
+    key: 米饭将熟时铺腊肠，沿锅边淋油小火焗出锅巴，淋甜豉油
+    flavors: [savory, smoky]
+    scenes: [one-pot]
+    difficulty: 2
+  - zh: 皮蛋瘦肉粥
+    en: Century egg and pork congee
+    key: 米用少量油盐腌过再煲，瘦肉预先腌咸，粥底绵滑
+    flavors: [light]
+    scenes: [soup, late-night]
+    difficulty: 1
+  - zh: 西洋菜猪骨汤
+    en: Watercress and pork bone soup
+    key: 猪骨焯水，加蜜枣、陈皮慢煲，西洋菜后下
+    flavors: [light]
+    scenes: [soup]
+    difficulty: 1
+  - zh: 豉汁凉瓜炒牛肉
+    en: Beef with bitter melon in black bean sauce
+    key: 凉瓜切片焯水或盐腌去苦，牛肉上浆滑炒，豉汁蒜蓉炒香
+    flavors: [savory]
+    scenes: [rice-companion]
+    difficulty: 2
+
+overseas:
+  - item: 蒸鱼豉油
+    where: 亚洲超市
+    substitute: 生抽、清水、糖按 2:2:1 加热溶化
+    difference: 鲜味略少，可加一点鱼露补鲜
+  - item: 整条鲜鱼
+    where: 亚洲超市活鱼柜；西方超市多为鱼排
+    substitute: 鲈鱼（sea bass）、金目鲈（barramundi）、欧洲海鲈（branzino）；或用鱼排并缩短蒸制时间
+    difference: 鱼排易蒸老，按厚度计时
+  - item: 鲜河粉
+    where: 亚洲超市冷藏或冷冻区
+    substitute: 干宽米粉（泡软）
+    difference: 口感偏硬，不如鲜河粉软滑
+  - item: 沙姜
+    where: 亚洲超市（沙姜粉）
+    substitute: 省略，或用少量姜粉
+    difference: 缺少特殊的辛香
+  - item: 梅头肉
+    where: 西方超市的 pork shoulder / Boston butt
+    substitute: 直接使用即可
+    difference: 无明显差别
+
+review_notes:
+  - 干炒牛河在家用电炉上难以做出镬气，难度标为 3；教程应建议分小份炒
+  - 老火汤的药材（如陈皮、蜜枣）海外可得性因地区而异，暂未逐一列出替代

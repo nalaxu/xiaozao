@@ -1,0 +1,171 @@
+id: northern-home
+status: reviewed
+reviewed_by: nalaxu
+reviewed_at: 2026-11-16
+name: {zh: 北方家常菜, en: Northern Chinese home cooking}
+group: chinese
+
+overview: >-
+  北方家常菜（涵盖京津、山东、东北、西北的家常风味）以咸鲜、酱香为主，常用大葱、大蒜、黄酱、甜面酱与陈醋，口味实在、份量足。
+  面食极其丰富（饺子、面条、饼）；技法以爆炒、熘、炖为主，东北的炖菜与锅包肉、西北的孜然羊肉也在此范围。
+
+flavor_tags: [savory, rich, sour, sweet]
+
+flavor_profiles:
+  - name: 酱香
+    how: 黄酱或甜面酱炒香，咸甜浓郁，如炸酱、京酱
+  - name: 葱香咸鲜
+    how: 大葱大火爆香，配酱油、少量醋，如葱爆羊肉
+  - name: 醋溜
+    how: 陈醋、糖、酱油调汁，大火快炒，酸香开胃
+  - name: 酸甜（锅包肉）
+    how: 糖醋汁裹在炸得酥脆的肉片上
+  - name: 炖菜家常
+    how: 酱油、八角、葱姜长时间炖煮，汤汁浓厚
+  - name: 孜然香辣
+    how: 孜然与辣椒面炒肉，西北风味
+
+core_seasonings:
+  - zh: 黄酱（大酱）
+    en: Yellow soybean paste
+    role: 炸酱、东北大酱的酱香
+  - zh: 甜面酱
+    en: Sweet bean sauce
+    role: 京酱肉丝、烤鸭酱的甜咸
+  - zh: 大葱
+    en: Chinese leek (scallion)
+    role: 北方菜的主要香味来源，常作主料
+  - zh: 山西陈醋
+    en: Shanxi aged vinegar
+    role: 醋溜菜与饺子蘸料
+  - zh: 八角、花椒
+    en: Star anise, Sichuan peppercorn
+    role: 炖菜、卤菜的香料
+  - zh: 东北酸菜
+    en: Northeastern sour cabbage
+    role: 酸菜炖菜的主角
+  - zh: 孜然
+    en: Cumin
+    role: 西北烤肉、炒肉的主要香料
+
+techniques:
+  - name: 爆
+    key_points: 大火热油，主料快速翻炒十几秒到一分钟，保持嫩
+  - name: 熘
+    key_points: 主料挂糊炸酥（焦熘）或上浆滑熟（滑熘），再浇芡汁快速翻匀
+  - name: 炖
+    key_points: 主料煎或焯后加足水，小火炖 40 分钟以上；粉条最后下
+  - name: 炸酱
+    key_points: 肉丁煸出油，黄酱与甜面酱小火慢炸十几分钟至酱香、油亮
+  - name: 和面与包饺子
+    key_points: 饺子皮用温水或冷水和面醒 30 分钟；馅料顺一个方向搅打上劲
+
+common_ingredients: [猪肉, 羊肉, 牛肉, 鸡肉, 白菜, 土豆, 茄子, 青椒, 番茄, 鸡蛋, 面粉]
+
+representative_dishes:
+  - zh: 西红柿炒鸡蛋
+    en: Tomato and egg stir-fry
+    key: 鸡蛋炒至嫩滑盛出，番茄炒出汁，加少许糖平衡酸味后回锅
+    flavors: [sweet, sour]
+    scenes: [quick, clear-fridge, rice-companion]
+    difficulty: 1
+  - zh: 京酱肉丝
+    en: Shredded pork in sweet bean sauce
+    key: 肉丝上浆滑炒，甜面酱炒香后裹匀，配大葱丝与豆腐皮卷着吃
+    flavors: [sweet, rich]
+    scenes: [rice-companion]
+    difficulty: 2
+  - zh: 葱爆羊肉
+    en: Lamb stir-fried with scallions
+    key: 羊肉片大火快炒变色即下大葱段，沿锅边淋醋与酱油，几秒出锅
+    flavors: [savory, garlicky]
+    scenes: [quick, rice-companion]
+    difficulty: 1
+  - zh: 锅包肉
+    en: Guo bao rou (crispy sweet and sour pork)
+    key: 里脊切大片挂土豆淀粉糊炸两次，糖醋汁熬浓后快速翻匀保持酥脆
+    flavors: [sweet, sour]
+    scenes: [entertaining]
+    difficulty: 3
+  - zh: 地三鲜
+    en: Stir-fried potato, eggplant and pepper
+    key: 土豆、茄子分别煎或炸至金黄（可用烤箱或空气炸锅减油），与青椒合炒勾芡
+    flavors: [savory, garlicky]
+    scenes: [rice-companion]
+    difficulty: 2
+  - zh: 小鸡炖蘑菇
+    en: Chicken stewed with mushrooms
+    key: 鸡块炒至变色加酱油八角，加泡发的蘑菇与泡蘑菇水炖 40 分钟，可加粉条
+    flavors: [rich]
+    scenes: [one-pot, soup]
+    difficulty: 1
+  - zh: 酸菜白肉炖粉条
+    en: Sour cabbage with pork belly and glass noodles
+    key: 五花肉煮熟切片，酸菜洗净挤干炒香，加肉汤炖，粉条最后下
+    flavors: [sour]
+    scenes: [one-pot, soup]
+    difficulty: 1
+  - zh: 炸酱面
+    en: Zhajiang noodles
+    key: 肉丁煸油后下黄酱、甜面酱小火慢炸，配黄瓜丝、豆芽等菜码
+    flavors: [rich]
+    scenes: [meal-prep]
+    difficulty: 1
+  - zh: 猪肉白菜饺子
+    en: Pork and napa cabbage dumplings
+    key: 白菜切碎加盐杀水挤干，肉馅加葱姜水搅打上劲再拌入白菜
+    flavors: [savory]
+    scenes: [meal-prep, entertaining]
+    difficulty: 2
+  - zh: 醋溜白菜
+    en: Vinegar-glazed napa cabbage
+    key: 白菜帮斜片，大火快炒，陈醋、糖、酱油碗汁一次下锅
+    flavors: [sour]
+    scenes: [quick, clear-fridge]
+    difficulty: 1
+  - zh: 木须肉
+    en: Moo shu pork
+    key: 肉片、炒蛋、木耳、黄瓜分批炒，最后合炒，保持各自口感
+    flavors: [savory]
+    scenes: [quick, rice-companion]
+    difficulty: 1
+  - zh: 孜然羊肉
+    en: Cumin lamb
+    key: 羊肉片大火煸干表面，加孜然粒、辣椒面、洋葱快速翻炒
+    flavors: [spiced, smoky]
+    scenes: [rice-companion, quick]
+    difficulty: 1
+
+overseas:
+  - item: 甜面酱
+    where: 亚洲超市
+    substitute: 海鲜酱（hoisin）
+    difference: 更甜，带五香味
+  - item: 黄酱
+    where: 亚洲超市
+    substitute: 韩式大酱（doenjang）或味噌
+    difference: 味噌更甜更温和
+  - item: 大葱
+    where: 亚洲超市
+    substitute: 韭葱（leek）白段，或整把小葱
+    difference: 韭葱更甜、纤维更粗，需多炒一会儿
+  - item: 东北酸菜
+    where: 亚洲超市袋装
+    substitute: 德式酸菜（sauerkraut），洗过挤干
+    difference: 卷心菜做成，更酸、更细碎
+  - item: 红薯粉条
+    where: 亚洲超市、韩国超市（韩式杂菜的粉条同类）
+    substitute: 绿豆粉丝（更易煮烂，晚点下）
+    difference: 不如红薯粉条筋道
+  - item: 山西陈醋
+    where: 亚洲超市
+    substitute: 镇江香醋
+    difference: 更甜、酸度较低
+  - item: 榛蘑
+    where: 较难买到
+    substitute: 干香菇或口蘑（cremini）
+    difference: 香气不同
+
+review_notes:
+  - “北方家常菜”覆盖面广，以家常为主；鲁菜作为八大菜系之一暂未单列，已放入第二批候选
+  - 锅包肉对炸制要求高，难度标为 3，请确认

@@ -1,0 +1,180 @@
+id: mexican
+status: reviewed
+reviewed_by: nalaxu
+reviewed_at: 2026-11-16
+name: {zh: 墨西哥菜, en: Mexican}
+group: europe-americas
+
+overview: >-
+  墨西哥家常菜以玉米、豆类、辣椒、番茄与绿番茄、青柠和芫荽为核心。
+  干辣椒（安秋、瓜希柳、奇波特雷）带来烟熏与果香的复合辣味，新鲜莎莎与腌洋葱提供酸爽；塔可、慢炖肉与各式莎莎是日常。
+
+flavor_tags: [smoky, sour-spicy, herby, spiced]
+
+flavor_profiles:
+  - name: 青柠芫荽
+    how: 番茄、洋葱、辣椒、芫荽切丁加青柠汁与盐，新鲜爽口（pico de gallo）
+  - name: 干辣椒烟熏
+    how: 干辣椒烘香泡软打成酱，或用罐装奇波特雷辣椒，烟熏微甜
+  - name: 绿番茄酸辣
+    how: 绿番茄（tomatillo）烤或煮后与辣椒、芫荽打成绿酱
+  - name: 慢炖香料
+    how: 肉与干辣椒酱、孜然、牛至、柑橘汁慢炖至可手撕
+  - name: 莫莱
+    how: 多种干辣椒、坚果、香料与少量巧克力熬成的浓酱（复杂，第一版不作为常规推荐）
+
+core_seasonings:
+  - zh: 干辣椒（安秋、瓜希柳）
+    en: Dried chiles (ancho, guajillo)
+    role: 颜色与烟熏果香，辣度中低
+  - zh: 罐装奇波特雷辣椒
+    en: Chipotle peppers in adobo
+    role: 烟熏辣，一罐可分装冷冻
+  - zh: 墨西哥辣椒
+    en: Jalapeño / serrano
+    role: 新鲜辣味
+  - zh: 青柠
+    en: Lime
+    role: 酸味
+  - zh: 芫荽
+    en: Cilantro
+    role: 主要香草
+  - zh: 孜然、墨西哥牛至
+    en: Cumin, Mexican oregano
+    role: 炖肉与豆类香料
+  - zh: 绿番茄
+    en: Tomatillo
+    role: 绿酱的酸味来源
+  - zh: 玉米饼
+    en: Corn tortillas
+    role: 塔可与多种菜的主食
+
+techniques:
+  - name: 干辣椒处理
+    key_points: 去蒂去籽，干锅烘 10–20 秒至出香（不可焦），热水泡软 15 分钟后打成酱
+  - name: 干烤（tatemado）
+    key_points: 番茄、洋葱、蒜、辣椒在干锅或烤箱上火下烤至起焦斑，再打成莎莎
+  - name: 慢炖手撕
+    key_points: 肉与辣椒酱、香料小火炖或烤箱慢烤 2–3 小时至可用叉子撕开
+  - name: 加热玉米饼
+    key_points: 干锅每面加热 30 秒至柔软带焦点，用布包住保温
+  - name: 油封猪肉（carnitas）
+    key_points: 猪肩肉块在猪油或少量水与橙汁中小火慢煮至软，最后大火煎出焦脆边
+
+common_ingredients: [猪肉, 鸡肉, 牛肉, 鱼, 黑豆, 牛油果, 番茄, 玉米, 洋葱, 鸡蛋]
+
+representative_dishes:
+  - zh: 墨西哥慢炖猪肉
+    en: Carnitas
+    original: Carnitas
+    key: 猪肩肉加橙汁、蒜、香料慢煮至软烂，撕开后大火煎出焦脆边，做塔可
+    flavors: [rich, smoky]
+    scenes: [entertaining, meal-prep]
+    difficulty: 2
+  - zh: 奇波特雷手撕鸡
+    en: Chicken tinga
+    original: Tinga de pollo
+    key: 鸡肉煮熟撕丝，与番茄、洋葱、奇波特雷辣椒酱同炖，做塔可或盖饭
+    flavors: [smoky, spiced]
+    scenes: [meal-prep, rice-companion]
+    difficulty: 1
+  - zh: 家庭版牧师塔可
+    en: Tacos al pastor (home style)
+    original: Tacos al pastor
+    key: 猪肉片以瓜希柳辣椒、胭脂树籽酱、菠萝汁腌制，平底锅或烤箱烤至焦边，配菠萝丁
+    flavors: [smoky, sweet]
+    scenes: [entertaining]
+    difficulty: 2
+  - zh: 绿酱卷饼
+    en: Enchiladas verdes
+    original: Enchiladas verdes
+    key: 玉米饼卷手撕鸡，淋绿番茄莎莎与奶酪，烤至起泡
+    flavors: [sour-spicy]
+    scenes: [entertaining, meal-prep]
+    difficulty: 2
+  - zh: 牛油果酱
+    en: Guacamole
+    original: Guacamole
+    key: 熟牛油果粗压，拌洋葱、辣椒、芫荽、青柠与盐，现做现吃
+    flavors: [herby, sour]
+    scenes: [quick, entertaining]
+    difficulty: 1
+  - zh: 墨西哥烤玉米
+    en: Elote (Mexican street corn)
+    original: Elotes
+    key: 玉米烤至焦斑，抹蛋黄酱，撒奶酪碎、辣椒粉，挤青柠
+    flavors: [smoky, creamy]
+    scenes: [entertaining, quick]
+    difficulty: 1
+  - zh: 墨西哥鱼塔可
+    en: Baja fish tacos
+    original: Tacos de pescado
+    key: 白鱼条挂啤酒面糊炸脆（或煎），配卷心菜丝、青柠奶油酱
+    flavors: [herby, sour]
+    scenes: [quick, entertaining]
+    difficulty: 2
+  - zh: 牧场早餐蛋
+    en: Huevos rancheros
+    original: Huevos rancheros
+    key: 煎蛋放在烘过的玉米饼上，淋热莎莎，配豆泥
+    flavors: [sour-spicy]
+    scenes: [quick, late-night, clear-fridge]
+    difficulty: 1
+  - zh: 莎莎玉米片
+    en: Chilaquiles
+    original: Chilaquiles
+    key: 玉米饼片炸脆或烤脆，拌入红或绿莎莎稍煮，配鸡蛋、奶酪、酸奶油
+    flavors: [sour-spicy]
+    scenes: [quick, clear-fridge]
+    difficulty: 1
+  - zh: 墨西哥番茄饭
+    en: Mexican red rice
+    original: Arroz rojo
+    key: 米先用油炒至金黄，再加番茄洋葱蒜打的汁与高汤焖熟
+    flavors: [savory]
+    scenes: [one-pot]
+    difficulty: 1
+  - zh: 墨西哥玉米饼汤
+    en: Tortilla soup
+    original: Sopa de tortilla
+    key: 番茄与干辣椒打成汤底，加炸玉米饼条、牛油果、奶酪与酸奶油
+    flavors: [smoky, spiced]
+    scenes: [soup]
+    difficulty: 1
+  - zh: 墨西哥炖牛肉
+    en: Beef barbacoa
+    original: Barbacoa de res
+    key: 牛肩肉与干辣椒、奇波特雷、香料、醋慢炖至手撕，可用压力锅或慢炖锅
+    flavors: [smoky, spiced]
+    scenes: [meal-prep, entertaining]
+    difficulty: 2
+
+overseas:
+  - item: 罐装奇波特雷辣椒
+    where: 美国普遍；英国、欧洲、澳洲大型超市或拉美店
+    substitute: 烟熏甜椒粉加少量卡宴辣椒粉与番茄膏
+    difference: 缺少醋香与肉感
+  - item: 安秋、瓜希柳干辣椒
+    where: 美国普遍；其他国家多需网购
+    substitute: 烟熏甜椒粉加少量辣椒粉
+    difference: 果香明显不足
+  - item: 绿番茄
+    where: 美国普遍；其他国家多为罐装
+    substitute: 青番茄加青柠汁
+    difference: 酸味来源不同，略生涩
+  - item: 墨西哥奶酪（cotija、queso fresco）
+    where: 美国普遍
+    substitute: 菲达奶酪（feta）
+    difference: 更咸、更酸
+  - item: 玉米饼
+    where: 美国普遍；其他国家多为面粉饼
+    substitute: 面粉饼
+    difference: 缺少玉米香，口感更软
+  - item: 胭脂树籽酱（achiote）
+    where: 拉美店
+    substitute: 甜椒粉加少量姜黄与醋
+    difference: 颜色接近，风味较弱
+
+review_notes:
+  - 墨西哥食材在美国以外较难买到，推荐给非美国用户时应优先选择替代后仍好吃的菜
+  - 莫莱酱复杂，未列入代表菜

@@ -1,0 +1,172 @@
+id: korean
+status: reviewed
+reviewed_by: nalaxu
+reviewed_at: 2026-11-16
+name: {zh: 韩国料理, en: Korean}
+group: east-southeast-asia
+
+overview: >-
+  韩国家常菜以发酵酱料为核心：辣椒酱、辣椒粉、大酱与泡菜，口味辣、咸、发酵鲜味并重，常带甜。
+  饭桌讲究米饭配汤或锅与多种小菜；腌烤肉与炖锅是两大支柱，麻油、芝麻、蒜几乎无处不在。
+
+flavor_tags: [sweet-spicy, umami-fermented, garlicky, smoky, sour-spicy]
+
+flavor_profiles:
+  - name: 甜辣
+    how: 辣椒酱加糖或糖浆、蒜、麻油，如辣炒年糕、辣炒猪肉
+  - name: 酱烧甜咸
+    how: 酱油、糖、梨泥、蒜、麻油腌肉后高温烤炒，如烤牛肉
+  - name: 泡菜酸辣
+    how: 发酵泡菜的酸辣，熟泡菜更适合做锅和炒饭
+  - name: 大酱鲜香
+    how: 大酱煮汤，咸鲜带豆香
+  - name: 麻油蒜香
+    how: 拌菜（namul）以麻油、蒜、盐、芝麻调味
+
+core_seasonings:
+  - zh: 韩式辣椒酱
+    en: Gochujang
+    role: 甜辣与发酵味
+  - zh: 韩式辣椒粉
+    en: Gochugaru
+    role: 颜色与温和的果香辣
+  - zh: 韩式大酱
+    en: Doenjang
+    role: 大酱汤的主味
+  - zh: 酱油
+    en: Soy sauce
+    role: 腌料与调味
+  - zh: 麻油
+    en: Toasted sesame oil
+    role: 出锅前增香
+  - zh: 蒜
+    en: Garlic
+    role: 几乎每道菜都用，量大
+  - zh: 泡菜
+    en: Kimchi
+    role: 既是小菜也是调味主料
+
+techniques:
+  - name: 腌烤
+    key_points: 肉切薄片腌 30 分钟至数小时，梨泥能嫩肉；高温平底锅或烤架快烤出焦边
+  - name: 炖锅（jjigae）
+    key_points: 泡菜或大酱先与肉炒香，加水或淘米水煮，豆腐最后放
+  - name: 拌菜（namul）
+    key_points: 蔬菜焯水挤干，用手抓拌麻油、蒜、盐、芝麻
+  - name: 韩式炸鸡
+    key_points: 两次油炸使外皮酥脆，再裹甜辣酱汁，裹酱后尽快吃
+  - name: 煎饼（jeon）
+    key_points: 面糊薄而少，油稍多，中火煎至两面金黄酥脆
+
+common_ingredients: [牛肉, 猪肉, 五花肉, 鸡肉, 豆腐, 泡菜, 年糕, 菠菜, 豆芽, 西葫芦]
+
+representative_dishes:
+  - zh: 韩式烤牛肉
+    en: Bulgogi
+    original: 불고기
+    key: 牛肉薄片以酱油、糖、梨泥、蒜、麻油腌制，高温快炒或烤
+    flavors: [sweet, garlicky]
+    scenes: [rice-companion, quick]
+    difficulty: 1
+  - zh: 泡菜锅
+    en: Kimchi jjigae (kimchi stew)
+    original: 김치찌개
+    key: 熟泡菜与五花肉先炒，加水与辣椒粉煮，放豆腐与葱
+    flavors: [sour-spicy, umami-fermented]
+    scenes: [soup, one-pot, clear-fridge]
+    difficulty: 1
+  - zh: 大酱汤
+    en: Doenjang jjigae (soybean paste stew)
+    original: 된장찌개
+    key: 大酱溶于淘米水或高汤，加西葫芦、土豆、豆腐、蘑菇煮
+    flavors: [umami-fermented]
+    scenes: [soup, clear-fridge]
+    difficulty: 1
+  - zh: 石锅拌饭
+    en: Bibimbap
+    original: 비빔밥
+    key: 米饭上铺多种拌菜、肉与煎蛋，配拌饭辣酱；无石锅可用铸铁锅烙出锅巴
+    flavors: [sweet-spicy]
+    scenes: [clear-fridge, one-pot]
+    difficulty: 2
+  - zh: 辣炒年糕
+    en: Tteokbokki
+    original: 떡볶이
+    key: 年糕在辣椒酱、辣椒粉、糖与高汤中煮至汁浓，可加鱼饼与煮蛋
+    flavors: [sweet-spicy]
+    scenes: [late-night, quick]
+    difficulty: 1
+  - zh: 韩式甜辣炸鸡
+    en: Yangnyeom chicken
+    original: 양념치킨
+    key: 鸡块两次油炸（或空气炸锅），裹辣椒酱、糖浆、蒜调的酱汁
+    flavors: [sweet-spicy]
+    scenes: [entertaining]
+    difficulty: 2
+  - zh: 杂菜
+    en: Japchae (stir-fried glass noodles)
+    original: 잡채
+    key: 红薯粉条煮后拌酱油麻油，各种蔬菜与肉分别炒，再合拌
+    flavors: [sweet, savory]
+    scenes: [entertaining, meal-prep]
+    difficulty: 2
+  - zh: 辣炒猪肉
+    en: Jeyuk bokkeum (spicy pork stir-fry)
+    original: 제육볶음
+    key: 猪肉片以辣椒酱、辣椒粉、酱油、糖、蒜腌后与洋葱大火炒
+    flavors: [sweet-spicy]
+    scenes: [rice-companion, quick]
+    difficulty: 1
+  - zh: 泡菜煎饼
+    en: Kimchi pancake
+    original: 김치전
+    key: 切碎的熟泡菜加泡菜汁与面粉调成稀糊，多油煎至边缘酥脆
+    flavors: [sour-spicy]
+    scenes: [quick, clear-fridge, late-night]
+    difficulty: 1
+  - zh: 嫩豆腐汤
+    en: Sundubu jjigae (soft tofu stew)
+    original: 순두부찌개
+    key: 辣椒油炒肉或海鲜，加高汤与整盒嫩豆腐，最后打一个生鸡蛋
+    flavors: [sour-spicy]
+    scenes: [soup, quick]
+    difficulty: 1
+  - zh: 参鸡汤
+    en: Samgyetang (ginseng chicken soup)
+    original: 삼계탕
+    key: 童子鸡填糯米、红枣、大蒜、人参，小火炖 1 小时以上，上桌自加盐与胡椒
+    flavors: [light]
+    scenes: [soup]
+    difficulty: 2
+  - zh: 拌菠菜
+    en: Seasoned spinach
+    original: 시금치나물
+    key: 菠菜焯水 30 秒，冷水过凉挤干，拌麻油、蒜、盐、芝麻
+    flavors: [garlicky, light]
+    scenes: [quick, meal-prep]
+    difficulty: 1
+
+overseas:
+  - item: 韩式辣椒粉
+    where: 韩国或亚洲超市
+    substitute: 阿勒颇辣椒（Aleppo pepper）；或甜椒粉加少量卡宴辣椒粉
+    difference: 颜色与果香接近度一般，辣度需调整
+  - item: 韩式大酱
+    where: 韩国或亚洲超市
+    substitute: 日本味噌（红味噌更接近）
+    difference: 更甜更温和
+  - item: 韩国梨
+    where: 亚洲超市（Asian pear）
+    substitute: 苹果泥；或少量猕猴桃泥（嫩肉很强，腌 30 分钟内）
+    difference: 苹果甜味不同；猕猴桃腌久会使肉变糊
+  - item: 年糕条
+    where: 韩国超市冷藏或冷冻区
+    substitute: 无理想替代
+    difference: 建议改选其他菜
+  - item: 童子鸡
+    where: 西方超市的 Cornish hen
+    substitute: 直接使用
+    difference: 无明显差别
+
+review_notes:
+  - 泡菜本身的制作未列为代表菜，假设用户购买成品泡菜

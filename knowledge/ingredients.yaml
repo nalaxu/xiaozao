@@ -1,0 +1,265 @@
+# 食材词典（首批）
+# 用途：食材输入联想、拍照识别结果归一、各菜系 common_ingredients 的标准名
+# en.us / en.uk：美式与英式（含澳洲、新西兰）叫法不同时分别列出；相同时只填 us
+# category: meat | poultry | seafood | egg-dairy | soy | vegetable | mushroom | herb-aromatic | fruit | legume | grain-noodle | preserved
+# pairs: 常见搭配（参考，不作为硬约束）
+
+status: reviewed
+reviewed_by: nalaxu
+reviewed_at: 2026-11-16
+
+ingredients:
+  # 肉类
+  - zh: 猪肉
+    aliases: [瘦肉, 前腿肉, 里脊]
+    en: {us: pork}
+    category: meat
+    pairs: [青椒, 白菜, 豆腐]
+  - zh: 五花肉
+    aliases: [三层肉, 猪腩]
+    en: {us: pork belly}
+    category: meat
+    pairs: [土豆, 鸡蛋, 竹笋]
+  - zh: 排骨
+    aliases: [小排, 肋排]
+    en: {us: spare ribs, uk: pork ribs}
+    category: meat
+    pairs: [土豆, 玉米]
+  - zh: 牛肉
+    aliases: [牛腱, 牛腩, 牛里脊]
+    en: {us: beef}
+    category: meat
+    pairs: [洋葱, 番茄, 土豆]
+  - zh: 牛肉末
+    aliases: [牛绞肉]
+    en: {us: ground beef, uk: beef mince}
+    category: meat
+    pairs: [番茄, 洋葱, 意面]
+  - zh: 羊肉
+    aliases: [羊排, 羊腿]
+    en: {us: lamb}
+    category: meat
+    pairs: [洋葱, 胡萝卜]
+
+  # 禽类与蛋
+  - zh: 鸡肉
+    aliases: [鸡腿, 鸡胸, 鸡翅, 整鸡, 鸡腿肉]
+    en: {us: chicken}
+    category: poultry
+    pairs: [土豆, 蘑菇, 洋葱]
+  - zh: 鸡蛋
+    aliases: [蛋]
+    en: {us: eggs}
+    category: egg-dairy
+    pairs: [番茄, 韭菜, 米饭]
+
+  # 海鲜
+  - zh: 鱼
+    aliases: [鱼片, 鱼排, 白鱼, 鲈鱼]
+    en: {us: fish, uk: fish}
+    category: seafood
+    pairs: [姜, 葱, 柠檬]
+  - zh: 三文鱼
+    aliases: [鲑鱼]
+    en: {us: salmon}
+    category: seafood
+    pairs: [柠檬, 菠菜]
+  - zh: 虾
+    aliases: [虾仁, 大虾, 明虾]
+    en: {us: shrimp, uk: prawns}
+    category: seafood
+    pairs: [鸡蛋, 蒜, 西兰花]
+  - zh: 青口
+    aliases: [贻贝, 淡菜]
+    en: {us: mussels}
+    category: seafood
+    pairs: [蒜, 番茄]
+
+  # 豆制品与豆类
+  - zh: 豆腐
+    aliases: [嫩豆腐, 老豆腐, 北豆腐, 南豆腐]
+    en: {us: tofu}
+    category: soy
+    pairs: [肉末, 青菜, 蘑菇]
+  - zh: 毛豆
+    aliases: [枝豆]
+    en: {us: edamame}
+    category: legume
+  - zh: 鹰嘴豆
+    aliases: [鸡心豆]
+    en: {us: chickpeas, uk: chickpeas}
+    category: legume
+    pairs: [番茄, 菠菜]
+  - zh: 小扁豆
+    aliases: [兵豆, 红扁豆, 黄扁豆]
+    en: {us: lentils}
+    category: legume
+  - zh: 黑豆
+    aliases: []
+    en: {us: black beans}
+    category: legume
+
+  # 蔬菜
+  - zh: 土豆
+    aliases: [马铃薯, 洋芋]
+    en: {us: potatoes}
+    category: vegetable
+    pairs: [牛肉, 鸡肉, 青椒]
+  - zh: 番茄
+    aliases: [西红柿]
+    en: {us: tomatoes}
+    category: vegetable
+    pairs: [鸡蛋, 牛肉]
+  - zh: 洋葱
+    aliases: []
+    en: {us: onion}
+    category: vegetable
+  - zh: 胡萝卜
+    aliases: [红萝卜]
+    en: {us: carrots}
+    category: vegetable
+  - zh: 茄子
+    aliases: []
+    en: {us: eggplant, uk: aubergine}
+    category: vegetable
+    pairs: [肉末, 蒜, 番茄]
+  - zh: 西葫芦
+    aliases: [角瓜]
+    en: {us: zucchini, uk: courgette}
+    category: vegetable
+  - zh: 青椒
+    aliases: [甜椒, 彩椒, 灯笼椒]
+    en: {us: bell pepper, uk: pepper, au: capsicum}
+    category: vegetable
+  - zh: 四季豆
+    aliases: [芸豆角, 扁豆角]
+    en: {us: green beans, uk: French beans}
+    category: vegetable
+  - zh: 豆角
+    aliases: [长豆角, 豇豆]
+    en: {us: long beans, uk: yardlong beans}
+    category: vegetable
+  - zh: 白菜
+    aliases: [大白菜, 黄芽白, 绍菜]
+    en: {us: napa cabbage, uk: Chinese leaf}
+    category: vegetable
+  - zh: 卷心菜
+    aliases: [包菜, 圆白菜, 洋白菜, 椰菜]
+    en: {us: cabbage}
+    category: vegetable
+  - zh: 青菜
+    aliases: [上海青, 小白菜, 油菜]
+    en: {us: bok choy, uk: pak choi}
+    category: vegetable
+  - zh: 菜心
+    aliases: []
+    en: {us: choy sum}
+    category: vegetable
+  - zh: 生菜
+    aliases: [莴苣叶]
+    en: {us: lettuce}
+    category: vegetable
+  - zh: 菠菜
+    aliases: []
+    en: {us: spinach}
+    category: vegetable
+  - zh: 花菜
+    aliases: [菜花, 花椰菜]
+    en: {us: cauliflower}
+    category: vegetable
+  - zh: 西兰花
+    aliases: [青花菜]
+    en: {us: broccoli}
+    category: vegetable
+  - zh: 黄瓜
+    aliases: [青瓜]
+    en: {us: cucumber}
+    category: vegetable
+  - zh: 豆芽
+    aliases: [绿豆芽, 黄豆芽]
+    en: {us: bean sprouts, uk: beansprouts}
+    category: vegetable
+  - zh: 竹笋
+    aliases: [春笋, 冬笋, 笋]
+    en: {us: bamboo shoots}
+    category: vegetable
+  - zh: 玉米
+    aliases: [苞米]
+    en: {us: corn, uk: sweetcorn}
+    category: vegetable
+  - zh: 牛油果
+    aliases: [鳄梨]
+    en: {us: avocado}
+    category: fruit
+
+  # 菌菇
+  - zh: 蘑菇
+    aliases: [口蘑, 白蘑菇, 香菇, 平菇, 杏鲍菇]
+    en: {us: mushrooms}
+    category: mushroom
+
+  # 香料与香草
+  - zh: 葱
+    aliases: [小葱, 香葱, 青葱]
+    en: {us: scallions, uk: spring onions}
+    category: herb-aromatic
+  - zh: 姜
+    aliases: [生姜, 老姜]
+    en: {us: ginger}
+    category: herb-aromatic
+  - zh: 蒜
+    aliases: [大蒜, 蒜头]
+    en: {us: garlic}
+    category: herb-aromatic
+  - zh: 香菜
+    aliases: [芫荽]
+    en: {us: cilantro, uk: coriander}
+    category: herb-aromatic
+  - zh: 辣椒
+    aliases: [小米椒, 尖椒, 红辣椒]
+    en: {us: chili peppers, uk: chillies}
+    category: herb-aromatic
+  - zh: 柠檬
+    aliases: []
+    en: {us: lemon}
+    category: fruit
+  - zh: 青柠
+    aliases: [莱姆]
+    en: {us: lime}
+    category: fruit
+
+  # 主食与面
+  - zh: 米饭
+    aliases: [剩饭, 隔夜饭]
+    en: {us: cooked rice}
+    category: grain-noodle
+  - zh: 米
+    aliases: [大米, 香米, 茉莉香米]
+    en: {us: rice}
+    category: grain-noodle
+  - zh: 面粉
+    aliases: [中筋面粉, 普通面粉]
+    en: {us: all-purpose flour, uk: plain flour}
+    category: grain-noodle
+  - zh: 意面
+    aliases: [意大利面, 通心粉]
+    en: {us: pasta}
+    category: grain-noodle
+  - zh: 河粉
+    aliases: [沙河粉, 粿条]
+    en: {us: wide rice noodles}
+    category: grain-noodle
+  - zh: 米粉
+    aliases: [米线, 米粉丝]
+    en: {us: rice vermicelli}
+    category: grain-noodle
+  - zh: 年糕
+    aliases: [韩式年糕, 年糕条]
+    en: {us: rice cakes (tteok)}
+    category: grain-noodle
+
+  # 腌制与发酵
+  - zh: 泡菜
+    aliases: [韩式泡菜, 辣白菜]
+    en: {us: kimchi}
+    category: preserved

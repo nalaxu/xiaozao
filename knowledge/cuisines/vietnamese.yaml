@@ -1,0 +1,172 @@
+id: vietnamese
+status: reviewed
+reviewed_by: nalaxu
+reviewed_at: 2026-11-16
+name: {zh: 越南菜, en: Vietnamese}
+group: east-southeast-asia
+
+overview: >-
+  越南菜清爽鲜香，大量生食香草与蔬菜，以鱼露调味，追求酸甜咸的平衡，辣度通常低于泰菜，辣椒多放在桌上自取。
+  汤粉与米纸卷最具代表性；受中餐与法餐影响，焦糖炖菜与法棍三明治也很常见。
+
+flavor_tags: [light, herby, sour, umami-fermented, sour-spicy]
+
+flavor_profiles:
+  - name: 鱼露蘸汁
+    how: 鱼露、青柠汁、糖、水、蒜、辣椒调成酸甜咸的蘸汁（nước chấm），几乎配所有菜
+  - name: 清汤香料
+    how: 牛骨长时间熬汤，加烤焦的洋葱与姜，以及八角、肉桂、丁香，如牛肉河粉
+  - name: 焦糖鱼露（kho）
+    how: 糖熬成焦糖，加鱼露炖肉或鱼，甜咸深色
+  - name: 香茅烤炒
+    how: 香茅、蒜、鱼露、糖腌肉后烤或炒
+  - name: 酸汤
+    how: 罗望子的酸配番茄、菠萝与香草，如越南酸鱼汤
+
+core_seasonings:
+  - zh: 鱼露
+    en: Fish sauce
+    role: 主要咸鲜来源
+  - zh: 青柠
+    en: Lime
+    role: 酸味
+  - zh: 糖
+    en: Sugar
+    role: 平衡酸咸
+  - zh: 香茅
+    en: Lemongrass
+    role: 腌料香气
+  - zh: 新鲜香草
+    en: Fresh herbs (mint, Thai basil, cilantro, perilla)
+    role: 生吃配菜，提供清新感
+  - zh: 焦糖水
+    en: Caramel sauce (nước màu)
+    role: 炖菜的颜色与甜苦香
+  - zh: 米纸与米粉
+    en: Rice paper, rice noodles
+    role: 卷与汤粉的主体
+
+techniques:
+  - name: 熬河粉汤
+    key_points: 骨头焯水，洋葱与姜直接火烤或烤箱烤至焦黑，与烘香的整颗香料一起小火熬，持续撇沫
+  - name: 焦糖炖（kho）
+    key_points: 糖小火熬至琥珀色，加鱼露与肉或鱼，加椰子水或水小火炖至汁浓
+  - name: 腌烤
+    key_points: 香茅、蒜、鱼露、糖腌肉，烤箱上火或炭火烤出焦边
+  - name: 米纸卷
+    key_points: 米纸在温水中过一下即取出，在案板上变软后再卷，卷紧
+  - name: 调蘸汁
+    key_points: 糖先溶于温水，再加鱼露与青柠，最后放蒜椒
+
+common_ingredients: [牛肉, 猪肉, 鸡肉, 虾, 鱼, 米粉, 豆芽, 生菜, 黄瓜]
+
+representative_dishes:
+  - zh: 越南牛肉河粉
+    en: Pho bo (beef pho)
+    original: Phở bò
+    key: 牛骨汤加烤洋葱姜与香料熬 3 小时以上，生牛肉片放碗中以滚汤烫熟，配香草与豆芽
+    flavors: [light, herby]
+    scenes: [soup, entertaining]
+    difficulty: 2
+  - zh: 鲜虾米纸卷
+    en: Fresh spring rolls
+    original: Gỏi cuốn
+    key: 米纸包虾、猪肉、米线与生菜香草，配花生海鲜酱蘸
+    flavors: [light, herby]
+    scenes: [quick, entertaining]
+    difficulty: 1
+  - zh: 河内烤肉米线
+    en: Bun cha
+    original: Bún chả
+    key: 腌猪肉饼与五花片烤至焦香，浸入温热的鱼露蘸汁，配米线与香草
+    flavors: [sweet, herby, smoky]
+    scenes: [entertaining]
+    difficulty: 2
+  - zh: 越南法棍三明治
+    en: Banh mi
+    original: Bánh mì
+    key: 酥脆法棍夹肉酱、烤肉、腌胡萝卜白萝卜丝、黄瓜、芫荽与辣椒
+    flavors: [herby, sour]
+    scenes: [quick, meal-prep]
+    difficulty: 1
+  - zh: 焦糖炖猪肉
+    en: Caramelized braised pork with eggs
+    original: Thịt kho trứng
+    key: 五花肉以焦糖与鱼露上色，加椰子水与煮蛋小火炖 1 小时
+    flavors: [sweet, rich]
+    scenes: [rice-companion, one-pot, meal-prep]
+    difficulty: 1
+  - zh: 焦糖炖鱼
+    en: Caramelized braised fish
+    original: Cá kho tộ
+    key: 鱼块以焦糖、鱼露、胡椒小火炖至汁浓，极下饭
+    flavors: [sweet, savory]
+    scenes: [rice-companion]
+    difficulty: 1
+  - zh: 香茅辣椒炒鸡
+    en: Lemongrass chili chicken
+    original: Gà xào sả ớt
+    key: 鸡腿肉以鱼露、糖腌，与大量香茅末、辣椒、蒜炒至焦香
+    flavors: [sour-spicy, herby]
+    scenes: [quick, rice-companion]
+    difficulty: 1
+  - zh: 越南炸春卷
+    en: Fried spring rolls
+    original: Chả giò
+    key: 猪肉、虾、粉丝、木耳、胡萝卜做馅，用米纸或春卷皮包，炸至金黄
+    flavors: [savory]
+    scenes: [entertaining]
+    difficulty: 2
+  - zh: 碎米饭配烤猪排
+    en: Broken rice with grilled pork chop
+    original: Cơm tấm sườn
+    key: 薄猪排以香茅、鱼露、糖、蒜腌后烤，配米饭、葱油与鱼露蘸汁
+    flavors: [sweet, savory]
+    scenes: [rice-companion]
+    difficulty: 1
+  - zh: 越南酸鱼汤
+    en: Sour fish soup
+    original: Canh chua cá
+    key: 罗望子汤底加鱼、菠萝、番茄、豆芽，出锅撒香草
+    flavors: [sour, herby]
+    scenes: [soup]
+    difficulty: 1
+  - zh: 越式蒜香骰子牛肉
+    en: Shaking beef
+    original: Bò lúc lắc
+    key: 牛肉丁腌后大火快煎，晃锅翻面，配西洋菜与青柠盐胡椒蘸料
+    flavors: [garlicky, savory]
+    scenes: [quick, entertaining]
+    difficulty: 1
+  - zh: 越南鸡肉河粉
+    en: Pho ga (chicken pho)
+    original: Phở gà
+    key: 整鸡与烤洋葱姜、香料熬汤约 1.5 小时，鸡肉撕丝，比牛肉河粉省时
+    flavors: [light, herby]
+    scenes: [soup]
+    difficulty: 1
+
+overseas:
+  - item: 越南香草
+    where: 亚洲超市；紫苏（perilla）在韩国超市常见
+    substitute: 普通超市的薄荷、芫荽、罗勒
+    difference: 种类少一些，但大体风味可保留
+  - item: 河粉
+    where: 亚洲超市（干米粉 rice sticks）
+    substitute: 无需替代
+    difference: 无
+  - item: 碎米
+    where: 亚洲超市
+    substitute: 茉莉香米
+    difference: 口感更完整，不影响风味
+  - item: 椰子水
+    where: 大多数超市
+    substitute: 清水加少许糖
+    difference: 缺少清甜
+  - item: 越南法棍
+    where: 越南面包店
+    substitute: 外皮薄脆、内部轻软的普通法棍
+    difference: 法式法棍更硬更韧
+
+review_notes:
+  - 牛肉河粉在家熬汤耗时较长，可在教程中提供压力锅版本

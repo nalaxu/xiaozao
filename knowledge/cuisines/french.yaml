@@ -1,0 +1,171 @@
+id: french
+status: reviewed
+reviewed_by: nalaxu
+reviewed_at: 2026-11-16
+name: {zh: 法国菜, en: French}
+group: europe-americas
+
+overview: >-
+  法国家常菜（家庭菜与小酒馆菜）以黄油、奶油、葡萄酒、高汤与香草（百里香、月桂、欧芹、龙蒿）为基础，重视酱汁：煎后用锅底精华做酱，最后加黄油收汁。
+  技法以煎、炖、烤、焗为主，许多经典菜是一锅慢炖，适合提前做好。
+
+flavor_tags: [rich, creamy, savory, garlicky]
+
+flavor_profiles:
+  - name: 黄油香草
+    how: 黄油煎，加百里香、蒜、红葱头，出锅前淋黄油
+  - name: 红酒慢炖
+    how: 肉煎上色后加红葡萄酒与高汤、香草束长时间炖，汁浓色深
+  - name: 奶油芥末
+    how: 锅底精华加白葡萄酒、第戎芥末与奶油收成酱
+  - name: 白葡萄酒蒜香
+    how: 白葡萄酒、红葱头、蒜与欧芹，用于青口、海鲜
+  - name: 焦糖洋葱
+    how: 洋葱小火慢炒 40 分钟以上至深棕色，如洋葱汤
+
+core_seasonings:
+  - zh: 黄油
+    en: Butter
+    role: 煎、收汁与风味核心
+  - zh: 鲜奶油
+    en: Cream / crème fraîche
+    role: 酱汁与焗菜
+  - zh: 第戎芥末
+    en: Dijon mustard
+    role: 酱汁的辛香与乳化
+  - zh: 葡萄酒
+    en: Dry white or red wine
+    role: 去锅底精华、炖煮
+  - zh: 红葱头
+    en: Shallot
+    role: 酱汁与炒料的甜香
+  - zh: 香草束
+    en: Bouquet garni (thyme, bay leaf, parsley)
+    role: 炖菜的香气
+  - zh: 龙蒿
+    en: Tarragon
+    role: 鸡肉与酱汁的特殊香草
+  - zh: 高汤
+    en: Stock
+    role: 炖菜与酱汁的鲜味基础
+
+techniques:
+  - name: 锅底酱（pan sauce）
+    key_points: 煎肉后倒掉多余油，加红葱头、葡萄酒刮下锅底焦渣，收汁，离火加冷黄油摇匀
+  - name: 炖（braise）
+    key_points: 肉分批煎至深褐色，与蔬菜、酒、高汤入锅，烤箱 160°C 左右或小火炖 2–3 小时
+  - name: 烤整鸡
+    key_points: 鸡提前抹盐风干，高温烤至皮脆，核心温度 74°C，静置 15 分钟再切
+  - name: 焗（gratin）
+    key_points: 食材铺盘，淋奶油或撒奶酪，烤至表面金黄起泡
+  - name: 煎鱼（meunière）
+    key_points: 鱼擦干拍薄面粉，中高火煎，最后淋焦化黄油与柠檬汁
+
+common_ingredients: [鸡肉, 牛肉, 猪肉, 鱼, 青口, 土豆, 洋葱, 蘑菇, 鸡蛋, 胡萝卜]
+
+representative_dishes:
+  - zh: 红酒炖牛肉
+    en: Beef bourguignon
+    original: Bœuf bourguignon
+    key: 牛肩肉分批煎至深褐，加红酒、高汤、香草束炖 3 小时，再加煎好的蘑菇、小洋葱与培根
+    flavors: [rich]
+    scenes: [entertaining, meal-prep, one-pot]
+    difficulty: 2
+  - zh: 法式烤鸡
+    en: Roast chicken
+    original: Poulet rôti
+    key: 整鸡提前抹盐冷藏风干，腹中塞柠檬与香草，高温烤，用烤盘汁做酱
+    flavors: [savory, herby]
+    scenes: [entertaining, one-pot]
+    difficulty: 1
+  - zh: 法式洋葱汤
+    en: French onion soup
+    original: Soupe à l'oignon gratinée
+    key: 洋葱小火慢炒 40–60 分钟至深棕，加牛肉高汤，盖面包片与格吕耶尔奶酪焗
+    flavors: [rich, sweet]
+    scenes: [soup]
+    difficulty: 2
+  - zh: 白酒青口
+    en: Moules marinières
+    original: Moules marinières
+    key: 红葱头与蒜黄油炒香，加白葡萄酒与青口盖锅大火焖 4–5 分钟至开口，撒欧芹
+    flavors: [garlicky, herby]
+    scenes: [quick, entertaining]
+    difficulty: 1
+  - zh: 芥末奶油猪排
+    en: Pork chops with mustard cream sauce
+    original: Côtes de porc à la moutarde
+    key: 猪排煎熟，锅底加白葡萄酒、第戎芥末、奶油收汁
+    flavors: [creamy, rich]
+    scenes: [quick]
+    difficulty: 1
+  - zh: 普罗旺斯炖菜
+    en: Ratatouille
+    original: Ratatouille
+    key: 茄子、西葫芦、甜椒分别煎过再与番茄、洋葱、香草合炖，保持各自口感
+    flavors: [herby, garlicky]
+    scenes: [meal-prep, clear-fridge, one-pot]
+    difficulty: 1
+  - zh: 奶油焗土豆
+    en: Gratin dauphinois
+    original: Gratin dauphinois
+    key: 土豆切薄片，与奶油、牛奶、蒜层叠，低温烤 1 小时至软而表面金黄
+    flavors: [creamy, rich]
+    scenes: [entertaining]
+    difficulty: 1
+  - zh: 黄油柠檬煎鱼
+    en: Fish meunière
+    original: Sole meunière
+    key: 白鱼柳拍薄面粉，黄油煎，最后淋焦化黄油、柠檬汁与欧芹；鳎鱼难买可用任意白鱼
+    flavors: [savory]
+    scenes: [quick]
+    difficulty: 1
+  - zh: 红酒炖鸡
+    en: Coq au vin
+    original: Coq au vin
+    key: 鸡腿以红酒腌后煎上色，与培根、蘑菇、小洋葱用红酒高汤炖 1 小时
+    flavors: [rich]
+    scenes: [entertaining, meal-prep]
+    difficulty: 2
+  - zh: 法式蛋卷
+    en: French omelette
+    original: Omelette
+    key: 中火黄油，不停搅动蛋液至细嫩半凝固，卷起，表面不上色
+    flavors: [creamy]
+    scenes: [quick, late-night]
+    difficulty: 2
+  - zh: 黑胡椒牛排
+    en: Steak au poivre
+    original: Steak au poivre
+    key: 牛排压满粗黑胡椒煎至喜好熟度，锅底加白兰地点燃（可省）与奶油做酱
+    flavors: [rich]
+    scenes: [quick, entertaining]
+    difficulty: 2
+  - zh: 尼斯沙拉
+    en: Salade niçoise
+    original: Salade niçoise
+    key: 金枪鱼、溏心蛋、四季豆、小土豆、橄榄、番茄，配油醋汁
+    flavors: [light, sour]
+    scenes: [quick, meal-prep]
+    difficulty: 1
+
+overseas:
+  - item: 葡萄酒（不饮酒或不便买酒时）
+    where: 酒类商店
+    substitute: 高汤加 1 茶匙醋或少量葡萄汁
+    difference: 风味深度明显不足，红酒炖菜尤其如此
+  - item: 红葱头
+    where: 大多数超市
+    substitute: 洋葱（减量）
+    difference: 更冲，甜香不足
+  - item: 法式酸奶油（crème fraîche）
+    where: 大型超市
+    substitute: 淡奶油加少量酸奶
+    difference: 接近
+  - item: 格吕耶尔奶酪
+    where: 大型超市
+    substitute: 埃门塔尔或任意易融化的硬质奶酪
+    difference: 香气略弱
+
+review_notes:
+  - 白兰地点燃步骤在家有安全风险，教程中应默认省略或只加热不点燃
