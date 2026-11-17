@@ -31,6 +31,7 @@ npm run dev
 - 未配置 `DATABASE_URL` 时使用本地 PGlite 数据库（`.data/pglite`，首次启动自动建表）。
 - 未配置 Resend 时，验证码和邀请邮件打印在 `npm run dev` 的终端里。
 - 未配置 Turnstile 时跳过真人验证；未配置 Google 时登录页只显示邮箱登录。
+- 未配置 `OPENAI_API_KEY` 时使用假模型（`src/server/ai/fake.ts`）：拍照识别返回固定的几样食材，推荐从知识库的代表菜里挑，流程和界面都能走通，但结果不代表真实模型的质量。线上没有密钥会直接报错。
 
 本地注册第一个账号：在 `.env.local` 里写 `ADMIN_EMAILS=你的邮箱`，先停掉 dev 服务器，再运行 `npm run admin:invite` 生成邀请码（PGlite 同一时间只能被一个进程打开），然后启动 dev 服务器，用该邮箱登录并填入邀请码，这个账号就是管理员。
 
