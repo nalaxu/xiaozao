@@ -3,6 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { createInviteCodes, ignoreWaitlist, inviteFromWaitlist, revokeInviteCode } from "@/server/admin";
+import { mergeDishes, regenerateImage, setAccountStatus } from "@/server/admin-stats";
+import { redirect } from "next/navigation";
 import { requireAdmin } from "@/server/auth/current";
 import { getDb } from "@/server/db";
 import { inviteMail, sendMail } from "@/server/mail";
@@ -51,4 +53,29 @@ export async function ignoreApplicantAction(formData: FormData) {
   const id = z.string().uuid().parse(formData.get("id"));
   await ignoreWaitlist(await getDb(), id);
   revalidatePath("/admin/waitlist");
+}
+
+export async function setAccountStatusAction(formData: FormData) {
+  const admin = await requireAdmin();
+  const id = z.string().uuid().parse(formData.get("id"));
+  const status = z.enum(["active", "disabled"]).parse(formData.get("status"));
+  await setAccountStatus(await getDb(), admin.id, id, status);
+  revalidatePath("/admin/accounts");
+}
+
+export async function regenerateImageAction(formData: FormData) {
+  await requireAdmin();
+  const id = z.string().uuid().parse(formData.get("id"));
+  await regenerateImage(await getDb(), id);
+  revalidatePath("/admin/images");
+}
+
+export async function mergeDishesAction(formData: FormData) {
+  await requireAdmin();
+  const from = z.string().uuid().parse(formData.get("from"));
+  const into = z.string().uuid().parse(formData.get("into"));
+  const q = z.string().max(50).parse(formData.get("q") ?? "");
+  const r = await mergeDishes(await getDb(), from, into);
+  const msg = r.ok ? `已把“${r.dropped}”合并到“${r.kept}”` : `没有合并：${r.reason}`;
+  redirect(`/admin/images?q=${encodeURIComponent(q)}&msg=${encodeURIComponent(msg)}`);
 }

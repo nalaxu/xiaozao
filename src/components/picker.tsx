@@ -23,6 +23,8 @@ export interface PickerOptions {
 
 interface Account {
   quota: QuotaStatus;
+  /** 全站当日预算已用完（PRD 6.3 达 $100） */
+  paused?: boolean;
   last: { flavors: string[]; scene: string | null; cuisine: string | null } | null;
 }
 
@@ -119,7 +121,12 @@ function IngredientStep({
     });
   }
 
-  const remove = (name: string) => update((d) => ({ ...d, items: d.items.filter((i) => i.name !== name) }));
+  const remove = (name: string) =>
+    update((d) => {
+      const gone = d.items.find((i) => i.name === name);
+      const stats = gone?.photo && d.photoStats ? { ...d.photoStats, removed: d.photoStats.removed + 1 } : d.photoStats;
+      return { ...d, items: d.items.filter((i) => i.name !== name), photoStats: stats };
+    });
 
   function startPhoto() {
     if (!account) {
@@ -161,12 +168,15 @@ function IngredientStep({
       update((d) => {
         let mains = d.items.filter((i) => i.main).length;
         const items = [...d.items];
+        let added = 0;
         for (const it of sure) {
           if (items.some((x) => x.name === it.name) || items.length >= MAX_ITEMS) continue;
-          items.push({ name: it.name, main: mains < 3, known: it.inDictionary });
+          items.push({ name: it.name, main: mains < 3, known: it.inDictionary, photo: true });
+          added++;
           if (mains < 3) mains++;
         }
-        return { ...d, items };
+        const prev = d.photoStats ?? { recognized: 0, removed: 0 };
+        return { ...d, items, photoStats: { ...prev, recognized: prev.recognized + added } };
       });
       setPhoto({ status: "done", unsure, remaining: data.remaining ?? null });
     } catch {
@@ -469,6 +479,16 @@ function TasteStep({
   if (left !== null && !exhausted) label += ` · 用 1 次，剩 ${left} 次`;
 
   function go() {
+    // 识别修改率：拍照加入的食材里，发起推荐前被删掉的比例
+    if (account && draft.photoStats?.recognized) {
+      void fetch("/api/events", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: "recognize_edit", props: draft.photoStats }),
+        keepalive: true,
+      }).catch(() => {});
+      draft.photoStats = undefined;
+    }
     saveDraft(draft);
     if (!account) router.push(`/login?next=${encodeURIComponent("/recommend?resume=1")}`);
     else router.push("/recommend?go=1");
@@ -539,7 +559,11 @@ function TasteStep({
       </div>
 
       <ActionBar>
-        {exhausted && quota ? (
+        {account?.paused && quota ? (
+          <p className="rounded-control bg-surface-muted p-3 text-center text-small text-text-muted">
+            今天的生成名额已满，{resetTimeLabel(quota.resetAt)}（你的时间）恢复。收藏的教程照常可以看和做。
+          </p>
+        ) : exhausted && quota ? (
           <p className="rounded-control bg-surface-muted p-3 text-center text-small text-text-muted">
             今天的 {quota.limits.recommend} 次推荐用完了，{resetTimeLabel(quota.resetAt)}（你的时间）恢复。
           </p>

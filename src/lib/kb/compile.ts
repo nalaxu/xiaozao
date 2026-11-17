@@ -9,6 +9,7 @@ import {
   scenesFileSchema,
   type Cuisine,
   type KnowledgeBase,
+  type ReviewEntry,
 } from "./schema";
 
 export interface RawKnowledge {
@@ -150,6 +151,21 @@ export function compileKnowledge(
   if (errors.length > 0) return { kb: null, errors, warnings };
 
   const publishedIds = new Set(published.map((c) => c.id));
+  const at = (v: string | Date | null | undefined) => (v instanceof Date ? v.toISOString().slice(0, 10) : (v ?? null));
+  const entry = (
+    file: string,
+    title: string,
+    m: { status: "draft" | "reviewed"; reviewed_by?: string | null; reviewed_at?: string | Date | null },
+    notes: number,
+    publishedFlag: boolean,
+  ): ReviewEntry => ({ file, title, status: m.status, reviewedBy: m.reviewed_by ?? null, reviewedAt: at(m.reviewed_at), notes, published: publishedFlag });
+  const review: ReviewEntry[] = [
+    entry("flavors.yaml", "味型", flavorsFile.data, 0, true),
+    entry("scenes.yaml", "场景", scenesFile.data, 0, true),
+    entry("ingredients.yaml", "食材词典", ingredientsFile.data, 0, true),
+    entry("allergens.yaml", "过敏原", allergensFile.data, allergensFile.data.review_notes.length, true),
+    ...cuisines.map((c) => entry(`cuisines/${c.id}.yaml`, c.name.zh, c, c.review_notes.length, publishedIds.has(c.id))),
+  ];
   return {
     kb: {
       version: opts.version ?? "dev",
@@ -159,6 +175,7 @@ export function compileKnowledge(
       cuisines: published,
       allergens: allergens.map(({ id, zh, en, keywords, except }) => ({ id, zh, en, keywords, except })),
       allergensReviewed,
+      review,
     },
     errors,
     warnings,

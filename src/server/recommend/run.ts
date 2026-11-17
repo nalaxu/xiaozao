@@ -6,6 +6,7 @@ import { ArrayItemExtractor } from "@/lib/json-stream";
 import { sha256 } from "../crypto";
 import type { Db } from "../db/client";
 import { recommendationCache, recommendationRuns } from "../db/schema";
+import { logEvent } from "../events";
 import { dishImages, findOrCreateDish, libraryDishes } from "../dishes";
 import { enqueueImage } from "../images/queue";
 import {
@@ -112,7 +113,10 @@ export async function runRecommend(
     const images = await dishImages(db, dishes.map((d) => d.dishId));
     emit({ type: "start", remaining, cached: true });
     for (const d of dishes) emit({ type: "dish", dish: { ...d, imageUrl: images[d.dishId] ?? null } });
-    const runId = await saveRun(db, user.id, input, key, dishes);
+    const runId = await saveRun(db, user.id, input, key, dishes, {
+      cached: true,
+      withImage: dishes.filter((d) => images[d.dishId]).length,
+    });
     emit({ type: "done", runId, note: shortNote(dishes.length, false) });
     return { queuedImages };
   }
@@ -218,7 +222,10 @@ export async function runRecommend(
     return { queuedImages };
   }
 
-  const runId = await saveRun(db, user.id, input, key, accepted);
+  const runId = await saveRun(db, user.id, input, key, accepted, {
+    cached: false,
+    withImage: accepted.filter((d) => d.imageUrl).length,
+  });
   if (!failure) {
     await db
       .insert(recommendationCache)
@@ -238,10 +245,19 @@ function shortNote(count: number, restricted: boolean): string | null {
   return restricted ? `考虑到你的忌口，这次只找到 ${count} 道合适的。` : `这次只找到 ${count} 道合适的。`;
 }
 
-async function saveRun(db: Db, userId: string, input: RecommendInput, key: string, dishes: RecommendedDish[]) {
+async function saveRun(
+  db: Db,
+  userId: string,
+  input: RecommendInput,
+  key: string,
+  dishes: RecommendedDish[],
+  stats: { cached: boolean; withImage: number },
+) {
   const [row] = await db
     .insert(recommendationRuns)
     .values({ userId, input, cacheKey: key, dishIds: dishes.map((d) => d.dishId), dishes })
     .returning({ id: recommendationRuns.id });
+  // 推荐时已有图片的菜的比例即图片库命中率（PRD 第 9 节）
+  await logEvent(db, userId, "recommend_run", { runId: row.id, dishes: dishes.length, ...stats });
   return row.id;
 }

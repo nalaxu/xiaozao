@@ -5,12 +5,16 @@ export interface DraftItem {
   name: string;
   /** 主料（实心）或“手头还有”（描边） */
   main: boolean;
+  /** 来自拍照识别（统计识别修改率） */
+  photo?: boolean;
   /** 是否在食材词典里；词典外的显示为虚线标签 */
   known: boolean;
 }
 
 export interface Draft {
   items: DraftItem[];
+  /** 拍照识别加入了几样、用户删了其中几样；发起推荐时上报后清零（PRD 第 9 节） */
+  photoStats?: { recognized: number; removed: number };
   flavors: string[];
   scene: string | null;
   cuisine: string | null;

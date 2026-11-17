@@ -1,5 +1,6 @@
 import "server-only";
 import { getDb } from "../db";
+import { logEvent } from "../events";
 import { safeNext } from "../http";
 import { clearPendingCookie, setPendingCookie, setSessionCookie } from "./current";
 import { createSession } from "./session";
@@ -23,6 +24,7 @@ export async function completeVerified(
   if (identity.kind === "disabled") return { kind: "disabled" };
   if (identity.kind === "pending") {
     await setPendingCookie(identity.pendingId);
+    await logEvent(await getDb(), null, "signup_pending", { pendingId: identity.pendingId });
     return { kind: "need_invite", next: `/login/invite?next=${encodeURIComponent(target)}` };
   }
   await signIn(identity.user, userAgent);

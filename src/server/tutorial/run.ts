@@ -6,6 +6,7 @@ import type { RecommendedDish } from "@/lib/recommend-types";
 import type { TutorialContent, TutorialEvent } from "@/lib/tutorial-types";
 import type { Db } from "../db/client";
 import { recommendationRuns, tutorials } from "../db/schema";
+import { logEvent } from "../events";
 import { loadPersonalization, preferenceSummary, ratedDishes, restrictionKeywords } from "../preferences";
 import { nextReset, refundQuota, reserveQuota, spentToday } from "../usage";
 import { BudgetPausedError, callModel } from "../ai/call";
@@ -92,6 +93,7 @@ export async function runTutorial(
     .values({ userId: user.id, dishId: target.dish.dishId, runId: target.runId, params, model, status: "streaming" })
     .returning({ id: tutorials.id });
   emit({ type: "start", id: row.id, remaining: user.role === "admin" ? null : quota.remaining, model });
+  await logEvent(db, user.id, "tutorial_open", { tutorialId: row.id, runId: target.runId });
 
   const fail = async (code: string, error: string) => {
     await db.update(tutorials).set({ status: "failed" }).where(eq(tutorials.id, row.id));

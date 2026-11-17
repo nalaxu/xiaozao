@@ -1,7 +1,8 @@
 // 收藏、历史与烹饪记录（PRD F19、F28；设计文档 4.8）。
 import { and, desc, eq, inArray } from "drizzle-orm";
 import type { Db } from "./db/client";
-import { dishes, events, favorites, tutorials } from "./db/schema";
+import { dishes, favorites, tutorials } from "./db/schema";
+import { logEvent } from "./events";
 import { imageUrl } from "./dishes";
 import { loadPersonalization } from "./preferences";
 
@@ -122,12 +123,7 @@ export type CookEvent = "start" | "complete";
 /** 进入烹饪模式 / 做好了。做好了会在教程上记下时间 */
 export async function recordCook(db: Db, userId: string, tutorialId: string, event: CookEvent, now = new Date()) {
   if (!(await ownDoneTutorial(db, userId, tutorialId))) return false;
-  await db.insert(events).values({
-    userId,
-    name: event === "start" ? "cook_start" : "cook_complete",
-    props: { tutorialId },
-    createdAt: now,
-  });
+  await logEvent(db, userId, event === "start" ? "cook_start" : "cook_complete", { tutorialId }, now);
   if (event === "complete") {
     await db.update(tutorials).set({ cookedAt: now }).where(eq(tutorials.id, tutorialId));
   }

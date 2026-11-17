@@ -15,6 +15,7 @@ import {
   tutorials,
   users,
 } from "./db/schema";
+import { logEvent } from "./events";
 import { DEFAULT_PRIVACY, loadPersonalization } from "./preferences";
 import { imageUrl } from "./dishes";
 
@@ -81,6 +82,7 @@ export async function rateTutorial(
     .insert(ratings)
     .values({ userId, tutorialId: t.id, verdict: input.verdict, reason, createdAt: now })
     .onConflictDoUpdate({ target: [ratings.userId, ratings.tutorialId], set: { verdict: input.verdict, reason, createdAt: now } });
+  await logEvent(db, userId, "rating", { verdict: input.verdict, tutorialId: t.id }, now);
   return { ok: true, recorded: true };
 }
 

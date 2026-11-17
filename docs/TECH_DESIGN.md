@@ -397,6 +397,11 @@ safety_notes: [string]                   // 熟度、生食等提示（PRD 6.2�
 
 - 单个账号当日 `spend_usd` 超过 $1 时通知管理员（每个账号每天一次）。
 - 阈值在 `config/limits.ts`。
+- M6 实现说明：
+  - 每次记账（`recordCall`）后检查阈值（`src/server/alerts.ts`）。$50 / $80 / $95 / $100 四档都发邮件，各档每天一次；去重靠原子地往 `daily_spend.alerts_sent` 追加 `budget:50` 或 `account:<id>`。邮件发到 `ADMIN_EMAILS`。
+  - 告警排进 `jobs`（type = alert）后立即尝试发送（不阻塞用户请求），发送失败每 5 分钟由巡检重试，最多 5 次。Hobby 套餐巡检每天一次，所以重试会慢，但第一次发送不依赖巡检。
+  - 达到 $100 时首页的“给我推荐”按钮换成说明文字，收藏和烹饪模式照常可用。
+  - 演练见 `src/server/budget-drill.test.ts`：从 $0 推到 $100，逐档检查告警、停图、降级、暂停。
 
 ### 9.3 限流
 
@@ -444,7 +449,7 @@ PRD 第 11 节要求上线前实测成本。方法：
 - **注销**（F36）：删除用户及所有关联行（外键级联）；`model_calls` 中的 user_id 置空，保留成本统计。
 - **关闭记录开关**：立即停止写入对应数据，并询问是否同时删除已有数据。
 - **加密**：Neon 与 R2 提供静态加密；全站 HTTPS；验证码与会话令牌只存哈希。
-- **HTTP 头**：内容安全策略（只允许本站、R2 图片域、Turnstile、Google 登录）、`X-Frame-Options: DENY`、`Referrer-Policy: strict-origin-when-cross-origin`。
+- **HTTP 头**：内容安全策略（只允许本站、R2 图片域、Turnstile、Google 登录）、`X-Frame-Options: DENY`、`Referrer-Policy: strict-origin-when-cross-origin`。M6 实现见 `config/csp.ts`：Google 登录是整页跳转，不需要放行；脚本仍需 `'unsafe-inline'`，因为 Next.js 页面内联水合数据，改用 nonce 会让所有页面动态渲染（离线外壳等静态页会失效），第一版先这样，其余来源全部收紧。生产环境另加 HSTS。R2 图片域取自构建时的 `IMAGE_BASE_URL`。
 - **密钥**：OpenAI、Resend、Turnstile、OAuth、`OTP_SECRET`、`CRON_SECRET` 只在服务端环境变量中。
 - **隐私政策页**与首次拍照前的告知（PRD 第 8 节）。
 
@@ -460,12 +465,16 @@ PRD 第 11 节要求上线前实测成本。方法：
 | 账号 | 搜索、查看用量与花费、停用/启用（F39） |
 | 图片库 | 图片总数、命中率、失败列表，可重新生成或合并重复菜 |
 | 知识库 | 各条目审核状态（只读，F40） |
+| 指标 | PRD 第 9 节的指标按周汇总，标出是否达到初始目标；月活人均成本（M6 新增） |
+
+M6 实现说明：花费页为后台首页，含当日预算进度条（四个阈值与当前档位）、按环节分列、近 30 天趋势、当日花费最多的账号。停用账号会立即删除其会话，不能停用自己。图片库的“合并重复菜”在搜索结果里选两道同菜系的菜，保留有图的那条，另一条的名字写进 `dish_aliases`，教程改指向保留的那条。知识库页的数据来自构建时 `kb.json` 里的审核信息，改审核状态要改 YAML 并重新部署。
 
 ## 14. 可观测性
 
 - `model_calls` 即调用日志，后台“花费”页直接查询。
-- 前后端错误上报到 Sentry（免费档），去掉请求体与用户邮箱。
+- 前后端错误上报到 Sentry（免费档），去掉请求体与用户邮箱。**尚未接入**：需要先注册 Sentry 并决定是否接受把错误堆栈发到第三方，接入时再加依赖。目前错误只在 Vercel 的函数日志里。
 - PRD 第 9 节的指标所需事件（推荐 → 打开教程、进入烹饪模式、完成烹饪、评价、次周回访、识别结果修改率、图片库命中率、邀请码 → 注册完成）记录在 `events` 表（user_id, name, props, created_at），后台按周汇总。第一版不接第三方分析工具。
+- M6 实现的事件见 `src/server/events.ts`：`visit`（每个账号每天第一次打开首页、收藏或教程）、`recommend_run`（含推荐时已有图的菜数）、`tutorial_open`、`cook_start`、`cook_complete`、`rating`（关闭评价记录时不记）、`recognize`、`recognize_edit`（前端在发起推荐时上报拍照加入与删掉的数量）、`signup_pending`、`signup_complete`。事件里不含食材、照片或自由文本。“用完当日推荐额度”直接从 `usage_daily` 统计。
 
 ## 15. 测试
 

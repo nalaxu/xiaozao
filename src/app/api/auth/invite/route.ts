@@ -4,6 +4,7 @@ import { signIn } from "@/server/auth/complete";
 import { PENDING_COOKIE, readCookie } from "@/server/auth/current";
 import { redeemInvite } from "@/server/auth/signup";
 import { getDb } from "@/server/db";
+import { logEvent } from "@/server/events";
 import { clientIp, forbiddenOrigin, jsonError, readJson, safeNext, sameOrigin } from "@/server/http";
 
 const body = z.object({ code: z.string().max(40), next: z.string().max(500).optional() });
@@ -20,8 +21,9 @@ export async function POST(req: NextRequest) {
   const parsed = body.safeParse(await readJson(req));
   if (!parsed.success) return jsonError(400, MESSAGES.invalid_code);
 
+  const pendingId = await readCookie(PENDING_COOKIE);
   const result = await redeemInvite(await getDb(), {
-    pendingId: await readCookie(PENDING_COOKIE),
+    pendingId,
     code: parsed.data.code,
     ip: clientIp(req),
   });
@@ -30,6 +32,7 @@ export async function POST(req: NextRequest) {
     return jsonError(status, MESSAGES[result.reason], { reason: result.reason });
   }
   await signIn(result.user, req.headers.get("user-agent"));
+  await logEvent(await getDb(), result.user.id, "signup_complete", { pendingId: pendingId ?? null });
   // 新账号先到欢迎页问忌口与过敏（设计文档 4.12），完成后回到原本要去的页面
   return NextResponse.json({ next: `/welcome?next=${encodeURIComponent(safeNext(parsed.data.next))}` });
 }

@@ -1,12 +1,8 @@
 import Link from "next/link";
+import { AdminNav } from "@/components/admin/admin-nav";
 import { requireAdmin } from "@/server/auth/current";
 
 export const dynamic = "force-dynamic";
-
-const NAV = [
-  { href: "/admin/invites", label: "邀请码" },
-  { href: "/admin/waitlist", label: "申请" },
-];
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   await requireAdmin();
@@ -21,13 +17,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           返回
         </Link>
       </div>
-      <nav className="mb-6 flex gap-2 border-b border-border" aria-label="后台导航">
-        {NAV.map((n) => (
-          <Link key={n.href} href={n.href} className="px-3 py-2 font-bold text-text-muted hover:text-text">
-            {n.label}
-          </Link>
-        ))}
-      </nav>
+      <AdminNav />
       {children}
     </div>
   );

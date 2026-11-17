@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 import { input } from "@config/limits";
 import { BudgetPausedError, callModel } from "@/server/ai/call";
+import { logEvent } from "@/server/events";
 import { normalizeRecognized, recognizeRequest, type RawRecognized } from "@/server/ai/recognize";
 import { jsonError, readJson } from "@/server/http";
 import { guardModelRoute } from "@/server/model-guard";
@@ -54,6 +55,7 @@ export async function POST(req: NextRequest) {
     const result = await callModel(db, user.id, recognizeRequest(parsed.data.images));
     const raw = rawSchema.parse(JSON.parse(result.text)) as RawRecognized;
     const { notFood, items } = normalizeRecognized(raw);
+    await logEvent(db, user.id, "recognize", { items: items.length, notFood });
     return NextResponse.json({
       notFood,
       items,

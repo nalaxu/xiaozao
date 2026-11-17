@@ -3,6 +3,7 @@ import { SavedView, type SavedEntry } from "@/components/saved/saved-view";
 import { ButtonLink, Card } from "@/components/ui";
 import { getCurrentUser } from "@/server/auth/current";
 import { getDb } from "@/server/db";
+import { touchVisit } from "@/server/events";
 import { listFavorites, listHistory, type SavedItem } from "@/server/saved";
 import { cuisineMeta } from "../t/cuisine-meta";
 
@@ -36,7 +37,11 @@ export default async function SavedPage({ searchParams }: Props) {
     );
   }
   const db = await getDb();
-  const [favorites, history] = await Promise.all([listFavorites(db, user.id), listHistory(db, user.id)]);
+  const [favorites, history] = await Promise.all([
+    listFavorites(db, user.id),
+    listHistory(db, user.id),
+    touchVisit(db, user.id),
+  ]);
   const { tab } = await searchParams;
   return (
     <SavedView

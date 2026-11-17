@@ -4,6 +4,7 @@ import { budget, quota } from "@config/limits";
 import { estimateUsd, textCostUsd, type Feature } from "@config/models";
 import type { Db } from "./db/client";
 import { dailySpend, modelCalls, usageDaily } from "./db/schema";
+import { checkAlerts, kickAlertSender } from "./alerts";
 import type { Usage } from "./ai/types";
 
 export type QuotaKind = "recommend" | "tutorial" | "recognize";
@@ -87,7 +88,7 @@ export async function quotaStatus(db: Db, user: QuotaUser, now = new Date()): Pr
 
 /**
  * 按预估成本预占当日预算。已达上限（$100）时返回 null，调用方应返回 budget_paused。
- * 告警（$50）与降级档位在 M6 接入。
+ * 告警见 alerts.ts（记账后检查），$80 停图见 images/jobs.ts，$95 降级见 tutorial/run.ts。
  */
 export async function reserveBudget(db: Db, feature: Feature, now = new Date()): Promise<number | null> {
   const amount = estimateUsd[feature];
@@ -167,6 +168,12 @@ export async function recordCall(db: Db, rec: CallRecord, now = new Date()): Pro
         target: [usageDaily.userId, usageDaily.day],
         set: { spendUsd: sql`${usageDaily.spendUsd} + ${cost}` },
       });
+  }
+  // 告警检查失败不能影响用户的请求
+  try {
+    if (await checkAlerts(db, { userId: rec.userId, now })) kickAlertSender(db);
+  } catch (e) {
+    console.error("alert check failed", e);
   }
   return cost;
 }

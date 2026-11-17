@@ -148,4 +148,17 @@ export interface KnowledgeBase {
   allergens: Allergen[];
   /** allergens.yaml 是否已终审（未终审也会使用，见 compile.ts） */
   allergensReviewed: boolean;
+  /** 各文件的审核状态（含未上线的草稿），供后台“知识库”页只读查看（F40） */
+  review: ReviewEntry[];
+}
+
+export interface ReviewEntry {
+  file: string;
+  title: string;
+  status: "draft" | "reviewed";
+  reviewedBy: string | null;
+  reviewedAt: string | null;
+  notes: number;
+  /** 是否进了这次构建 */
+  published: boolean;
 }

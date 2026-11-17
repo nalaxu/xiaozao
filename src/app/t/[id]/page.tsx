@@ -6,6 +6,7 @@ import { TutorialLive } from "@/components/tutorial/tutorial-live";
 import { TutorialView } from "@/components/tutorial/tutorial-view";
 import { requireUser } from "@/server/auth/current";
 import { getDb } from "@/server/db";
+import { touchVisit } from "@/server/events";
 import { toOfflineRecord } from "@/lib/offline";
 import { loadPersonalization } from "@/server/preferences";
 import { readTutorial } from "@/server/tutorial/read";
@@ -24,7 +25,7 @@ export default async function TutorialPage({ params, searchParams }: Props) {
   const backHref = from === "saved" ? "/saved" : from === "history" ? "/saved?tab=history" : "/recommend";
   const user = await requireUser(`/t/${id}`);
   const db = await getDb();
-  const t = await readTutorial(db, user.id, id);
+  const [t] = await Promise.all([readTutorial(db, user.id, id), touchVisit(db, user.id)]);
   if (!t) notFound();
   // 单位按账号当前的设置显示（设置页可改），没设置过用生成时的
   const units = (await loadPersonalization(db, user.id)).prefs?.units ?? t.units;
