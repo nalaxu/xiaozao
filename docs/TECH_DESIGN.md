@@ -83,7 +83,7 @@ how-to-cook/
    └─ limits.ts             额度、限流、预算阈值
 ```
 
-`scripts/check_kb.rb` 的校验规则迁移到 `build-kb.ts`（用 zod 写 Schema）后删除。构建时只收录 `status: reviewed` 的条目；本地开发可加 `KB_INCLUDE_DRAFT=1` 预览草稿。
+校验规则在 `src/lib/kb/compile.ts`（zod Schema + 交叉引用检查），原 `scripts/check_kb.rb` 已删除。构建时只收录 `status: reviewed` 的条目；本地开发可加 `KB_INCLUDE_DRAFT=1` 预览草稿。
 
 ## 4. 数据模型
 

@@ -1,0 +1,55 @@
+# 小灶
+
+告诉它你想吃什么味道、手头有什么，它帮你挑几道菜，再带你做出来。
+
+- 需求：[docs/PRD.md](docs/PRD.md)
+- 技术方案：[docs/TECH_DESIGN.md](docs/TECH_DESIGN.md)
+- 设计：[docs/DESIGN.md](docs/DESIGN.md)
+- 部署：[docs/DEPLOY.md](docs/DEPLOY.md)
+- 知识库：[knowledge/README.md](knowledge/README.md)
+
+## 本地开发
+
+需要 Node.js 22。
+
+```bash
+npm install
+```
+
+```bash
+cp .env.example .env.local
+```
+
+```bash
+npm run dev
+```
+
+打开 http://localhost:3000。`npm run dev` 和 `npm run build` 会先编译知识库（`npm run kb`）。
+
+## 常用命令
+
+| 命令 | 作用 |
+|---|---|
+| `npm run dev` | 本地开发 |
+| `npm run build` | 生产构建 |
+| `npm run kb` | 校验并编译知识库到 `src/generated/kb.json` |
+| `npm run kb:check` | 只校验知识库 |
+| `npm test` | 单元测试 |
+| `npm run typecheck` | 类型检查 |
+| `npm run lint` | 代码检查 |
+| `npm run db:generate` | 根据 `src/server/db/schema.ts` 生成迁移 |
+| `npm run db:migrate` | 把迁移应用到 `DATABASE_URL` 指向的数据库 |
+
+## 目录
+
+```
+config/      模型、单价、额度与预算阈值
+docs/        需求、技术方案、设计、部署
+drizzle/     数据库迁移（生成后提交）
+knowledge/   知识库 YAML（需终审才上线）
+scripts/     知识库编译等脚本
+src/app/     页面与接口
+src/components/
+src/lib/     前后端共用逻辑（知识库查询、食材归一）
+src/server/  仅服务端代码（数据库等）
+```

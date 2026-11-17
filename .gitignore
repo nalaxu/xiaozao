@@ -1,5 +1,32 @@
 .DS_Store
-node_modules/
+*.pem
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+/build
+next-env.d.ts
+*.tsbuildinfo
+.vercel
+
+# debug
+npm-debug.log*
+
+# env files
 .env
 .env.*
 !.env.example
+
+# build outputs
+/src/generated/
+
+# local eval photos and reports are kept out of git
+/evals/photos/

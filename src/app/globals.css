@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+/* 设计令牌，见 docs/DESIGN.md 第 6 节 */
+:root {
+  --bg: #fbf8f3;
+  --surface: #ffffff;
+  --surface-muted: #f3eee6;
+  --border: #e7e0d5;
+  --text: #2a2622;
+  --text-muted: #6f675e;
+  --primary: #d9531e;
+  --primary-contrast: #ffffff;
+  --primary-soft: #fce9df;
+  --success: #2f8a57;
+  --warning: #b7791f;
+  --danger: #c23b3b;
+
+  --group-chinese: #c8553d;
+  --group-east-southeast-asia: #5b8e7d;
+  --group-south-asia-middle-east: #d4a24c;
+  --group-europe-americas: #6c7fa8;
+
+  --shadow-float: 0 4px 16px rgba(42, 38, 34, 0.08);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161412;
+    --surface: #211e1b;
+    --surface-muted: #2b2723;
+    --border: #3a3530;
+    --text: #f2ede6;
+    --text-muted: #a89f94;
+    --primary: #f07a45;
+    --primary-contrast: #1a1209;
+    --primary-soft: #3a2418;
+    --success: #5cc28a;
+    --warning: #e0a84a;
+    --danger: #ef6b6b;
+    --shadow-float: 0 4px 16px rgba(0, 0, 0, 0.4);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #161412;
+  --surface: #211e1b;
+  --surface-muted: #2b2723;
+  --border: #3a3530;
+  --text: #f2ede6;
+  --text-muted: #a89f94;
+  --primary: #f07a45;
+  --primary-contrast: #1a1209;
+  --primary-soft: #3a2418;
+  --success: #5cc28a;
+  --warning: #e0a84a;
+  --danger: #ef6b6b;
+  --shadow-float: 0 4px 16px rgba(0, 0, 0, 0.4);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-primary: var(--primary);
+  --color-primary-contrast: var(--primary-contrast);
+  --color-primary-soft: var(--primary-soft);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+
+  --font-sans: -apple-system, "PingFang SC", "Hiragino Sans GB", "Noto Sans SC",
+    "Microsoft YaHei", system-ui, sans-serif;
+
+  --text-display: 28px;
+  --text-display--line-height: 36px;
+  --text-h1: 22px;
+  --text-h1--line-height: 30px;
+  --text-h2: 18px;
+  --text-h2--line-height: 26px;
+  --text-body: 16px;
+  --text-body--line-height: 26px;
+  --text-small: 14px;
+  --text-small--line-height: 20px;
+  --text-caption: 12px;
+  --text-caption--line-height: 16px;
+  --text-cook: 28px;
+  --text-cook--line-height: 40px;
+
+  --radius-control: 12px;
+  --radius-card: 16px;
+  --radius-sheet: 20px;
+
+  --shadow-float: var(--shadow-float);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 26px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
