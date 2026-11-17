@@ -6,7 +6,7 @@ import type { RecommendedDish } from "@/lib/recommend-types";
 import type { TutorialContent, TutorialEvent } from "@/lib/tutorial-types";
 import type { Db } from "../db/client";
 import { recommendationRuns, tutorials } from "../db/schema";
-import { loadPersonalization, preferenceSummary, restrictionKeywords } from "../preferences";
+import { loadPersonalization, preferenceSummary, ratedDishes, restrictionKeywords } from "../preferences";
 import { nextReset, refundQuota, reserveQuota, spentToday } from "../usage";
 import { BudgetPausedError, callModel } from "../ai/call";
 import { ModelError } from "../ai/types";
@@ -80,7 +80,7 @@ export async function runTutorial(
     units: prefs?.units ?? "metric",
     equipment: privacy.recordEquipment ? (prefs?.equipment ?? []) : [],
     pantry: privacy.recordPantry ? (prefs?.pantry ?? []) : [],
-    summary: preferenceSummary(prefs, privacy),
+    summary: preferenceSummary(prefs, privacy, await ratedDishes(db, user.id, privacy)),
     scene: target.scene,
   };
   // 当日花费达到降级档位后改用较便宜的模型（技术方案 9.2）

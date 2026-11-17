@@ -33,3 +33,9 @@ export const primaryFlavors = () => kb.flavors.filter((f) => f.tier === "primary
 export const moreFlavors = () => kb.flavors.filter((f) => f.tier === "more");
 
 export type { Ingredient as KbIngredient };
+
+/** 传给前端食材输入框的精简词典 */
+export const slimIngredients = () => kb.ingredients.map(({ zh, aliases, en, category }) => ({ zh, aliases, en, category }));
+
+/** 过敏原标签（设计文档 4.10） */
+export const allergenOptions = () => kb.allergens.map(({ id, zh }) => ({ id, zh }));

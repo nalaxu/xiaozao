@@ -9,11 +9,16 @@ export function Button({
   children,
   disabled,
   ...props
-}: ComponentProps<"button"> & { variant?: "primary" | "secondary" | "ghost"; loading?: boolean }) {
+}: ComponentProps<"button"> & {
+  variant?: "primary" | "secondary" | "ghost" | "danger" | "danger-ghost";
+  loading?: boolean;
+}) {
   const styles = {
     primary: "bg-primary text-primary-contrast active:brightness-90 disabled:bg-surface-muted disabled:text-text-muted",
     secondary: "border border-border bg-surface text-text active:bg-surface-muted disabled:text-text-muted",
     ghost: "text-primary active:bg-primary-soft disabled:text-text-muted",
+    danger: "bg-danger text-white active:brightness-90 disabled:bg-surface-muted disabled:text-text-muted",
+    "danger-ghost": "text-danger active:bg-surface-muted disabled:text-text-muted",
   }[variant];
   return (
     <button

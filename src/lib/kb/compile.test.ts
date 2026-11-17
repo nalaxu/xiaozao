@@ -16,6 +16,7 @@ function realKnowledge(): RawKnowledge {
     flavors: load("flavors.yaml"),
     scenes: load("scenes.yaml"),
     ingredients: load("ingredients.yaml"),
+    allergens: load("allergens.yaml"),
     cuisines,
   };
 }

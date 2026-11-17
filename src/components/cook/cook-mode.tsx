@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, type TouchEvent } from "react";
 import { AlertTriangle, ChevronLeft, ChevronRight, Flame, ListChecks, Thermometer, Timer, Type, X } from "lucide-react";
 import { Sheet } from "@/components/overlay";
+import { CookDone } from "./cook-done";
 import { Ingredients } from "@/components/tutorial/tutorial-view";
 import { flushCookEvents, recordCookEvent } from "@/lib/cook-events";
 import { saveOffline, type OfflineTutorial } from "@/lib/offline";
@@ -20,11 +21,20 @@ interface Props {
   exitHref: string;
   /** 在线打开时传入，用来存一份离线副本；离线外壳里已是本机数据，不传 */
   offlineRecord?: Omit<OfflineTutorial, "openedAt">;
+  /** 评价记录开关；离线时不知道，按开着处理（关着的话服务端不会保存） */
+  ratingsRecorded?: boolean;
 }
 
 const BIG_KEY = "xz_cook_big";
 
-export function CookMode({ tutorialId, content, units: defaultUnits, exitHref, offlineRecord }: Props) {
+export function CookMode({
+  tutorialId,
+  content,
+  units: defaultUnits,
+  exitHref,
+  offlineRecord,
+  ratingsRecorded = true,
+}: Props) {
   const steps = content.steps;
   const total = steps.length;
   const stepKey = `xz_cook_step_${tutorialId}`;
@@ -268,22 +278,13 @@ export function CookMode({ tutorialId, content, units: defaultUnits, exitHref, o
       {/* 当前步骤 */}
       <div className="relative flex-1 overflow-hidden" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
         {finished ? (
-          <div className="mx-auto flex h-full max-w-[720px] flex-col items-center justify-center px-6 text-center">
-            <p className="text-[56px] leading-none" aria-hidden>
-              🍽
-            </p>
-            <h1 className="mt-4 text-display font-bold">做好了，开吃吧</h1>
-            <p className="mt-2 text-text-muted">下次打开{content.overview.name_zh}，会看到“你做过”。</p>
-            <Link
-              href={exitHref}
-              className="mt-8 flex h-[52px] w-full max-w-[320px] items-center justify-center rounded-control bg-primary font-bold text-primary-contrast"
-            >
-              回到教程
-            </Link>
-            <button type="button" onClick={() => setFinished(false)} className="mt-3 h-11 text-text-muted">
-              回到最后一步
-            </button>
-          </div>
+          <CookDone
+            tutorialId={tutorialId}
+            dishName={content.overview.name_zh}
+            exitHref={exitHref}
+            ratingsRecorded={ratingsRecorded}
+            onBack={() => setFinished(false)}
+          />
         ) : (
           <div
             key={index}

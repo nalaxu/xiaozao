@@ -3,7 +3,7 @@ import { z } from "zod";
 import { modelFor } from "@config/models";
 import { normKey } from "@/lib/ingredients";
 import { kb, getScene } from "@/lib/kb";
-import { findRestricted } from "@/lib/restrictions";
+import { findRestricted, type Restrictions } from "@/lib/restrictions";
 import type { ModelRequest } from "../ai/types";
 
 export const RECOMMEND_TIMEOUT_MS = 30_000;
@@ -160,7 +160,7 @@ export type RejectReason = "invalid" | "cuisine" | "restricted" | "scene" | "dup
 /** 单道菜的后检查，通过返回 null */
 export function checkDish(
   d: RawDish,
-  ctx: { candidates: string[]; scene: string | null; keywords: string[]; seen: Set<string> },
+  ctx: { candidates: string[]; scene: string | null; keywords: Restrictions; seen: Set<string> },
 ): RejectReason | null {
   if (!ctx.candidates.includes(d.cuisine_id)) return "cuisine";
   const norm = dishNameNorm(d.name_zh);

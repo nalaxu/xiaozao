@@ -68,6 +68,23 @@ export const ingredientSchema = z.object({
   pairs: z.array(z.string()).default([]),
 });
 
+// 过敏原类别（设计文档 4.10 的 9 个标签），关键词见 knowledge/allergens.yaml
+export const ALLERGEN_IDS = ["peanut", "tree-nut", "shellfish", "fish", "egg", "dairy", "gluten", "soy", "sesame"] as const;
+
+export const allergenSchema = z.object({
+  id: z.enum(ALLERGEN_IDS),
+  zh: z.string(),
+  en: z.string(),
+  keywords: z.array(z.string().min(1)).min(1),
+  except: z.array(z.string().min(1)).default([]),
+});
+
+export const allergensFileSchema = z.object({
+  ...reviewMeta,
+  allergens: z.array(allergenSchema).min(1),
+  review_notes: z.array(z.string()).default([]),
+});
+
 export const ingredientsFileSchema = z.object({
   ...reviewMeta,
   ingredients: z.array(ingredientSchema).min(1),
@@ -112,6 +129,8 @@ export type Flavor = z.infer<typeof flavorSchema>;
 export type Scene = z.infer<typeof sceneSchema>;
 export type Ingredient = z.infer<typeof ingredientSchema>;
 export type Dish = z.infer<typeof dishSchema>;
+export type Allergen = z.infer<typeof allergenSchema>;
+export type AllergenId = (typeof ALLERGEN_IDS)[number];
 export type CuisineGroup = (typeof CUISINE_GROUPS)[number];
 
 /** 编译后随应用发布的菜系条目（去掉审核元数据与 review_notes） */
@@ -126,4 +145,7 @@ export interface KnowledgeBase {
   scenes: Scene[];
   ingredients: Ingredient[];
   cuisines: Cuisine[];
+  allergens: Allergen[];
+  /** allergens.yaml 是否已终审（未终审也会使用，见 compile.ts） */
+  allergensReviewed: boolean;
 }

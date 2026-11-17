@@ -1,0 +1,94 @@
+# 过敏原类别与食材关键词（技术方案 7.5）
+# 用途：用户在“忌口与过敏”里选了某类过敏原后，推荐和教程的食材清单里出现任一关键词就判为不能用（宁可误杀）。
+# 匹配方式：食材中英文名先统一成小写，先去掉 except 里的词，再看是否包含 keywords 里的任一词。
+#   except 只作用于本类别：例如“椰奶”只在检查“奶”时被排除，不会影响别的类别。
+#   except 要写完整的词：写“无麸质酱油”而不是“无麸质”，否则去掉“无麸质”后剩下的“酱油”仍会命中。
+# 关键词宁多勿少：多一个词最多误删一道菜，少一个词可能让过敏的人吃到。
+# 审核：请重点看 review_notes，以及每类有没有漏掉海外常见的成品酱料。
+
+status: draft
+reviewed_by:
+reviewed_at:
+
+allergens:
+  - id: peanut
+    zh: 花生
+    en: Peanuts
+    keywords: [花生, 落花生, 花生酱, 花生油, 花生碎, 沙爹, 沙嗲, 宫保, 怪味, peanut, groundnut, satay]
+    except: []
+
+  - id: tree-nut
+    zh: 坚果
+    en: Tree nuts
+    keywords:
+      [杏仁, 巴旦木, 腰果, 核桃, 山核桃, 碧根果, 榛子, 开心果, 夏威夷果, 松子, 松仁, 栗子, 板栗, 坚果, 果仁, 青酱, 杏仁粉,
+       almond, cashew, walnut, pecan, hazelnut, pistachio, macadamia, pine nut, chestnut, brazil nut, pesto, praline, marzipan, frangipane, nutella]
+    except: []
+
+  - id: shellfish
+    zh: 甲壳类与贝类
+    en: Shellfish
+    keywords:
+      [虾, 蟹, 龙虾, 小龙虾, 虾米, 虾皮, 虾仁, 虾酱, 虾膏, 虾油, 蟹黄, 蚝, 牡蛎, 生蚝, 蚝油, 蛤, 蛏, 蚬, 扇贝, 带子, 干贝, 瑶柱, 贝, 青口, 淡菜, 鲍鱼, 螺, 鱿鱼, 墨鱼, 章鱼, 八爪鱼, 海鲜, xo酱, 叁巴, 参巴, 峇拉煎,
+       shrimp, prawn, crab, lobster, crayfish, crawfish, langoustine, oyster, clam, mussel, scallop, abalone, squid, calamari, octopus, cuttlefish, shellfish, seafood, belacan, xo sauce, shrimp paste]
+    except: [贝果, 宝贝, 海鲜酱, 螺丝面, 螺旋面, hoisin]
+
+  - id: fish
+    zh: 鱼
+    en: Fish
+    keywords:
+      [鱼, 鱼露, 鱼酱, 鱼干, 鱼片, 鳀, 凤尾鱼, 鳕, 鲈, 鲑, 鲷, 鲭, 鳗, 鲣, 柴鱼, 木鱼花, 鲣节, 伍斯特, 辣酱油, 凯撒,
+       fish, anchovy, anchovies, salmon, tuna, cod, bass, bream, sardine, mackerel, eel, trout, tilapia, halibut, bonito, katsuobushi, dashi, worcestershire, caesar, nam pla, nuoc mam]
+    except: [鱼香, 鱿鱼, 墨鱼, 章鱼, 八爪鱼, 鲍鱼, 甲鱼, 鱼腥草, fish fragrant, yu xiang, peel]
+
+  - id: egg
+    zh: 蛋
+    en: Eggs
+    keywords:
+      [蛋, 鸡蛋, 鸭蛋, 皮蛋, 咸蛋, 鹌鹑蛋, 蛋黄, 蛋清, 蛋白, 蛋液, 蛋黄酱, 美乃滋, 沙拉酱, 千岛酱, 塔塔酱,
+       egg, eggs, mayonnaise, mayo, aioli, meringue, custard, hollandaise, carbonara, tartar sauce]
+    except: [eggplant, egg plant]
+
+  - id: dairy
+    zh: 奶
+    en: Dairy
+    keywords:
+      [奶, 牛奶, 鲜奶, 奶油, 黄油, 牛油, 奶酪, 芝士, 起司, 乳酪, 酸奶, 淡奶, 炼乳, 奶粉, 乳清, 酥油, 帕玛森, 马苏里拉, 马斯卡彭, 菲达, 印度奶酪,
+       milk, butter, cream, cheese, yogurt, yoghurt, ghee, paneer, parmesan, mozzarella, ricotta, mascarpone, feta, whey, custard, bechamel, béchamel]
+    except:
+      [椰奶, 豆奶, 杏仁奶, 燕麦奶, 米奶, 奶白菜, 奶白,
+       coconut milk, almond milk, soy milk, oat milk, rice milk, coconut cream, peanut butter, nut butter, cocoa butter, butternut, butter lettuce, butter bean, cream of tartar]
+
+  - id: gluten
+    zh: 麸质（小麦）
+    en: Gluten
+    keywords:
+      [小麦, 面粉, 中筋, 低筋, 高筋, 面, 面包, 面包糠, 面筋, 烤麸, 饺子皮, 馄饨皮, 云吞皮, 春卷皮, 馒头, 包子, 饼, 意面, 通心粉, 乌冬, 拉面, 大麦, 黑麦, 燕麦, 麦芽, 啤酒,
+       酱油, 生抽, 老抽, 蚝油, 甜面酱, 豆瓣, 黄酱, 海鲜酱,
+       wheat, flour, bread, breadcrumb, breadcrumbs, panko, noodle, noodles, pasta, spaghetti, macaroni, udon, ramen, barley, rye, oats, malt, beer, seitan, couscous, bulgur, semolina, soy sauce, hoisin, wonton, dumpling wrapper]
+    except:
+      [米粉, 河粉, 粉丝, 米面, 绿豆面, 无麸质酱油, 无麸质面粉, 无麸质面条, 无麸质面包, 无麸质意面,
+       rice flour, almond flour, coconut flour, chickpea flour, gram flour, tapioca flour, corn flour, cornflour, rice noodle, rice noodles, glass noodle, glass noodles, mung bean noodle,
+       gluten free soy sauce, gluten free flour, gluten free pasta, gluten free bread, gluten free noodles, goat]
+
+  - id: soy
+    zh: 大豆
+    en: Soy
+    keywords:
+      [大豆, 黄豆, 豆腐, 豆浆, 豆奶, 腐竹, 豆皮, 千张, 百叶, 豆干, 油豆腐, 腐乳, 豆豉, 酱油, 生抽, 老抽, 味噌, 纳豆, 毛豆, 豆瓣, 黄豆酱, 大酱, 甜面酱, 海鲜酱, 照烧,
+       soy, soya, tofu, edamame, miso, natto, tempeh, tamari, shoyu, teriyaki, hoisin, yuba]
+    except: [杏仁豆腐]
+
+  - id: sesame
+    zh: 芝麻
+    en: Sesame
+    keywords: [芝麻, 麻油, 香油, 芝麻油, 芝麻酱, 麻酱, 胡麻, 塔希尼, 中东芝麻酱, 鹰嘴豆泥, sesame, tahini, hummus, benne, gomasio, za atar, zaatar]
+    except: []
+
+review_notes:
+  - 甲壳类：设计文档只写了“甲壳类”，但它举的蚝油是贝类做的。这里把贝类、鱿鱼墨鱼章鱼也归进来，标签改叫“甲壳类与贝类”。如果要分成两类，需要同时改设计文档的标签。
+  - 牛油：川式火锅里的牛油是牛脂，不含奶；粤语地区的牛油指黄油。按宁可误杀一律算奶。
+  - 麸质：酱油、蚝油、豆瓣酱、甜面酱、海鲜酱通常含小麦，已算进麸质；燕麦常有交叉污染，也算进。这会让麸质过敏的用户很难拿到中餐推荐，模型会改用无麸质酱油等替代，请确认能接受。
+  - 单字关键词“面”“饼”“蛋”“奶”“鱼”“虾”“蟹”“贝”“螺”“蚝”“蛤”范围很大，靠 except 排除了已知的误伤（鱼香、椰奶、eggplant 等），请补充你想到的其他误伤。
+  - 坚果：栗子在美国 FDA 的清单里算坚果，这里也算；椰子不算。
+  - 大豆：只匹配明确的豆制品，没有用单字“豆”，因为绿豆、红豆、土豆都会误伤。

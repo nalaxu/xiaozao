@@ -1,6 +1,8 @@
 // 把解析后的 YAML 校验并编译成 KnowledgeBase。纯函数，便于测试。
 import { z } from "zod";
 import {
+  ALLERGEN_IDS,
+  allergensFileSchema,
   cuisineSchema,
   flavorsFileSchema,
   ingredientsFileSchema,
@@ -13,6 +15,7 @@ export interface RawKnowledge {
   flavors: unknown;
   scenes: unknown;
   ingredients: unknown;
+  allergens: unknown;
   /** 文件名（不含扩展名）→ 内容 */
   cuisines: Record<string, unknown>;
 }
@@ -40,6 +43,8 @@ export function compileKnowledge(
   if (!flavorsFile.success) errors.push(...zodErrors("flavors.yaml", flavorsFile.error));
   if (!scenesFile.success) errors.push(...zodErrors("scenes.yaml", scenesFile.error));
   if (!ingredientsFile.success) errors.push(...zodErrors("ingredients.yaml", ingredientsFile.error));
+  const allergensFile = allergensFileSchema.safeParse(raw.allergens);
+  if (!allergensFile.success) errors.push(...zodErrors("allergens.yaml", allergensFile.error));
 
   const cuisines: z.infer<typeof cuisineSchema>[] = [];
   for (const [file, data] of Object.entries(raw.cuisines).sort(([a], [b]) => a.localeCompare(b))) {
@@ -52,7 +57,7 @@ export function compileKnowledge(
     cuisines.push(parsed.data);
   }
 
-  if (!flavorsFile.success || !scenesFile.success || !ingredientsFile.success) {
+  if (!flavorsFile.success || !scenesFile.success || !ingredientsFile.success || !allergensFile.success) {
     return { kb: null, errors, warnings };
   }
 
@@ -73,6 +78,11 @@ export function compileKnowledge(
   dupCheck("味型 id", flavors.map((f) => f.id));
   dupCheck("场景 id", scenes.map((s) => s.id));
   dupCheck("食材名", ingredients.map((i) => i.zh));
+  const allergens = allergensFile.data.allergens;
+  dupCheck("过敏原 id", allergens.map((a) => a.id));
+  for (const id of ALLERGEN_IDS) {
+    if (!allergens.some((a) => a.id === id)) errors.push(`allergens.yaml 缺少类别 ${id}`);
+  }
 
   // 别名不能与其他食材的标准名或别名冲突，否则归一时有歧义
   const nameOwner = new Map<string, string>();
@@ -123,6 +133,9 @@ export function compileKnowledge(
   ] as const) {
     if (!include(s)) errors.push(`${file} 尚未终审，不能用于线上`);
   }
+  // 过敏原关键词关系到安全：未终审也使用（多一个词只会多过滤），只提示尽快终审
+  const allergensReviewed = allergensFile.data.status === "reviewed";
+  if (!allergensReviewed) warnings.push("allergens.yaml 尚未终审：关键词已生效，请尽快审核");
   const published: Cuisine[] = [];
   for (const c of cuisines) {
     if (!include(c.status)) {
@@ -144,6 +157,8 @@ export function compileKnowledge(
       scenes,
       ingredients,
       cuisines: published,
+      allergens: allergens.map(({ id, zh, en, keywords, except }) => ({ id, zh, en, keywords, except })),
+      allergensReviewed,
     },
     errors,
     warnings,

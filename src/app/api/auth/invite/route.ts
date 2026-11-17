@@ -30,5 +30,6 @@ export async function POST(req: NextRequest) {
     return jsonError(status, MESSAGES[result.reason], { reason: result.reason });
   }
   await signIn(result.user, req.headers.get("user-agent"));
-  return NextResponse.json({ next: safeNext(parsed.data.next) });
+  // 新账号先到欢迎页问忌口与过敏（设计文档 4.12），完成后回到原本要去的页面
+  return NextResponse.json({ next: `/welcome?next=${encodeURIComponent(safeNext(parsed.data.next))}` });
 }

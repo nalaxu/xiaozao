@@ -30,6 +30,7 @@ import {
   type TutorialIngredient,
   type TutorialStep,
 } from "@/lib/tutorial-types";
+import { VERDICT_LABELS, type Verdict } from "@/lib/preference-options";
 import { saveOffline, setOfflineFavorite, type OfflineTutorial } from "@/lib/offline";
 import { formatAmount, formatDuration, formatTemp, type UnitSystem } from "@/lib/units";
 import { FollowupSheet, type Followup } from "./followup-sheet";
@@ -61,6 +62,8 @@ export interface TutorialViewProps {
   favorite?: boolean;
   /** 最近一次做好的时间 */
   cookedAt?: string | null;
+  /** 自己的评价 */
+  rating?: Verdict | null;
   /** 离线外壳里打开：不能追问、不能收藏 */
   offline?: boolean;
   /** 在线打开已生成的教程时传入，存一份离线副本 */
@@ -165,6 +168,7 @@ export function TutorialView(props: TutorialViewProps) {
           {props.cookedAt && (
             <p className="mb-2 inline-flex items-center gap-1 rounded-full bg-surface-muted px-2.5 py-0.5 text-small text-success">
               <CheckCircle2 size={14} aria-hidden /> 你做过
+              {props.rating && ` · ${VERDICT_LABELS[props.rating].label}`}
             </p>
           )}
           <div className="flex items-baseline justify-between gap-3">

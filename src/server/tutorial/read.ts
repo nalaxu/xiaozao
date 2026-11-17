@@ -4,6 +4,7 @@ import type { TutorialContent } from "@/lib/tutorial-types";
 import type { Db } from "../db/client";
 import { dishes, followups, tutorials } from "../db/schema";
 import { isFavorite } from "../saved";
+import { myRating } from "../settings";
 import { imageUrl } from "../dishes";
 
 export interface TutorialView {
@@ -16,6 +17,7 @@ export interface TutorialView {
   followups: { id: string; question: string; answer: string | null }[];
   favorite: boolean;
   cookedAt: string | null;
+  rating: "good" | "ok" | "never" | null;
   createdAt: string;
 }
 
@@ -48,6 +50,7 @@ export async function readTutorial(db: Db, userId: string, id: string): Promise<
     },
     followups: qs.filter((q) => q.answer !== null),
     favorite: await isFavorite(db, userId, id),
+    rating: await myRating(db, userId, id),
     cookedAt: row.t.cookedAt?.toISOString() ?? null,
     createdAt: row.t.createdAt.toISOString(),
   };

@@ -11,6 +11,7 @@ import { enqueueImage } from "../images/queue";
 import {
   loadPersonalization,
   preferenceSummary,
+  ratedDishes,
   recentRecommendations,
   restrictionKeywords,
   saveLastChoices,
@@ -85,10 +86,12 @@ export async function runRecommend(
   const remaining = user.role === "admin" ? null : quota.remaining;
 
   const { prefs, privacy } = await loadPersonalization(db, user.id);
-  const summary = preferenceSummary(prefs, privacy);
+  const rated = await ratedDishes(db, user.id, privacy);
+  const summary = preferenceSummary(prefs, privacy, rated);
   const keywords = restrictionKeywords(prefs);
   const recent = privacy.recordHistory ? await recentRecommendations(db, user.id, 14, now) : { names: [], cuisines: [] };
-  const exclude = [...new Set([...input.exclude, ...recent.names])].slice(0, 80);
+  // “不会再做”的菜不再推荐
+  const exclude = [...new Set([...input.exclude, ...rated.never, ...recent.names])].slice(0, 80);
   const candidates = pickCuisines({
     main: input.main,
     flavors: input.flavors,

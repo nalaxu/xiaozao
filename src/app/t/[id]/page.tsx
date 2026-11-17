@@ -7,6 +7,7 @@ import { TutorialView } from "@/components/tutorial/tutorial-view";
 import { requireUser } from "@/server/auth/current";
 import { getDb } from "@/server/db";
 import { toOfflineRecord } from "@/lib/offline";
+import { loadPersonalization } from "@/server/preferences";
 import { readTutorial } from "@/server/tutorial/read";
 import { cuisineMeta } from "../cuisine-meta";
 
@@ -22,8 +23,11 @@ export default async function TutorialPage({ params, searchParams }: Props) {
   const { from } = await searchParams;
   const backHref = from === "saved" ? "/saved" : from === "history" ? "/saved?tab=history" : "/recommend";
   const user = await requireUser(`/t/${id}`);
-  const t = await readTutorial(await getDb(), user.id, id);
+  const db = await getDb();
+  const t = await readTutorial(db, user.id, id);
   if (!t) notFound();
+  // 单位按账号当前的设置显示（设置页可改），没设置过用生成时的
+  const units = (await loadPersonalization(db, user.id)).prefs?.units ?? t.units;
 
   const dish = { id: t.dish.id, nameZh: t.dish.nameZh, imageUrl: t.dish.imageUrl };
   const cuisine = cuisineMeta(t.dish.cuisineId);
@@ -45,7 +49,7 @@ export default async function TutorialPage({ params, searchParams }: Props) {
         mode={{ kind: "poll", id: t.id }}
         dish={dish}
         cuisine={cuisine}
-        units={t.units}
+        units={units}
         followupLimit={quota.followupsPerTutorial}
         backHref={backHref}
       />
@@ -58,12 +62,13 @@ export default async function TutorialPage({ params, searchParams }: Props) {
       streaming={false}
       dish={dish}
       cuisine={cuisine}
-      units={t.units}
+      units={units}
       followups={t.followups}
       followupLimit={quota.followupsPerTutorial}
       backHref={backHref}
       favorite={t.favorite}
       cookedAt={t.cookedAt}
+      rating={t.rating}
       offlineRecord={toOfflineRecord({ ...t, cuisine }) ?? undefined}
     />
   );

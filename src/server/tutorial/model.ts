@@ -1,6 +1,6 @@
 // 教程的提示词、输出 Schema 与后检查（技术方案 7.4、PRD 4.3 与 6.2）。
 import { z } from "zod";
-import { findRestricted } from "@/lib/restrictions";
+import { findRestricted, type Restrictions } from "@/lib/restrictions";
 import { getCuisine, getScene, kb } from "@/lib/kb";
 import { HEATS, UNITS, type TutorialContent } from "@/lib/tutorial-types";
 import type { RecommendedDish } from "@/lib/recommend-types";
@@ -243,7 +243,7 @@ export function tutorialRequest(opts: {
 }
 
 /** 过敏原与忌口检查：食材名（中英文）与替代品。命中返回关键词 */
-export function restrictedInTutorial(content: TutorialContent, keywords: string[]): string | null {
+export function restrictedInTutorial(content: TutorialContent, keywords: Restrictions): string | null {
   const texts = [
     ...content.ingredients.flatMap((i) => [i.name_zh, i.name_en]),
     ...content.substitutions.map((s) => s.substitute),

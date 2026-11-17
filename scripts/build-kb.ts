@@ -29,6 +29,7 @@ const load = (file: string) => {
 const flavors = load(join(kbDir, "flavors.yaml"));
 const scenes = load(join(kbDir, "scenes.yaml"));
 const ingredients = load(join(kbDir, "ingredients.yaml"));
+const allergens = load(join(kbDir, "allergens.yaml"));
 const cuisines: Record<string, unknown> = {};
 for (const f of readdirSync(join(kbDir, "cuisines")).filter((f) => f.endsWith(".yaml")).sort()) {
   cuisines[basename(f, ".yaml")] = load(join(kbDir, "cuisines", f));
@@ -36,7 +37,7 @@ for (const f of readdirSync(join(kbDir, "cuisines")).filter((f) => f.endsWith(".
 
 const version = createHash("sha256").update(sources.join("\n")).digest("hex").slice(0, 12);
 const { kb, errors, warnings } = compileKnowledge(
-  { flavors, scenes, ingredients, cuisines },
+  { flavors, scenes, ingredients, allergens, cuisines },
   { includeDrafts: process.env.KB_INCLUDE_DRAFT === "1", version },
 );
 

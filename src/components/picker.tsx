@@ -2,9 +2,10 @@
 
 // 首页两步：① 食材（拍照 / 输入 / 常用）→ ② 口味（味型 · 场景 · 菜系）。设计文档 4.1–4.3。
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Camera, Check, ChevronDown, ChevronLeft, Plus, Search, X } from "lucide-react";
 import { Button } from "@/components/form";
+import { ToggleChip } from "@/components/toggle-chip";
 import { ActionBar, Sheet } from "@/components/overlay";
 import { emptyDraft, loadDraft, resetTimeLabel, saveDraft, type Draft, type DraftItem } from "@/lib/draft";
 import { buildIngredientIndex } from "@/lib/ingredients";
@@ -587,38 +588,8 @@ function TasteStep({
 
 // ─── 小组件 ─────────────────────────────────────────────────
 
-function ToggleChip({
-  on,
-  disabled,
-  onClick,
-  title,
-  children,
-}: {
-  on: boolean;
-  disabled?: boolean;
-  onClick: () => void;
-  title?: string;
-  children: ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      aria-pressed={on}
-      disabled={disabled}
-      onClick={onClick}
-      title={title}
-      className={`inline-flex h-9 items-center rounded-full px-3.5 text-small ${
-        on ? "bg-primary-soft font-bold text-primary" : "bg-surface-muted text-text"
-      } disabled:opacity-40`}
-    >
-      {children}
-    </button>
-  );
-}
-
 function QuotaBadge({ quota }: { quota: QuotaStatus }) {
   if (quota.unlimited) return <span className="text-small text-text-muted">管理员 · 不限次数</span>;
   return <span className="text-small text-text-muted">今日推荐剩 {quota.remaining.recommend} 次</span>;
 }
 
-export { ToggleChip };
