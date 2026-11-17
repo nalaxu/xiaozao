@@ -32,4 +32,20 @@ M0 只有静态页面（首页、探索菜系），不需要数据库和任何�
 | M2 | OpenAI | 建 API Key，建议在 OpenAI 后台另设月度用量上限作为第二道保险 | `OPENAI_API_KEY` |
 | M3 | Cloudflare R2 | 建存储桶并开启公开访问（自定义域名或 r2.dev 地址），建 API 令牌 | `R2_*`、`IMAGE_BASE_URL` |
 
+## M1 上线后创建第一位管理员
+
+1. 在 Vercel 环境变量中设置 `ADMIN_EMAILS=你的邮箱`，重新部署。
+2. 在本地 `.env.local` 中填入线上的 `DATABASE_URL`，运行建表与生成邀请码：
+
+   ```bash
+   npm run db:migrate
+   ```
+
+   ```bash
+   npm run admin:invite
+   ```
+
+3. 打开线上站点，用 `ADMIN_EMAILS` 中的邮箱登录，填入刚生成的邀请码。注册完成后即为管理员，之后的邀请码都可以在 `/admin/invites` 生成。
+4. 用完后从本地 `.env.local` 中删掉线上的 `DATABASE_URL`，避免本地开发误连线上库。
+
 所有密钥只填在 Vercel 的环境变量和本地 `.env.local` 里，不提交到代码库。

@@ -30,3 +30,4 @@ npm-debug.log*
 
 # local eval photos and reports are kept out of git
 /evals/photos/
+/.data/

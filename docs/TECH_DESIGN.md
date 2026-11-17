@@ -15,7 +15,7 @@
 | 前后端框架 | Next.js（App Router）+ TypeScript + React | 一套代码同时提供页面与接口；流式输出支持好；PWA 生态成熟 |
 | 样式 | Tailwind CSS | 设计令牌可直接映射到配置（见设计文档第 6 节） |
 | 部署 | Vercel | 绑定三级域名只需加一条 CNAME；函数最长可运行 300 秒，满足图片生成；自带定时任务 |
-| 数据库 | Postgres（Neon 托管）+ Drizzle ORM | 关系数据为主；用 jsonb 存教程等结构化内容；托管版自带静态加密与备份 |
+| 数据库 | Postgres（Neon 托管）+ Drizzle ORM | 关系数据为主；用 jsonb 存教程等结构化内容；托管版自带静态加密与备份。线上用 Neon 的 WebSocket 连接池（支持事务）；本地未配置 `DATABASE_URL` 时自动使用 PGlite（进程内 Postgres，数据在 `.data/`），测试也用内存 PGlite |
 | 图片存储 | Cloudflare R2 + CDN | 无流量费，适合图片库这类读多写少的资源 |
 | 邮件 | Resend | 发送验证码与管理员告警，接口简单 |
 | 真人验证 | Cloudflare Turnstile | 免费、无需用户操作、不依赖 Google；对海外用户可用（PRD 4.6 留待技术方案定，此处定为 Turnstile） |
@@ -152,7 +152,7 @@ Google 登录成功 ─┐
 
 ### 5.2 Google 登录
 
-- 标准 OAuth 2.0 授权码 + PKCE（用 `arctic` 库），只请求 `openid email profile`。
+- 标准 OAuth 2.0 授权码 + PKCE（自行实现，约 100 行，见 `src/server/auth/google.ts`，不引入第三方库），只请求 `openid email profile`。
 - 只接受 `email_verified = true` 的 Google 账号。
 
 ### 5.3 邮箱验证码（规则见 PRD 4.6）

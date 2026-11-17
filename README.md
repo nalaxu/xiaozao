@@ -26,6 +26,14 @@ npm run dev
 
 打开 http://localhost:3000。`npm run dev` 和 `npm run build` 会先编译知识库（`npm run kb`）。
 
+本地不需要任何外部服务：
+
+- 未配置 `DATABASE_URL` 时使用本地 PGlite 数据库（`.data/pglite`，首次启动自动建表）。
+- 未配置 Resend 时，验证码和邀请邮件打印在 `npm run dev` 的终端里。
+- 未配置 Turnstile 时跳过真人验证；未配置 Google 时登录页只显示邮箱登录。
+
+本地注册第一个账号：在 `.env.local` 里写 `ADMIN_EMAILS=你的邮箱`，先停掉 dev 服务器，再运行 `npm run admin:invite` 生成邀请码（PGlite 同一时间只能被一个进程打开），然后启动 dev 服务器，用该邮箱登录并填入邀请码，这个账号就是管理员。
+
 ## 常用命令
 
 | 命令 | 作用 |
@@ -39,6 +47,7 @@ npm run dev
 | `npm run lint` | 代码检查 |
 | `npm run db:generate` | 根据 `src/server/db/schema.ts` 生成迁移 |
 | `npm run db:migrate` | 把迁移应用到 `DATABASE_URL` 指向的数据库 |
+| `npm run admin:invite -- [数量] [次数] [天数]` | 生成邀请码（读取 `.env.local` 的 `DATABASE_URL`，未配置则写本地库） |
 
 ## 目录
 
