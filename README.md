@@ -33,6 +33,7 @@ npm run dev
 - 未配置 Turnstile 时跳过真人验证；未配置 Google 时登录页只显示邮箱登录。
 - 未配置 `OPENAI_API_KEY` 时使用假模型（`src/server/ai/fake.ts`）：拍照识别返回固定的几样食材，推荐从知识库的代表菜里挑，流程和界面都能走通，但结果不代表真实模型的质量。线上没有密钥会直接报错。
 - 未配置 R2 时，菜品图写到 `.data/images`，经 `/api/dev-images` 读取；没有 OpenAI 密钥时图片是写着菜名的占位图。
+- Service Worker（离线）只在生产构建注册。要在本地试离线：先停掉 dev 服务器，`npm run build`，再用 `PGLITE_DIR=.data/pglite npm run start` 启动（生产模式默认要求 `DATABASE_URL`，显式设置 `PGLITE_DIR` 才会用本地库）；打开过的教程在停掉服务器后仍能打开。之后再运行 `npm run dev` 会自动注销 Service Worker。
 
 本地注册第一个账号：在 `.env.local` 里写 `ADMIN_EMAILS=你的邮箱`，先停掉 dev 服务器，再运行 `npm run admin:invite` 生成邀请码（PGlite 同一时间只能被一个进程打开），然后启动 dev 服务器，用该邮箱登录并填入邀请码，这个账号就是管理员。
 
@@ -49,6 +50,7 @@ npm run dev
 | `npm run lint` | 代码检查 |
 | `npm run db:generate` | 根据 `src/server/db/schema.ts` 生成迁移 |
 | `npm run db:migrate` | 把迁移应用到 `DATABASE_URL` 指向的数据库 |
+| `npx tsx scripts/make-icons.ts` | 重新生成 PWA 图标（`public/icons`） |
 | `npm run admin:invite -- [数量] [次数] [天数]` | 生成邀请码（读取 `.env.local` 的 `DATABASE_URL`，未配置则写本地库） |
 
 ## 目录

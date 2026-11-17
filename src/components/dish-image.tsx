@@ -36,7 +36,7 @@ export function DishImage({
               loaded ? "opacity-100" : "opacity-0"
             }`}
           />
-          {loaded && (
+          {loaded && caption && (
             <span className="absolute bottom-2 right-2 rounded bg-black/50 px-1.5 text-caption text-white">{caption}</span>
           )}
         </>

@@ -1,6 +1,7 @@
 // 数据库连接。
 // - 配置了 DATABASE_URL：连接 Neon（WebSocket 连接池，支持事务）。
 // - 未配置且非生产环境：使用本地 PGlite（.data/pglite），首次启动自动建表，方便不开通 Neon 也能本地开发。
+//   本地用 next start 试生产构建时，显式设置 PGLITE_DIR 也会使用 PGlite。
 // - 测试：用 setDbForTests 注入内存 PGlite。
 import type { PgDatabase, PgQueryResultHKT } from "drizzle-orm/pg-core";
 import * as schema from "./schema";
@@ -16,7 +17,7 @@ async function connect(): Promise<Db> {
     const { drizzle } = await import("drizzle-orm/neon-serverless");
     return drizzle({ client: new Pool({ connectionString: url }), schema }) as unknown as Db;
   }
-  if (process.env.NODE_ENV === "production") {
+  if (process.env.NODE_ENV === "production" && !process.env.PGLITE_DIR) {
     throw new Error("DATABASE_URL 未配置");
   }
   return openPglite(process.env.PGLITE_DIR ?? ".data/pglite");

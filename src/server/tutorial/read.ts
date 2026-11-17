@@ -3,6 +3,7 @@ import { and, asc, eq } from "drizzle-orm";
 import type { TutorialContent } from "@/lib/tutorial-types";
 import type { Db } from "../db/client";
 import { dishes, followups, tutorials } from "../db/schema";
+import { isFavorite } from "../saved";
 import { imageUrl } from "../dishes";
 
 export interface TutorialView {
@@ -13,6 +14,8 @@ export interface TutorialView {
   units: "metric" | "us";
   dish: { id: string; nameZh: string; cuisineId: string; imageUrl: string | null; imageStatus: string };
   followups: { id: string; question: string; answer: string | null }[];
+  favorite: boolean;
+  cookedAt: string | null;
   createdAt: string;
 }
 
@@ -44,6 +47,8 @@ export async function readTutorial(db: Db, userId: string, id: string): Promise<
       imageStatus: row.d.imageStatus,
     },
     followups: qs.filter((q) => q.answer !== null),
+    favorite: await isFavorite(db, userId, id),
+    cookedAt: row.t.cookedAt?.toISOString() ?? null,
     createdAt: row.t.createdAt.toISOString(),
   };
 }

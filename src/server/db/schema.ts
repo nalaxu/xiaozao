@@ -232,6 +232,8 @@ export const tutorials = pgTable(
     content: jsonb("content"),
     model: text("model").notNull(),
     status: tutorialStatus("status").notNull().default("streaming"),
+    // 最近一次在烹饪模式里点“做好了”的时间（历史里的“做过”标记）
+    cookedAt: timestamp("cooked_at", { withTimezone: true }),
     createdAt: createdAt(),
   },
   (t) => [
@@ -251,7 +253,7 @@ export const favorites = pgTable(
       .references(() => tutorials.id, { onDelete: "cascade" }),
     createdAt: createdAt(),
   },
-  (t) => [primaryKey({ columns: [t.userId, t.tutorialId] })],
+  (t) => [primaryKey({ columns: [t.userId, t.tutorialId] }), index("favorites_user_idx").on(t.userId, t.createdAt)],
 );
 
 export const ratingVerdict = pgEnum("rating_verdict", ["good", "ok", "never"]);

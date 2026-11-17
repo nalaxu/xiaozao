@@ -5,8 +5,11 @@ import Link from "next/link";
 import { useEffect, useState, type ReactNode } from "react";
 import {
   AlertTriangle,
+  Bookmark,
+  CheckCircle2,
   ChevronDown,
   ChevronLeft,
+  ChevronRight,
   Clock,
   Flame,
   Lightbulb,
@@ -27,6 +30,7 @@ import {
   type TutorialIngredient,
   type TutorialStep,
 } from "@/lib/tutorial-types";
+import { saveOffline, setOfflineFavorite, type OfflineTutorial } from "@/lib/offline";
 import { formatAmount, formatDuration, formatTemp, type UnitSystem } from "@/lib/units";
 import { FollowupSheet, type Followup } from "./followup-sheet";
 
@@ -53,6 +57,14 @@ export interface TutorialViewProps {
   followups: Followup[];
   followupLimit: number;
   backHref: string;
+  /** 已收藏；undefined 表示不显示收藏按钮（生成中、离线） */
+  favorite?: boolean;
+  /** 最近一次做好的时间 */
+  cookedAt?: string | null;
+  /** 离线外壳里打开：不能追问、不能收藏 */
+  offline?: boolean;
+  /** 在线打开已生成的教程时传入，存一份离线副本 */
+  offlineRecord?: Omit<OfflineTutorial, "openedAt">;
 }
 
 export function TutorialView(props: TutorialViewProps) {
@@ -79,6 +91,41 @@ export function TutorialView(props: TutorialViewProps) {
     } catch {}
   };
 
+  const [favorite, setFavorite] = useState(props.favorite);
+  const [favBusy, setFavBusy] = useState(false);
+  const record = props.offlineRecord;
+
+  // 流式生成完后才知道可以收藏
+  useEffect(() => {
+    if (props.favorite !== undefined) setFavorite((f) => f ?? props.favorite);
+  }, [props.favorite]);
+
+  // 打开过的教程存到本机，离线也能看（技术方案第 11 节）
+  useEffect(() => {
+    if (record) void saveOffline(record);
+  }, [record]);
+
+  const toggleFavorite = async () => {
+    if (!props.tutorialId || favorite === undefined || favBusy) return;
+    const on = !favorite;
+    setFavorite(on);
+    setFavBusy(true);
+    try {
+      const res = await fetch("/api/favorites", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tutorialId: props.tutorialId, on }),
+      });
+      if (!res.ok) throw new Error();
+      if (record && on) await saveOffline({ ...record, favorite: true });
+      else await setOfflineFavorite(props.tutorialId, on);
+    } catch {
+      setFavorite(!on);
+    } finally {
+      setFavBusy(false);
+    }
+  };
+
   const steps = (content?.steps ?? []).filter((s): s is DeepPartial<TutorialStep> => Boolean(s?.action));
   const done = !streaming;
 
@@ -101,9 +148,25 @@ export function TutorialView(props: TutorialViewProps) {
           >
             <ChevronLeft size={22} aria-hidden />
           </Link>
+          {favorite !== undefined && !props.offline && (
+            <button
+              type="button"
+              onClick={toggleFavorite}
+              aria-pressed={favorite}
+              aria-label={favorite ? "取消收藏" : "收藏"}
+              className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-black/40 text-white"
+            >
+              <Bookmark size={20} fill={favorite ? "currentColor" : "none"} aria-hidden />
+            </button>
+          )}
         </div>
 
         <header className="mt-4">
+          {props.cookedAt && (
+            <p className="mb-2 inline-flex items-center gap-1 rounded-full bg-surface-muted px-2.5 py-0.5 text-small text-success">
+              <CheckCircle2 size={14} aria-hidden /> 你做过
+            </p>
+          )}
           <div className="flex items-baseline justify-between gap-3">
             <h1 className="text-display font-bold">{overview?.name_zh ?? props.dish.nameZh}</h1>
             {cuisine && (
@@ -219,17 +282,28 @@ export function TutorialView(props: TutorialViewProps) {
           <Button disabled>{props.status ?? "正在写步骤…"}</Button>
         ) : (
           <div className="flex gap-3">
-            <Button
-              variant="secondary"
-              className="flex-1"
-              onClick={() => setAskOpen(true)}
-              disabled={!props.tutorialId}
-            >
-              <MessageCircleQuestion size={18} aria-hidden /> 问一问
-            </Button>
-            <Button className="flex-[2]" disabled title="烹饪模式下一阶段开放">
-              开始做（即将开放）
-            </Button>
+            {!props.offline && (
+              <Button
+                variant="secondary"
+                className="flex-1"
+                onClick={() => setAskOpen(true)}
+                disabled={!props.tutorialId}
+              >
+                <MessageCircleQuestion size={18} aria-hidden /> 问一问
+              </Button>
+            )}
+            {props.tutorialId ? (
+              <Link
+                href={`/t/${props.tutorialId}/cook${servings !== null && servings !== baseServings ? `?servings=${servings}` : ""}`}
+                className="flex h-[52px] flex-[2] items-center justify-center gap-1 rounded-control bg-primary font-bold text-primary-contrast active:brightness-90"
+              >
+                开始做 <ChevronRight size={20} aria-hidden />
+              </Link>
+            ) : (
+              <Button className="flex-[2]" disabled>
+                开始做
+              </Button>
+            )}
           </div>
         )}
       </ActionBar>
@@ -246,7 +320,7 @@ export function TutorialView(props: TutorialViewProps) {
   );
 }
 
-function Ingredients({ content, factor, units }: { content: PartialContent | null; factor: number; units: UnitSystem }) {
+export function Ingredients({ content, factor, units }: { content: PartialContent | null; factor: number; units: UnitSystem }) {
   const items = (content?.ingredients ?? []).filter((i): i is DeepPartial<TutorialIngredient> => Boolean(i?.name_zh));
   const subs = (content?.substitutions ?? []).filter((s) => s?.for && s.substitute);
   const subFor = (name: string) => subs.find((s) => s!.for!.includes(name) || name.includes(s!.for!));

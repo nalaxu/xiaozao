@@ -3,6 +3,7 @@ import { getCurrentUser } from "@/server/auth/current";
 import { getDb } from "@/server/db";
 import { jsonError } from "@/server/http";
 import { readTutorial } from "@/server/tutorial/read";
+import { cuisineMeta } from "@/app/t/cuisine-meta";
 
 export const dynamic = "force-dynamic";
 
@@ -11,5 +12,5 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
   if (!user) return jsonError(401, "请先登录", { code: "auth" });
   const t = await readTutorial(await getDb(), user.id, (await params).id);
   if (!t) return jsonError(404, "找不到这份教程");
-  return NextResponse.json(t);
+  return NextResponse.json({ ...t, cuisine: cuisineMeta(t.dish.cuisineId) ?? null });
 }

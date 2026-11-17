@@ -120,6 +120,7 @@ how-to-cook/
 | `recommendation_cache` | cache_key, result（jsonb）, expires_at | 24 小时 |
 | `tutorials` | id, user_id, dish_id, run_id, params（jsonb：份量、厨具等）, content（jsonb，见 7.4）, model, status（streaming / done / failed）| 生成后不可变 |
 | `favorites` | user_id, tutorial_id | 收藏指向不可变的教程，满足 F19 |
+| （`tutorials.cooked_at`） | 最近一次在烹饪模式点“做好了”的时间 | 历史里的“做过”标记；教程内容本身仍不可变 |
 | `followups` | id, tutorial_id, user_id, question, answer | 每份教程最多 5 条 |
 | `jobs` | id, type（image / alert）, payload, status, run_after, attempts, last_error | 后台任务 |
 
@@ -321,7 +322,7 @@ safety_notes: [string]                   // 熟度、生食等提示（PRD 6.2�
 - 后检查：食材名对照 7.5，命中过敏原则丢弃本次结果并重新生成一次；仍命中则返回错误并退还额度。场景约束不符（如快手菜超过 6 步）只记日志、进入评测，不重试。
 - 预算降级：当日花费达到 $95 后，教程改用 `MODEL_TUTORIAL_FALLBACK`（默认 gpt-6.1-terra）。
 - 生成成功才扣额度：开始时预占一次，失败时退还。
-- M3 实现说明：从推荐卡片进入 `/t/new?run=&dish=`，生成开始后地址换成 `/t/[id]`；同一次推荐里的同一道菜再次打开直接复用，不重复扣额度。推荐时展示的卡片内容存在 `recommendation_runs.dishes`，作为教程输入。份量与单位切换在前端完成，单位选择暂存在浏览器（设置页在 M5）。步骤里的计时器在 M4 烹饪模式中实现。
+- M3 实现说明：从推荐卡片进入 `/t/new?run=&dish=`，生成开始后地址换成 `/t/[id]`；同一次推荐里的同一道菜再次打开直接复用，不重复扣额度。推荐时展示的卡片内容存在 `recommendation_runs.dishes`，作为教程输入。份量与单位切换在前端完成，单位选择暂存在浏览器（设置页在 M5）。步骤里的计时器在烹饪模式中（M4，见第 11 节）。
 
 ### 7.5 过敏原与忌口检查
 
@@ -418,6 +419,13 @@ PRD 第 11 节要求上线前实测成本。方法：
 - 进入烹饪模式时把该教程及其图片写入本地，之后不依赖网络。
 - 屏幕常亮用 Wake Lock API（F23）；浏览器不支持时在烹饪模式顶部提示“请在系统设置中延长锁屏时间”。
 - 计时器（F24）在前端运行，记录结束时刻而不是倒数秒数，切到后台再回来也准确；结束时振动并播放提示音。
+- M4 实现说明：
+  - Service Worker 没有用 Serwist，而是手写（`src/app/sw.js/route.ts`，约 80 行），避免构建插件与 Next 版本的兼容问题。每次部署版本号不同，浏览器自动更新并清掉旧缓存。
+  - 页面先走网络；断网时一律返回预渲染的离线外壳 `/offline`，外壳按地址从 IndexedDB 读出教程，渲染教程页或烹饪模式，其余地址列出本机保存的教程。带哈希的构建产物缓存优先；菜品图存在 Cache Storage（`xz-images`），跨域的 R2 图片以不透明响应缓存。
+  - 打开已生成的教程、进入烹饪模式时存一份；收藏页加载时把收藏但本机没有的教程下载下来。非收藏的只留最近打开的 5 份。退出登录时清空。
+  - 烹饪模式的“进入 / 做好了”记在 `events`（`cook_start`、`cook_complete`），做好了同时写 `tutorials.cooked_at`；离线时存在本机，联网后补发。
+  - 计时器存在 localStorage（按教程），刷新或切走再回来都还在；提示音要在用户点“开始计时”时解锁，页面在后台时无法提醒，回到前台立即响。
+  - 评价（F29）在 M5 接到“做好了”之后；目前“做好了”只记录并回到教程。
 
 ## 12. 隐私与安全
 

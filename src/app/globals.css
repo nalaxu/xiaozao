@@ -123,6 +123,71 @@ body {
   }
 }
 
+/* 烹饪模式：高对比配色（对比度不低于 7:1，设计文档 6.2），跟随系统深色模式 */
+.cook-contrast {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-muted: #f1ede7;
+  --border: #d6cfc4;
+  --text: #111111;
+  --text-muted: #45403a;
+  --primary: #b8410f;
+  --primary-soft: #fbe3d6;
+  --warning: #8a5a0f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .cook-contrast {
+    --bg: #000000;
+    --surface: #111111;
+    --surface-muted: #1e1c1a;
+    --border: #3a3530;
+    --text: #ffffff;
+    --text-muted: #cfc8bf;
+    --primary: #ff8a50;
+    --primary-contrast: #000000;
+    --primary-soft: #3a2418;
+    --warning: #f2b85b;
+  }
+}
+
+/* 烹饪模式翻页：水平滑动 250ms（减少动态效果时由下方规则去掉） */
+@keyframes cook-in-next {
+  from {
+    opacity: 0;
+    transform: translateX(24%);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes cook-in-prev {
+  from {
+    opacity: 0;
+    transform: translateX(-24%);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.cook-in-next {
+  animation: cook-in-next 250ms ease-out;
+}
+.cook-in-prev {
+  animation: cook-in-prev 250ms ease-out;
+}
+
+@keyframes cook-alarm {
+  50% {
+    filter: brightness(1.35);
+  }
+}
+.cook-alarm {
+  animation: cook-alarm 0.8s step-end infinite;
+}
+
 .tabular {
   font-variant-numeric: tabular-nums;
 }

@@ -187,6 +187,7 @@ export function TutorialLive(props: Props) {
       cuisine={props.cuisine}
       units={props.units}
       followups={[]}
+      favorite={streaming || !id ? undefined : false}
       followupLimit={props.followupLimit}
       backHref={props.backHref}
     />

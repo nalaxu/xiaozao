@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { Bookmark, ChefHat, Compass, UserRound } from "lucide-react";
+import { useRealPathname } from "@/lib/use-real-pathname";
 
 const TABS = [
   { href: "/", label: "做菜", icon: ChefHat },
@@ -19,7 +19,7 @@ function isActive(pathname: string, href: string) {
 }
 
 export function AppNav() {
-  const pathname = usePathname();
+  const pathname = useRealPathname();
   const hidden = HIDDEN_PREFIXES.some((p) => pathname.startsWith(p));
 
   return (

@@ -9,8 +9,8 @@
     },
     {
       "name": "web",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "start"],
+      "runtimeExecutable": "env",
+      "runtimeArgs": ["PGLITE_DIR=.data/pglite", "npm", "run", "start"],
       "port": 3000
     }
   ]
