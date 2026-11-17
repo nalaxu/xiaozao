@@ -7,6 +7,7 @@ import { sha256 } from "../crypto";
 import type { Db } from "../db/client";
 import { recommendationCache, recommendationRuns } from "../db/schema";
 import { dishImages, findOrCreateDish, libraryDishes } from "../dishes";
+import { enqueueImage } from "../images/queue";
 import {
   loadPersonalization,
   preferenceSummary,
@@ -61,7 +62,15 @@ export function cacheKey(parts: {
   );
 }
 
-export async function runRecommend(db: Db, user: RunUser, input: RecommendInput, emit: Emit, now = new Date()) {
+/** 返回这次新排进图片队列的菜，由接口在响应结束后立即处理 */
+export async function runRecommend(
+  db: Db,
+  user: RunUser,
+  input: RecommendInput,
+  emit: Emit,
+  now = new Date(),
+): Promise<{ queuedImages: string[] }> {
+  const queuedImages: string[] = [];
   const quota = await reserveQuota(db, user, "recommend", now);
   if (!quota.ok) {
     emit({
@@ -71,7 +80,7 @@ export async function runRecommend(db: Db, user: RunUser, input: RecommendInput,
       refunded: false,
       resetAt: nextReset(now).toISOString(),
     });
-    return;
+    return { queuedImages };
   }
   const remaining = user.role === "admin" ? null : quota.remaining;
 
@@ -102,7 +111,7 @@ export async function runRecommend(db: Db, user: RunUser, input: RecommendInput,
     for (const d of dishes) emit({ type: "dish", dish: { ...d, imageUrl: images[d.dishId] ?? null } });
     const runId = await saveRun(db, user.id, input, key, dishes);
     emit({ type: "done", runId, note: shortNote(dishes.length, false) });
-    return;
+    return { queuedImages };
   }
 
   emit({ type: "start", remaining, cached: false });
@@ -128,6 +137,7 @@ export async function runRecommend(db: Db, user: RunUser, input: RecommendInput,
       nameOriginal: d.name_original,
       visual: d.visual,
     });
+    if (ref.imageStatus === "none" && (await enqueueImage(db, ref.id, now))) queuedImages.push(ref.id);
     const dish: RecommendedDish = {
       dishId: ref.id,
       nameZh: d.name_zh,
@@ -202,7 +212,7 @@ export async function runRecommend(db: Db, user: RunUser, input: RecommendInput,
       if (failure && !(failure instanceof ModelError)) console.error("recommend failed", failure);
       emit({ type: "error", code: "model", error: "这次没生成出来，次数已退回。再试一次？", refunded: true });
     }
-    return;
+    return { queuedImages };
   }
 
   const runId = await saveRun(db, user.id, input, key, accepted);
@@ -217,6 +227,7 @@ export async function runRecommend(db: Db, user: RunUser, input: RecommendInput,
   }
   const restricted = rejected.some((r) => r.reason === "restricted");
   emit({ type: "done", runId, note: shortNote(accepted.length, restricted) });
+  return { queuedImages };
 }
 
 function shortNote(count: number, restricted: boolean): string | null {
@@ -227,7 +238,7 @@ function shortNote(count: number, restricted: boolean): string | null {
 async function saveRun(db: Db, userId: string, input: RecommendInput, key: string, dishes: RecommendedDish[]) {
   const [row] = await db
     .insert(recommendationRuns)
-    .values({ userId, input, cacheKey: key, dishIds: dishes.map((d) => d.dishId) })
+    .values({ userId, input, cacheKey: key, dishIds: dishes.map((d) => d.dishId), dishes })
     .returning({ id: recommendationRuns.id });
   return row.id;
 }

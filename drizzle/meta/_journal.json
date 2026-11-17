@@ -8,6 +8,13 @@
       "when": 1794902180599,
       "tag": "0000_panoramic_black_cat",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794913429559,
+      "tag": "0001_organic_squadron_sinister",
+      "breakpoints": true
     }
   ]
 }

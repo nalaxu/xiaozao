@@ -204,6 +204,8 @@ export const recommendationRuns = pgTable(
     input: jsonb("input").notNull(),
     cacheKey: text("cache_key").notNull(),
     dishIds: uuid("dish_ids").array().notNull().default(sql`'{}'`),
+    // 本次展示的推荐卡片内容（RecommendedDish[]），生成教程时作为输入
+    dishes: jsonb("dishes").notNull().default(sql`'[]'::jsonb`),
     createdAt: createdAt(),
   },
   (t) => [index("recommendation_runs_user_idx").on(t.userId, t.createdAt)],
@@ -232,7 +234,10 @@ export const tutorials = pgTable(
     status: tutorialStatus("status").notNull().default("streaming"),
     createdAt: createdAt(),
   },
-  (t) => [index("tutorials_user_idx").on(t.userId, t.createdAt)],
+  (t) => [
+    index("tutorials_user_idx").on(t.userId, t.createdAt),
+    index("tutorials_run_dish_idx").on(t.runId, t.dishId),
+  ],
 );
 
 export const favorites = pgTable(

@@ -18,6 +18,13 @@ export const TEXT_PRICES: Record<string, TextPrice> = {
 
 /** 图片模型按输出 token 计费，每百万 $30（附录 B） */
 export const IMAGE_OUTPUT_PRICE_PER_M = 30;
+/** 图片模型的文字输入，每百万 token 美元 */
+export const IMAGE_INPUT_PRICE_PER_M = 5;
+
+export function imageCostUsd(usage: { inputTokens: number; outputTokens: number } | null): number {
+  if (!usage) return estimateUsd.image;
+  return (usage.inputTokens * IMAGE_INPUT_PRICE_PER_M + usage.outputTokens * IMAGE_OUTPUT_PRICE_PER_M) / 1e6;
+}
 
 const env = (key: string, fallback: string) => process.env[key] || fallback;
 

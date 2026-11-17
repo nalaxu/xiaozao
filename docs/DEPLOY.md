@@ -32,6 +32,16 @@ M0 只有静态页面（首页、探索菜系），不需要数据库和任何�
 | M2 | OpenAI | 建 API Key，建议在 OpenAI 后台另设月度用量上限作为第二道保险 | `OPENAI_API_KEY` |
 | M3 | Cloudflare R2 | 建存储桶并开启公开访问（自定义域名或 r2.dev 地址），建 API 令牌 | `R2_*`、`IMAGE_BASE_URL` |
 
+## 数据库迁移
+
+每次部署带有新迁移（`drizzle/` 下新增文件，例如 M3 的 `0001_*.sql`）时，在本地 `.env.local` 临时填入线上 `DATABASE_URL` 运行一次 `npm run db:migrate`，用完删掉。先迁移、再部署代码。
+
+## M3：图片库
+
+1. **R2**：Cloudflare 后台 → R2 → 新建存储桶（如 `xiaozao-images`）。在存储桶设置里开启公开访问：可以绑定已有域名下的子域名（如 `img.xiaozao.example.com`，需该域名托管在 Cloudflare），或先用 `r2.dev` 地址。
+2. **API 令牌**：R2 → Manage API Tokens → 新建，权限选 Object Read & Write，范围限定这个存储桶。把 Account ID、Access Key ID、Secret Access Key 填进环境变量 `R2_ACCOUNT_ID`、`R2_ACCESS_KEY_ID`、`R2_SECRET_ACCESS_KEY`，存储桶名填 `R2_BUCKET`，公开地址（不带结尾斜杠）填 `IMAGE_BASE_URL`。
+3. **定时任务**：`vercel.json` 配置了每分钟调用一次 `/api/cron/tick`（接手遗漏或失败的图片任务、清理过期数据），Vercel 会自动带上 `CRON_SECRET`。**每分钟一次的定时任务需要 Vercel Pro**；Hobby 只允许每天一次，部署时会报错。Hobby 下可以把 `vercel.json` 的 `schedule` 改成 `0 3 * * *`（每天一次）：新图仍会在推荐后立即生成，只是失败重试要等到第二天。
+
 ## M1 上线后创建第一位管理员
 
 1. 在 Vercel 环境变量中设置 `ADMIN_EMAILS=你的邮箱`，重新部署。

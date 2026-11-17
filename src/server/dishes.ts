@@ -2,17 +2,19 @@
 import { and, eq, inArray, sql } from "drizzle-orm";
 import type { Db } from "./db/client";
 import { dishAliases, dishes } from "./db/schema";
+import { imageBaseUrl } from "./images/storage";
 import { dishNameNorm } from "./recommend/model";
 
 export interface DishRef {
   id: string;
   imageUrl: string | null;
+  imageStatus: "none" | "queued" | "generating" | "ready" | "failed";
 }
 
 export function imageUrl(imageKey: string | null, size: 384 | 768 = 384): string | null {
-  const base = process.env.IMAGE_BASE_URL;
+  const base = imageBaseUrl();
   if (!imageKey || !base) return null;
-  return `${base.replace(/\/$/, "")}/${imageKey}/${size}.webp`;
+  return `${base}/${imageKey}/${size}.webp`;
 }
 
 /** 按 (菜系, 归一菜名) 查找，先查别名表；没有则新建。每次调用计一次 times_recommended */
@@ -31,7 +33,7 @@ export async function findOrCreateDish(
       .set({ timesRecommended: sql`${dishes.timesRecommended} + 1` })
       .where(eq(dishes.id, alias.dishId))
       .returning({ id: dishes.id, imageKey: dishes.imageKey, imageStatus: dishes.imageStatus });
-    if (row) return { id: row.id, imageUrl: row.imageStatus === "ready" ? imageUrl(row.imageKey) : null };
+    if (row) return { id: row.id, imageStatus: row.imageStatus, imageUrl: row.imageStatus === "ready" ? imageUrl(row.imageKey) : null };
   }
   const [row] = await db
     .insert(dishes)
@@ -52,7 +54,7 @@ export async function findOrCreateDish(
       },
     })
     .returning({ id: dishes.id, imageKey: dishes.imageKey, imageStatus: dishes.imageStatus });
-  return { id: row.id, imageUrl: row.imageStatus === "ready" ? imageUrl(row.imageKey) : null };
+  return { id: row.id, imageStatus: row.imageStatus, imageUrl: row.imageStatus === "ready" ? imageUrl(row.imageKey) : null };
 }
 
 /** 图片库参考：候选菜系里已有图的菜，优先名称含主料的，最多 20 道（技术方案 7.3 第 4 步） */
@@ -70,11 +72,15 @@ export async function libraryDishes(db: Db, cuisineIds: string[], main: string[]
     .map(({ cuisineId, nameZh }) => ({ cuisineId, nameZh }));
 }
 
-export async function dishImages(db: Db, ids: string[]): Promise<Record<string, string | null>> {
+export async function dishImages(
+  db: Db,
+  ids: string[],
+  size: 384 | 768 = 384,
+): Promise<Record<string, string | null>> {
   if (!ids.length) return {};
   const rows = await db
     .select({ id: dishes.id, imageKey: dishes.imageKey, imageStatus: dishes.imageStatus })
     .from(dishes)
     .where(inArray(dishes.id, ids));
-  return Object.fromEntries(rows.map((r) => [r.id, r.imageStatus === "ready" ? imageUrl(r.imageKey) : null]));
+  return Object.fromEntries(rows.map((r) => [r.id, r.imageStatus === "ready" ? imageUrl(r.imageKey, size) : null]));
 }

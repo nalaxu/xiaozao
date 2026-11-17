@@ -71,11 +71,90 @@ function fakeRecommend(req: ModelRequest): string {
   });
 }
 
+function metaOf<T>(req: ModelRequest): T | null {
+  const text = req.user.map((c) => (c.type === "text" ? c.text : "")).join("");
+  const m = /<request_meta>([\s\S]*)<\/request_meta>/.exec(text);
+  return m ? (JSON.parse(m[1]) as T) : null;
+}
+
+function fakeTutorial(req: ModelRequest): string {
+  const meta = metaOf<{ dish: string; cuisine: string; servings: number; uses: string[] }>(req);
+  const c = kb.cuisines.find((x) => x.id === meta?.cuisine) ?? kb.cuisines[0];
+  const d = c.representative_dishes.find((x) => x.zh === meta?.dish);
+  const servings = meta?.servings ?? 2;
+  const main = meta?.uses?.length ? meta.uses : ["鸡肉"];
+  return JSON.stringify({
+    overview: {
+      name_zh: meta?.dish ?? d?.zh ?? "示例菜",
+      name_en: d?.en ?? "Sample dish",
+      name_original: d?.original ?? null,
+      cuisine_id: c.id,
+      flavor_desc: d?.key ?? "（本地假模型生成的示例内容）",
+      total_minutes: 25,
+      active_minutes: 15,
+      difficulty: d?.difficulty ?? 2,
+      servings,
+    },
+    ingredients: [
+      ...main.map((name, i) => ({
+        group: "main",
+        name_zh: name,
+        name_en: name,
+        amount: i === 0 ? 150 * servings : 1 * servings,
+        unit: i === 0 ? "g" : "piece",
+        prep: "切块",
+        optional: false,
+      })),
+      { group: "aux", name_zh: "蒜", name_en: "garlic", amount: 3, unit: "clove", prep: "拍碎", optional: false },
+      { group: "aux", name_zh: "香菜", name_en: "cilantro", amount: null, unit: "to_taste", prep: null, optional: true },
+      ...c.core_seasonings.slice(0, 3).map((s, i) => ({
+        group: "seasoning",
+        name_zh: s.zh,
+        name_en: s.en,
+        amount: [1, 2, 0.5][i],
+        unit: ["tbsp", "tsp", "tsp"][i],
+        prep: null,
+        optional: false,
+      })),
+      { group: "seasoning", name_zh: "高汤", name_en: "stock", amount: 250, unit: "ml", prep: null, optional: true },
+    ],
+    substitutions: c.overseas.slice(0, 2).map((o) => ({ for: o.item, substitute: o.substitute, difference: o.difference })),
+    equipment: ["炒锅", "砧板"],
+    steps: [
+      ...c.techniques.slice(0, 3).map((t, i) => ({
+        action: `${t.name}：${t.key_points}`,
+        heat: (["medium_high", "medium", "low"] as const)[i],
+        oven_c: null,
+        timer_seconds: [null, 180, 600][i],
+        cue: ["油面微微起纹、放一根葱丝会冒小泡", "边缘微焦、香味出来", "汤汁收到能挂在勺背上"][i],
+        warning: i === 0 ? "热油容易溅，下料前把食材擦干" : null,
+      })),
+      { action: "出锅装盘，撒上香菜。", heat: "off", oven_c: null, timer_seconds: null, cue: "趁热吃", warning: null },
+    ],
+    key_points: ["这是本地假模型生成的示例，只用来检查页面", "火候以判断标准为准，不要只看时间"],
+    background: c.overview,
+    safety_notes: ["禽肉中心温度至少 74°C，切开不能带粉红色。"],
+  });
+}
+
+function fakeFollowup(): string {
+  return JSON.stringify({
+    answer: "（本地假模型的示例回答）可以。没有的话用手头相近的调料代替，味道会淡一些，出锅前尝一下再补盐。",
+  });
+}
+
 export function fakeClient(): ModelClient {
   return {
     async run(req, onDelta) {
       await sleep(req.feature === "recognize" ? 1200 : 600);
-      const text = req.feature === "recognize" ? fakeRecognize() : fakeRecommend(req);
+      const text =
+        req.feature === "recognize"
+          ? fakeRecognize()
+          : req.feature === "tutorial"
+            ? fakeTutorial(req)
+            : req.feature === "followup"
+              ? fakeFollowup()
+              : fakeRecommend(req);
       await emit(text, onDelta);
       return { text, usage: ZERO_USAGE };
     },

@@ -1,9 +1,10 @@
-import type { NextRequest } from "next/server";
+import { after, type NextRequest } from "next/server";
 import { z } from "zod";
 import { input as limits } from "@config/limits";
 import { kb } from "@/lib/kb";
 import type { RecommendEvent } from "@/lib/recommend-types";
 import { jsonError, readJson } from "@/server/http";
+import { processImageJobs } from "@/server/images/jobs";
 import { guardModelRoute } from "@/server/model-guard";
 import { runRecommend } from "@/server/recommend/run";
 
@@ -34,16 +35,26 @@ export async function POST(req: NextRequest) {
   const parsed = body.safeParse(await readJson(req));
   if (!parsed.success) return jsonError(400, "选择的条件不对，请返回重选", { code: "invalid" });
 
+  // 响应结束后立即生成新菜的图片（技术方案 8.2）。after() 需在请求上下文内注册，菜单通过 promise 传进去
+  let resolveQueued: (ids: string[]) => void = () => {};
+  const queued = new Promise<string[]>((r) => (resolveQueued = r));
+  after(async () => {
+    const ids = await queued;
+    if (ids.length) await processImageJobs(db, { dishIds: ids, limit: 5 });
+  });
+
   const encoder = new TextEncoder();
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
       const emit = (e: RecommendEvent) => controller.enqueue(encoder.encode(`${JSON.stringify(e)}\n`));
+      let ids: string[] = [];
       try {
-        await runRecommend(db, user, parsed.data, emit);
+        ids = (await runRecommend(db, user, parsed.data, emit)).queuedImages;
       } catch (e) {
         console.error("recommend route failed", e);
         emit({ type: "error", code: "model", error: "这次没生成出来，请稍后再试", refunded: false });
       } finally {
+        resolveQueued(ids);
         controller.close();
       }
     },

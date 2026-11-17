@@ -4,11 +4,13 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ChevronLeft, Clock, RotateCw } from "lucide-react";
+import { ChevronLeft, ChevronRight, Clock, RotateCw } from "lucide-react";
 import { Button } from "@/components/form";
-import { CuisinePlaceholder, DifficultyDots } from "@/components/ui";
+import { DishImage } from "@/components/dish-image";
+import { DifficultyDots } from "@/components/ui";
 import { loadDraft, resetTimeLabel, type Draft } from "@/lib/draft";
 import type { RecommendEvent, RecommendInput, RecommendedDish } from "@/lib/recommend-types";
+import { useDishImages } from "@/lib/use-dish-images";
 import type { QuotaStatus } from "@/server/usage";
 
 type CuisineMeta = Record<string, { zh: string; color: string }>;
@@ -17,6 +19,7 @@ interface Saved {
   draft: Draft;
   dishes: RecommendedDish[];
   note: string | null;
+  runId: string | null;
   /** 本次会话展示过的全部菜名，换一批时排除（F12） */
   shown: string[];
 }
@@ -60,6 +63,8 @@ export function RecommendView({
   const [draft, setDraft] = useState<Draft | null>(null);
   const [dishes, setDishes] = useState<RecommendedDish[]>([]);
   const [note, setNote] = useState<string | null>(null);
+  const [runId, setRunId] = useState<string | null>(null);
+  const imageFor = useDishImages(dishes);
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const [left, setLeft] = useState<number | null>(quota.unlimited ? null : quota.remaining.recommend);
   const shownRef = useRef<string[]>([]);
@@ -70,6 +75,7 @@ export function RecommendView({
       setStatus({ kind: "streaming" });
       setDishes([]);
       setNote(null);
+      setRunId(null);
       const body: RecommendInput = {
         main: d.items.filter((i) => i.main).map((i) => i.name),
         other: d.items.filter((i) => !i.main).map((i) => i.name),
@@ -81,6 +87,7 @@ export function RecommendView({
       if (!more) shownRef.current = [];
       const got: RecommendedDish[] = [];
       let finalNote: string | null = null;
+      let finalRun: string | null = null;
       let ended = false;
       try {
         const res = await fetch("/api/recommend", {
@@ -112,6 +119,7 @@ export function RecommendView({
               setDishes([...got]);
             } else if (e.type === "done") {
               finalNote = e.note;
+              finalRun = e.runId;
               ended = true;
             } else if (e.type === "error") {
               ended = true;
@@ -132,8 +140,9 @@ export function RecommendView({
       }
       shownRef.current = [...shownRef.current, ...got.map((x) => x.nameZh)];
       setNote(finalNote);
+      setRunId(finalRun);
       if (ended || got.length) setStatus((s) => (s.kind === "error" ? s : { kind: "done" }));
-      storeSaved({ draft: d, dishes: got, note: finalNote, shown: shownRef.current });
+      storeSaved({ draft: d, dishes: got, note: finalNote, runId: finalRun, shown: shownRef.current });
       // 额度以服务端为准
       fetch("/api/me/usage")
         .then((r) => (r.ok ? r.json() : null))
@@ -160,6 +169,7 @@ export function RecommendView({
       setDraft(saved.draft);
       setDishes(saved.dishes);
       setNote(saved.note);
+      setRunId(saved.runId ?? null);
       shownRef.current = saved.shown;
       setStatus({ kind: "done" });
     } else if (d) {
@@ -208,7 +218,11 @@ export function RecommendView({
       <ul className="mt-4 space-y-4">
         {dishes.map((d) => (
           <li key={d.dishId}>
-            <DishCard dish={d} cuisine={cuisines[d.cuisineId]} />
+            <DishCard
+              dish={{ ...d, imageUrl: imageFor(d.dishId, d.imageUrl) }}
+              cuisine={cuisines[d.cuisineId]}
+              href={runId ? `/t/new?run=${runId}&dish=${d.dishId}` : null}
+            />
           </li>
         ))}
         {streaming &&
@@ -258,22 +272,25 @@ export function RecommendView({
   );
 }
 
-function DishCard({ dish, cuisine }: { dish: RecommendedDish; cuisine?: { zh: string; color: string } }) {
+function DishCard({
+  dish,
+  cuisine,
+  href,
+}: {
+  dish: RecommendedDish;
+  cuisine?: { zh: string; color: string };
+  href: string | null;
+}) {
   const required = dish.toBuy.filter((t) => t.required);
   const optional = dish.toBuy.filter((t) => !t.required);
-  return (
-    <article className="overflow-hidden rounded-card border border-border bg-surface motion-safe:animate-[fadein_.3s_ease-out]">
-      <div className="relative aspect-video">
-        {dish.imageUrl ? (
-          <>
-            {/* eslint-disable-next-line @next/next/no-img-element -- R2 图片已按尺寸生成 WebP */}
-            <img src={dish.imageUrl} alt="" className="h-full w-full object-cover" />
-            <span className="absolute bottom-2 right-2 rounded bg-black/50 px-1.5 text-caption text-white">AI 示意图</span>
-          </>
-        ) : (
-          <CuisinePlaceholder color={cuisine?.color ?? "var(--surface-muted)"} label={cuisine?.zh ?? ""} className="h-full w-full" />
-        )}
-      </div>
+  const body = (
+    <>
+      <DishImage
+        url={dish.imageUrl}
+        color={cuisine?.color}
+        label={cuisine?.zh ?? ""}
+        className="aspect-video"
+      />
       <div className="p-4">
         <div className="flex items-baseline justify-between gap-3">
           <h2 className="text-h2 font-bold">{dish.nameZh}</h2>
@@ -301,9 +318,22 @@ function DishCard({ dish, cuisine }: { dish: RecommendedDish; cuisine?: { zh: st
             </>
           )}
         </p>
-        <p className="mt-3 text-caption text-text-muted">详细教程即将开放</p>
+        {href && (
+          <p className="mt-3 flex items-center justify-end gap-1 text-small font-bold text-primary">
+            看做法 <ChevronRight size={16} aria-hidden />
+          </p>
+        )}
       </div>
-    </article>
+    </>
+  );
+  const cls =
+    "block overflow-hidden rounded-card border border-border bg-surface motion-safe:animate-[fadein_.3s_ease-out]";
+  return href ? (
+    <Link href={href} className={`${cls} active:bg-surface-muted`} aria-label={`${dish.nameZh}，看做法`}>
+      <article>{body}</article>
+    </Link>
+  ) : (
+    <article className={cls}>{body}</article>
   );
 }
 

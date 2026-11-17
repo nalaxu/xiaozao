@@ -119,16 +119,21 @@ export interface CallRecord {
   error?: string;
   /** reserveBudget 预占的金额，记账时释放 */
   reserved: number;
+  /** 非文字模型（图片）直接给出成本 */
+  costUsd?: number;
+  imageCount?: number;
 }
 
 /** 每次模型调用结束（成功或失败）写一行 model_calls，并用实际成本替换预占（技术方案 7.1、9.2） */
 export async function recordCall(db: Db, rec: CallRecord, now = new Date()): Promise<number> {
-  let cost = 0;
-  try {
-    cost = textCostUsd(rec.model, rec.usage);
-  } catch {
-    cost = 0; // 未配置单价的模型：成本记 0，并在 error 中注明
-    rec.error = [rec.error, `未配置单价: ${rec.model}`].filter(Boolean).join("; ");
+  let cost = rec.costUsd ?? 0;
+  if (rec.costUsd === undefined) {
+    try {
+      cost = textCostUsd(rec.model, rec.usage);
+    } catch {
+      cost = 0; // 未配置单价的模型：成本记 0，并在 error 中注明
+      rec.error = [rec.error, `未配置单价: ${rec.model}`].filter(Boolean).join("; ");
+    }
   }
   const day = utcDay(now);
   await db.insert(modelCalls).values({
@@ -138,6 +143,7 @@ export async function recordCall(db: Db, rec: CallRecord, now = new Date()): Pro
     inputTokens: rec.usage.inputTokens,
     cachedTokens: rec.usage.cachedTokens,
     outputTokens: rec.usage.outputTokens,
+    imageCount: rec.imageCount ?? 0,
     costUsd: cost,
     latencyMs: rec.latencyMs,
     status: rec.status,
