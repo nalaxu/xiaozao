@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # 在服务器上以 root 运行一次（由 deploy/deploy.sh setup 调用）。可重复运行：已存在的数据库、环境变量文件不会被覆盖。
-# 适用于 Ubuntu 22.04 / 24.04。
+# 适用于 Ubuntu 22.04 / 24.04 / 26.10。不改动服务器上已有的服务（已有的 Caddy 站点、其他数据库等）。
 set -euo pipefail
 
 DOMAIN=${1:?缺少域名}
@@ -22,8 +22,10 @@ apt-get install -y -q curl ca-certificates gnupg rsync openssl postgresql postgr
 
 if ! node -v 2>/dev/null | grep -q '^v22\.'; then
   echo "==> 安装 Node.js 22"
-  curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
-  apt-get install -y -q nodejs
+  if ! { curl -fsSL https://deb.nodesource.com/setup_22.x | bash - && apt-get install -y -q nodejs; }; then
+    echo "NodeSource 不可用，改用系统软件源里的 Node.js"
+    apt-get install -y -q nodejs npm
+  fi
 fi
 
 if ! command -v caddy >/dev/null; then
@@ -35,7 +37,7 @@ if ! command -v caddy >/dev/null; then
 fi
 
 if ! swapon --show | grep -q .; then
-  echo "==> 添加 2G 交换空间（4G 内存构建 Next.js 时防止内存不足）"
+  echo "==> 添加 2G 交换空间（构建 Next.js 时防止内存不足）"
   fallocate -l 2G /swapfile
   chmod 600 /swapfile
   mkswap /swapfile >/dev/null
@@ -78,14 +80,23 @@ install -m 644 "$SRC/deploy/server/howtocook.service" /etc/systemd/system/howtoc
 systemctl daemon-reload
 systemctl enable howtocook >/dev/null
 
-if [[ -f /etc/caddy/Caddyfile ]] && ! grep -q 'howtocook' /etc/caddy/Caddyfile; then
-  cp /etc/caddy/Caddyfile "/etc/caddy/Caddyfile.bak-$(date +%Y%m%d%H%M%S)"
+# 站点配置单独放 /etc/caddy/howtocook.caddy，主 Caddyfile 里只加一行 import，不动服务器上已有的其他站点。
+# 只有主 Caddyfile 还是安装包自带的默认欢迎页时才整个替换掉。
+SITE=/etc/caddy/howtocook.caddy
+MAIN=/etc/caddy/Caddyfile
+sed "s|__DOMAIN__|$DOMAIN|g" "$SRC/deploy/server/Caddyfile" > "$SITE"
+if [[ ! -f $MAIN ]] || grep -q '/usr/share/caddy' "$MAIN"; then
+  [[ -f $MAIN ]] && cp "$MAIN" "$MAIN.bak-$(date +%Y%m%d%H%M%S)"
+  echo "import $SITE" > "$MAIN"
+elif ! grep -qx "import $SITE" "$MAIN"; then
+  cp "$MAIN" "$MAIN.bak-$(date +%Y%m%d%H%M%S)"
+  printf '\nimport %s\n' "$SITE" >> "$MAIN"
 fi
-sed "s|__DOMAIN__|$DOMAIN|g" "$SRC/deploy/server/Caddyfile" > /etc/caddy/Caddyfile
 mkdir -p /var/log/caddy && chown caddy:caddy /var/log/caddy
-caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null
+caddy validate --config "$MAIN" --adapter caddyfile >/dev/null
 systemctl enable caddy >/dev/null
-systemctl reload-or-restart caddy
+# reload 是平滑的：新配置有错时 Caddy 保留旧配置继续运行
+if systemctl is-active -q caddy; then systemctl reload caddy; else systemctl start caddy; fi
 
 install -m 644 "$SRC/deploy/server/cron" /etc/cron.d/howtocook
 

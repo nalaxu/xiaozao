@@ -20,7 +20,7 @@ crontab：每分钟 /api/cron/tick；每天 03:30 备份数据库和图片
 | `deploy/server/release.sh` | 发布与回滚 |
 | `deploy/server/env.template` | 线上环境变量模板，生成到 `/etc/howtocook/env` |
 | `deploy/server/howtocook.service` | systemd 服务 |
-| `deploy/server/Caddyfile` | 反向代理、HTTPS、图片 |
+| `deploy/server/Caddyfile` | 反向代理、HTTPS、图片（装到 `/etc/caddy/howtocook.caddy`，主 Caddyfile 只追加一行 `import`，不影响服务器上已有的站点） |
 | `deploy/server/cron`、`cron-tick.sh`、`backup.sh` | 定时任务与备份 |
 
 服务器上的目录：
@@ -37,7 +37,7 @@ crontab：每分钟 /api/cron/tick；每天 03:30 备份数据库和图片
 
 ### 1. 准备
 
-- 服务器：Ubuntu 22.04 或 24.04，能用 SSH 登录且有 sudo 权限。云厂商的安全组放行 **22、80、443** 端口。
+- 服务器：Ubuntu 22.04 / 24.04 / 26.10，能用 SSH 登录且有 sudo 权限。云厂商的安全组放行 **22、80、443** 端口。
 - 本机能免密 SSH 到服务器（`ssh-copy-id ubuntu@<服务器IP>`）。下文用 `ubuntu@<服务器IP>` 代指。
 - DNS：在 `alanxiang.top` 的 DNS 里加一条记录，等它生效（`dig +short xiaozao.alanxiang.top` 能返回服务器 IP）：
 

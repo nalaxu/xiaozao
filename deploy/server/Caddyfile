@@ -1,4 +1,4 @@
-# 由 deploy/server/setup.sh 安装到 /etc/caddy/Caddyfile。Caddy 自动申请并续期 HTTPS 证书。
+# 由 deploy/server/setup.sh 安装到 /etc/caddy/howtocook.caddy，并在 /etc/caddy/Caddyfile 末尾 import（不影响已有站点）。Caddy 自动申请并续期 HTTPS 证书。
 __DOMAIN__ {
 	# 只压缩这些类型；推荐、教程的 NDJSON 流不压缩，避免缓冲
 	encode zstd gzip {
