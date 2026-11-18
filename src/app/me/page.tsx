@@ -21,7 +21,7 @@ export default async function MePage() {
   if (!user) {
     return (
       <>
-        <h1 className="text-h1 font-bold">我的</h1>
+        <h1 className="font-serif text-display font-black">我的</h1>
         <Card className="mt-4 p-4">
           <p>登录后可以设置忌口与过敏、厨具和常备调料，查看今日额度和管理个人数据。</p>
           <ButtonLink href="/login?next=/me" className="mt-4">
@@ -39,7 +39,7 @@ export default async function MePage() {
 
   return (
     <>
-      <h1 className="text-h1 font-bold">我的</h1>
+      <h1 className="font-serif text-display font-black">我的</h1>
       <Card className="mt-4 p-4">
         <p className="font-bold">{user.displayName ?? user.email.split("@")[0]}</p>
         <p className="text-small text-text-muted">{user.email}</p>

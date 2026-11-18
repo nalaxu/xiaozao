@@ -164,7 +164,7 @@ export function TutorialLive(props: Props) {
         <Link href={props.backHref} className="text-text-muted">
           ← 回到推荐
         </Link>
-        <h1 className="mt-4 text-h1 font-bold">{props.dish.nameZh}</h1>
+        <h1 className="mt-4 font-serif text-display font-black">{props.dish.nameZh}</h1>
         <div role="alert" className="mt-4 rounded-card bg-surface-muted p-4">
           <p>{message}</p>
           {canRetry && (

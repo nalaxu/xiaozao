@@ -16,7 +16,7 @@ export default async function ApplyPage() {
       <Link href="/login" className="text-h2 font-bold text-primary">
         小灶
       </Link>
-      <h1 className="mt-6 text-h1 font-bold">申请邀请码</h1>
+      <h1 className="mt-6 font-serif text-display font-black">申请邀请码</h1>
       <p className="mb-6 mt-1 text-text-muted">小灶还在小范围试用。留下邮箱，发放邀请码后会通知你。</p>
       <ApplyForm defaultEmail={pending?.email ?? ""} />
     </div>

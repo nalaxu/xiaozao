@@ -4,10 +4,10 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight, Clock, RotateCw } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight, Clock, RotateCw, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/form";
 import { DishImage } from "@/components/dish-image";
-import { DifficultyDots } from "@/components/ui";
+import { DifficultyDots, Stamp } from "@/components/ui";
 import { loadDraft, resetTimeLabel, type Draft } from "@/lib/draft";
 import type { RecommendEvent, RecommendInput, RecommendedDish } from "@/lib/recommend-types";
 import { useDishImages } from "@/lib/use-dish-images";
@@ -200,22 +200,23 @@ export function RecommendView({
           <ChevronLeft size={20} aria-hidden />
           修改条件
         </Link>
-        <h1 className="mt-1 text-h1 font-bold" aria-live="polite">
+        <h1 className="mt-1 font-serif text-display font-black" aria-live="polite">
           {title}
         </h1>
         {draft && (
-          <p className="mt-1 flex items-center gap-2 text-small text-text-muted">
-            <span className="min-w-0 flex-1 truncate">
-              {ingredientsText} | {tasteText}
+          <div className="mt-2 flex items-center gap-2 text-small">
+            <span className="flex min-w-0 flex-1 gap-2 overflow-hidden">
+              <span className="truncate rounded-full bg-kraft px-2.5 py-1">{ingredientsText}</span>
+              <span className="truncate rounded-full bg-kraft px-2.5 py-1">{tasteText}</span>
             </span>
-            <Link href="/?step=2" className="shrink-0 text-primary">
+            <Link href="/?step=2" className="flex h-11 shrink-0 items-center font-bold text-primary">
               修改
             </Link>
-          </p>
+          </div>
         )}
       </header>
 
-      <ul className="mt-4 space-y-4">
+      <ul className="mt-3 space-y-[18px]">
         {dishes.map((d) => (
           <li key={d.dishId}>
             <DishCard
@@ -257,7 +258,7 @@ export function RecommendView({
       {status.kind === "done" && draft && dishes.length > 0 && (
         <div className="mt-6">
           {exhausted ? (
-            <p className="rounded-control bg-surface-muted p-3 text-center text-small text-text-muted">
+            <p className="rounded-control bg-kraft p-3 text-center text-small text-text-muted">
               今天的 {quota.limits.recommend} 次推荐用完了，{resetTimeLabel(quota.resetAt)}（你的时间）恢复。
             </p>
           ) : (
@@ -285,39 +286,48 @@ function DishCard({
   const optional = dish.toBuy.filter((t) => !t.required);
   const body = (
     <>
-      <DishImage
-        url={dish.imageUrl}
-        color={cuisine?.color}
-        label={cuisine?.zh ?? ""}
-        className="aspect-video"
-      />
-      <div className="p-4">
-        <div className="flex items-baseline justify-between gap-3">
-          <h2 className="text-h2 font-bold">{dish.nameZh}</h2>
-          <span className="shrink-0 text-small text-text-muted">{cuisine?.zh}</span>
-        </div>
+      <div className="relative">
+        <DishImage url={dish.imageUrl} color={cuisine?.color} label={cuisine?.zh ?? ""} className="aspect-video" />
+        {cuisine && dish.imageUrl && (
+          <Stamp color={cuisine.color} className="absolute left-3 top-3 text-[20px]">
+            {cuisine.zh}
+          </Stamp>
+        )}
+      </div>
+      <div className="px-4 pb-4 pt-3.5">
+        <h2 className="font-serif text-[21px] font-black leading-[30px]">{dish.nameZh}</h2>
         <p className="text-small text-text-muted">{dish.nameOriginal ?? dish.nameEn}</p>
-        <p className="mt-2">{dish.summary}</p>
-        <p className="mt-2 flex items-center gap-1.5 text-small text-text-muted">
-          <Clock size={14} aria-hidden />
-          <span className="tabular">{dish.totalMinutes} 分钟</span>
-          <span aria-hidden>·</span>
-          难度 <DifficultyDots level={dish.difficulty} />
+        <p className="mt-2 text-[15px] leading-[23px]">{dish.summary}</p>
+        <p className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-small">
+          <span className="inline-flex items-center gap-1">
+            <Clock size={15} className="text-text-muted" aria-hidden />
+            <span className="tabular">{dish.totalMinutes} 分钟</span>
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            难度 <DifficultyDots level={dish.difficulty} />
+          </span>
+          {cuisine && !dish.imageUrl && <span className="text-text-muted">{cuisine.zh}</span>}
         </p>
-        <p className="mt-2 text-small">
+        <div className="mt-3 flex items-start gap-2 rounded-[10px] border-t-[1.5px] border-dashed border-border-strong bg-surface-muted px-3 py-2.5 text-small">
           {dish.toBuy.length === 0 ? (
-            <span className="text-success">手头的就够了</span>
+            <>
+              <Check size={16} strokeWidth={2} className="mt-0.5 shrink-0 text-success" aria-hidden />
+              <span className="font-bold text-success">手头的就够了，不用出门</span>
+            </>
           ) : (
             <>
-              <span className="text-text-muted">还需：</span>
-              {required.map((t) => t.name).join("、")}
-              {required.length > 0 && optional.length > 0 && "、"}
-              {optional.length > 0 && (
-                <span className="text-text-muted">{optional.map((t) => `${t.name}（可省）`).join("、")}</span>
-              )}
+              <ShoppingBag size={16} strokeWidth={1.75} className="mt-0.5 shrink-0 text-primary" aria-hidden />
+              <span>
+                <b className="mr-2 text-primary">还要买</b>
+                {required.map((t) => t.name).join("、")}
+                {required.length > 0 && optional.length > 0 && "　"}
+                {optional.length > 0 && (
+                  <span className="text-text-muted">{optional.map((t) => `${t.name}（可省）`).join("、")}</span>
+                )}
+              </span>
             </>
           )}
-        </p>
+        </div>
         {href && (
           <p className="mt-3 flex items-center justify-end gap-1 text-small font-bold text-primary">
             看做法 <ChevronRight size={16} aria-hidden />
@@ -340,7 +350,7 @@ function DishCard({
 function SkeletonCard() {
   return (
     <div className="overflow-hidden rounded-card border border-border bg-surface" aria-hidden>
-      <div className="aspect-video animate-pulse bg-surface-muted" />
+      <div className="aspect-video animate-pulse bg-kraft" />
       <div className="space-y-2 p-4">
         <div className="h-5 w-2/5 animate-pulse rounded bg-surface-muted" />
         <div className="h-4 w-1/3 animate-pulse rounded bg-surface-muted" />
@@ -367,7 +377,7 @@ function ErrorBox({
   }
   const canRetry = onRetry && !["quota", "budget_paused"].includes(status.code);
   return (
-    <div role="alert" className="mt-4 rounded-card bg-surface-muted p-4">
+    <div role="alert" className="mt-4 rounded-card border border-dashed border-border-strong bg-surface p-4">
       <p>{message}</p>
       {canRetry && (
         <Button variant="secondary" className="mt-3" onClick={onRetry}>

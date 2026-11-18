@@ -56,7 +56,7 @@ export function SavedView({
 
   return (
     <>
-      <h1 className="text-h1 font-bold">收藏</h1>
+      <h1 className="font-serif text-display font-black">收藏</h1>
       <div className="mt-4 grid grid-cols-2 rounded-full bg-surface-muted p-1" role="tablist" aria-label="收藏与历史">
         {(
           [

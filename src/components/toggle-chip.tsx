@@ -23,8 +23,10 @@ export function ToggleChip({
       disabled={disabled}
       onClick={onClick}
       title={title}
-      className={`inline-flex h-9 items-center rounded-full px-3.5 text-small ${
-        on ? "bg-primary-soft font-bold text-primary" : "bg-surface-muted text-text"
+      className={`inline-flex h-11 items-center rounded-full border px-4 text-[15px] ${
+        on
+          ? "border-primary bg-primary font-bold text-primary-contrast"
+          : "border-border bg-surface text-text active:bg-surface-muted"
       } disabled:opacity-40`}
     >
       {children}

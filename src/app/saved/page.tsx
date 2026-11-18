@@ -26,7 +26,7 @@ export default async function SavedPage({ searchParams }: Props) {
   if (!user) {
     return (
       <>
-        <h1 className="text-h1 font-bold">收藏</h1>
+        <h1 className="font-serif text-display font-black">收藏</h1>
         <Card className="mt-4 p-4">
           <p>登录后，收藏的教程和看过的菜会出现在这里，收藏的教程没网也能看、能做。</p>
           <ButtonLink href="/login?next=/saved" className="mt-4">

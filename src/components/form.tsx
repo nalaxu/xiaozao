@@ -14,15 +14,16 @@ export function Button({
   loading?: boolean;
 }) {
   const styles = {
-    primary: "bg-primary text-primary-contrast active:brightness-90 disabled:bg-surface-muted disabled:text-text-muted",
-    secondary: "border border-border bg-surface text-text active:bg-surface-muted disabled:text-text-muted",
+    primary:
+      "bg-primary text-primary-contrast shadow-cta active:brightness-90 disabled:bg-kraft disabled:text-text-muted disabled:shadow-none",
+    secondary: "border-[1.5px] border-ink bg-transparent text-text active:bg-surface-muted disabled:border-border disabled:text-text-muted",
     ghost: "text-primary active:bg-primary-soft disabled:text-text-muted",
     danger: "bg-danger text-white active:brightness-90 disabled:bg-surface-muted disabled:text-text-muted",
     "danger-ghost": "text-danger active:bg-surface-muted disabled:text-text-muted",
   }[variant];
   return (
     <button
-      className={`flex h-[52px] w-full items-center justify-center gap-2 rounded-control text-body font-bold ${styles} ${className}`}
+      className={`flex h-[54px] w-full items-center justify-center gap-2 rounded-control text-[17px] font-bold ${styles} ${className}`}
       disabled={disabled || loading}
       aria-busy={loading || undefined}
       {...props}

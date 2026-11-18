@@ -46,13 +46,13 @@ export default async function CuisinePage({ params }: Props) {
         <CuisinePlaceholder
           color={cuisineColor(cuisine.group, indexInGroup)}
           label={cuisine.name.zh}
-          className="h-28 text-display"
+          className="h-28 !text-[48px]"
         />
         <div className="p-4">
           <p className="text-small text-text-muted">
             {CUISINE_GROUP_LABELS[cuisine.group]} · {cuisine.name.en}
           </p>
-          <h1 className="mt-1 text-display font-bold">{cuisine.name.zh}</h1>
+          <h1 className="mt-1 font-serif text-display font-black">{cuisine.name.zh}</h1>
           <p className="mt-3">{cuisine.overview}</p>
           <div className="mt-4 flex flex-wrap gap-2">
             {cuisine.flavor_tags.map((t) => (

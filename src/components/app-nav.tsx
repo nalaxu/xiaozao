@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { Bookmark, ChefHat, Compass, UserRound } from "lucide-react";
+import { Bookmark, Compass, CookingPot, UserRound } from "lucide-react";
 import { useRealPathname } from "@/lib/use-real-pathname";
 
 const TABS = [
-  { href: "/", label: "做菜", icon: ChefHat },
+  { href: "/", label: "做菜", icon: CookingPot },
   { href: "/saved", label: "收藏", icon: Bookmark },
   { href: "/explore", label: "探索", icon: Compass },
   { href: "/me", label: "我的", icon: UserRound },
@@ -27,7 +27,7 @@ export function AppNav() {
       {/* 桌面：顶部导航 */}
       <header className="sticky top-0 z-20 hidden border-b border-border bg-bg/95 backdrop-blur lg:block">
         <nav className="mx-auto flex h-14 max-w-[960px] items-center gap-8 px-6" aria-label="主导航">
-          <Link href="/" className="text-h2 font-bold text-primary">
+          <Link href="/" className="font-brush text-[30px] leading-none text-primary">
             小灶
           </Link>
           <ul className="flex gap-6">

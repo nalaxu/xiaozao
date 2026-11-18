@@ -4,8 +4,9 @@
 // 进入后不依赖网络：内容由页面一次性传入，记录事件失败时存在本机稍后补发。
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, type TouchEvent } from "react";
-import { AlertTriangle, ChevronLeft, ChevronRight, Flame, ListChecks, Thermometer, Timer, Type, X } from "lucide-react";
+import { AlertTriangle, ChevronLeft, ChevronRight, ListChecks, Thermometer, Timer, Type, X } from "lucide-react";
 import { Sheet } from "@/components/overlay";
+import { HeatBadge } from "@/components/ui";
 import { CookDone } from "./cook-done";
 import { Ingredients } from "@/components/tutorial/tutorial-view";
 import { flushCookEvents, recordCookEvent } from "@/lib/cook-events";
@@ -294,22 +295,25 @@ export function CookMode({
               {((step.heat && step.heat !== "off") || step.oven_c) && (
                 <div className="mb-4 flex flex-wrap gap-2">
                   {step.heat && step.heat !== "off" && (
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 font-bold text-primary-contrast">
-                      <Flame size={18} aria-hidden /> {HEAT_LABELS[step.heat]}
-                    </span>
+                    <HeatBadge heat={step.heat} label={HEAT_LABELS[step.heat]} className="bg-transparent px-0 text-[20px]" />
                   )}
                   {step.oven_c ? (
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-3 py-1 font-bold text-primary-contrast">
+                    <span className="inline-flex items-center gap-1.5 rounded-full bg-primary-soft px-3 py-1 text-[18px] font-bold text-primary">
                       <Thermometer size={18} aria-hidden /> 烤箱 {formatTemp(step.oven_c, units)}
                     </span>
                   ) : null}
                 </div>
               )}
-              <p className={big ? "text-[34px] leading-[48px]" : "text-cook"}>{step.action}</p>
+              <p className={`font-semibold ${big ? "text-[34px] leading-[48px]" : "text-cook"}`}>{step.action}</p>
               {step.cue && (
-                <p className={`mt-6 font-bold ${big ? "text-[28px] leading-[40px]" : "text-[22px] leading-[32px]"}`}>
-                  看到：{step.cue}
-                </p>
+                <div className="mt-6 rounded-card bg-surface-muted px-[18px] py-4">
+                  <p className="text-small tracking-[1px] text-text-muted">看到这个样子就对了</p>
+                  <p
+                    className={`mt-1.5 font-bold text-[var(--cue)] ${big ? "text-[28px] leading-[40px]" : "text-[22px] leading-[32px]"}`}
+                  >
+                    {step.cue}
+                  </p>
+                </div>
               )}
               {step.warning && (
                 <p className="mt-6 flex gap-2 rounded-control border-2 border-warning p-3 text-h2">

@@ -72,7 +72,7 @@ function OfflineList({ missing, list: initial }: { missing: boolean; list: Offli
 
   return (
     <>
-      <h1 className="text-h1 font-bold">现在没有网络</h1>
+      <h1 className="font-serif text-display font-black">现在没有网络</h1>
       <Card className="mt-4 p-4">
         <p>{missing ? "这份教程没有存到这台设备上。" : "联网后才能推荐和生成新教程。"}</p>
         <p className="mt-1 text-small text-text-muted">收藏的教程和最近打开的 5 份教程，没网也能看、能做。</p>

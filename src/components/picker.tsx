@@ -3,7 +3,7 @@
 // 首页两步：① 食材（拍照 / 输入 / 常用）→ ② 口味（味型 · 场景 · 菜系）。设计文档 4.1–4.3。
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Camera, Check, ChevronDown, ChevronLeft, Plus, Search, X } from "lucide-react";
+import { Camera, Check, ChevronDown, ChevronLeft, ChevronRight, Flame, Plus, Search, X } from "lucide-react";
 import { Button } from "@/components/form";
 import { ToggleChip } from "@/components/toggle-chip";
 import { ActionBar, Sheet } from "@/components/overlay";
@@ -193,31 +193,49 @@ function IngredientStep({
 
   return (
     <div className="pb-24">
-      <div className="flex items-baseline justify-between">
-        <p className="text-h2 font-bold text-primary lg:hidden">小灶</p>
+      <div className="flex items-center justify-between">
+        <p className="flex items-center gap-1.5 font-brush text-[32px] leading-none text-primary lg:hidden">
+          <Flame size={22} strokeWidth={2} aria-hidden />
+          小灶
+        </p>
         {account && <QuotaBadge quota={account.quota} />}
       </div>
-      <h1 className="mt-4 text-h1 font-bold">今天手头有什么？</h1>
+      <Greeting />
 
       <div className="mt-4 space-y-3">
-        <button
-          type="button"
-          onClick={startPhoto}
-          disabled={photo.status === "working" || recognizeLeft === 0}
-          className="flex h-14 w-full items-center gap-3 rounded-card border border-border bg-surface px-4 text-left active:bg-surface-muted disabled:text-text-muted"
-        >
-          <Camera size={22} strokeWidth={1.75} className="text-primary" aria-hidden />
-          <span className="flex-1">拍一下冰箱或台面</span>
-          <span className="text-caption text-text-muted">
-            {!account
-              ? "登录后可用"
-              : recognizeLeft === 0
-                ? "今天的次数用完了"
-                : recognizeLeft !== null
-                  ? `剩 ${recognizeLeft} 次`
-                  : ""}
-          </span>
-        </button>
+        <div>
+          {/* eslint-disable-next-line @next/next/no-img-element -- 静态配图，已压成 WebP */}
+          <img
+            src="/images/fridge.webp"
+            alt=""
+            width={960}
+            height={640}
+            className="h-[136px] w-full rounded-card object-cover object-[50%_45%] lg:h-[180px]"
+          />
+          <button
+            type="button"
+            onClick={startPhoto}
+            disabled={photo.status === "working" || recognizeLeft === 0}
+            className="relative mx-3 -mt-[34px] flex w-[calc(100%-24px)] items-center gap-3 rounded-[16px] border border-border bg-surface px-3.5 py-3 text-left shadow-float active:bg-surface-muted disabled:text-text-muted"
+          >
+            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary text-primary-contrast">
+              <Camera size={22} strokeWidth={1.75} aria-hidden />
+            </span>
+            <span className="flex min-w-0 flex-1 flex-col">
+              <span className="font-bold">拍一下冰箱或台面</span>
+              <span className="text-small text-text-muted">
+                {!account
+                  ? "登录后就能拍照认食材"
+                  : recognizeLeft === 0
+                    ? "今天的次数用完了"
+                    : recognizeLeft !== null
+                      ? `认出来的食材直接放上砧板 · 剩 ${recognizeLeft} 次`
+                      : "认出来的食材直接放上砧板"}
+              </span>
+            </span>
+            <ChevronRight size={20} strokeWidth={1.75} className="shrink-0 text-text-muted" aria-hidden />
+          </button>
+        </div>
         <input
           ref={fileRef}
           type="file"
@@ -230,7 +248,7 @@ function IngredientStep({
         <PhotoStatus photo={photo} onAdd={add} onDismiss={() => setPhoto({ status: "idle" })} />
 
         <div className="relative">
-          <label className="flex h-[52px] items-center gap-3 rounded-control border border-border bg-surface px-4 focus-within:border-primary">
+          <label className="flex h-12 items-center gap-3 rounded-control border border-border bg-surface px-4 focus-within:border-primary">
             <Search size={20} strokeWidth={1.75} className="text-text-muted" aria-hidden />
             <input
               ref={inputRef}
@@ -242,7 +260,7 @@ function IngredientStep({
                   add(query);
                 }
               }}
-              placeholder="输入食材，中英文都行"
+              placeholder="输入食材，中英文都行，如 cilantro"
               aria-label="输入食材"
               maxLength={30}
               enterKeyHint="done"
@@ -250,7 +268,7 @@ function IngredientStep({
             />
           </label>
           {query.trim() && (
-            <ul className="absolute inset-x-0 top-[56px] z-10 overflow-hidden rounded-control border border-border bg-surface shadow-[var(--shadow-float)]">
+            <ul className="absolute inset-x-0 top-[52px] z-10 overflow-hidden rounded-control border border-border bg-surface shadow-[var(--shadow-float)]">
               {suggestions.map((s) => (
                 <li key={s.zh}>
                   <button
@@ -280,39 +298,53 @@ function IngredientStep({
         </div>
       </div>
 
-      <div className="mt-4 flex flex-wrap items-center gap-2">
-        <span className="mr-1 text-small text-text-muted">常用</span>
-        {options.common
-          .filter((n) => !has(n))
-          .map((n) => (
-            <button
-              key={n}
-              type="button"
-              onClick={() => add(n)}
-              className="inline-flex h-9 items-center rounded-full bg-surface-muted px-3.5 text-small active:brightness-95"
-            >
-              {n}
-            </button>
-          ))}
-      </div>
+      <section className="mt-4" aria-label="常用食材">
+        <p className="text-small text-text-muted">常用</p>
+        <div className="no-scrollbar -mx-4 mt-1.5 flex gap-2 overflow-x-auto px-4 lg:mx-0 lg:flex-wrap lg:px-0">
+          {options.common
+            .filter((n) => !has(n))
+            .map((n) => (
+              <button
+                key={n}
+                type="button"
+                onClick={() => add(n)}
+                className="inline-flex h-11 shrink-0 items-center gap-1.5 rounded-[10px] border border-border bg-surface pl-2.5 pr-3.5 text-[15px] active:bg-surface-muted"
+              >
+                <span className="h-[7px] w-[7px] rounded-full border-[1.5px] border-border-strong" aria-hidden />
+                {n}
+              </button>
+            ))}
+        </div>
+      </section>
 
-      {draft.items.length > 0 && (
-        <section className="mt-6" aria-label="已选食材">
-          <p className="mb-2 text-small text-text-muted">
-            已选 {draft.items.length} 样 · 点选今天想用的主料（最多 {MAX_MAIN} 个）
-          </p>
-          <ul className="flex flex-wrap gap-2">
+      <section className="mt-4 rounded-[18px] bg-kraft p-3 pb-3.5" aria-labelledby="board-title">
+        <div className="flex items-baseline justify-between gap-2 px-0.5">
+          <h2 id="board-title" className="font-serif font-bold">
+            砧板上{draft.items.length > 0 && ` · ${draft.items.length} 样`}
+          </h2>
+          {draft.items.length > 0 && (
+            <span className="text-caption text-text-muted">
+              点一下切换主料 · 主料 {mainCount}/{MAX_MAIN}
+            </span>
+          )}
+        </div>
+        {draft.items.length > 0 ? (
+          <ul className="mt-2.5 flex flex-wrap gap-2">
             {draft.items.map((i) => (
               <li key={i.name}>
                 <ItemChip item={i} onToggle={() => toggleMain(i.name)} onRemove={() => remove(i.name)} />
               </li>
             ))}
           </ul>
-          {mainCount === 0 && (
-            <p className="mt-2 text-small text-text-muted">没选主料时，会把这些都当作“手头还有”的食材。</p>
-          )}
-        </section>
-      )}
+        ) : (
+          <p className="mt-2 rounded-control border-[1.5px] border-dashed border-border-strong px-3 py-4 text-center text-small text-text-muted">
+            砧板还空着。拍一下，或者从上面点几样。
+          </p>
+        )}
+        {draft.items.length > 0 && mainCount === 0 && (
+          <p className="mt-2 text-small text-text-muted">没选主料时，会把这些都当作“手头还有”的食材。</p>
+        )}
+      </section>
 
       <ActionBar>
         <Button onClick={onNext}>{draft.items.length ? "下一步：选口味" : "跳过，直接选口味"}</Button>
@@ -418,21 +450,21 @@ function PhotoStatus({
 
 function ItemChip({ item, onToggle, onRemove }: { item: DraftItem; onToggle: () => void; onRemove: () => void }) {
   const style = item.main
-    ? "bg-primary text-primary-contrast"
-    : `border bg-surface ${item.known ? "border-border" : "border-dashed border-text-muted"}`;
+    ? "border border-ink bg-ink font-bold text-ink-contrast"
+    : `bg-surface ${item.known ? "border border-border-strong" : "border-[1.5px] border-dashed border-text-muted"}`;
   return (
-    <span className={`inline-flex h-9 items-center rounded-full text-small ${style}`}>
+    <span className={`inline-flex h-10 items-center rounded-[10px] text-[15px] ${style}`}>
       <button
         type="button"
         onClick={onToggle}
         aria-pressed={item.main}
         aria-label={`${item.name}，${item.main ? "主料" : "手头还有"}`}
-        className="flex h-full items-center gap-1 pl-3.5 pr-1"
+        className="flex h-full items-center gap-1 pl-3 pr-1"
       >
-        {item.main && <Check size={14} strokeWidth={2.5} aria-hidden />}
+        {item.main && <Check size={15} strokeWidth={2.5} className="text-marker" aria-hidden />}
         {item.name}
       </button>
-      <button type="button" onClick={onRemove} aria-label={`删除${item.name}`} className="flex h-full items-center pl-1 pr-2.5 opacity-70">
+      <button type="button" onClick={onRemove} aria-label={`删除${item.name}`} className="flex h-full items-center pl-1 pr-2.5 opacity-60">
         <X size={14} />
       </button>
     </span>
@@ -460,6 +492,7 @@ function TasteStep({
   );
   const [cuisineOpen, setCuisineOpen] = useState(false);
   const flavors = options.flavors.filter((f) => f.tier === "primary" || showMore);
+  const picked = draft.flavors.map((id) => options.flavors.find((f) => f.id === id)).filter((f) => f !== undefined);
   const cuisineName = options.cuisineGroups.flatMap((g) => g.cuisines).find((c) => c.id === draft.cuisine)?.zh;
 
   function toggleFlavor(id: string) {
@@ -496,17 +529,23 @@ function TasteStep({
 
   return (
     <div className="pb-24">
-      <header className="flex items-center justify-between">
+      <header className="flex items-center justify-between gap-2">
         <button type="button" onClick={onBack} className="-ml-2 flex h-11 items-center gap-1 px-2 text-text-muted">
           <ChevronLeft size={20} aria-hidden />
-          食材
+          食材{draft.items.length > 0 && ` · ${draft.items.length} 样`}
         </button>
-        {account && <QuotaBadge quota={account.quota} />}
+        <span className="flex items-center gap-1.5 text-small text-text-muted">
+          <span className="h-1 w-[18px] rounded-sm bg-primary" aria-hidden />
+          <span className="h-1 w-[18px] rounded-sm bg-primary" aria-hidden />
+          第 2 步，共 2 步
+        </span>
       </header>
 
-      <div className="mt-2 flex items-baseline justify-between">
-        <h1 className="text-h1 font-bold">想吃什么味道？</h1>
-        <span className="text-small text-text-muted">最多选 {MAX_FLAVORS} 个</span>
+      <div className="mt-2 flex items-baseline justify-between gap-3">
+        <h1 className="font-serif text-display font-black">想吃什么味道？</h1>
+        <span className="shrink-0 text-small text-text-muted">
+          最多 {MAX_FLAVORS} 个 · 已选 {draft.flavors.length}
+        </span>
       </div>
       <div className="mt-3 flex flex-wrap gap-2">
         {flavors.map((f) => {
@@ -523,48 +562,74 @@ function TasteStep({
         <button
           type="button"
           onClick={() => setShowMore(true)}
-          className="mt-2 flex h-11 items-center gap-1 text-small text-text-muted"
+          className="mt-2 flex h-11 items-center gap-1 text-small font-bold text-primary"
         >
-          更多 <ChevronDown size={16} aria-hidden />
+          更多味型 <ChevronDown size={16} aria-hidden />
         </button>
       )}
+      {picked.length > 0 && (
+        <div className="mt-3 flex items-start gap-2.5 rounded-control border border-dashed border-border-strong bg-surface px-3.5 py-3">
+          <span className="stamp shrink-0 bg-primary text-[17px]" aria-hidden>
+            味
+          </span>
+          <p className="text-small text-text">
+            {picked.map((f, i) => (
+              <span key={f.id}>
+                {i > 0 && " "}
+                <b>{f.zh}</b>：{f.description}
+              </span>
+            ))}
+          </p>
+        </div>
+      )}
 
-      <h2 className="mt-6 text-h2 font-bold">
-        今天的情况 <span className="text-small font-normal text-text-muted">可不选</span>
-      </h2>
-      <div className="mt-3 flex flex-wrap gap-2">
-        {options.scenes.map((s) => (
-          <ToggleChip
-            key={s.id}
-            on={draft.scene === s.id}
-            onClick={() => update((d) => ({ ...d, scene: d.scene === s.id ? null : s.id }))}
-            title={s.guidance}
-          >
-            {s.zh}
-          </ToggleChip>
-        ))}
+      <div className="mt-7 flex items-baseline justify-between">
+        <h2 className="font-serif text-h2 font-bold">今天的情况</h2>
+        <span className="text-small text-text-muted">可不选</span>
+      </div>
+      <div className="mt-2.5 grid grid-cols-4 gap-2">
+        {options.scenes.map((s) => {
+          const on = draft.scene === s.id;
+          return (
+            <button
+              key={s.id}
+              type="button"
+              aria-pressed={on}
+              title={s.guidance}
+              onClick={() => update((d) => ({ ...d, scene: d.scene === s.id ? null : s.id }))}
+              className={`flex h-14 items-center justify-center rounded-[12px] border px-1 text-[15px] font-bold ${
+                on ? "border-ink bg-ink text-ink-contrast" : "border-border bg-surface text-text active:bg-surface-muted"
+              }`}
+            >
+              {s.zh}
+            </button>
+          );
+        })}
       </div>
 
-      <div className="mt-6 flex items-center justify-between">
-        <h2 className="text-h2 font-bold">
-          菜系 <span className="text-small font-normal text-text-muted">可不选</span>
-        </h2>
-        <button
-          type="button"
-          onClick={() => setCuisineOpen(true)}
-          className="flex h-11 items-center gap-1 rounded-control px-3 text-primary active:bg-primary-soft"
-        >
-          {cuisineName ?? "不限"} <ChevronDown size={16} aria-hidden />
-        </button>
-      </div>
+      <button
+        type="button"
+        onClick={() => setCuisineOpen(true)}
+        className="mt-6 flex h-[52px] w-full items-center gap-2.5 rounded-control border border-border bg-surface px-3.5 text-[15px] active:bg-surface-muted"
+      >
+        <span className="font-bold">菜系</span>
+        <span className="flex gap-1" aria-hidden>
+          <span className="h-2 w-2 rounded-full bg-[var(--group-chinese)]" />
+          <span className="h-2 w-2 rounded-full bg-[var(--group-east-southeast-asia)]" />
+          <span className="h-2 w-2 rounded-full bg-[var(--group-south-asia-middle-east)]" />
+          <span className="h-2 w-2 rounded-full bg-[var(--group-europe-americas)]" />
+        </span>
+        <span className="flex-1 text-right text-text-muted">{cuisineName ?? "不限，可不选"}</span>
+        <ChevronDown size={18} className="text-text-muted" aria-hidden />
+      </button>
 
       <ActionBar>
         {account?.paused && quota ? (
-          <p className="rounded-control bg-surface-muted p-3 text-center text-small text-text-muted">
+          <p className="rounded-control bg-kraft p-3 text-center text-small text-text-muted">
             今天的生成名额已满，{resetTimeLabel(quota.resetAt)}（你的时间）恢复。收藏的教程照常可以看和做。
           </p>
         ) : exhausted && quota ? (
-          <p className="rounded-control bg-surface-muted p-3 text-center text-small text-text-muted">
+          <p className="rounded-control bg-kraft p-3 text-center text-small text-text-muted">
             今天的 {quota.limits.recommend} 次推荐用完了，{resetTimeLabel(quota.resetAt)}（你的时间）恢复。
           </p>
         ) : (
@@ -614,6 +679,36 @@ function TasteStep({
 
 function QuotaBadge({ quota }: { quota: QuotaStatus }) {
   if (quota.unlimited) return <span className="text-small text-text-muted">管理员 · 不限次数</span>;
-  return <span className="text-small text-text-muted">今日推荐剩 {quota.remaining.recommend} 次</span>;
+  const left = quota.remaining.recommend;
+  return (
+    <span className="flex h-8 items-center gap-2 rounded-full border border-border bg-surface px-3 text-small text-text-muted">
+      <span className="flex gap-[3px]" aria-hidden>
+        {Array.from({ length: quota.limits.recommend }, (_, i) => (
+          <span key={i} className={`h-1.5 w-1.5 rounded-full ${i < left ? "bg-primary" : "bg-border-strong"}`} />
+        ))}
+      </span>
+      今日剩 {left} 次
+    </span>
+  );
 }
 
+const WEEKDAYS = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+
+/** 按用户本地时间问候；服务端渲染时先显示不带时间的版本 */
+function Greeting() {
+  const [now, setNow] = useState<Date | null>(null);
+  useEffect(() => setNow(new Date()), []);
+  const h = now?.getHours() ?? 18;
+  const [meal, when] =
+    h < 10 ? ["早饭时间", "今早"] : h < 14 ? ["午饭时间", "中午"] : h < 21 ? ["晚饭时间", "今晚"] : ["夜宵时间", "今晚"];
+  return (
+    <section className="mt-3">
+      <p className="h-[18px] text-small tracking-[1px] text-text-muted">{now && `${WEEKDAYS[now.getDay()]} · ${meal}`}</p>
+      <h1 className="mt-1 font-serif text-[30px] font-black leading-[40px] tracking-[0.5px]">
+        冰箱里有什么，
+        <br />
+        <span className="marker">{now ? when : "今天"}</span>就做什么。
+      </h1>
+    </section>
+  );
+}

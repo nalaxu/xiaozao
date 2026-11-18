@@ -23,7 +23,7 @@ export default async function LoginPage({ searchParams }: Props) {
   return (
     <div className="mx-auto max-w-[420px] pt-4">
       <p className="text-h2 font-bold text-primary">小灶</p>
-      <h1 className="mt-6 text-h1 font-bold">
+      <h1 className="mt-6 font-serif text-display font-black">
         {reason === "photo" ? "登录后可拍照识别食材" : "登录后就能拿到推荐了"}
       </h1>
       <p className="mb-6 mt-1 text-text-muted">

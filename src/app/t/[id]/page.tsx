@@ -39,7 +39,7 @@ export default async function TutorialPage({ params, searchParams }: Props) {
         <Link href={backHref} className="text-text-muted">
           ← 返回
         </Link>
-        <h1 className="mt-4 text-h1 font-bold">{t.dish.nameZh}</h1>
+        <h1 className="mt-4 font-serif text-display font-black">{t.dish.nameZh}</h1>
         <p className="mt-4 rounded-card bg-surface-muted p-4">这份教程没生成出来，次数已退回。回到推荐页再选一次？</p>
       </div>
     );

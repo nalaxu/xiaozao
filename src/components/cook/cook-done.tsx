@@ -45,7 +45,7 @@ export function CookDone({
       <p className="text-[48px] leading-none" aria-hidden>
         🍽
       </p>
-      <h1 className="mt-3 text-display font-bold">做好了，开吃吧</h1>
+      <h1 className="mt-3 font-serif text-display font-black">做好了，开吃吧</h1>
       <h2 className="mt-8 text-h2 font-bold">{dishName}做得怎么样？</h2>
       <div className="mt-4 grid grid-cols-3 gap-2" role="group" aria-label="评价">
         {VERDICTS.map((v) => (

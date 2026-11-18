@@ -10,9 +10,6 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
-  Clock,
-  Flame,
-  Lightbulb,
   MessageCircleQuestion,
   Minus,
   Plus,
@@ -23,7 +20,7 @@ import {
 import { Button } from "@/components/form";
 import { DishImage } from "@/components/dish-image";
 import { ActionBar } from "@/components/overlay";
-import { DifficultyDots } from "@/components/ui";
+import { DifficultyDots, HeatBadge, Stamp } from "@/components/ui";
 import {
   HEAT_LABELS,
   type TutorialContent,
@@ -142,12 +139,12 @@ export function TutorialView(props: TutorialViewProps) {
             color={cuisine?.color}
             label={cuisine?.zh ?? ""}
             className="aspect-[4/3] lg:rounded-card"
-            caption="AI 生成示意图，成品可能不同"
+            caption=""
           />
           <Link
             href={props.backHref}
             aria-label="返回"
-            className="absolute left-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-black/40 text-white"
+            className="absolute left-3 top-3 flex h-11 w-11 items-center justify-center rounded-full bg-surface/90 text-text shadow-float"
           >
             <ChevronLeft size={22} aria-hidden />
           </Link>
@@ -157,53 +154,53 @@ export function TutorialView(props: TutorialViewProps) {
               onClick={toggleFavorite}
               aria-pressed={favorite}
               aria-label={favorite ? "取消收藏" : "收藏"}
-              className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full bg-black/40 text-white"
+              className="absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-full bg-surface/90 text-text shadow-float"
             >
-              <Bookmark size={20} fill={favorite ? "currentColor" : "none"} aria-hidden />
+              <Bookmark size={20} fill={favorite ? "currentColor" : "none"} className={favorite ? "text-primary" : ""} aria-hidden />
             </button>
           )}
         </div>
 
         <header className="mt-4">
+          <p className="text-caption text-text-muted">AI 生成示意图，成品可能不同</p>
           {props.cookedAt && (
-            <p className="mb-2 inline-flex items-center gap-1 rounded-full bg-surface-muted px-2.5 py-0.5 text-small text-success">
+            <p className="mb-2 mt-3 inline-flex items-center gap-1 rounded-full bg-success-soft px-2.5 py-0.5 text-small font-bold text-success">
               <CheckCircle2 size={14} aria-hidden /> 你做过
               {props.rating && ` · ${VERDICT_LABELS[props.rating].label}`}
             </p>
           )}
-          <div className="flex items-baseline justify-between gap-3">
-            <h1 className="text-display font-bold">{overview?.name_zh ?? props.dish.nameZh}</h1>
-            {cuisine && (
-              <span className="shrink-0 rounded-full bg-surface-muted px-2.5 py-0.5 text-small">{cuisine.zh}</span>
-            )}
-          </div>
+          {cuisine && (
+            <div className="mb-2.5 mt-1">
+              <Stamp color={cuisine.color}>{cuisine.zh}</Stamp>
+            </div>
+          )}
+          <h1 className="font-serif text-[30px] font-black leading-[40px]">{overview?.name_zh ?? props.dish.nameZh}</h1>
           {(overview?.name_en || overview?.name_original) && (
             <p className="text-small text-text-muted">
               {[overview?.name_en, overview?.name_original].filter(Boolean).join(" · ")}
             </p>
           )}
-          {overview?.flavor_desc && <p className="mt-2">{overview.flavor_desc}</p>}
+          {overview?.flavor_desc && <p className="mt-2.5">{overview.flavor_desc}</p>}
           {overview?.total_minutes !== undefined && (
-            <p className="mt-2 flex flex-wrap items-center gap-x-2 text-small text-text-muted">
-              <span className="inline-flex items-center gap-1">
-                <Clock size={14} aria-hidden />
-                <span className="tabular">共 {overview.total_minutes} 分钟</span>
-              </span>
-              {overview.active_minutes !== undefined && <span>· 动手 {overview.active_minutes} 分钟</span>}
-              {overview.difficulty && (
-                <span>
-                  · 难度 <DifficultyDots level={overview.difficulty as 1 | 2 | 3} />
-                </span>
-              )}
-              {overview.servings !== undefined && <span>· {overview.servings} 人份</span>}
-            </p>
+            <dl className="mt-4 grid grid-cols-4 border-y border-border text-center">
+              <Fact label="总时间">
+                <span className="tabular">{overview.total_minutes} 分钟</span>
+              </Fact>
+              <Fact label="动手">
+                {overview.active_minutes !== undefined ? <span className="tabular">{overview.active_minutes} 分钟</span> : "—"}
+              </Fact>
+              <Fact label="难度">
+                {overview.difficulty ? <DifficultyDots level={overview.difficulty as 1 | 2 | 3} /> : "—"}
+              </Fact>
+              <Fact label="份量">{overview.servings !== undefined ? `${overview.servings} 人` : "—"}</Fact>
+            </dl>
           )}
         </header>
 
-        <section className="mt-6" aria-labelledby="ingredients-title">
+        <section className="mt-7" aria-labelledby="ingredients-title">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <h2 id="ingredients-title" className="text-h2 font-bold">
-              食材
+            <h2 id="ingredients-title" className="font-serif text-h1 font-black">
+              备料
             </h2>
             <div className="flex items-center gap-3">
               <Stepper
@@ -231,11 +228,11 @@ export function TutorialView(props: TutorialViewProps) {
       {/* 右栏：步骤、关键点、背景 */}
       <div>
         <section className="mt-8 lg:mt-0" aria-labelledby="steps-title">
-          <h2 id="steps-title" className="mb-3 text-h2 font-bold">
-            步骤
+          <h2 id="steps-title" className="mb-1 font-serif text-h1 font-black">
+            开火
           </h2>
           {steps.length === 0 && streaming && <SkeletonLines n={4} />}
-          <ol className="space-y-5">
+          <ol className="divide-y divide-border">
             {steps.map((s, i) => (
               <StepItem key={i} index={i} step={s} units={units} />
             ))}
@@ -246,25 +243,30 @@ export function TutorialView(props: TutorialViewProps) {
         </section>
 
         {done && !!content?.key_points?.length && (
-          <section className="mt-8 rounded-card bg-primary-soft p-4" aria-labelledby="keypoints-title">
-            <h2 id="keypoints-title" className="mb-2 flex items-center gap-2 font-bold text-primary">
-              <Lightbulb size={18} aria-hidden /> 关键点
+          <section className="mt-8" aria-labelledby="keypoints-title">
+            <h2 id="keypoints-title" className="mb-3 font-serif text-h1 font-black">
+              做之前看一眼
             </h2>
-            <ul className="list-disc space-y-1 pl-5">
+            <ul className="space-y-2.5">
               {content.key_points.map((k, i) => (
-                <li key={i}>{k}</li>
+                <li key={i} className="flex gap-3 rounded-[4px_16px_16px_16px] bg-primary-soft px-4 py-3.5">
+                  <span className="shrink-0 font-brush text-[24px] leading-[26px] text-primary" aria-hidden>
+                    {NUMERALS[i] ?? i + 1}
+                  </span>
+                  <span className="text-[15px] leading-[23px]">{k}</span>
+                </li>
               ))}
             </ul>
           </section>
         )}
 
         {done && content?.background && (
-          <details className="group mt-6 rounded-card border border-border bg-surface">
-            <summary className="flex h-12 cursor-pointer list-none items-center justify-between px-4 font-bold">
-              背景
+          <details className="group mt-6 border-b border-border">
+            <summary className="flex h-[52px] cursor-pointer list-none items-center justify-between font-serif font-bold">
+              这道菜的来历
               <ChevronDown size={18} className="transition-transform group-open:rotate-180" aria-hidden />
             </summary>
-            <p className="px-4 pb-4 text-text-muted">{content.background}</p>
+            <p className="pb-4 text-text-muted">{content.background}</p>
           </details>
         )}
 
@@ -299,7 +301,7 @@ export function TutorialView(props: TutorialViewProps) {
             {props.tutorialId ? (
               <Link
                 href={`/t/${props.tutorialId}/cook${servings !== null && servings !== baseServings ? `?servings=${servings}` : ""}`}
-                className="flex h-[52px] flex-[2] items-center justify-center gap-1 rounded-control bg-primary font-bold text-primary-contrast active:brightness-90"
+                className="flex h-[54px] flex-[2] items-center justify-center gap-1 rounded-control bg-primary text-[17px] font-bold text-primary-contrast shadow-cta active:brightness-90"
               >
                 开始做 <ChevronRight size={20} aria-hidden />
               </Link>
@@ -332,14 +334,14 @@ export function Ingredients({ content, factor, units }: { content: PartialConten
 
   if (!items.length) return <SkeletonLines n={5} />;
   return (
-    <div className="mt-3 space-y-4">
+    <div className="mt-3.5 rounded-[18px] border border-border bg-surface px-4 pb-2.5 pt-1.5">
       {GROUPS.map((g) => {
         const list = items.filter((i) => i.group === g.id);
         if (!list.length) return null;
         return (
           <div key={g.id}>
-            <p className="mb-1 text-small text-text-muted">{g.label}</p>
-            <ul className="divide-y divide-border rounded-card border border-border bg-surface">
+            <p className="pb-0.5 pt-3 font-serif text-small font-bold tracking-[2px] text-primary">{g.label}</p>
+            <ul className="divide-y divide-dashed divide-border">
               {list.map((i, idx) => (
                 <IngredientRow key={`${i.name_zh}-${idx}`} item={i} factor={factor} units={units} sub={subFor(i.name_zh!)} />
               ))}
@@ -349,8 +351,8 @@ export function Ingredients({ content, factor, units }: { content: PartialConten
       })}
       {unmatched.length > 0 && (
         <div>
-          <p className="mb-1 text-small text-text-muted">替代</p>
-          <ul className="space-y-2 rounded-card border border-border bg-surface p-3 text-small">
+          <p className="pb-1 pt-3 font-serif text-small font-bold tracking-[2px] text-success">替代</p>
+          <ul className="space-y-2 rounded-control bg-success-soft p-3 text-small">
             {unmatched.map((s, i) => (
               <li key={i}>
                 <b>{s!.for}</b> → {s!.substitute}
@@ -381,7 +383,7 @@ function IngredientRow({
       ? formatAmount(item.amount ?? null, item.unit as TutorialIngredient["unit"], factor, units)
       : null;
   return (
-    <li className="px-3 py-2.5">
+    <li className="py-2.5">
       <div className="flex items-baseline gap-2">
         <div className="min-w-0 flex-1">
           <span>{item.name_zh}</span>
@@ -394,17 +396,17 @@ function IngredientRow({
             type="button"
             onClick={() => setOpen((o) => !o)}
             aria-expanded={open}
-            className="shrink-0 rounded-full border border-primary px-2 text-caption text-primary"
+            className="shrink-0 rounded-[6px] bg-success-soft px-2 py-0.5 text-caption font-bold text-success"
           >
             替代
           </button>
         )}
-        <span className="tabular shrink-0 text-right font-bold">
+        <span className="tabular shrink-0 text-right">
           {amount ? `${amount.value}${amount.value ? " " : ""}${amount.unit}` : ""}
         </span>
       </div>
       {open && sub && (
-        <p className="mt-2 rounded-control bg-surface-muted p-2 text-small">
+        <p className="mt-2 rounded-[10px] bg-success-soft px-3 py-2.5 text-small">
           可以用 <b>{sub.substitute}</b>
           {sub.difference && <span className="text-text-muted">。{sub.difference}</span>}
         </p>
@@ -415,26 +417,33 @@ function IngredientRow({
 
 function StepItem({ index, step, units }: { index: number; step: DeepPartial<TutorialStep>; units: UnitSystem }) {
   return (
-    <li className="flex gap-3">
-      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-small font-bold text-primary-contrast">
+    <li className="flex gap-3.5 py-4">
+      <span className="w-[30px] shrink-0 text-center font-serif text-[28px] font-black leading-[30px] text-primary">
         {index + 1}
       </span>
-      <div className="min-w-0 flex-1">
+      <div className="min-w-0 flex-1 space-y-2">
         {(step.heat || step.oven_c || step.timer_seconds) && (
-          <div className="mb-1 flex flex-wrap gap-2 text-caption">
+          <div className="flex flex-wrap gap-2 text-[13px]">
             {step.heat && step.heat !== "off" && (
-              <Badge icon={<Flame size={12} aria-hidden />}>{HEAT_LABELS[step.heat as TutorialStep["heat"] & string]}</Badge>
+              <HeatBadge heat={step.heat} label={HEAT_LABELS[step.heat as TutorialStep["heat"] & string]} />
             )}
-            {step.oven_c ? <Badge icon={<Thermometer size={12} aria-hidden />}>烤箱 {formatTemp(step.oven_c, units)}</Badge> : null}
+            {step.oven_c ? <Badge icon={<Thermometer size={13} aria-hidden />}>烤箱 {formatTemp(step.oven_c, units)}</Badge> : null}
             {step.timer_seconds ? (
-              <Badge icon={<Timer size={12} aria-hidden />}>{formatDuration(step.timer_seconds)}</Badge>
+              <Badge icon={<Timer size={13} aria-hidden />} muted>
+                {formatDuration(step.timer_seconds)}
+              </Badge>
             ) : null}
           </div>
         )}
         <p>{step.action}</p>
-        {step.cue && <p className="mt-1 font-bold">看到：{step.cue}</p>}
+        {step.cue && (
+          <p>
+            <span className="mr-1.5 text-small text-text-muted">看到</span>
+            <b className="marker">{step.cue}</b>
+          </p>
+        )}
         {step.warning && (
-          <p className="mt-2 flex gap-2 rounded-control bg-surface-muted p-2 text-small">
+          <p className="flex gap-2 rounded-[10px] bg-warning-soft px-3 py-2.5 text-small">
             <AlertTriangle size={16} className="mt-0.5 shrink-0 text-warning" aria-hidden />
             {step.warning}
           </p>
@@ -444,9 +453,24 @@ function StepItem({ index, step, units }: { index: number; step: DeepPartial<Tut
   );
 }
 
-function Badge({ icon, children }: { icon: ReactNode; children: ReactNode }) {
+function Fact({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-primary-soft px-2 py-0.5 font-bold text-primary">
+    <div className="flex flex-col items-center gap-0.5 border-l border-border py-3 first:border-l-0">
+      <dt className="text-caption text-text-muted">{label}</dt>
+      <dd className="flex h-[22px] items-center text-[15px] font-bold">{children}</dd>
+    </div>
+  );
+}
+
+const NUMERALS = ["一", "二", "三", "四", "五"];
+
+function Badge({ icon, children, muted = false }: { icon: ReactNode; children: ReactNode; muted?: boolean }) {
+  return (
+    <span
+      className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 font-bold ${
+        muted ? "bg-kraft text-text" : "bg-primary-soft text-primary"
+      }`}
+    >
       {icon}
       {children}
     </span>
@@ -469,13 +493,13 @@ function Stepper({
   disabled?: boolean;
 }) {
   return (
-    <div className="flex items-center rounded-full border border-border bg-surface">
+    <div className="flex h-11 items-center rounded-full border border-border bg-surface">
       <button
         type="button"
         aria-label="减少份量"
         disabled={disabled || value <= min}
         onClick={() => onChange(value - 1)}
-        className="flex h-9 w-9 items-center justify-center disabled:opacity-30"
+        className="flex h-11 w-10 items-center justify-center disabled:opacity-30"
       >
         <Minus size={16} />
       </button>
@@ -487,7 +511,7 @@ function Stepper({
         aria-label="增加份量"
         disabled={disabled || value >= max}
         onClick={() => onChange(value + 1)}
-        className="flex h-9 w-9 items-center justify-center disabled:opacity-30"
+        className="flex h-11 w-10 items-center justify-center disabled:opacity-30"
       >
         <Plus size={16} />
       </button>
@@ -505,14 +529,14 @@ function Segmented<T extends string>({
   options: { value: T; label: string }[];
 }) {
   return (
-    <div className="flex rounded-full bg-surface-muted p-0.5" role="group" aria-label="单位">
+    <div className="flex h-11 items-center rounded-full bg-kraft p-[3px]" role="group" aria-label="单位">
       {options.map((o) => (
         <button
           key={o.value}
           type="button"
           aria-pressed={value === o.value}
           onClick={() => onChange(o.value)}
-          className={`h-8 rounded-full px-3 text-small ${value === o.value ? "bg-surface font-bold shadow-sm" : "text-text-muted"}`}
+          className={`h-full rounded-full px-3 text-small ${value === o.value ? "bg-ink font-bold text-ink-contrast" : "text-text"}`}
         >
           {o.label}
         </button>

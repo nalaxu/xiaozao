@@ -23,7 +23,7 @@ export default async function InvitePage({ searchParams }: Props) {
       <p className="text-h2 font-bold text-primary">小灶</p>
       {pending ? (
         <>
-          <h1 className="mt-6 text-h1 font-bold">填写邀请码</h1>
+          <h1 className="mt-6 font-serif text-display font-black">填写邀请码</h1>
           <p className="mb-6 mt-1 text-text-muted">
             {pending.email} 已验证。小灶目前凭邀请码注册，填入后就能开始用了。
           </p>
@@ -36,7 +36,7 @@ export default async function InvitePage({ searchParams }: Props) {
         </>
       ) : (
         <>
-          <h1 className="mt-6 text-h1 font-bold">请先验证邮箱</h1>
+          <h1 className="mt-6 font-serif text-display font-black">请先验证邮箱</h1>
           <p className="mb-6 mt-1 text-text-muted">验证状态已过期（30 分钟），重新验证邮箱后再填写邀请码。</p>
           <ButtonLink href={`/login?next=${encodeURIComponent(next)}`}>去验证邮箱</ButtonLink>
         </>

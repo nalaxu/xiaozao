@@ -15,7 +15,7 @@ export function SettingsHeader({ title, back = "/me", sub }: { title: string; ba
       <Link href={back} className="-ml-2 inline-flex h-11 items-center gap-1 px-2 text-text-muted">
         <ChevronLeft size={18} aria-hidden /> 我的
       </Link>
-      <h1 className="text-h1 font-bold">{title}</h1>
+      <h1 className="font-serif text-display font-black">{title}</h1>
       {sub && <p className="mt-1 text-small text-text-muted">{sub}</p>}
     </header>
   );

@@ -35,7 +35,7 @@ export function WelcomeForm(props: {
 
   return (
     <>
-      <h1 className="text-display font-bold">有什么不吃或过敏的吗？</h1>
+      <h1 className="font-serif text-display font-black">有什么不吃或过敏的吗？</h1>
       <p className="mt-2 text-text-muted">推荐和教程都会避开它们。以后可以在“我的”里随时改。</p>
       <div className="mt-6">
         <RestrictionsFields value={value} onChange={setValue} allergenOptions={props.allergenOptions} ingredients={props.ingredients} />
