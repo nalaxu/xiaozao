@@ -3,6 +3,7 @@
 #
 #   deploy/deploy.sh setup    <ssh目标> <域名>   首次：装 Node 22、Postgres、Caddy，建用户、目录、数据库、环境变量模板、服务、定时任务
 #   deploy/deploy.sh release  <ssh目标>          发布当前 HEAD：上传 → 安装依赖 → 数据库迁移 → 构建 → 切换 → 重启 → 健康检查（失败自动回滚）
+#   deploy/deploy.sh update   <ssh目标> [--force] 让服务器自己从 GitHub 拉取 main 最新提交并发布（等同在服务器上运行 xiaozao-update）
 #   deploy/deploy.sh rollback <ssh目标>          切回上一个版本
 #   deploy/deploy.sh invite   <ssh目标> [数量] [次数] [天数]   在线上库生成邀请码
 #   deploy/deploy.sh logs     <ssh目标>          跟踪应用日志
@@ -12,7 +13,7 @@ set -euo pipefail
 
 cmd=${1:-}
 host=${2:-}
-[[ -n "$cmd" && -n "$host" ]] || { sed -n '2,10p' "$0"; exit 1; }
+[[ -n "$cmd" && -n "$host" ]] || { sed -n '2,11p' "$0"; exit 1; }
 cd "$(dirname "$0")/.."
 
 upload() {
@@ -38,6 +39,9 @@ case "$cmd" in
     upload "$tmp"
     ssh -t "$host" "sudo bash $tmp/deploy/server/release.sh '$tmp' '$sha'"
     ;;
+  update)
+    ssh -t "$host" "sudo xiaozao-update ${3:-}"
+    ;;
   rollback)
     ssh -t "$host" "sudo bash /opt/howtocook/current/deploy/server/release.sh --rollback"
     ;;
@@ -49,7 +53,7 @@ case "$cmd" in
     ssh -t "$host" "sudo journalctl -u howtocook -f -n 100"
     ;;
   *)
-    sed -n '2,10p' "$0"
+    sed -n '2,11p' "$0"
     exit 1
     ;;
 esac

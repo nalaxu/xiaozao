@@ -17,7 +17,7 @@ fi
 
 echo "==> 安装系统软件"
 apt-get update -q
-apt-get install -y -q curl ca-certificates gnupg rsync openssl postgresql postgresql-contrib
+apt-get install -y -q curl ca-certificates gnupg rsync openssl git postgresql postgresql-contrib
 
 if ! node -v 2>/dev/null | grep -q '^v22\.'; then
   echo "==> 安装 Node.js 22"

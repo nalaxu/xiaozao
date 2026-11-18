@@ -94,11 +94,12 @@ deploy/deploy.sh invite ubuntu@<服务器IP>
 
 | 要做的事 | 命令 |
 |---|---|
-| 发布新版本 | 先提交，再 `deploy/deploy.sh release ubuntu@<服务器IP>` |
+| 更新到 GitHub 上的最新代码 | 在服务器上运行 `xiaozao-update`（或在本机 `deploy/deploy.sh update ubuntu@<服务器IP>`）：拉取 `main` 最新提交 → 安装依赖 → 迁移 → 构建 → 切换 → 重启 → 健康检查，失败自动回滚；已是最新则跳过，`--force` 强制重新发布 |
+| 发布本机的提交（不经过 GitHub） | 先提交，再 `deploy/deploy.sh release ubuntu@<服务器IP>` |
 | 回滚到上一个版本 | `deploy/deploy.sh rollback ubuntu@<服务器IP>`（不回滚数据库迁移） |
 | 看应用日志 | `deploy/deploy.sh logs ubuntu@<服务器IP>` |
 | 生成邀请码 | `deploy/deploy.sh invite ubuntu@<服务器IP> [数量] [次数] [天数]` |
-| 改环境变量 | 编辑 `/etc/howtocook/env` 后重新 `release`（`IMAGE_BASE_URL`、`NEXT_PUBLIC_*` 在构建时读取，只重启不生效） |
+| 改环境变量 | 编辑 `/etc/howtocook/env` 后运行 `xiaozao-update --force`（`IMAGE_BASE_URL`、`NEXT_PUBLIC_*` 在构建时读取，只重启不生效） |
 | 看访问日志 | 服务器上 `sudo tail -f /var/log/caddy/howtocook.log` |
 | 看定时任务是否报错 | 服务器上 `journalctl -t howtocook-cron -t howtocook-backup` |
 

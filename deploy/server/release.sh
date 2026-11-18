@@ -62,6 +62,8 @@ echo "==> 切换并重启"
 switch_to "$REL"
 if health; then
   echo "==> 发布成功：$(basename "$REL")"
+  # 一键更新命令指向当前版本里的脚本
+  ln -sfn "$BASE/current/deploy/server/update.sh" /usr/local/bin/xiaozao-update
 else
   echo "健康检查失败，最近日志："
   journalctl -u howtocook -n 50 --no-pager || true
