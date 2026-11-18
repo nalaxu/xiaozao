@@ -43,7 +43,7 @@ case "$cmd" in
     ;;
   invite)
     shift 2
-    ssh -t "$host" "cd /opt/howtocook/current && sudo -u howtocook node --env-file=/etc/howtocook/env node_modules/tsx/dist/cli.mjs scripts/admin-invite.ts $*"
+    ssh -t "$host" "sudo -u howtocook bash -c 'cd /opt/howtocook/current && node --env-file=/etc/howtocook/env node_modules/tsx/dist/cli.mjs scripts/admin-invite.ts $*'"
     ;;
   logs)
     ssh -t "$host" "sudo journalctl -u howtocook -f -n 100"
