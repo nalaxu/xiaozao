@@ -6,9 +6,9 @@
 # 关键词宁多勿少：多一个词最多误删一道菜，少一个词可能让过敏的人吃到。
 # 审核：请重点看 review_notes，以及每类有没有漏掉海外常见的成品酱料。
 
-status: draft
-reviewed_by:
-reviewed_at:
+status: reviewed
+reviewed_by: nalaxu
+reviewed_at: 2026-11-17
 
 allergens:
   - id: peanut
