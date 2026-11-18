@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import wokImage from "@/assets/wok.webp";
 import { ChevronRight } from "lucide-react";
 import { Card, SectionTitle, cuisineColor, stampColor } from "@/components/ui";
 import { cuisinesByGroup, getCuisine, moreFlavors, primaryFlavors, type Flavor } from "@/lib/kb";
@@ -31,7 +32,7 @@ export default function ExplorePage() {
 
       <Link href="/" className="mt-5 block overflow-hidden rounded-card bg-[#2b1e16] text-[#fff8ee]">
         {/* eslint-disable-next-line @next/next/no-img-element -- 静态配图，已压成 WebP */}
-        <img src="/images/wok.webp" alt="" width={960} height={640} className="h-[160px] w-full object-cover lg:h-[200px]" />
+        <img src={wokImage.src} alt="" width={960} height={640} className="h-[160px] w-full object-cover lg:h-[200px]" />
         <div className="px-[18px] pb-[18px] pt-4">
           <h2 className="font-serif text-[21px] font-black leading-[30px]">按你冰箱里的东西，现做一份</h2>
           <p className="mt-1.5 text-small text-[#e3d3be]">拍一下食材，挑个口味，从几个菜系里挑 3–5 道给你。</p>

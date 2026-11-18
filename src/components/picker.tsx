@@ -4,6 +4,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Camera, Check, ChevronDown, ChevronLeft, ChevronRight, Flame, Plus, Search, X } from "lucide-react";
+import fridgeImage from "@/assets/fridge.webp";
 import { Button } from "@/components/form";
 import { ToggleChip } from "@/components/toggle-chip";
 import { ActionBar, Sheet } from "@/components/overlay";
@@ -204,9 +205,9 @@ function IngredientStep({
 
       <div className="mt-4 space-y-3">
         <div>
-          {/* eslint-disable-next-line @next/next/no-img-element -- 静态配图，已压成 WebP */}
+          {/* eslint-disable-next-line @next/next/no-img-element -- 静态配图，已压成 WebP。用 import 得到带内容哈希的地址（/_next/static/media/…），换图即换地址，不怕旧缓存 */}
           <img
-            src="/images/fridge.webp"
+            src={fridgeImage.src}
             alt=""
             width={960}
             height={640}
