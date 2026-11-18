@@ -39,6 +39,8 @@ SRC=${1:?缺少上传目录}
 SHA=${2:?缺少提交号}
 [[ -f $ENV_FILE ]] || { echo "缺少 $ENV_FILE，请先运行 deploy/deploy.sh setup"; exit 1; }
 grep -qE '^OPENAI_API_KEY=.+' "$ENV_FILE" || echo "提示：$ENV_FILE 里 OPENAI_API_KEY 还是空的，模型功能会报错。"
+grep -qE '^TURNSTILE_SECRET_KEY=.+' "$ENV_FILE" || echo "提示：$ENV_FILE 里 TURNSTILE_SECRET_KEY 还是空的，线上无法发验证码登录。"
+grep -qE '^RESEND_API_KEY=.+' "$ENV_FILE" || echo "提示：$ENV_FILE 里 RESEND_API_KEY 还是空的，线上无法发邮件。"
 
 REL="$BASE/releases/$(date +%Y%m%d%H%M%S)-$SHA"
 mv "$SRC" "$REL"

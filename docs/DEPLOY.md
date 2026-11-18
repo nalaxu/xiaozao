@@ -66,7 +66,7 @@ ssh -t ubuntu@<服务器IP> sudo nano /etc/howtocook/env
 | `OPENAI_API_KEY`、`OPENAI_BASE_URL` | 是 | 与本地 `.env.local` 相同 |
 | `RESEND_API_KEY`、`MAIL_FROM` | 是 | 邮箱验证码、邀请和花费告警都靠它；没配置时线上发信会报错。`MAIL_FROM` 含空格要加双引号，如 `MAIL_FROM="小灶 <noreply@alanxiang.top>"` |
 | `ADMIN_EMAILS` | 是 | 管理员邮箱，逗号分隔 |
-| `NEXT_PUBLIC_TURNSTILE_SITE_KEY`、`TURNSTILE_SECRET_KEY` | 建议 | 不配置则跳过真人验证，验证码接口容易被刷 |
+| `NEXT_PUBLIC_TURNSTILE_SITE_KEY`、`TURNSTILE_SECRET_KEY` | 是 | 线上不配置时发验证码、申请邀请码一律被拒（“真人验证没有通过”），无法登录；只有本地开发会跳过。站点密钥在构建时读取，改了要重新 `release` |
 | `GOOGLE_CLIENT_ID`、`GOOGLE_CLIENT_SECRET` | 否 | 不配置则登录页只显示邮箱登录 |
 | `APP_URL`、`DATABASE_URL`、`IMAGE_DIR`、`IMAGE_BASE_URL`、`OTP_SECRET`、`CRON_SECRET` | — | 已自动填好，不用改 |
 
@@ -128,7 +128,7 @@ sudo systemctl start howtocook
 |---|---|---|
 | OpenAI（或兼容的中转） | 建 API Key；建议在后台另设月度用量上限作为第二道保险 | `OPENAI_API_KEY`、`OPENAI_BASE_URL` |
 | Resend（免费档每月 3,000 封） | 验证发信域名 `alanxiang.top`（在 DNS 中添加 Resend 给出的 SPF/DKIM 记录），建 API Key | `RESEND_API_KEY`、`MAIL_FROM` |
-| Cloudflare Turnstile（免费） | 新建站点，域名填 `xiaozao.alanxiang.top` 和 `localhost` | `NEXT_PUBLIC_TURNSTILE_SITE_KEY`、`TURNSTILE_SECRET_KEY` |
+| Cloudflare Turnstile（免费，线上必需） | Cloudflare 后台 → Turnstile → Add widget，Hostname 填 `xiaozao.alanxiang.top`（本地测试可再加 `localhost`），Widget Mode 选 Managed | `NEXT_PUBLIC_TURNSTILE_SITE_KEY`、`TURNSTILE_SECRET_KEY` |
 | Google Cloud（免费） | 创建 OAuth 客户端（Web），回调地址填 `https://xiaozao.alanxiang.top/api/auth/google/callback` 和 `http://localhost:3000/api/auth/google/callback` | `GOOGLE_CLIENT_ID`、`GOOGLE_CLIENT_SECRET` |
 
 ### 可选：改用托管服务

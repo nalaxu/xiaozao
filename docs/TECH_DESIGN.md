@@ -27,7 +27,7 @@
 
 **区域**：用户分布在北美、欧洲、澳洲，服务器在新加坡。模型调用耗时远大于跨洋网络延迟，单区域足够。
 
-**需要产品负责人开通的账号**：Resend、OpenAI API（必需），Cloudflare Turnstile、Google 登录（建议）。第一版只用免费档。密钥只放在服务器的 `/etc/howtocook/env`（权限 640）和本地 `.env.local` 里，不进代码库。
+**需要产品负责人开通的账号**：Resend、OpenAI API、Cloudflare Turnstile（必需：线上未配置 Turnstile 时验证码接口一律拒绝），Google 登录（可选）。第一版只用免费档。密钥只放在服务器的 `/etc/howtocook/env`（权限 640）和本地 `.env.local` 里，不进代码库。
 
 ## 2. 系统结构
 
