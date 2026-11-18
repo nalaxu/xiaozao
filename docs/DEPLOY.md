@@ -1,6 +1,6 @@
 # 部署说明
 
-线上运行在自有 Ubuntu 服务器（新加坡，2 核 4G），域名 `xiaozao.alanxiang.com`（技术方案第 1 节）。
+线上运行在自有 Ubuntu 服务器（新加坡，2 核 4G），域名 `xiaozao.alanxiang.top`（技术方案第 1 节）。
 
 ```
 浏览器 ──HTTPS──▶ Caddy（自动证书；/images/* 直接读本机图片目录）
@@ -39,7 +39,7 @@ crontab：每分钟 /api/cron/tick；每天 03:30 备份数据库和图片
 
 - 服务器：Ubuntu 22.04 或 24.04，能用 SSH 登录且有 sudo 权限。云厂商的安全组放行 **22、80、443** 端口。
 - 本机能免密 SSH 到服务器（`ssh-copy-id ubuntu@<服务器IP>`）。下文用 `ubuntu@<服务器IP>` 代指。
-- DNS：在 `alanxiang.com` 的 DNS 里加一条记录，等它生效（`dig +short xiaozao.alanxiang.com` 能返回服务器 IP）：
+- DNS：在 `alanxiang.top` 的 DNS 里加一条记录，等它生效（`dig +short xiaozao.alanxiang.top` 能返回服务器 IP）：
 
   | 类型 | 名称 | 值 |
   |---|---|---|
@@ -50,7 +50,7 @@ crontab：每分钟 /api/cron/tick；每天 03:30 备份数据库和图片
 ### 2. 初始化服务器
 
 ```bash
-deploy/deploy.sh setup ubuntu@<服务器IP> xiaozao.alanxiang.com
+deploy/deploy.sh setup ubuntu@<服务器IP> xiaozao.alanxiang.top
 ```
 
 它会安装 Node.js 22、PostgreSQL、Caddy，加 2G 交换空间，建 `howtocook` 系统用户和上面的目录，建数据库，生成 `/etc/howtocook/env`（数据库密码、`OTP_SECRET`、`CRON_SECRET` 已自动生成），安装 systemd 服务、Caddyfile 和定时任务。80/443 端口被其他程序占用时会停下来提示。
@@ -64,7 +64,7 @@ ssh -t ubuntu@<服务器IP> sudo nano /etc/howtocook/env
 | 变量 | 必填 | 说明 |
 |---|---|---|
 | `OPENAI_API_KEY`、`OPENAI_BASE_URL` | 是 | 与本地 `.env.local` 相同 |
-| `RESEND_API_KEY`、`MAIL_FROM` | 是 | 邮箱验证码、邀请和花费告警都靠它；没配置时线上发信会报错。`MAIL_FROM` 含空格要加双引号，如 `MAIL_FROM="小灶 <noreply@alanxiang.com>"` |
+| `RESEND_API_KEY`、`MAIL_FROM` | 是 | 邮箱验证码、邀请和花费告警都靠它；没配置时线上发信会报错。`MAIL_FROM` 含空格要加双引号，如 `MAIL_FROM="小灶 <noreply@alanxiang.top>"` |
 | `ADMIN_EMAILS` | 是 | 管理员邮箱，逗号分隔 |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY`、`TURNSTILE_SECRET_KEY` | 建议 | 不配置则跳过真人验证，验证码接口容易被刷 |
 | `GOOGLE_CLIENT_ID`、`GOOGLE_CLIENT_SECRET` | 否 | 不配置则登录页只显示邮箱登录 |
@@ -80,7 +80,7 @@ deploy/deploy.sh release ubuntu@<服务器IP>
 
 它会把**最后一次提交**（`git archive HEAD`，不含未提交的改动和 `.env.local`）上传为新版本，然后依次：`npm ci` → 数据库迁移 → 构建 → 切换 `current` → 重启 → 健康检查。健康检查失败会自动切回原版本。首次构建约 3–5 分钟。
 
-打开 `https://xiaozao.alanxiang.com`，首次访问时 Caddy 会花几秒申请证书。
+打开 `https://xiaozao.alanxiang.top`，首次访问时 Caddy 会花几秒申请证书。
 
 ### 5. 创建第一位管理员
 
@@ -127,9 +127,9 @@ sudo systemctl start howtocook
 | 服务 | 要做的事 | 环境变量 |
 |---|---|---|
 | OpenAI（或兼容的中转） | 建 API Key；建议在后台另设月度用量上限作为第二道保险 | `OPENAI_API_KEY`、`OPENAI_BASE_URL` |
-| Resend（免费档每月 3,000 封） | 验证发信域名 `alanxiang.com`（在 DNS 中添加 Resend 给出的 SPF/DKIM 记录），建 API Key | `RESEND_API_KEY`、`MAIL_FROM` |
-| Cloudflare Turnstile（免费） | 新建站点，域名填 `xiaozao.alanxiang.com` 和 `localhost` | `NEXT_PUBLIC_TURNSTILE_SITE_KEY`、`TURNSTILE_SECRET_KEY` |
-| Google Cloud（免费） | 创建 OAuth 客户端（Web），回调地址填 `https://xiaozao.alanxiang.com/api/auth/google/callback` 和 `http://localhost:3000/api/auth/google/callback` | `GOOGLE_CLIENT_ID`、`GOOGLE_CLIENT_SECRET` |
+| Resend（免费档每月 3,000 封） | 验证发信域名 `alanxiang.top`（在 DNS 中添加 Resend 给出的 SPF/DKIM 记录），建 API Key | `RESEND_API_KEY`、`MAIL_FROM` |
+| Cloudflare Turnstile（免费） | 新建站点，域名填 `xiaozao.alanxiang.top` 和 `localhost` | `NEXT_PUBLIC_TURNSTILE_SITE_KEY`、`TURNSTILE_SECRET_KEY` |
+| Google Cloud（免费） | 创建 OAuth 客户端（Web），回调地址填 `https://xiaozao.alanxiang.top/api/auth/google/callback` 和 `http://localhost:3000/api/auth/google/callback` | `GOOGLE_CLIENT_ID`、`GOOGLE_CLIENT_SECRET` |
 
 ### 可选：改用托管服务
 
