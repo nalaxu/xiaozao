@@ -23,7 +23,7 @@
 | 后台任务 | Postgres 任务表 + 请求结束后立即触发 + 每分钟定时巡检 | 第一版量小，不引入额外队列服务 |
 | 测试 | Vitest（单元）+ Playwright（端到端，模型用假实现） | |
 
-**域名**：`howtocook.alanliang.com`，DNS 加一条 A 记录指向服务器，Caddy 自动申请证书。代码只读取环境变量 `APP_URL`，不写死域名；以后换独立域名只需改 DNS、`APP_URL`、`IMAGE_BASE_URL` 和 Caddyfile 里的站点名。
+**域名**：`xiaozao.alanxiang.com`，DNS 加一条 A 记录指向服务器，Caddy 自动申请证书。代码只读取环境变量 `APP_URL`，不写死域名；以后换独立域名只需改 DNS、`APP_URL`、`IMAGE_BASE_URL` 和 Caddyfile 里的站点名。
 
 **区域**：用户分布在北美、欧洲、澳洲，服务器在新加坡。模型调用耗时远大于跨洋网络延迟，单区域足够。
 
@@ -486,13 +486,13 @@ M6 实现说明：花费页为后台首页，含当日预算进度条（四个�
 ## 16. 环境变量
 
 ```
-APP_URL                     https://howtocook.alanliang.com
+APP_URL                     https://xiaozao.alanxiang.com
 DATABASE_URL
 OPENAI_API_KEY
 OPENAI_BASE_URL             可选，OpenAI 兼容的代理或中转地址（含 /v1），默认 https://api.openai.com/v1
 MODEL_RECOGNIZE / MODEL_RECOMMEND / MODEL_TUTORIAL / MODEL_TUTORIAL_FALLBACK / MODEL_FOLLOWUP / MODEL_IMAGE
 IMAGE_QUALITY               默认 medium
-IMAGE_DIR / IMAGE_BASE_URL  本机图片目录与对外地址（线上为 /var/lib/howtocook/images 与 https://howtocook.alanliang.com/images）
+IMAGE_DIR / IMAGE_BASE_URL  本机图片目录与对外地址（线上为 /var/lib/howtocook/images 与 https://xiaozao.alanxiang.com/images）
 R2_ACCOUNT_ID / R2_ACCESS_KEY_ID / R2_SECRET_ACCESS_KEY / R2_BUCKET   可选，配置后图片改存 R2
 RESEND_API_KEY / MAIL_FROM
 NEXT_PUBLIC_TURNSTILE_SITE_KEY / TURNSTILE_SECRET_KEY
@@ -522,7 +522,7 @@ SENTRY_DSN                  可选
 需要产品负责人确认或提供：
 
 1. ~~第 1 节选型~~（已确认，部署改为自有服务器）。
-2. ~~域名~~（已定：`howtocook.alanliang.com`）。
+2. ~~域名~~（已定：`xiaozao.alanxiang.com`）。
 3. 开通 Resend、Turnstile、Google 登录，并在服务器上填写环境变量（见 `docs/DEPLOY.md`）。
 4. 管理员邮箱。
 5. 评测用的 20 张食材照片。

@@ -67,3 +67,7 @@ src/components/
 src/lib/     前后端共用逻辑（知识库查询、食材归一）
 src/server/  仅服务端代码（数据库等）
 ```
+
+## 许可证
+
+[MIT](LICENSE)
