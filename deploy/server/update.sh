@@ -6,7 +6,7 @@
 #
 # 发布过程与 deploy/deploy.sh release 相同（release.sh）：安装依赖 → 数据库迁移 → 构建 → 切换 → 重启 → 健康检查，
 # 失败自动切回原版本。用的是新拉下来的那份 release.sh，脚本本身的改进也会随之生效。
-# 首次发布后会安装命令 /usr/local/bin/xiaozao-update 指向本文件。
+# 每次发布成功后会生成命令 /usr/local/bin/xiaozao-update（包装脚本，自动 sudo 运行本文件）。
 # 仓库与分支可用环境变量覆盖：REPO_URL=... BRANCH=... xiaozao-update
 set -euo pipefail
 

@@ -62,8 +62,14 @@ echo "==> 切换并重启"
 switch_to "$REL"
 if health; then
   echo "==> 发布成功：$(basename "$REL")"
-  # 一键更新命令指向当前版本里的脚本
-  ln -sfn "$BASE/current/deploy/server/update.sh" /usr/local/bin/xiaozao-update
+  # 一键更新命令：小包装脚本（/opt/howtocook 只有服务账号能进，不能用软链接），自动 sudo 运行当前版本里的 update.sh
+  rm -f /usr/local/bin/xiaozao-update
+  cat > /usr/local/bin/xiaozao-update <<'WRAPPER'
+#!/bin/sh
+# 从 GitHub 拉取最新代码并发布小灶。由 deploy/server/release.sh 生成，见 deploy/server/update.sh
+exec sudo env REPO_URL="${REPO_URL:-}" BRANCH="${BRANCH:-}" bash /opt/howtocook/current/deploy/server/update.sh "$@"
+WRAPPER
+  chmod 755 /usr/local/bin/xiaozao-update
 else
   echo "健康检查失败，最近日志："
   journalctl -u howtocook -n 50 --no-pager || true
