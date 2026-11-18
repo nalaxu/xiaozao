@@ -17,8 +17,7 @@ fi
 
 echo "==> 安装系统软件"
 apt-get update -q
-apt-get install -y -q curl ca-certificates gnupg rsync openssl postgresql postgresql-contrib \
-  debian-keyring debian-archive-keyring apt-transport-https
+apt-get install -y -q curl ca-certificates gnupg rsync openssl postgresql postgresql-contrib
 
 if ! node -v 2>/dev/null | grep -q '^v22\.'; then
   echo "==> 安装 Node.js 22"
@@ -30,6 +29,7 @@ fi
 
 if ! command -v caddy >/dev/null; then
   echo "==> 安装 Caddy（自动申请和续期 HTTPS 证书）"
+  apt-get install -y -q debian-keyring debian-archive-keyring apt-transport-https
   curl -1sLf https://dl.cloudsmith.io/public/caddy/stable/gpg.key | gpg --dearmor --yes -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
   curl -1sLf https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt > /etc/apt/sources.list.d/caddy-stable.list
   apt-get update -q
