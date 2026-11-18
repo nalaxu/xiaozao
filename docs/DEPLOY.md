@@ -29,7 +29,7 @@ M0 只有静态页面（首页、探索菜系），不需要数据库和任何�
 | M1 | Resend | 验证发信域名（在已有域名 DNS 中添加 Resend 给出的记录），建 API Key | `RESEND_API_KEY`、`MAIL_FROM` |
 | M1 | — | 生成两个随机串：`openssl rand -hex 32` | `OTP_SECRET`、`CRON_SECRET` |
 | M1 | — | 管理员邮箱 | `ADMIN_EMAILS` |
-| M2 | OpenAI | 建 API Key，建议在 OpenAI 后台另设月度用量上限作为第二道保险 | `OPENAI_API_KEY` |
+| M2 | OpenAI | 建 API Key，建议在 OpenAI 后台另设月度用量上限作为第二道保险 | `OPENAI_API_KEY`；走代理或中转时另填 `OPENAI_BASE_URL`（含 `/v1`） |
 | M3 | Cloudflare R2 | 建存储桶并开启公开访问（自定义域名或 r2.dev 地址），建 API 令牌 | `R2_*`、`IMAGE_BASE_URL` |
 
 ## 数据库迁移

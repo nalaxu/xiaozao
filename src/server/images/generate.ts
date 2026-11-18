@@ -1,6 +1,7 @@
 // 生成菜品示意图（技术方案 8.2）：统一的风格模板 + 菜名 + 推荐时的外观描述。
 import sharp from "sharp";
 import { imageQuality, modelFor } from "@config/models";
+import { openAiBaseUrl } from "../ai/openai";
 
 export const IMAGE_TIMEOUT_MS = 120_000;
 
@@ -26,7 +27,7 @@ const openAiGenerator: ImageGenerator = async (prompt) => {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), IMAGE_TIMEOUT_MS);
   try {
-    const res = await fetch("https://api.openai.com/v1/images/generations", {
+    const res = await fetch(`${openAiBaseUrl()}/images/generations`, {
       method: "POST",
       headers: { Authorization: `Bearer ${process.env.OPENAI_API_KEY}`, "Content-Type": "application/json" },
       body: JSON.stringify({ model, prompt, size: "1024x1024", quality: imageQuality(), n: 1, output_format: "png" }),

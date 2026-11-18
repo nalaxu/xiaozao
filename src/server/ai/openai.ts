@@ -1,7 +1,8 @@
 // OpenAI Responses API，直接用 fetch 调用（结构化输出 + 流式）。技术方案 7.1。
 import { ModelError, ZERO_USAGE, type Content, type ModelClient, type ModelRequest, type Usage } from "./types";
 
-const ENDPOINT = "https://api.openai.com/v1/responses";
+/** OpenAI 兼容接口地址，可用 OPENAI_BASE_URL 换成代理或中转（需包含 /v1） */
+export const openAiBaseUrl = () => (process.env.OPENAI_BASE_URL || "https://api.openai.com/v1").replace(/\/+$/, "");
 
 function toInput(req: ModelRequest) {
   const content = req.user.map((c) =>
@@ -43,7 +44,7 @@ export function openAiClient(apiKey: string): ModelClient {
       let text = "";
       let usage: Usage = ZERO_USAGE;
       try {
-        const res = await fetch(ENDPOINT, {
+        const res = await fetch(`${openAiBaseUrl()}/responses`, {
           method: "POST",
           headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
           body: JSON.stringify(body),

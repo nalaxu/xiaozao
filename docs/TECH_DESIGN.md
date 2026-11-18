@@ -489,6 +489,7 @@ M6 实现说明：花费页为后台首页，含当日预算进度条（四个�
 APP_URL                     例如 https://xiaozao.<已有域名>
 DATABASE_URL
 OPENAI_API_KEY
+OPENAI_BASE_URL             可选，OpenAI 兼容的代理或中转地址（含 /v1），默认 https://api.openai.com/v1
 MODEL_RECOGNIZE / MODEL_RECOMMEND / MODEL_TUTORIAL / MODEL_TUTORIAL_FALLBACK / MODEL_FOLLOWUP / MODEL_IMAGE
 IMAGE_QUALITY               默认 medium
 R2_ACCOUNT_ID / R2_ACCESS_KEY_ID / R2_SECRET_ACCESS_KEY / R2_BUCKET / IMAGE_BASE_URL
