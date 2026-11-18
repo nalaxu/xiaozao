@@ -1,5 +1,7 @@
-// 图片存储：线上写 Cloudflare R2（S3 兼容接口，自己做 SigV4 签名，不引入 AWS SDK）；
-// 本地开发未配置 R2 时写到 .data/images，经 /api/dev-images 读取。
+// 图片存储，按优先级：
+// 1. 配置了 R2：写 Cloudflare R2（S3 兼容接口，自己做 SigV4 签名，不引入 AWS SDK）。
+// 2. 配置了 IMAGE_DIR：写本机目录（自建服务器上由 Caddy 直接以 IMAGE_BASE_URL 提供，如 /images/*）。
+// 3. 本地开发：写到 .data/images，经 /api/dev-images 读取。
 import { createHash, createHmac } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -9,6 +11,7 @@ export interface ImageStorage {
 }
 
 const DEV_DIR = path.join(process.cwd(), ".data", "images");
+const localDir = () => process.env.IMAGE_DIR || DEV_DIR;
 const isProd = () => process.env.NODE_ENV === "production";
 
 const r2Configured = () =>
@@ -90,9 +93,10 @@ const r2Storage: ImageStorage = {
   },
 };
 
-const devStorage: ImageStorage = {
+const diskStorage: ImageStorage = {
   async put(key, body) {
-    const file = path.join(DEV_DIR, key);
+    if (!/^dishes\/[0-9a-f-]{36}\/(384|768)\.webp$/.test(key)) throw new Error(`图片路径不合法: ${key}`);
+    const file = path.join(localDir(), key);
     await mkdir(path.dirname(file), { recursive: true });
     await writeFile(file, body);
   },
@@ -102,7 +106,7 @@ const devStorage: ImageStorage = {
 export async function readDevImage(key: string): Promise<Buffer | null> {
   if (!/^dishes\/[0-9a-f-]{36}\/(384|768)\.webp$/.test(key)) return null;
   try {
-    return await readFile(path.join(DEV_DIR, key));
+    return await readFile(path.join(localDir(), key));
   } catch {
     return null;
   }
@@ -113,8 +117,8 @@ const g = globalThis as unknown as { __xzStorage?: ImageStorage };
 export function getStorage(): ImageStorage {
   if (g.__xzStorage) return g.__xzStorage;
   if (r2Configured()) return r2Storage;
-  if (isProd()) throw new Error("R2 未配置");
-  return devStorage;
+  if (isProd() && !process.env.IMAGE_DIR) throw new Error("图片存储未配置（R2 或 IMAGE_DIR）");
+  return diskStorage;
 }
 
 export function setStorageForTests(s: ImageStorage | undefined) {

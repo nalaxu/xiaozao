@@ -2,13 +2,15 @@ import type { NextConfig } from "next";
 import { contentSecurityPolicy } from "./config/csp";
 
 // 每次部署不同的版本号，Service Worker 据此更新（src/app/sw.js）
-const buildId = process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 12) ?? Date.now().toString(36);
+const buildId = process.env.GIT_COMMIT_SHA?.slice(0, 12) || Date.now().toString(36);
 
 const nextConfig: NextConfig = {
   env: { NEXT_PUBLIC_BUILD_ID: buildId },
   // PGlite 带 WASM 文件，不参与打包（仅本地开发与测试使用）
-  serverExternalPackages: ["@electric-sql/pglite"],
+  serverExternalPackages: ["@electric-sql/pglite", "pg"],
   poweredByHeader: false,
+  // 自建服务器上由 Caddy 压缩；Next 自带的压缩可能缓冲流式响应（推荐、教程是 NDJSON 流）
+  compress: false,
   async headers() {
     return [
       {

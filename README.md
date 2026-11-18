@@ -5,7 +5,7 @@
 - 需求：[docs/PRD.md](docs/PRD.md)
 - 技术方案：[docs/TECH_DESIGN.md](docs/TECH_DESIGN.md)
 - 设计：[docs/DESIGN.md](docs/DESIGN.md)
-- 部署：[docs/DEPLOY.md](docs/DEPLOY.md)
+- 部署：[docs/DEPLOY.md](docs/DEPLOY.md)（自有 Ubuntu 服务器，`deploy/deploy.sh release <ssh目标>`）
 - 知识库：[knowledge/README.md](knowledge/README.md)
 
 ## 本地开发
@@ -32,7 +32,7 @@ npm run dev
 - 未配置 Resend 时，验证码和邀请邮件打印在 `npm run dev` 的终端里。
 - 未配置 Turnstile 时跳过真人验证；未配置 Google 时登录页只显示邮箱登录。
 - 未配置 `OPENAI_API_KEY` 时使用假模型（`src/server/ai/fake.ts`）：拍照识别返回固定的几样食材，推荐从知识库的代表菜里挑，流程和界面都能走通，但结果不代表真实模型的质量。线上没有密钥会直接报错。
-- 未配置 R2 时，菜品图写到 `.data/images`，经 `/api/dev-images` 读取；没有 OpenAI 密钥时图片是写着菜名的占位图。
+- 未配置 R2 和 `IMAGE_DIR` 时，菜品图写到 `.data/images`，经 `/api/dev-images` 读取；没有 OpenAI 密钥时图片是写着菜名的占位图。
 - Service Worker（离线）只在生产构建注册。要在本地试离线：先停掉 dev 服务器，`npm run build`，再用 `PGLITE_DIR=.data/pglite npm run start` 启动（生产模式默认要求 `DATABASE_URL`，显式设置 `PGLITE_DIR` 才会用本地库）；打开过的教程在停掉服务器后仍能打开。之后再运行 `npm run dev` 会自动注销 Service Worker。
 
 本地注册第一个账号：在 `.env.local` 里写 `ADMIN_EMAILS=你的邮箱`，先停掉 dev 服务器，再运行 `npm run admin:invite` 生成邀请码（PGlite 同一时间只能被一个进程打开），然后启动 dev 服务器，用该邮箱登录并填入邀请码，这个账号就是管理员。
@@ -57,6 +57,7 @@ npm run dev
 
 ```
 config/      模型、单价、额度与预算阈值
+deploy/      服务器初始化、发布、systemd、Caddy、定时任务与备份
 docs/        需求、技术方案、设计、部署
 drizzle/     数据库迁移（生成后提交）
 knowledge/   知识库 YAML（需终审才上线）

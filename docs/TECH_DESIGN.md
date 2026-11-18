@@ -2,32 +2,32 @@
 
 - 对应需求文档：`docs/PRD.md` v0.5
 - 对应设计文档：`docs/DESIGN.md`
-- 更新日期：2026-11-16
-- 状态：初稿，待产品负责人确认第 1 节的选型
+- 更新日期：2026-11-17
+- 状态：已确认。第 1 节选型经产品负责人审核通过；2026-11-17 改为部署在自有服务器（见第 1 节）
 - 标记说明：【建议】为本文给出的默认方案，确认后改为【已定】
 
 ---
 
-## 1. 选型总览【建议】
+## 1. 选型总览【已定】
 
 | 层 | 选型 | 理由 |
 |---|---|---|
 | 前后端框架 | Next.js（App Router）+ TypeScript + React | 一套代码同时提供页面与接口；流式输出支持好；PWA 生态成熟 |
 | 样式 | Tailwind CSS | 设计令牌可直接映射到配置（见设计文档第 6 节） |
-| 部署 | Vercel | 绑定三级域名只需加一条 CNAME；函数最长可运行 300 秒，满足图片生成；自带定时任务 |
-| 数据库 | Postgres（Neon 托管）+ Drizzle ORM | 关系数据为主；用 jsonb 存教程等结构化内容；托管版自带静态加密与备份。线上用 Neon 的 WebSocket 连接池（支持事务）；本地未配置 `DATABASE_URL` 时自动使用 PGlite（进程内 Postgres，数据在 `.data/`），测试也用内存 PGlite |
-| 图片存储 | Cloudflare R2 + CDN | 无流量费，适合图片库这类读多写少的资源 |
+| 部署 | 自有 Ubuntu 服务器（新加坡，2 核 4G）：Node.js 22 + systemd，Caddy 反向代理并自动签发 HTTPS 证书 | 无平台费用；常驻进程没有函数时长限制，`after()` 里的图片生成照常运行；定时任务用系统 crontab 每分钟调用。脚本与配置见 `deploy/`，步骤见 `docs/DEPLOY.md` |
+| 数据库 | Postgres（服务器本机）+ Drizzle ORM | 关系数据为主；用 jsonb 存教程等结构化内容。本机库只监听 127.0.0.1，每天 `pg_dump` 备份。`DATABASE_URL` 指向 `*.neon.tech` 时改用 Neon 的 WebSocket 连接池，其余地址用 node-postgres（都支持事务），以后迁到托管库只需换连接串；本地未配置 `DATABASE_URL` 时自动使用 PGlite（进程内 Postgres，数据在 `.data/`），测试也用内存 PGlite |
+| 图片存储 | 服务器本机目录（`IMAGE_DIR`），由 Caddy 在 `/images` 下直接提供 | 第一版约 1,000 道菜、两种尺寸共约 200 MB，本机足够；文件名带 uuid，长期缓存。配置了 R2 时改写 R2（无流量费、全球 CDN），作为日后升级选项 |
 | 邮件 | Resend | 发送验证码与管理员告警，接口简单 |
 | 真人验证 | Cloudflare Turnstile | 免费、无需用户操作、不依赖 Google；对海外用户可用（PRD 4.6 留待技术方案定，此处定为 Turnstile） |
 | 模型 | OpenAI 官方 Node SDK，Responses API | 结构化输出（JSON Schema 严格模式）+ 流式 |
 | 后台任务 | Postgres 任务表 + 请求结束后立即触发 + 每分钟定时巡检 | 第一版量小，不引入额外队列服务 |
 | 测试 | Vitest（单元）+ Playwright（端到端，模型用假实现） | |
 
-**域名**：第一版用产品负责人已有域名下的三级域名（如 `xiaozao.<已有域名>`）。代码只读取环境变量 `APP_URL`，不写死域名；以后换独立域名只需改 DNS 和该变量。图片 CDN 可用同一主域的另一个三级域名（如 `img.<已有域名>`），R2 自定义域名要求该主域托管在 Cloudflare；若不托管，第一版先用 R2 自带的公开地址。
+**域名**：`howtocook.alanliang.com`，DNS 加一条 A 记录指向服务器，Caddy 自动申请证书。代码只读取环境变量 `APP_URL`，不写死域名；以后换独立域名只需改 DNS、`APP_URL`、`IMAGE_BASE_URL` 和 Caddyfile 里的站点名。
 
-**区域**：用户分布在北美、欧洲、澳洲，第一版部署在美东（Vercel `iad1`，Neon `us-east`），静态资源和图片走全球 CDN。模型调用耗时远大于跨洋网络延迟，单区域足够。
+**区域**：用户分布在北美、欧洲、澳洲，服务器在新加坡。模型调用耗时远大于跨洋网络延迟，单区域足够。
 
-**需要产品负责人开通的账号**：Vercel、Neon、Cloudflare（R2 + Turnstile）、Resend、OpenAI API。密钥只放在 Vercel 环境变量里，不进代码库。
+**需要产品负责人开通的账号**：Resend、OpenAI API（必需），Cloudflare Turnstile、Google 登录（建议）。第一版只用免费档。密钥只放在服务器的 `/etc/howtocook/env`（权限 640）和本地 `.env.local` 里，不进代码库。
 
 ## 2. 系统结构
 
@@ -35,14 +35,14 @@
 浏览器（PWA）
   │  页面、接口请求、流式响应
   ▼
-Next.js（Vercel）
+Caddy（HTTPS、/images 静态图片）→ Next.js（systemd 常驻）
   ├─ 页面渲染
   ├─ /api/*  接口：鉴权 → 额度 → 预算 → 调用模型 → 记账
   ├─ 知识库（构建时由 YAML 编译为 JSON，随代码部署）
   └─ 后台任务：图片生成、告警邮件
         │                 │                │
         ▼                 ▼                ▼
-   Postgres（Neon）   OpenAI API      R2（图片库）
+   Postgres（本机）   OpenAI API      本机磁盘（图片库）
                                        Resend（邮件）
 ```
 
@@ -360,7 +360,7 @@ safety_notes: [string]                   // 熟度、生食等提示（PRD 6.2�
 - 同一道菜同时只会有一个任务：`UPDATE dishes SET image_status = 'generating' WHERE id = ? AND image_status IN ('none','queued','failed') RETURNING id` 拿到锁才生成。
 - 提示词：固定的风格模板 + 菜名（中英文）+ 推荐结果里的 `visual` 描述。风格模板统一为“家常摆盘、45 度俯拍、自然光、浅色桌面、无文字、无人手”，保证全站图片风格一致。
 - 模型与质量来自配置（`MODEL_IMAGE`、`IMAGE_QUALITY=medium`），1024×1024。
-- 生成后用 `sharp` 转成 WebP 两种尺寸（768 像素用于教程顶部、384 像素用于卡片），上传 R2，路径 `dishes/{dish_id}/{768|384}.webp`，设置长期缓存。
+- 生成后用 `sharp` 转成 WebP 两种尺寸（768 像素用于教程顶部、384 像素用于卡片），写入图片存储（本机 `IMAGE_DIR` 或 R2），路径 `dishes/{dish_id}/{768|384}.webp`，设置长期缓存。
 - 失败最多重试 2 次，之后标记 `failed`，前端保持占位图（PRD 4.3）。
 - 当日花费达到 $80 后不再生成新图，新任务延后到次日（PRD 6.3）。
 
@@ -448,8 +448,8 @@ PRD 第 11 节要求上线前实测成本。方法：
 - **欢迎页**：兑换邀请码注册后先到 `/welcome`，保存或“以后再说”都记下 `onboarded_at`，再回到原本要去的页面。
 - **注销**（F36）：删除用户及所有关联行（外键级联）；`model_calls` 中的 user_id 置空，保留成本统计。
 - **关闭记录开关**：立即停止写入对应数据，并询问是否同时删除已有数据。
-- **加密**：Neon 与 R2 提供静态加密；全站 HTTPS；验证码与会话令牌只存哈希。
-- **HTTP 头**：内容安全策略（只允许本站、R2 图片域、Turnstile、Google 登录）、`X-Frame-Options: DENY`、`Referrer-Policy: strict-origin-when-cross-origin`。M6 实现见 `config/csp.ts`：Google 登录是整页跳转，不需要放行；脚本仍需 `'unsafe-inline'`，因为 Next.js 页面内联水合数据，改用 nonce 会让所有页面动态渲染（离线外壳等静态页会失效），第一版先这样，其余来源全部收紧。生产环境另加 HSTS。R2 图片域取自构建时的 `IMAGE_BASE_URL`。
+- **加密**：全站 HTTPS（Caddy）；数据库只监听本机，环境变量文件仅 root 与服务账号可读；验证码与会话令牌只存哈希。
+- **HTTP 头**：内容安全策略（只允许本站、图片域、Turnstile、Google 登录）、`X-Frame-Options: DENY`、`Referrer-Policy: strict-origin-when-cross-origin`。M6 实现见 `config/csp.ts`：Google 登录是整页跳转，不需要放行；脚本仍需 `'unsafe-inline'`，因为 Next.js 页面内联水合数据，改用 nonce 会让所有页面动态渲染（离线外壳等静态页会失效），第一版先这样，其余来源全部收紧。生产环境另加 HSTS。R2 图片域取自构建时的 `IMAGE_BASE_URL`。
 - **密钥**：OpenAI、Resend、Turnstile、OAuth、`OTP_SECRET`、`CRON_SECRET` 只在服务端环境变量中。
 - **隐私政策页**与首次拍照前的告知（PRD 第 8 节）。
 
@@ -472,7 +472,7 @@ M6 实现说明：花费页为后台首页，含当日预算进度条（四个�
 ## 14. 可观测性
 
 - `model_calls` 即调用日志，后台“花费”页直接查询。
-- 前后端错误上报到 Sentry（免费档），去掉请求体与用户邮箱。**尚未接入**：需要先注册 Sentry 并决定是否接受把错误堆栈发到第三方，接入时再加依赖。目前错误只在 Vercel 的函数日志里。
+- 前后端错误上报到 Sentry（免费档），去掉请求体与用户邮箱。**尚未接入**：需要先注册 Sentry 并决定是否接受把错误堆栈发到第三方，接入时再加依赖。目前错误只在服务器的 systemd 日志里（`journalctl -u howtocook`）。
 - PRD 第 9 节的指标所需事件（推荐 → 打开教程、进入烹饪模式、完成烹饪、评价、次周回访、识别结果修改率、图片库命中率、邀请码 → 注册完成）记录在 `events` 表（user_id, name, props, created_at），后台按周汇总。第一版不接第三方分析工具。
 - M6 实现的事件见 `src/server/events.ts`：`visit`（每个账号每天第一次打开首页、收藏或教程）、`recommend_run`（含推荐时已有图的菜数）、`tutorial_open`、`cook_start`、`cook_complete`、`rating`（关闭评价记录时不记）、`recognize`、`recognize_edit`（前端在发起推荐时上报拍照加入与删掉的数量）、`signup_pending`、`signup_complete`。事件里不含食材、照片或自由文本。“用完当日推荐额度”直接从 `usage_daily` 统计。
 
@@ -486,15 +486,16 @@ M6 实现说明：花费页为后台首页，含当日预算进度条（四个�
 ## 16. 环境变量
 
 ```
-APP_URL                     例如 https://xiaozao.<已有域名>
+APP_URL                     https://howtocook.alanliang.com
 DATABASE_URL
 OPENAI_API_KEY
 OPENAI_BASE_URL             可选，OpenAI 兼容的代理或中转地址（含 /v1），默认 https://api.openai.com/v1
 MODEL_RECOGNIZE / MODEL_RECOMMEND / MODEL_TUTORIAL / MODEL_TUTORIAL_FALLBACK / MODEL_FOLLOWUP / MODEL_IMAGE
 IMAGE_QUALITY               默认 medium
-R2_ACCOUNT_ID / R2_ACCESS_KEY_ID / R2_SECRET_ACCESS_KEY / R2_BUCKET / IMAGE_BASE_URL
+IMAGE_DIR / IMAGE_BASE_URL  本机图片目录与对外地址（线上为 /var/lib/howtocook/images 与 https://howtocook.alanliang.com/images）
+R2_ACCOUNT_ID / R2_ACCESS_KEY_ID / R2_SECRET_ACCESS_KEY / R2_BUCKET   可选，配置后图片改存 R2
 RESEND_API_KEY / MAIL_FROM
-TURNSTILE_SITE_KEY / TURNSTILE_SECRET_KEY
+NEXT_PUBLIC_TURNSTILE_SITE_KEY / TURNSTILE_SECRET_KEY
 GOOGLE_CLIENT_ID / GOOGLE_CLIENT_SECRET
 OTP_SECRET / CRON_SECRET
 ADMIN_EMAILS
@@ -520,9 +521,9 @@ SENTRY_DSN                  可选
 
 需要产品负责人确认或提供：
 
-1. 第 1 节选型（尤其是 Vercel + Neon + R2 + Resend + Turnstile 这组服务）。
-2. 用哪个已有域名开三级域名，以及该域名是否托管在 Cloudflare（决定图片能否用同主域的自定义地址）。
-3. 开通第 1 节列出的服务账号，并配置环境变量。
+1. ~~第 1 节选型~~（已确认，部署改为自有服务器）。
+2. ~~域名~~（已定：`howtocook.alanliang.com`）。
+3. 开通 Resend、Turnstile、Google 登录，并在服务器上填写环境变量（见 `docs/DEPLOY.md`）。
 4. 管理员邮箱。
 5. 评测用的 20 张食材照片。
 

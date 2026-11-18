@@ -1,0 +1,7 @@
+# 由 deploy/server/setup.sh 安装到 /etc/cron.d/howtocook（时间为服务器时区）
+SHELL=/bin/bash
+PATH=/usr/local/bin:/usr/bin:/bin
+# 每分钟：接手遗漏或失败的图片任务、清理过期数据、预算告警
+* * * * * howtocook bash /opt/howtocook/current/deploy/server/cron-tick.sh
+# 每天 03:30：备份数据库和图片
+30 3 * * * howtocook bash /opt/howtocook/current/deploy/server/backup.sh

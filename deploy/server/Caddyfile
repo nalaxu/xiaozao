@@ -1,0 +1,37 @@
+# 由 deploy/server/setup.sh 安装到 /etc/caddy/Caddyfile。Caddy 自动申请并续期 HTTPS 证书。
+__DOMAIN__ {
+	# 只压缩这些类型；推荐、教程的 NDJSON 流不压缩，避免缓冲
+	encode zstd gzip {
+		match {
+			header Content-Type text/html*
+			header Content-Type text/css*
+			header Content-Type text/plain*
+			header Content-Type application/json*
+			header Content-Type application/javascript*
+			header Content-Type application/manifest+json*
+			header Content-Type image/svg+xml*
+		}
+	}
+
+	# 菜品图片：直接读本机目录（IMAGE_DIR），文件名带 uuid，永不变化
+	handle_path /images/* {
+		root * /var/lib/howtocook/images
+		header Cache-Control "public, max-age=31536000, immutable"
+		header X-Content-Type-Options nosniff
+		file_server
+	}
+
+	handle {
+		reverse_proxy 127.0.0.1:3000 {
+			# 流式响应立即转发
+			flush_interval -1
+		}
+	}
+
+	log {
+		output file /var/log/caddy/howtocook.log {
+			roll_size 20MiB
+			roll_keep 5
+		}
+	}
+}

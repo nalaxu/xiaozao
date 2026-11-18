@@ -1,5 +1,6 @@
 // 数据库连接。
-// - 配置了 DATABASE_URL：连接 Neon（WebSocket 连接池，支持事务）。
+// - 配置了 DATABASE_URL：主机名以 neon.tech 结尾时用 Neon 的 WebSocket 连接池；
+//   其他地址（如服务器本机的 Postgres）用 node-postgres 连接池。两者都支持事务。
 // - 未配置且非生产环境：使用本地 PGlite（.data/pglite），首次启动自动建表，方便不开通 Neon 也能本地开发。
 //   本地用 next start 试生产构建时，显式设置 PGLITE_DIR 也会使用 PGlite。
 // - 测试：用 setDbForTests 注入内存 PGlite。
@@ -13,14 +14,27 @@ const g = globalThis as unknown as { __xzDb?: Promise<Db> };
 async function connect(): Promise<Db> {
   const url = process.env.DATABASE_URL;
   if (url) {
-    const { Pool } = await import("@neondatabase/serverless");
-    const { drizzle } = await import("drizzle-orm/neon-serverless");
-    return drizzle({ client: new Pool({ connectionString: url }), schema }) as unknown as Db;
+    if (isNeonUrl(url)) {
+      const { Pool } = await import("@neondatabase/serverless");
+      const { drizzle } = await import("drizzle-orm/neon-serverless");
+      return drizzle({ client: new Pool({ connectionString: url }), schema }) as unknown as Db;
+    }
+    const { Pool } = await import("pg");
+    const { drizzle } = await import("drizzle-orm/node-postgres");
+    return drizzle({ client: new Pool({ connectionString: url, max: 10 }), schema }) as unknown as Db;
   }
   if (process.env.NODE_ENV === "production" && !process.env.PGLITE_DIR) {
     throw new Error("DATABASE_URL 未配置");
   }
   return openPglite(process.env.PGLITE_DIR ?? ".data/pglite");
+}
+
+export function isNeonUrl(url: string): boolean {
+  try {
+    return new URL(url).hostname.endsWith(".neon.tech");
+  } catch {
+    return false;
+  }
 }
 
 /** 打开 PGlite 并应用迁移；dir 为 undefined 时使用内存库 */
