@@ -20,7 +20,7 @@ crontab：每分钟 /api/cron/tick；每天 03:30 备份数据库和图片
 | `deploy/server/release.sh` | 发布与回滚 |
 | `deploy/server/env.template` | 线上环境变量模板，生成到 `/etc/howtocook/env` |
 | `deploy/server/howtocook.service` | systemd 服务 |
-| `deploy/server/Caddyfile` | 反向代理、HTTPS、图片（装到 `/etc/caddy/howtocook.caddy`，主 Caddyfile 只追加一行 `import`，不影响服务器上已有的站点） |
+| `deploy/server/Caddyfile` | 反向代理、HTTPS、图片（装到 `/etc/caddy/howtocook.caddy`，主 Caddyfile 只追加一行 `import`，不影响服务器上已有的站点；每次发布时自动同步，校验不过则保留原配置）。Caddy 只接管 `/images/dishes/*`，`public/images` 里的界面图片仍由应用提供 |
 | `deploy/server/cron`、`cron-tick.sh`、`backup.sh` | 定时任务与备份 |
 
 服务器上的目录：

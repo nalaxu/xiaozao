@@ -18,6 +18,29 @@ health() {
   return 1
 }
 
+# 把当前版本里的 Caddy 站点配置同步到 /etc/caddy/howtocook.caddy（内容变了才动）。
+# 先校验，失败就恢复原文件；reload 是平滑的，不影响同一台 Caddy 上的其他站点。
+sync_caddy() {
+  local site=/etc/caddy/howtocook.caddy domain new
+  [[ -f $site ]] || return 0
+  domain=$(grep -E '^APP_URL=' "$ENV_FILE" | tail -1 | cut -d= -f2- | sed -E 's#^"?https?://##; s#[/:"].*$##')
+  [[ -n $domain ]] || return 0
+  new=$(mktemp)
+  sed "s|__DOMAIN__|$domain|g" "$BASE/current/deploy/server/Caddyfile" > "$new"
+  if cmp -s "$new" "$site"; then rm -f "$new"; return 0; fi
+  cp "$site" "$site.bak"
+  install -m 644 "$new" "$site"
+  rm -f "$new"
+  if caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile >/dev/null 2>&1; then
+    chown -R caddy:caddy /var/log/caddy
+    if systemctl reload caddy; then echo "==> 已更新 Caddy 配置"; return 0; fi
+  fi
+  echo "提示：新的 Caddy 配置无效或重载失败，已恢复原配置（$site.bak 为新版本前的备份）"
+  install -m 644 "$site.bak" "$site"
+  chown -R caddy:caddy /var/log/caddy
+  systemctl reload caddy || true
+}
+
 switch_to() {
   ln -sfn "$1" "$BASE/current.tmp"
   mv -T "$BASE/current.tmp" "$BASE/current"
@@ -70,6 +93,7 @@ if health; then
 exec sudo env REPO_URL="${REPO_URL:-}" BRANCH="${BRANCH:-}" bash /opt/howtocook/current/deploy/server/update.sh "$@"
 WRAPPER
   chmod 755 /usr/local/bin/xiaozao-update
+  sync_caddy
 else
   echo "健康检查失败，最近日志："
   journalctl -u howtocook -n 50 --no-pager || true

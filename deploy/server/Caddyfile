@@ -13,8 +13,10 @@ __DOMAIN__ {
 		}
 	}
 
-	# 菜品图片：直接读本机目录（IMAGE_DIR），文件名带 uuid，永不变化
-	handle_path /images/* {
+	# 菜品图片：直接读本机目录（IMAGE_DIR），文件名带 uuid，永不变化。
+	# 只接管 /images/dishes/*；/images 下的其他文件（public/images 里的界面图片）交给 Next.js
+	handle /images/dishes/* {
+		uri strip_prefix /images
 		root * /var/lib/howtocook/images
 		header Cache-Control "public, max-age=31536000, immutable"
 		header X-Content-Type-Options nosniff
