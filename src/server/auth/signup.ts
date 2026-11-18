@@ -1,4 +1,6 @@
-// “先验证邮箱，再填邀请码”的统一流程（技术方案 5.1、5.5）。
+// 注册流程（技术方案 5.1、5.5）：邮箱验证通过后，有账号就登录；新邮箱凭邀请码建号。
+// 邮箱登录页把邮箱、邀请码、验证码放在同一页：发验证码前先查邀请码是否有效（checkInviteCode），
+// 验证码通过后直接用它建号；Google 登录仍走 /login/invite。
 import { and, eq, gt, isNull, lt, or, sql } from "drizzle-orm";
 import { signup as limits } from "@config/limits";
 import type { Db } from "../db/client";
@@ -71,29 +73,15 @@ export async function getPendingSignup(db: Db, pendingId: string | undefined, no
   return row ?? null;
 }
 
-export type RedeemResult =
-  | { ok: true; user: User }
-  | { ok: false; reason: "pending_expired" | "invalid_code" | "rate_limited" | "ip_signup_limit" };
+export const INVITE_MESSAGES = {
+  pending_expired: "登录状态已过期，请重新验证邮箱",
+  invalid_code: "邀请码无效或已用完",
+  rate_limited: "尝试次数太多，请一小时后再试",
+  ip_signup_limit: "今天这个网络下注册的账号已达上限，请明天再试",
+} as const;
 
-export async function redeemInvite(
-  db: Db,
-  input: { pendingId: string | undefined; code: string; ip: string },
-  now = new Date(),
-): Promise<RedeemResult> {
-  const pending = await getPendingSignup(db, input.pendingId, now);
-  if (!pending) return { ok: false, reason: "pending_expired" };
-
-  const attempt = await hit(
-    db,
-    { bucket: "invite:ip:h", key: input.ip, windowSeconds: HOUR, limit: limits.inviteAttemptsPerIpPerHour },
-    now,
-  );
-  if (!attempt.ok) return { ok: false, reason: "rate_limited" };
-
-  const code = normalizeInviteCode(input.code);
-  if (!code) return { ok: false, reason: "invalid_code" };
-
-  // 先确认码有效，再计入同 IP 的注册次数，避免输错码也占用注册名额
+/** 当前可用的邀请码（未撤销、未过期、未用完） */
+async function findValidInvite(db: Db, code: string, now: Date) {
   const [valid] = await db
     .select({ id: inviteCodes.id })
     .from(inviteCodes)
@@ -106,6 +94,48 @@ export async function redeemInvite(
       ),
     )
     .limit(1);
+  return valid ?? null;
+}
+
+const inviteAttempt = (db: Db, ip: string, now: Date) =>
+  hit(db, { bucket: "invite:ip:h", key: ip, windowSeconds: HOUR, limit: limits.inviteAttemptsPerIpPerHour }, now);
+
+/**
+ * 发验证码前预查邀请码，让填错码的人不用先收一封验证码邮件才发现。
+ * 只说明码本身是否可用，不透露邮箱是否注册过。与兑换共用同一个按 IP 的尝试次数限制，防止猜码。
+ */
+export async function checkInviteCode(
+  db: Db,
+  input: { code: string; ip: string },
+  now = new Date(),
+): Promise<{ ok: true } | { ok: false; reason: "invalid_code" | "rate_limited" }> {
+  const attempt = await inviteAttempt(db, input.ip, now);
+  if (!attempt.ok) return { ok: false, reason: "rate_limited" };
+  const code = normalizeInviteCode(input.code);
+  if (!code || !(await findValidInvite(db, code, now))) return { ok: false, reason: "invalid_code" };
+  return { ok: true };
+}
+
+export type RedeemResult =
+  | { ok: true; user: User }
+  | { ok: false; reason: "pending_expired" | "invalid_code" | "rate_limited" | "ip_signup_limit" };
+
+export async function redeemInvite(
+  db: Db,
+  input: { pendingId: string | undefined; code: string; ip: string },
+  now = new Date(),
+): Promise<RedeemResult> {
+  const pending = await getPendingSignup(db, input.pendingId, now);
+  if (!pending) return { ok: false, reason: "pending_expired" };
+
+  const attempt = await inviteAttempt(db, input.ip, now);
+  if (!attempt.ok) return { ok: false, reason: "rate_limited" };
+
+  const code = normalizeInviteCode(input.code);
+  if (!code) return { ok: false, reason: "invalid_code" };
+
+  // 先确认码有效，再计入同 IP 的注册次数，避免输错码也占用注册名额
+  const valid = await findValidInvite(db, code, now);
   if (!valid) return { ok: false, reason: "invalid_code" };
 
   const signupsToday = await hit(

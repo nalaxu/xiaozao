@@ -5,7 +5,7 @@ import type { Db } from "../db/client";
 import { inviteCodes, users } from "../db/schema";
 import { at, plus, testDb } from "../test-utils";
 import { createSession, userForSession } from "./session";
-import { applyForInvite, redeemInvite, resolveVerifiedIdentity } from "./signup";
+import { applyForInvite, checkInviteCode, redeemInvite, resolveVerifiedIdentity } from "./signup";
 
 let db: Db;
 const t0 = at("2026-11-17T10:00:00Z");
@@ -208,5 +208,47 @@ describe("邀请码申请（F33b）", () => {
     expect((await listWaitlist(db))[0].status).toBe("invited");
     // 不会重复发
     expect(await inviteFromWaitlist(db, list[0].id, "00000000-0000-0000-0000-000000000000", t0)).toBeNull();
+  });
+});
+
+describe("发验证码前预查邀请码（登录页同页填写）", () => {
+  it("有效码通过，大小写和空格不影响；无效、过期、用完、撤销都拒绝", async () => {
+    const ok = await newCode();
+    expect(await checkInviteCode(db, { code: ` ${ok.code.toLowerCase()} `, ip: "1.1.1.1" }, t0)).toEqual({ ok: true });
+    expect(await checkInviteCode(db, { code: "NOPE1234", ip: "1.1.1.1" }, t0)).toEqual({ ok: false, reason: "invalid_code" });
+
+    const expired = await newCode({ days: 1 });
+    expect(await checkInviteCode(db, { code: expired.code, ip: "1.1.1.2" }, plus(t0, 2 * 86400))).toEqual({
+      ok: false,
+      reason: "invalid_code",
+    });
+
+    const revoked = await newCode();
+    await revokeInviteCode(db, revoked.id, t0);
+    expect(await checkInviteCode(db, { code: revoked.code, ip: "1.1.1.2" }, t0)).toMatchObject({ ok: false });
+
+    const once = await newCode();
+    const r = await redeemInvite(db, { pendingId: await pendingFor("a@x.com"), code: once.code, ip: "1.1.1.3" }, t0);
+    expect(r.ok).toBe(true);
+    expect(await checkInviteCode(db, { code: once.code, ip: "1.1.1.3" }, t0)).toMatchObject({ ok: false });
+  });
+
+  it("预查不占用邀请码，之后照常兑换", async () => {
+    const c = await newCode();
+    expect((await checkInviteCode(db, { code: c.code, ip: "2.2.2.2" }, t0)).ok).toBe(true);
+    const r = await redeemInvite(db, { pendingId: await pendingFor("b@x.com"), code: c.code, ip: "2.2.2.2" }, t0);
+    expect(r.ok).toBe(true);
+    const [row] = await db.select().from(inviteCodes).where(eq(inviteCodes.id, c.id));
+    expect(row.usedCount).toBe(1);
+  });
+
+  it("与兑换共用按 IP 的尝试次数，防止猜码", async () => {
+    for (let i = 0; i < 10; i++) await checkInviteCode(db, { code: `GUESS${i}XX`, ip: "3.3.3.3" }, t0);
+    const c = await newCode();
+    expect(await checkInviteCode(db, { code: c.code, ip: "3.3.3.3" }, t0)).toEqual({ ok: false, reason: "rate_limited" });
+    const r = await redeemInvite(db, { pendingId: await pendingFor("c@x.com"), code: c.code, ip: "3.3.3.3" }, t0);
+    expect(r).toEqual({ ok: false, reason: "rate_limited" });
+    // 其他 IP 不受影响
+    expect((await checkInviteCode(db, { code: c.code, ip: "4.4.4.4" }, t0)).ok).toBe(true);
   });
 });

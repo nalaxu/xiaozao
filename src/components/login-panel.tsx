@@ -28,12 +28,15 @@ export function LoginPanel({
   initialError?: string | null;
 }) {
   const router = useRouter();
-  const [step, setStep] = useState<"email" | "code">("email");
+  // start：填邮箱（新用户连同邀请码）→ code：同一页填验证码 → invite：邮箱已验证但缺邀请码或码不对，同一页补填
+  const [phase, setPhase] = useState<"start" | "code" | "invite">("start");
   const [email, setEmail] = useState("");
+  const [invite, setInvite] = useState("");
   const [code, setCode] = useState("");
   const [token, setToken] = useState<string | null>(null);
   const [resetKey, setResetKey] = useState(0);
   const [error, setError] = useState<string | null>(initialError ?? null);
+  const [inviteError, setInviteError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [cooldown, setCooldown] = useState(0);
 
@@ -43,33 +46,76 @@ export function LoginPanel({
     return () => clearTimeout(t);
   }, [cooldown]);
 
+  const go = (target: string) => {
+    router.replace(target);
+    router.refresh();
+  };
+
   async function sendCode() {
     setError(null);
+    setInviteError(null);
     setBusy(true);
-    const res = await postJson<{ retryAfter?: number }>("/api/auth/email/start", { email, turnstileToken: token });
+    const res = await postJson<{ retryAfter?: number; field?: string }>("/api/auth/email/start", {
+      email,
+      inviteCode: invite || undefined,
+      turnstileToken: token,
+    });
     setBusy(false);
     setResetKey((k) => k + 1); // Turnstile 令牌只能用一次
     if (!res.ok) {
-      setError(res.data.error ?? "发送失败，请稍后再试");
+      const message = res.data.error ?? "发送失败，请稍后再试";
+      if (res.data.field === "invite") setInviteError(message);
+      else setError(message);
       if (res.data.retryAfter) setCooldown(res.data.retryAfter);
       return;
     }
-    setStep("code");
+    setPhase("code");
     setCode("");
     setCooldown(otp.resendSeconds);
   }
 
   async function verify(value = code) {
     setError(null);
+    setInviteError(null);
     setBusy(true);
-    const res = await postJson<{ next?: string }>("/api/auth/email/verify", { email, code: value, next });
+    const res = await postJson<{ next?: string; needInvite?: boolean }>("/api/auth/email/verify", {
+      email,
+      code: value,
+      inviteCode: invite || undefined,
+      next,
+    });
     setBusy(false);
+    if (res.ok && res.data.needInvite) {
+      setPhase("invite");
+      setInviteError(res.data.error ?? "这个邮箱还没注册，填写邀请码就能完成注册");
+      return;
+    }
     if (!res.ok || !res.data.next) {
       setError(res.data.error ?? "验证码错误或已过期");
       return;
     }
-    router.replace(res.data.next);
-    router.refresh();
+    go(res.data.next);
+  }
+
+  async function redeem() {
+    setInviteError(null);
+    setBusy(true);
+    const res = await postJson<{ next?: string; reason?: string }>("/api/auth/invite", { code: invite, next });
+    setBusy(false);
+    if (res.ok && res.data.next) return go(res.data.next);
+    if (res.data.reason === "pending_expired") {
+      setPhase("start");
+      setError("验证已过期（30 分钟），请重新发送验证码");
+      return;
+    }
+    setInviteError(res.data.error ?? "邀请码无效或已用完");
+  }
+
+  function restart() {
+    setPhase("start");
+    setCode("");
+    setError(null);
+    setInviteError(null);
   }
 
   const needToken = turnstileEnabled && !token;
@@ -91,88 +137,120 @@ export function LoginPanel({
         </>
       )}
 
-      {step === "email" ? (
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            void sendCode();
-          }}
-        >
-          <label htmlFor="email" className="mb-2 block text-small font-bold">
-            邮箱
-          </label>
-          <TextInput
-            id="email"
-            type="email"
-            inputMode="email"
-            autoComplete="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@example.com"
-          />
-          <Turnstile onToken={setToken} resetKey={resetKey} />
-          <FieldError>{error}</FieldError>
-          <Button type="submit" className="mt-4" loading={busy} disabled={!email || needToken || cooldown > 0}>
-            {busy ? "正在发送…" : cooldown > 0 ? `${cooldown} 秒后可重新发送` : "发送验证码"}
-          </Button>
-        </form>
-      ) : (
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            void verify();
-          }}
-        >
-          <p className="mb-1">验证码已发送，请查收。</p>
-          <p className="mb-4 text-small text-text-muted">
-            发到 {email}，10 分钟内有效。
-            <button type="button" className="ml-1 text-primary" onClick={() => setStep("email")}>
-              换个邮箱
-            </button>
-          </p>
-          <label htmlFor="code" className="mb-2 block text-small font-bold">
-            6 位验证码
-          </label>
-          <TextInput
-            id="code"
-            inputMode="numeric"
-            autoComplete="one-time-code"
-            pattern="[0-9]*"
-            maxLength={6}
-            autoFocus
-            value={code}
-            onChange={(e) => {
-              const v = e.target.value.replace(/\D/g, "").slice(0, 6);
-              setCode(v);
-              if (v.length === 6) void verify(v);
-            }}
-            className="tabular text-center text-h1 tracking-[0.5em]"
-          />
-          <FieldError>{error}</FieldError>
-          <Button type="submit" className="mt-4" loading={busy} disabled={code.length !== 6}>
-            {busy ? "正在验证…" : "登录"}
-          </Button>
-          <Turnstile onToken={setToken} resetKey={resetKey} />
-          <Button
-            type="button"
-            variant="ghost"
-            className="mt-2"
-            disabled={cooldown > 0 || busy || needToken}
-            onClick={() => void sendCode()}
-          >
-            {cooldown > 0 ? `${cooldown} 秒后可重新发送` : "重新发送验证码"}
-          </Button>
-        </form>
-      )}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (phase === "start") void sendCode();
+          else if (phase === "code") void verify();
+          else void redeem();
+        }}
+      >
+        <label htmlFor="email" className="mb-2 block text-small font-bold">
+          邮箱
+        </label>
+        <TextInput
+          id="email"
+          type="email"
+          inputMode="email"
+          autoComplete="email"
+          required
+          readOnly={phase !== "start"}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="you@example.com"
+          className={phase !== "start" ? "bg-surface-muted text-text-muted" : ""}
+        />
+        {phase !== "start" && (
+          <button type="button" className="mt-2 text-small text-primary" onClick={restart}>
+            换个邮箱
+          </button>
+        )}
 
-      <p className="mt-6 text-small text-text-muted">
-        小灶目前凭邀请码注册。新邮箱验证后会请你填写邀请码。
-        <br />
-        <Link href="/login/apply" className="text-primary">
-          没有邀请码？申请一个 →
-        </Link>
-      </p>
+        <div className="mt-5 flex items-baseline justify-between gap-3">
+          <label htmlFor="invite" className="text-small font-bold">
+            邀请码
+          </label>
+          <Link href="/login/apply" className="shrink-0 text-small text-primary">
+            没有邀请码？申请一个
+          </Link>
+        </div>
+        <p className="mt-1 text-small text-text-muted">新用户必填，已注册的邮箱不用填</p>
+        <TextInput
+          id="invite"
+          autoComplete="off"
+          autoCapitalize="characters"
+          spellCheck={false}
+          maxLength={20}
+          autoFocus={phase === "invite"}
+          value={invite}
+          onChange={(e) => {
+            setInvite(e.target.value.toUpperCase().replace(/\s/g, ""));
+            setInviteError(null);
+          }}
+          placeholder="8 位字母和数字"
+          className="mt-2 tabular tracking-[0.2em]"
+        />
+        <FieldError>{inviteError}</FieldError>
+
+        {phase === "start" && (
+          <>
+            <Turnstile onToken={setToken} resetKey={resetKey} />
+            <FieldError>{error}</FieldError>
+            <Button type="submit" className="mt-4" loading={busy} disabled={!email || needToken || cooldown > 0}>
+              {busy ? "正在发送…" : cooldown > 0 ? `${cooldown} 秒后可重新发送` : "发送验证码"}
+            </Button>
+          </>
+        )}
+
+        {phase === "code" && (
+          <>
+            <label htmlFor="code" className="mb-2 mt-5 block text-small font-bold">
+              6 位验证码
+              <span className="ml-1 font-normal text-text-muted">已发到上面的邮箱，10 分钟内有效</span>
+            </label>
+            <TextInput
+              id="code"
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              pattern="[0-9]*"
+              maxLength={6}
+              autoFocus
+              value={code}
+              onChange={(e) => {
+                const v = e.target.value.replace(/\D/g, "").slice(0, 6);
+                setCode(v);
+                if (v.length === 6) void verify(v);
+              }}
+              className="tabular text-center text-h1 tracking-[0.5em]"
+            />
+            <FieldError>{error}</FieldError>
+            <Button type="submit" className="mt-4" loading={busy} disabled={code.length !== 6}>
+              {busy ? "正在验证…" : invite ? "注册并登录" : "登录"}
+            </Button>
+            <Turnstile onToken={setToken} resetKey={resetKey} />
+            <Button
+              type="button"
+              variant="ghost"
+              className="mt-2"
+              disabled={cooldown > 0 || busy || needToken}
+              onClick={() => void sendCode()}
+            >
+              {cooldown > 0 ? `${cooldown} 秒后可重新发送` : "重新发送验证码"}
+            </Button>
+          </>
+        )}
+
+        {phase === "invite" && (
+          <>
+            <p className="mt-5 text-small text-text-muted">邮箱已验证，不用再收验证码。填好邀请码就能完成注册。</p>
+            <Button type="submit" className="mt-4" loading={busy} disabled={invite.length < 4}>
+              {busy ? "正在注册…" : "完成注册"}
+            </Button>
+          </>
+        )}
+      </form>
+
+      <p className="mt-6 text-small text-text-muted">小灶目前凭邀请码注册，已注册的邮箱直接登录即可。</p>
     </div>
   );
 }
