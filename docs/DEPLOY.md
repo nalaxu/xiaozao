@@ -33,6 +33,8 @@ crontab：每分钟 /api/cron/tick；每天 03:30 备份数据库和图片
 | `/var/lib/howtocook/images` | 菜品图片 |
 | `/var/backups/howtocook` | 每日备份 |
 
+登录服务器的管理员账号（如 `alan`）在 `howtocook` 与 `systemd-journal` 组里：可以直接查看上面的目录和配置、直接 `journalctl -u howtocook` 看日志，不用 sudo；修改、重启、更新仍需 sudo，或直接运行 `xiaozao-update`（它会自己调用 sudo）。
+
 ## 一、首次上线
 
 ### 1. 准备

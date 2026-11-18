@@ -50,6 +50,11 @@ id howtocook >/dev/null 2>&1 || useradd --system --create-home --home-dir /opt/h
 mkdir -p /opt/howtocook/releases /var/lib/howtocook/images /var/backups/howtocook /etc/howtocook
 chown howtocook:howtocook /opt/howtocook /opt/howtocook/releases /var/lib/howtocook /var/lib/howtocook/images /var/backups/howtocook
 chmod 750 /var/backups/howtocook
+# 运行 setup 的管理员账号（sudo 之前的用户）：加入 howtocook 组可直接查看代码、配置与备份，加入 systemd-journal 组可直接看日志。
+# 改动仍需 sudo 或 xiaozao-update。重新登录后生效
+if [[ -n ${SUDO_USER:-} && $SUDO_USER != root ]]; then
+  usermod -aG howtocook,systemd-journal "$SUDO_USER"
+fi
 
 ENV_FILE=/etc/howtocook/env
 if [[ ! -f $ENV_FILE ]]; then
