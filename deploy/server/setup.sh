@@ -94,6 +94,8 @@ elif ! grep -qx "import $SITE" "$MAIN"; then
 fi
 mkdir -p /var/log/caddy && chown caddy:caddy /var/log/caddy
 caddy validate --config "$MAIN" --adapter caddyfile >/dev/null
+# validate 以 root 身份运行会创建日志文件，交还给 caddy 用户，否则 reload 时打不开
+chown -R caddy:caddy /var/log/caddy
 systemctl enable caddy >/dev/null
 # reload 是平滑的：新配置有错时 Caddy 保留旧配置继续运行
 if systemctl is-active -q caddy; then systemctl reload caddy; else systemctl start caddy; fi
