@@ -31,6 +31,32 @@ const SCHEMA = {
 
 const answerSchema = z.object({ answer: z.string().min(1), on_topic: z.boolean().optional() });
 
+/** 追问请求：菜谱全文放在上下文，最近几轮问答 + 新问题放在用户输入（评测脚本也用它） */
+export function followupRequest(
+  content: TutorialContent,
+  recent: { question: string; answer: string | null }[],
+  question: string,
+): ModelRequest {
+  return {
+    feature: "followup",
+    model: modelFor("followup"),
+    system: FOLLOWUP_SYSTEM,
+    context: `## 菜谱\n${JSON.stringify(content)}`,
+    user: [
+      {
+        type: "text",
+        text: [
+          ...recent.map((h) => `<question>${h.question}</question>\n回答：${h.answer}`),
+          `<question>${question}</question>`,
+        ].join("\n\n"),
+      },
+    ],
+    schema: SCHEMA,
+    timeoutMs: FOLLOWUP_TIMEOUT_MS,
+    reasoning: "low",
+  };
+}
+
 export type FollowupResult =
   | { ok: true; id: string; answer: string; remaining: number }
   | { ok: false; status: number; code: string; error: string };
@@ -64,24 +90,7 @@ export async function askFollowup(
     .orderBy(asc(followups.createdAt));
   const recent = history.filter((h) => h.answer).slice(-3);
 
-  const req: ModelRequest = {
-    feature: "followup",
-    model: modelFor("followup"),
-    system: FOLLOWUP_SYSTEM,
-    context: `## 菜谱\n${JSON.stringify(t.content as TutorialContent)}`,
-    user: [
-      {
-        type: "text",
-        text: [
-          ...recent.map((h) => `<question>${h.question}</question>\n回答：${h.answer}`),
-          `<question>${question}</question>`,
-        ].join("\n\n"),
-      },
-    ],
-    schema: SCHEMA,
-    timeoutMs: FOLLOWUP_TIMEOUT_MS,
-    reasoning: "low",
-  };
+  const req = followupRequest(t.content as TutorialContent, recent, question);
 
   try {
     const result = await callModel(db, userId, req);

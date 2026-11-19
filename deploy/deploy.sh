@@ -7,13 +7,15 @@
 #   deploy/deploy.sh rollback <ssh目标>          切回上一个版本
 #   deploy/deploy.sh invite   <ssh目标> [数量] [次数] [天数]   在线上库生成邀请码
 #   deploy/deploy.sh logs     <ssh目标>          跟踪应用日志
+#   deploy/deploy.sh seed-images <ssh目标> [--batch 1] [--limit 100]   按 knowledge/dish-seed.yaml 预生成菜品图片（花钱）
+#   deploy/deploy.sh eval     <ssh目标> [参数]   跑评测与成本实测（花钱），报告取回本机 evals/
 #
 # <ssh目标> 例如 ubuntu@1.2.3.4，需能免密 sudo（或在提示时输入 sudo 密码）。
 set -euo pipefail
 
 cmd=${1:-}
 host=${2:-}
-[[ -n "$cmd" && -n "$host" ]] || { sed -n '2,11p' "$0"; exit 1; }
+[[ -n "$cmd" && -n "$host" ]] || { sed -n '2,13p' "$0"; exit 1; }
 cd "$(dirname "$0")/.."
 
 upload() {
@@ -52,8 +54,19 @@ case "$cmd" in
   logs)
     ssh -t "$host" "sudo journalctl -u howtocook -f -n 100"
     ;;
+  seed-images)
+    shift 2
+    ssh -t "$host" "sudo -u howtocook bash -c 'cd /opt/howtocook/current && node --env-file=/etc/howtocook/env node_modules/tsx/dist/cli.mjs scripts/seed-images.ts $*'"
+    ;;
+  eval)
+    shift 2
+    out=/var/lib/howtocook/evals
+    ssh -t "$host" "sudo -u howtocook bash -c 'mkdir -p $out && cd /opt/howtocook/current && node --env-file=/etc/howtocook/env --conditions=react-server --import tsx scripts/eval.ts --out $out $*'"
+    mkdir -p evals
+    for f in $(ssh "$host" "sudo ls -t $out | head -2"); do ssh "$host" "sudo cat $out/$f" > "evals/$f"; echo "已取回 evals/$f"; done
+    ;;
   *)
-    sed -n '2,11p' "$0"
+    sed -n '2,13p' "$0"
     exit 1
     ;;
 esac

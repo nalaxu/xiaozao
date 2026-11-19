@@ -1,0 +1,198 @@
+# 评测用例（技术方案第 10 节）：30 组“食材 + 风味 + 场景（+ 忌口）”。
+# 前 14 组各指定一个菜系（覆盖全部 14 个），其余按风味选菜系；8 个场景都至少出现 3 次；c26–c30 带过敏原。
+# 每组跑一次推荐、为第一道通过检查的菜生成教程、再追问一次（question）。
+# 字段：main 主料、other 手头还有、flavors 风味 id、scene 场景 id、cuisine 指定菜系、
+#       allergens 过敏原 id、avoid 忌口、equipment 厨具、question 追问。
+status: draft
+
+cases:
+  - id: c01
+    cuisine: sichuan
+    main: [豆腐, 猪肉末]
+    other: [大葱, 蒜]
+    flavors: [numbing-spicy]
+    scene: rice-companion
+    question: 没有郫县豆瓣，用韩式辣酱可以吗？
+  - id: c02
+    cuisine: cantonese
+    main: [鸡腿]
+    other: [姜, 葱]
+    flavors: [light]
+    scene: one-pot
+    question: 可以提前一天做好吗？
+  - id: c03
+    cuisine: hunan
+    main: [五花肉, 青椒]
+    flavors: [sour-spicy]
+    scene: quick
+    question: 不太能吃辣，辣椒减多少合适？
+  - id: c04
+    cuisine: jiangzhe
+    main: [排骨]
+    flavors: [sweet]
+    scene: entertaining
+    question: 要做 6 个人的量，糖和醋怎么加？
+  - id: c05
+    cuisine: northern-home
+    main: [番茄, 鸡蛋]
+    other: [葱]
+    scene: late-night
+    question: 番茄不够红、不出汁怎么办？
+  - id: c06
+    cuisine: japanese
+    main: [三文鱼]
+    other: [米饭, 洋葱]
+    flavors: [savory]
+    scene: meal-prep
+    question: 带饭第二天用微波炉热会不会腥？
+  - id: c07
+    cuisine: korean
+    main: [泡菜, 猪五花]
+    other: [豆腐]
+    flavors: [sour-spicy]
+    scene: soup
+    question: 泡菜不够酸可以加醋吗？
+  - id: c08
+    cuisine: thai
+    main: [鸡胸肉]
+    other: [罗勒, 小米辣]
+    flavors: [herby]
+    scene: quick
+    question: 买不到泰国圣罗勒，用意大利罗勒差别大吗？
+  - id: c09
+    cuisine: vietnamese
+    main: [牛肉, 米粉]
+    other: [洋葱, 香菜]
+    flavors: [light]
+    scene: soup
+    question: 汤底没时间熬几个小时，有什么快的办法？
+  - id: c10
+    cuisine: indian
+    main: [鹰嘴豆罐头]
+    other: [洋葱, 番茄]
+    flavors: [spiced]
+    scene: meal-prep
+    equipment: [电饭煲]
+    question: 一次做 4 天的量能冷冻吗？
+  - id: c11
+    cuisine: levant-turkish
+    main: [鸡蛋, 番茄]
+    other: [甜椒, 洋葱]
+    flavors: [herby]
+    scene: one-pot
+    question: 没有铸铁锅，不粘锅可以吗？
+  - id: c12
+    cuisine: italian
+    main: [意面, 蘑菇]
+    other: [蒜, 黄油]
+    flavors: [creamy]
+    scene: quick
+    question: 没有白葡萄酒用什么代替？
+  - id: c13
+    cuisine: french
+    main: [牛腩, 胡萝卜]
+    other: [洋葱]
+    flavors: [rich]
+    scene: entertaining
+    equipment: [烤箱]
+    question: 没有铸铁锅能不能用烤箱里的普通烤盘？
+  - id: c14
+    cuisine: mexican
+    main: [猪肩肉]
+    other: [洋葱, 青柠]
+    flavors: [smoky]
+    scene: entertaining
+    equipment: [慢炖锅]
+    question: 用慢炖锅要炖几个小时？
+  - id: c15
+    main: [茄子]
+    other: [蒜]
+    flavors: [garlicky]
+    scene: rice-companion
+    question: 茄子怎么炒才不吸太多油？
+  - id: c16
+    main: [虾]
+    flavors: [garlicky, savory]
+    scene: clear-fridge
+    question: 冷冻虾要怎么解冻？
+  - id: c17
+    main: [鸡蛋, 米饭]
+    other: [火腿, 葱]
+    scene: late-night
+    question: 隔夜饭太硬结块怎么办？
+  - id: c18
+    main: [土豆, 胡萝卜, 洋葱]
+    other: [鸡蛋]
+    scene: clear-fridge
+    question: 土豆发芽了一点还能用吗？
+  - id: c19
+    main: [白菜]
+    other: [粉丝, 猪肉]
+    flavors: [light]
+    scene: clear-fridge
+    question: 粉丝要先泡多久？
+  - id: c20
+    main: [牛肉]
+    flavors: [numbing-spicy, sour-spicy]
+    scene: rice-companion
+    question: 牛肉怎么切、怎么腌才嫩？
+  - id: c21
+    main: [鸡腿]
+    flavors: [sweet-spicy]
+    scene: meal-prep
+    equipment: [空气炸锅]
+    question: 空气炸锅要设多少度、多久？
+  - id: c22
+    main: [三文鱼]
+    flavors: [herby, sour]
+    scene: entertaining
+    equipment: [烤箱]
+    question: 怎么判断三文鱼熟了但不老？
+  - id: c23
+    main: [羊肉]
+    flavors: [spiced]
+    scene: one-pot
+    question: 羊肉膻味重怎么处理？
+  - id: c24
+    main: [豆腐]
+    other: [香菇]
+    flavors: [umami-fermented]
+    scene: soup
+    question: 可以不放肉做成素的吗？
+  - id: c25
+    main: [西兰花, 鸡蛋]
+    scene: late-night
+    question: 有什么办法让它更有饱腹感？
+  - id: c26
+    main: [鸡胸肉]
+    other: [黄瓜]
+    flavors: [savory, garlicky]
+    scene: quick
+    allergens: [peanut, sesame]
+    question: 想加点脆的口感，用什么代替花生？
+  - id: c27
+    main: [猪肉, 青菜]
+    flavors: [savory]
+    scene: rice-companion
+    allergens: [shellfish]
+    question: 蚝油不能用的话用什么调鲜？
+  - id: c28
+    main: [牛肉, 洋葱]
+    flavors: [rich]
+    scene: meal-prep
+    allergens: [gluten]
+    question: 普通酱油不能用，用什么酱油？
+  - id: c29
+    main: [鸡腿, 土豆]
+    flavors: [creamy, spiced]
+    scene: one-pot
+    allergens: [dairy]
+    avoid: [香菜]
+    question: 不放奶油怎么让汤汁浓稠？
+  - id: c30
+    main: [鱼片]
+    other: [豆芽]
+    flavors: [sour-spicy]
+    scene: soup
+    allergens: [egg, soy]
+    question: 上浆不能用蛋清，用什么代替？

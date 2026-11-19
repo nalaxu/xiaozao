@@ -104,6 +104,8 @@ deploy/deploy.sh invite ubuntu@<服务器IP>
 | 改环境变量 | 编辑 `/etc/howtocook/env` 后运行 `xiaozao-update --force`（`IMAGE_BASE_URL`、`NEXT_PUBLIC_*` 在构建时读取，只重启不生效） |
 | 看访问日志 | 服务器上 `sudo tail -f /var/log/caddy/howtocook.log` |
 | 看定时任务是否报错 | 服务器上 `journalctl -t howtocook-cron -t howtocook-backup` |
+| 预生成菜品图片（花钱） | `deploy/deploy.sh seed-images ubuntu@<服务器IP> --batch 1 --limit 100`：读 `knowledge/dish-seed.yaml`，已有图的跳过，可中断后重跑续上；结束时打印张数、合计与平均成本。先加 `--dry-run` 看会生成哪些 |
+| 评测与成本实测（花钱，约 $1–2） | `deploy/deploy.sh eval ubuntu@<服务器IP>`：跑 `evals/cases.yaml` 的 30 组用例和识别照片，报告取回本机 `evals/report-<日期>.md`。只跑几组：`--only c01,c02` |
 
 **数据库迁移**：`release` 会先迁移再切换新代码。迁移需要与旧代码兼容（只加不删），回滚时不会撤销迁移。
 
