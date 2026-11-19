@@ -7,7 +7,7 @@ import type { TutorialContent, TutorialEvent } from "@/lib/tutorial-types";
 import type { Db } from "../db/client";
 import { recommendationRuns, tutorials } from "../db/schema";
 import { logEvent } from "../events";
-import { loadPersonalization, preferenceSummary, ratedDishes, restrictionKeywords } from "../preferences";
+import { cookingProfile, loadPersonalization, preferenceSummary, ratedDishes, restrictionKeywords } from "../preferences";
 import { nextReset, refundQuota, reserveQuota, spentToday } from "../usage";
 import { BudgetPausedError, callModel } from "../ai/call";
 import { ModelError } from "../ai/types";
@@ -76,13 +76,15 @@ export async function runTutorial(
 
   const { prefs, privacy } = await loadPersonalization(db, user.id);
   const keywords = restrictionKeywords(prefs);
+  const profile = cookingProfile(prefs, privacy);
   const params: TutorialParams = {
-    servings: defaultServings(target.scene),
+    servings: defaultServings(target.scene, profile.household),
     units: prefs?.units ?? "metric",
     equipment: privacy.recordEquipment ? (prefs?.equipment ?? []) : [],
     pantry: privacy.recordPantry ? (prefs?.pantry ?? []) : [],
     summary: preferenceSummary(prefs, privacy, await ratedDishes(db, user.id, privacy)),
     scene: target.scene,
+    profile,
   };
   // 当日花费达到降级档位后改用较便宜的模型（技术方案 9.2）
   const model =

@@ -7,7 +7,7 @@ import { ResetTime, UnitsToggle } from "@/components/settings/me-client";
 import { ButtonLink, Card } from "@/components/ui";
 import { getCurrentUser } from "@/server/auth/current";
 import { getDb } from "@/server/db";
-import { allergenLabel, loadPersonalization } from "@/server/preferences";
+import { allergenLabel, cookingProfile, loadPersonalization, profileText } from "@/server/preferences";
 import { quotaStatus, type QuotaKind } from "@/server/usage";
 
 export const metadata: Metadata = { title: "我的" };
@@ -36,6 +36,7 @@ export default async function MePage() {
   const [quota, { prefs }] = await Promise.all([quotaStatus(db, user), loadPersonalization(db, user.id)]);
   const restrictions = [...(prefs?.allergens ?? []).map((a) => `${allergenLabel(a)}过敏`), ...(prefs?.avoid ?? [])];
   const kitchen = [...(prefs?.equipment ?? []), ...(prefs?.pantry ?? [])];
+  const habits = profileText(cookingProfile(prefs, { recordTaste: true }));
 
   return (
     <>
@@ -79,6 +80,7 @@ export default async function MePage() {
       <Card className="mt-4">
         <ul className="divide-y divide-border">
           <MenuItem href="/me/taste" title="我的口味" sub={prefs?.tasteNotes || "小灶对你的理解，可以直接改"} />
+          <MenuItem href="/me/habits" title="做饭习惯" sub={habits || "经验、时间、吃辣、人数，还没填"} />
           <MenuItem href="/me/allergies" title="忌口与过敏" sub={restrictions.length ? restrictions.join("、") : "还没填"} />
           <MenuItem href="/me/kitchen" title="厨具与常备调料" sub={kitchen.length ? kitchen.join("、") : "还没填"} />
           <li className="flex items-center gap-3 p-4">

@@ -3,7 +3,7 @@ import { SettingsHeader } from "@/components/settings/controls";
 import { TasteForm } from "@/components/settings/taste-form";
 import { requireUser } from "@/server/auth/current";
 import { getDb } from "@/server/db";
-import { loadPersonalization, preferenceSummary, ratedDishes } from "@/server/preferences";
+import { cookingProfile, loadPersonalization, preferenceSummary, profileText, ratedDishes } from "@/server/preferences";
 import { listRatings } from "@/server/settings";
 
 export const metadata: Metadata = { title: "我的口味" };
@@ -18,7 +18,7 @@ export default async function TastePage() {
     <>
       <SettingsHeader title="我的口味" />
       <TasteForm
-        summary={preferenceSummary(prefs, privacy, rated)}
+        summary={[profileText(cookingProfile(prefs, privacy)), preferenceSummary(prefs, privacy, rated)].filter(Boolean).join("；")}
         notes={prefs?.tasteNotes ?? ""}
         rated={list}
         recording={{ taste: privacy.recordTaste, ratings: privacy.recordRatings }}

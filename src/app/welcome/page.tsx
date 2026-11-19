@@ -4,7 +4,7 @@ import { allergenOptions, slimIngredients } from "@/lib/kb";
 import { requireUser } from "@/server/auth/current";
 import { getDb } from "@/server/db";
 import { safeNext } from "@/server/http";
-import { loadPersonalization } from "@/server/preferences";
+import { cookingProfile, loadPersonalization } from "@/server/preferences";
 
 export const metadata: Metadata = { title: "欢迎" };
 export const dynamic = "force-dynamic";
@@ -18,7 +18,12 @@ export default async function WelcomePage({ searchParams }: Props) {
   return (
     <WelcomeForm
       next={next}
-      initial={{ allergens: prefs?.allergens ?? [], avoid: prefs?.avoid ?? [], equipment: prefs?.equipment ?? [] }}
+      initial={{
+        allergens: prefs?.allergens ?? [],
+        avoid: prefs?.avoid ?? [],
+        equipment: prefs?.equipment ?? [],
+        habits: cookingProfile(prefs, { recordTaste: true }),
+      }}
       allergenOptions={allergenOptions()}
       ingredients={slimIngredients()}
     />

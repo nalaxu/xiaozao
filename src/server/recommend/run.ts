@@ -12,6 +12,8 @@ import { enqueueImage } from "../images/queue";
 import {
   loadPersonalization,
   preferenceSummary,
+  profileLines,
+  cookingProfile,
   ratedDishes,
   recentRecommendations,
   restrictionKeywords,
@@ -48,6 +50,7 @@ export function cacheKey(parts: {
   scene: string | null;
   cuisine: string | null;
   summary: string;
+  profile?: string[];
   exclude: string[];
 }): string {
   const sorted = (a: string[]) => [...a].sort();
@@ -59,6 +62,7 @@ export function cacheKey(parts: {
       parts.scene,
       parts.cuisine,
       parts.summary,
+      parts.profile ?? [],
       sorted(parts.exclude),
     ]),
   );
@@ -89,6 +93,7 @@ export async function runRecommend(
   const { prefs, privacy } = await loadPersonalization(db, user.id);
   const rated = await ratedDishes(db, user.id, privacy);
   const summary = preferenceSummary(prefs, privacy, rated);
+  const profile = profileLines(cookingProfile(prefs, privacy), "recommend");
   const keywords = restrictionKeywords(prefs);
   const recent = privacy.recordHistory ? await recentRecommendations(db, user.id, 14, now) : { names: [], cuisines: [] };
   // “不会再做”的菜不再推荐
@@ -100,7 +105,7 @@ export async function runRecommend(
     recentCuisines: recent.cuisines,
   });
 
-  const key = cacheKey({ ...input, summary, exclude });
+  const key = cacheKey({ ...input, summary, profile, exclude });
   await saveLastChoices(db, user.id, privacy, input);
 
   // ─── 缓存命中：仍计一次额度，但不调用模型 ───
@@ -170,6 +175,7 @@ export async function runRecommend(
       candidates,
       context,
       summary,
+      profile,
       exclude: [...exclude, ...accepted.map((d) => d.nameZh), ...rejected.map((r) => r.name)],
       count,
       avoidCuisines,

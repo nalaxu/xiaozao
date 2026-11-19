@@ -57,7 +57,7 @@ export function TasteForm(props: {
     <>
       <section className="rounded-card bg-primary-soft p-4">
         <h2 className="text-small font-bold text-primary">小灶目前对你的理解</h2>
-        <p className="mt-1">{props.summary || "还没有。填一下忌口、厨具，或做完菜后评价一下，这里就会有内容。"}</p>
+        <p className="mt-1">{props.summary || "还没有。填一下做饭习惯、忌口、厨具，或做完菜后评价一下，这里就会有内容。"}</p>
         <p className="mt-2 text-caption text-text-muted">推荐和教程时只把这段话交给 AI，不包含你的名字、邮箱等身份信息。</p>
       </section>
 

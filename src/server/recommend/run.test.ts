@@ -5,7 +5,7 @@ import type { RecommendEvent, RecommendInput } from "@/lib/recommend-types";
 import { setModelClientForTests } from "../ai/call";
 import { ModelError, type ModelClient, type ModelRequest } from "../ai/types";
 import type { Db } from "../db/client";
-import { dailySpend, dishes, modelCalls, preferences, recommendationRuns, users } from "../db/schema";
+import { dailySpend, dishes, modelCalls, preferences, privacySettings as privacySettingsTable, recommendationRuns, users } from "../db/schema";
 import { testDb } from "../test-utils";
 import { quotaStatus, utcDay } from "../usage";
 import { pickCuisines } from "./candidates";
@@ -170,6 +170,26 @@ async function runRecommendWithoutHistory() {
   await db.insert(privacySettings).values({ userId: user.id, recordHistory: false });
   return collect();
 }
+
+describe("cooking habits", () => {
+  it("passes habits to the model and keys the cache on them", async () => {
+    await db.insert(preferences).values({ userId: user.id, skill: "beginner", timeBudget: 30 });
+    // 关掉历史记录，两次请求除了习惯完全相同
+    await db.insert(privacySettingsTable).values({ userId: user.id, recordHistory: false });
+    const three = () => [dish({}), dish({ name_zh: "酸汤肥牛", cuisine_id: "hunan" }), dish({ name_zh: "冬阴功汤", cuisine_id: "thai" })];
+    const { client, calls } = scripted([three(), three()]);
+    setModelClientForTests(client);
+    await collect();
+    const text = calls[0].user.map((c) => (c.type === "text" ? c.text : "")).join("");
+    expect(text).toContain("做饭经验：刚开始学做饭");
+    expect(text).toContain("不超过 30 分钟");
+    // 改了习惯，同样的输入不再命中缓存
+    await db.update(preferences).set({ skill: "seasoned" }).where(eq(preferences.userId, user.id));
+    const second = await collect();
+    expect(second[0]).toMatchObject({ type: "start", cached: false });
+    expect(calls).toHaveLength(2);
+  });
+});
 
 describe("checkDish", () => {
   const ctx = { candidates: ["sichuan", "thai"], scene: null, keywords: [], seen: new Set<string>() };

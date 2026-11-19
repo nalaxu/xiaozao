@@ -143,6 +143,11 @@ export const preferences = pgTable("preferences", {
   lastFlavors: text("last_flavors").array().notNull().default(sql`'{}'`),
   lastScene: text("last_scene"),
   lastCuisine: text("last_cuisine"),
+  // 做饭习惯：欢迎页第一步问，可在“我的 → 做饭习惯”修改；取值见 lib/preference-options
+  skill: text("skill"),
+  timeBudget: smallint("time_budget"),
+  spice: text("spice"),
+  household: smallint("household"),
   onboardedAt: timestamp("onboarded_at", { withTimezone: true }),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });

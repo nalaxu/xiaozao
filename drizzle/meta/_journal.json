@@ -22,6 +22,13 @@
       "when": 1794923338978,
       "tag": "0002_whole_banshee",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1795080109091,
+      "tag": "0003_cooking_habits",
+      "breakpoints": true
     }
   ]
 }

@@ -106,7 +106,7 @@ how-to-cook/
 
 | 表 | 关键字段 | 说明 |
 |---|---|---|
-| `preferences` | user_id, allergens（数组，过敏原类别 id）, avoid（数组，忌口食材标准名或自由文本）, equipment（数组）, pantry（数组）, taste_notes（文本，用户可改）, units（metric / us）, last_flavors, last_scene, last_cuisine | 一个用户一行 |
+| `preferences` | user_id, allergens（数组，过敏原类别 id）, avoid（数组，忌口食材标准名或自由文本）, equipment（数组）, pantry（数组）, taste_notes（文本，用户可改）, units（metric / us）, last_flavors, last_scene, last_cuisine, skill / time_budget / spice / household（做饭习惯，可空，取值见 `lib/preference-options.ts`；归在 record_taste 开关下） | 一个用户一行 |
 | `privacy_settings` | user_id, record_taste, record_history, record_ratings, record_equipment, record_pantry | 对应 PRD 7.2 的独立开关 |
 | `ratings` | id, user_id, tutorial_id, verdict（good / ok / never）, reason | |
 
@@ -193,9 +193,9 @@ Google 登录成功 ─┐
 | `/samples/[slug]` | 示例教程 | 否 |
 | `/explore`、`/explore/[cuisine]` | 菜系与味型介绍（知识库内容） | 否 |
 | `/saved` | 收藏与历史 | 是 |
-| `/me`、`/me/taste`、`/me/allergies`、`/me/kitchen`、`/me/privacy` | 我的 | 是 |
+| `/me`、`/me/taste`、`/me/habits`、`/me/allergies`、`/me/kitchen`、`/me/privacy` | 我的 | 是 |
 | `/login`、`/login/invite`、`/login/apply` | 登录、填邀请码、申请邀请码 | 否 |
-| `/welcome` | 首次登录：忌口、过敏与厨具（设计文档 4.12） | 是 |
+| `/welcome` | 首次登录：做饭习惯，然后忌口、过敏与厨具（设计文档 4.12） | 是 |
 | `/privacy` | 隐私政策 | 否 |
 | `/admin/*` | 管理后台 | 管理员 |
 
@@ -451,7 +451,8 @@ PRD 第 11 节要求上线前实测成本。方法：
 - **照片**：只在内存中转发，不写入数据库、对象存储或日志；接口日志不记录请求体。
 - **导出**（F30）：`GET /api/me/export` 返回 JSON，包含偏好、历史、收藏的教程、评价、追问。
 - **删除**（F30，M5 实现）：关闭某类记录开关时可选同时删除该类数据（关闭“历史”会删推荐记录和未收藏的教程）。“删除全部数据”清空偏好、隐私开关、教程（连带收藏、评价、追问）与推荐记录，但保留账号和当天的额度计数（否则删数据就能绕过每日额度）。注销需输入“注销”，删除账号及级联数据，花费账本 `model_calls` 只去掉账号关联。两者都会清掉本机离线保存的教程。
-- **欢迎页**：兑换邀请码注册后先到 `/welcome`，保存或“以后再说”都记下 `onboarded_at`，再回到原本要去的页面。
+- **欢迎页**：兑换邀请码注册后先到 `/welcome`，两步（做饭习惯 → 忌口、过敏与厨具），完成、跳过或“以后再说”都记下 `onboarded_at`，再回到原本要去的页面。已经看过旧版欢迎页的用户不会再被带去，可在“我的 → 做饭习惯”里填。
+- **做饭习惯进提示词**：推荐请求加“做饭经验”“平时做饭时间”“吃辣”三行（并计入缓存键），教程请求加“做饭经验”“吃辣”两行，各带一句对应的写法要求；教程默认份量按“几人吃”（宴客至少 4 人，夜宵 1 人，平时 1–2 人吃的按实际人数）。场景和本次选的味道优先于平时习惯。
 - **注销**（F36）：删除用户及所有关联行（外键级联）；`model_calls` 中的 user_id 置空，保留成本统计。
 - **关闭记录开关**：立即停止写入对应数据，并询问是否同时删除已有数据。
 - **加密**：全站 HTTPS（Caddy）；数据库只监听本机，环境变量文件仅 root 与服务账号可读；验证码与会话令牌只存哈希。

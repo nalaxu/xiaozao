@@ -1,6 +1,20 @@
 // 个性化数据的读取与偏好摘要（技术方案 7.6）。
 import { and, desc, eq, gte, inArray } from "drizzle-orm";
 import { kb } from "@/lib/kb";
+import {
+  HOUSEHOLD_LABELS,
+  HOUSEHOLDS,
+  SKILL_OPTIONS,
+  SKILLS,
+  SPICE_OPTIONS,
+  SPICES,
+  TIME_BUDGETS,
+  TIME_LABELS,
+  type Household,
+  type Skill,
+  type Spice,
+  type TimeBudget,
+} from "@/lib/preference-options";
 import { buildRestrictions, restrictionMatcher, type RestrictionRule } from "@/lib/restrictions";
 import type { Db } from "./db/client";
 import { dishes, preferences, privacySettings, ratings, recommendationRuns, tutorials } from "./db/schema";
@@ -61,6 +75,48 @@ export function preferenceSummary(
     if (next.length <= SUMMARY_MAX) s = next;
   }
   return s;
+}
+
+// ─── 做饭习惯 ──────────────────────────────────────────────
+
+export interface CookingProfile {
+  skill: Skill | null;
+  timeBudget: TimeBudget | null;
+  spice: Spice | null;
+  household: Household | null;
+}
+
+const pick = <T>(list: readonly T[], v: unknown): T | null => (list.includes(v as T) ? (v as T) : null);
+
+/** 做饭习惯；归在“口味偏好”记录开关下，关闭时一律不用 */
+export function cookingProfile(prefs: Preferences | null, privacy: Pick<Privacy, "recordTaste">): CookingProfile {
+  if (!prefs || !privacy.recordTaste) return { skill: null, timeBudget: null, spice: null, household: null };
+  return {
+    skill: pick(SKILLS, prefs.skill),
+    timeBudget: pick(TIME_BUDGETS, prefs.timeBudget),
+    spice: pick(SPICES, prefs.spice),
+    household: pick(HOUSEHOLDS, prefs.household),
+  };
+}
+
+/** 给用户看的一句话，例如“刚开始学做饭；平时半小时左右；微辣；通常 2 人吃” */
+export function profileText(p: CookingProfile): string {
+  const parts: string[] = [];
+  if (p.skill) parts.push(SKILL_OPTIONS[p.skill].prompt);
+  if (p.timeBudget !== null) parts.push(p.timeBudget ? `平时做饭${TIME_LABELS[p.timeBudget]}` : "做饭不赶时间");
+  if (p.spice) parts.push(SPICE_OPTIONS[p.spice].label);
+  if (p.household) parts.push(`通常 ${HOUSEHOLD_LABELS[p.household]}吃`);
+  return parts.join("；");
+}
+
+/** 交给模型的做饭习惯，每项一行，带上对应的要求 */
+export function profileLines(p: CookingProfile, feature: "recommend" | "tutorial"): string[] {
+  const lines: string[] = [];
+  if (p.skill) lines.push(`做饭经验：${SKILL_OPTIONS[p.skill].prompt}。${SKILL_OPTIONS[p.skill][feature]}。`);
+  if (feature === "recommend" && p.timeBudget)
+    lines.push(`平时做饭时间：${TIME_LABELS[p.timeBudget]}。没选场景时，total_minutes 尽量不超过 ${p.timeBudget} 分钟。`);
+  if (p.spice) lines.push(`吃辣：${SPICE_OPTIONS[p.spice].label}。${SPICE_OPTIONS[p.spice][feature]}。`);
+  return lines;
 }
 
 const expand = restrictionMatcher(kb.ingredients);

@@ -10,7 +10,7 @@ import { dailySpend, dishes, followups, preferences, recommendationRuns, tutoria
 import { testDb } from "../test-utils";
 import { quotaStatus, utcDay } from "../usage";
 import { askFollowup } from "./followup";
-import { tutorialContentSchema } from "./model";
+import { defaultServings, tutorialContentSchema } from "./model";
 import { existingTutorial, findRunDish, runTutorial } from "./run";
 
 const content = (over: Partial<TutorialContent> = {}): TutorialContent => ({
@@ -193,6 +193,31 @@ describe("askFollowup", () => {
     const [t] = await db.select().from(tutorials);
     const [other] = await db.insert(users).values({ email: "x@example.test" }).returning();
     expect(await askFollowup(db, other.id, t.id, "hi")).toMatchObject({ ok: false, status: 404 });
+  });
+});
+
+describe("cooking habits", () => {
+  it("uses the household size for servings and passes skill and spice to the model", async () => {
+    await db.insert(preferences).values({ userId: user.id, skill: "beginner", spice: "none", household: 4 });
+    const { client, calls } = scripted([content()]);
+    setModelClientForTests(client);
+    await generate();
+    const text = calls[0].user.map((c) => (c.type === "text" ? c.text : "")).join("");
+    expect(text).toContain("份量：4 人份");
+    expect(text).toContain("做饭经验：刚开始学做饭");
+    expect(text).toContain("吃辣：不吃辣");
+    const [t] = await db.select().from(tutorials);
+    expect(t.params).toMatchObject({ servings: 4, profile: { skill: "beginner", household: 4 } });
+  });
+
+  it("defaults servings from scene and household", () => {
+    expect(defaultServings(null)).toBe(2);
+    expect(defaultServings(null, 3)).toBe(3);
+    expect(defaultServings("entertaining", null)).toBe(4);
+    expect(defaultServings("entertaining", 6)).toBe(6);
+    expect(defaultServings("late-night", null)).toBe(1);
+    expect(defaultServings("late-night", 2)).toBe(2);
+    expect(defaultServings("late-night", 4)).toBe(1);
   });
 });
 

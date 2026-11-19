@@ -5,6 +5,7 @@ import { getCuisine, getScene, kb } from "@/lib/kb";
 import { HEATS, UNITS, type TutorialContent } from "@/lib/tutorial-types";
 import type { RecommendedDish } from "@/lib/recommend-types";
 import type { ModelRequest } from "../ai/types";
+import { profileLines, type CookingProfile } from "../preferences";
 
 // 实测中位 55 秒、最长 74 秒（2026-11-19 评测），留足余量
 export const TUTORIAL_TIMEOUT_MS = 120_000;
@@ -22,6 +23,7 @@ export const TUTORIAL_SYSTEM = `你是“小灶”的家常菜老师，为会做
 8. key_points 写 1–3 条这道菜最容易失败的地方。background 用两三句话讲这道菜或这种技法在该菜系里的位置。
 9. 只用用户说有的厨具；没提到的特殊厨具要给出普通厨具的替代做法。常备调料优先用用户已有的。
 10. 文风像会做饭的朋友，简短直接，不用感叹号。
+11. 给了“做饭经验”或“吃辣”时，按其中的要求调整步骤详略和辣度；食品安全和忌口的要求不受影响。
 
 食品安全（必须遵守，并在 safety_notes 中提示相关的条目）：
 - 禽肉中心温度至少 74°C、不能带粉红色；猪肉至少 63°C 并静置 3 分钟，绞肉 71°C；牛羊绞肉 71°C。
@@ -181,14 +183,16 @@ export interface TutorialParams {
   pantry: string[];
   summary: string;
   scene: string | null;
+  /** 做饭习惯（旧教程没有） */
+  profile?: CookingProfile;
 }
 
-/** 按场景定默认份量：宴客 4 人、夜宵 1 人，其他 2 人 */
-export function defaultServings(scene: string | null): number {
+/** 默认份量：按平时几个人吃（没填为 2 人）；宴客至少 4 人；夜宵按 1 人，平时 1–2 人吃的按实际人数 */
+export function defaultServings(scene: string | null, household: number | null = null): number {
   const c = scene ? getScene(scene)?.constraints : undefined;
-  if (c?.min_servings) return c.min_servings;
-  if (c?.max_servings) return Math.min(c.max_servings, 1);
-  return 2;
+  if (c?.min_servings) return Math.max(c.min_servings, household ?? 0);
+  if (c?.max_servings) return household && household <= c.max_servings ? household : 1;
+  return household ?? 2;
 }
 
 /** 完整的菜系条目作为上下文（去掉与做法无关的字段） */
@@ -223,6 +227,7 @@ export function tutorialRequest(opts: {
     `场景：${scene ? `${scene.zh}。${scene.guidance}` : "不限"}`,
     `厨具：${params.equipment.join("、") || "普通家用炉灶和锅具"}`,
     `常备调料：${params.pantry.join("、") || "未说明"}`,
+    ...(params.profile ? profileLines(params.profile, "tutorial") : []),
     `忌口与过敏等：${params.summary || "无"}`,
   ];
   if (opts.retryNote) lines.push(opts.retryNote);

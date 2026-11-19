@@ -1,7 +1,18 @@
 // 个性化设置、评价、隐私开关、导出与删除（PRD 7、F27–F31；设计文档 4.7、4.10、4.12）。
 import { and, desc, eq, inArray, notInArray } from "drizzle-orm";
 import { z } from "zod";
-import { EQUIPMENT, LIMITS, PRIVACY_KEYS, VERDICTS, type PrivacyKey, type Verdict } from "@/lib/preference-options";
+import {
+  EQUIPMENT,
+  HOUSEHOLDS,
+  LIMITS,
+  PRIVACY_KEYS,
+  SKILLS,
+  SPICES,
+  TIME_BUDGETS,
+  VERDICTS,
+  type PrivacyKey,
+  type Verdict,
+} from "@/lib/preference-options";
 import { ALLERGEN_IDS } from "@/lib/kb/schema";
 import type { Db } from "./db/client";
 import {
@@ -32,6 +43,11 @@ export const preferencesPatch = z
     pantry: z.array(term).max(LIMITS.pantry).transform(uniq),
     tasteNotes: z.string().max(LIMITS.tasteNotes).nullable(),
     units: z.enum(["metric", "us"]),
+    // 做饭习惯，null 为清除
+    skill: z.enum(SKILLS).nullable(),
+    timeBudget: z.union(TIME_BUDGETS.map((n) => z.literal(n))).nullable(),
+    spice: z.enum(SPICES).nullable(),
+    household: z.union(HOUSEHOLDS.map((n) => z.literal(n))).nullable(),
     /** 欢迎页保存或点“以后再说”时为 true */
     onboarded: z.literal(true),
   })
@@ -136,7 +152,17 @@ export async function purgeCategory(db: Db, userId: string, key: PrivacyKey) {
     case "recordTaste":
       await db
         .update(preferences)
-        .set({ tasteNotes: null, lastFlavors: [], lastScene: null, lastCuisine: null, updatedAt: now })
+        .set({
+          tasteNotes: null,
+          lastFlavors: [],
+          lastScene: null,
+          lastCuisine: null,
+          skill: null,
+          timeBudget: null,
+          spice: null,
+          household: null,
+          updatedAt: now,
+        })
         .where(eq(preferences.userId, userId));
       return;
     case "recordEquipment":
@@ -238,6 +264,10 @@ export async function exportData(db: Db, userId: string) {
           pantry: prefs.pantry,
           tasteNotes: prefs.tasteNotes,
           units: prefs.units,
+          skill: prefs.skill,
+          timeBudget: prefs.timeBudget,
+          spice: prefs.spice,
+          household: prefs.household,
           lastFlavors: prefs.lastFlavors,
           lastScene: prefs.lastScene,
           lastCuisine: prefs.lastCuisine,

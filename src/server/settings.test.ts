@@ -14,7 +14,7 @@ import {
   usageDaily,
   users,
 } from "./db/schema";
-import { DEFAULT_PRIVACY, loadPersonalization, preferenceSummary, ratedDishes } from "./preferences";
+import { cookingProfile, DEFAULT_PRIVACY, loadPersonalization, preferenceSummary, profileLines, profileText, ratedDishes } from "./preferences";
 import {
   deleteAccount,
   deleteAllData,
@@ -68,6 +68,45 @@ describe("preferences", () => {
     const { prefs } = await loadPersonalization(db, userId);
     expect(prefs).toMatchObject({ allergens: ["peanut"], avoid: ["香菜"], units: "us", tasteNotes: null });
     expect(await needsWelcome(db, userId)).toBe(false);
+  });
+});
+
+describe("cooking habits", () => {
+  it("validates, saves, clears with null and purges with the taste switch", async () => {
+    expect(preferencesPatch.safeParse({ skill: "chef" }).success).toBe(false);
+    expect(preferencesPatch.safeParse({ timeBudget: 45 }).success).toBe(false);
+    expect(preferencesPatch.safeParse({ household: 5 }).success).toBe(false);
+    await savePreferences(db, userId, preferencesPatch.parse({ skill: "beginner", timeBudget: 30, spice: "mild", household: 2 }));
+    let { prefs, privacy } = await loadPersonalization(db, userId);
+    expect(cookingProfile(prefs, privacy)).toEqual({ skill: "beginner", timeBudget: 30, spice: "mild", household: 2 });
+    expect((await exportData(db, userId)).preferences).toMatchObject({ skill: "beginner", household: 2 });
+
+    await savePreferences(db, userId, preferencesPatch.parse({ spice: null }));
+    ({ prefs, privacy } = await loadPersonalization(db, userId));
+    expect(cookingProfile(prefs, privacy).spice).toBeNull();
+
+    // 关闭“口味偏好”：不再使用；选择同时删除则清空
+    await setPrivacy(db, userId, "recordTaste", false);
+    ({ prefs, privacy } = await loadPersonalization(db, userId));
+    expect(cookingProfile(prefs, privacy).skill).toBeNull();
+    expect(prefs?.skill).toBe("beginner");
+    await setPrivacy(db, userId, "recordTaste", false, true);
+    ({ prefs } = await loadPersonalization(db, userId));
+    expect(cookingProfile(prefs, { recordTaste: true })).toEqual({ skill: null, timeBudget: null, spice: null, household: null });
+  });
+
+  it("describes the profile for people and for the model", () => {
+    const p = { skill: "beginner", timeBudget: 15, spice: "none", household: 6 } as const;
+    expect(profileText(p)).toBe("刚开始学做饭；平时做饭15 分钟内；不吃辣；通常 5 人以上吃");
+    expect(profileText({ ...p, timeBudget: 0 })).toContain("做饭不赶时间");
+    const rec = profileLines(p, "recommend").join("\n");
+    expect(rec).toContain("难度 1–2");
+    expect(rec).toContain("不超过 15 分钟");
+    const tut = profileLines(p, "tutorial").join("\n");
+    expect(tut).toContain("术语");
+    expect(tut).not.toContain("分钟");
+    expect(profileLines({ ...p, timeBudget: 0 }, "recommend").join("")).not.toContain("平时做饭时间");
+    expect(profileLines({ skill: null, timeBudget: null, spice: null, household: 2 }, "tutorial")).toEqual([]);
   });
 });
 
