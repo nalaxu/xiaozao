@@ -9,7 +9,7 @@ import { processImageJobs } from "@/server/images/jobs";
 import { guardModelRoute } from "@/server/model-guard";
 import { runRecommend } from "@/server/recommend/run";
 
-export const maxDuration = 90;
+export const maxDuration = 120;
 
 const name = z.string().trim().min(1).max(limits.maxIngredientLength);
 const flavorIds = kb.flavors.map((f) => f.id) as [string, ...string[]];

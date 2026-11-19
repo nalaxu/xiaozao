@@ -73,3 +73,39 @@ describe("openAiClient retries", () => {
     expect(fetchMock).toHaveBeenCalledTimes(3);
   });
 });
+
+describe("openAiClient idle timeout", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.useRealTimers();
+  });
+
+  it("keeps a slow stream alive as long as events keep arriving", async () => {
+    vi.useFakeTimers({ toFake: ["setTimeout"] });
+    // 每 15 秒一段输出，共 45 秒：超过 STALL_MS，但从没有空闲那么久
+    const slow = () => {
+      const enc = new TextEncoder();
+      const parts = ['{"a"', ':1}'];
+      let i = 0;
+      return new Response(
+        new ReadableStream<Uint8Array>({
+          async pull(c) {
+            await new Promise((r) => setTimeout(r, 15_000));
+            if (i < parts.length) {
+              c.enqueue(enc.encode(`data: ${JSON.stringify({ type: "response.output_text.delta", delta: parts[i++] })}\n\n`));
+            } else {
+              c.enqueue(enc.encode(`data: ${JSON.stringify({ type: "response.completed", response: { usage: {} } })}\n\n`));
+              c.close();
+            }
+          },
+        }),
+      );
+    };
+    const fetchMock = vi.fn().mockImplementation(async () => slow());
+    vi.stubGlobal("fetch", fetchMock);
+    const run = openAiClient("k").run(req);
+    await vi.advanceTimersByTimeAsync(50_000);
+    expect((await run).text).toBe('{"a":1}');
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+  });
+});

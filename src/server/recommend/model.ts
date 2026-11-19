@@ -6,8 +6,9 @@ import { kb, getScene } from "@/lib/kb";
 import { findRestricted, type Restrictions } from "@/lib/restrictions";
 import type { ModelRequest } from "../ai/types";
 
-// 实测中位 21 秒、P90 27 秒（2026-11-19 评测），中转站排队时更久，留足余量
-export const RECOMMEND_TIMEOUT_MS = 60_000;
+// 实测中位 18–21 秒、带过敏原约束时 30 秒以上（2026-11-19 评测）。结果是流式的，卡住由 20 秒空闲超时处理，
+// 总超时只防极端情况
+export const RECOMMEND_TIMEOUT_MS = 90_000;
 export const MAX_DISHES = 5;
 export const MIN_DISHES = 3;
 

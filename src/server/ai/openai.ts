@@ -37,8 +37,8 @@ function readUsage(u: unknown): Usage {
 const RETRYABLE = /concurrency limit|rate limit|too many requests|overloaded|\b429\b|stalled/i;
 
 /**
- * 首包超时：这么久一个事件都没收到就断开重试。2026-11-19 评测里约 13% 的请求在中转站卡住、
- * 60 秒零输出，而正常请求几秒内就开始输出。
+ * 空闲超时：这么久没有收到任何新事件就断开（每收到一个事件重新计时）。2026-11-19 评测里约 13% 的请求
+ * 在中转站卡住、60 秒零输出，而正常请求 2 秒内开始输出、之后持续出字。还没输出过内容时断开后重试。
  */
 export const STALL_MS = 20_000;
 const MAX_RETRIES = 2;
@@ -79,10 +79,15 @@ async function runOnce(
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), timeoutMs);
   let stalled = false;
-  const stallTimer = setTimeout(() => {
-    stalled = true;
-    ctrl.abort();
-  }, Math.min(STALL_MS, timeoutMs));
+  let stallTimer: ReturnType<typeof setTimeout> | undefined;
+  const armStall = () => {
+    clearTimeout(stallTimer);
+    stallTimer = setTimeout(() => {
+      stalled = true;
+      ctrl.abort();
+    }, STALL_MS);
+  };
+  armStall();
   const body = {
     model: req.model,
     instructions: req.system,
@@ -117,7 +122,7 @@ async function runOnce(
     }
     let completed = false;
     for await (const event of sseEvents(res.body)) {
-      clearTimeout(stallTimer);
+      armStall();
       if (event.type === "response.output_text.delta" && typeof event.delta === "string") {
         text += event.delta;
         onDelta(event.delta);
