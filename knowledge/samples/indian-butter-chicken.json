@@ -1,8 +1,8 @@
 {
   "slug": "indian-butter-chicken",
-  "status": "draft",
-  "reviewed_by": null,
-  "reviewed_at": null,
+  "status": "reviewed",
+  "reviewed_by": "nalaxu",
+  "reviewed_at": "2026-11-19",
   "cuisine_id": "indian",
   "generated_at": "2026-11-19T08:17:08.519Z",
   "model": "gpt-6.1-sol",

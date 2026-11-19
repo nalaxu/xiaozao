@@ -1,8 +1,8 @@
 {
   "slug": "italian-carbonara",
-  "status": "draft",
-  "reviewed_by": null,
-  "reviewed_at": null,
+  "status": "reviewed",
+  "reviewed_by": "nalaxu",
+  "reviewed_at": "2026-11-19",
   "cuisine_id": "italian",
   "generated_at": "2026-11-19T08:15:43.472Z",
   "model": "gpt-6.1-sol",

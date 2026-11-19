@@ -5,7 +5,7 @@
 #
 # 第 1 批（2026-11-19）：100 道，取自各菜系代表菜，每个菜系 7 道，川菜和粤菜各 8 道；
 # 线上已经有图的菜（麻婆豆腐、宫保鸡丁、红烧肉等 18 道）不再重复。
-# 产品负责人看过用量后决定后续批次的节奏（目标约 1,000 道）。
+# 第 2 批（2026-11-19）：200 道，产品负责人看过第 1 批用量后要求。目标约 1,000 道。
 status: draft
 reviewed_by:
 reviewed_at:
@@ -138,3 +138,235 @@ dishes:
   - {cuisine: mexican, batch: 1, zh: 牛油果酱, en: Guacamole, original: Guacamole, visual: "Chunky green guacamole with diced tomato, onion and cilantro in a stone molcajete with tortilla chips."}
   - {cuisine: mexican, batch: 1, zh: 墨西哥烤玉米, en: Elote (Mexican street corn), original: Elotes, visual: "Charred corn cobs slathered with creamy sauce, crumbled cotija cheese, chili powder and lime."}
   - {cuisine: mexican, batch: 1, zh: 墨西哥鱼塔可, en: Baja fish tacos, original: Tacos de pescado, visual: "Crispy battered fish in soft tortillas with shredded cabbage, creamy white sauce and lime wedges."}
+
+  # ═══ 第 2 批（2026-11-19）：200 道 ═══
+  # 57 道剩下的代表菜（日式咖喱饭、焦糖炖猪肉、辣炒猪肉与库里已有图的菜叫法相近，暂不重复）
+  # + 143 道家常菜，多数取自评测里模型实际推荐过的菜名，每道菜只取一个最通行的叫法。
+
+  # ─── 川菜 ───
+  - {cuisine: sichuan, batch: 2, zh: 蒜泥白肉, en: Garlic pork slices, visual: "Paper-thin slices of poached pork belly draped on a plate, drizzled with red chili oil and garlic sauce."}
+  - {cuisine: sichuan, batch: 2, zh: 辣子鸡, en: Chongqing chili chicken, visual: "Small crispy fried chicken pieces buried in a heap of dried red chilies and Sichuan peppercorns, sesame seeds on top."}
+  - {cuisine: sichuan, batch: 2, zh: 家常豆腐, en: Home-style tofu, visual: "Pan-fried golden tofu slices braised with sliced pork, wood ear mushrooms and green peppers in a glossy red bean sauce."}
+  - {cuisine: sichuan, batch: 2, zh: 肉末烧茄子, en: Braised eggplant with minced pork, visual: "Soft braised eggplant strips with minced pork in a savory brown-red sauce, sprinkled with scallions."}
+  - {cuisine: sichuan, batch: 2, zh: 蚂蚁上树, en: Ants climbing a tree (glass noodles with minced pork), visual: "Glossy glass noodles stir-fried with specks of minced pork and chili bean sauce, chopped scallions on top."}
+  - {cuisine: sichuan, batch: 2, zh: 醋溜土豆丝, en: Vinegar stir-fried potato shreds, visual: "Fine crisp potato shreds stir-fried with dried chilies and Sichuan peppercorns, glistening with vinegar."}
+  - {cuisine: sichuan, batch: 2, zh: 青椒肉丝, en: Shredded pork with green peppers, visual: "Julienned pork and bright green pepper strips stir-fried together, lightly glossy, on a plate."}
+  - {cuisine: sichuan, batch: 2, zh: 泡椒牛肉, en: Beef with pickled chilies, visual: "Tender beef slices stir-fried with red and yellow pickled chilies, ginger and garlic in a glossy sauce."}
+  - {cuisine: sichuan, batch: 2, zh: 泡椒鱼片, en: Fish slices with pickled chilies, visual: "Silky white fish slices in a light orange broth with pickled chilies and celery in a deep bowl."}
+  - {cuisine: sichuan, batch: 2, zh: 水煮鱼, en: Sichuan boiled fish, visual: "White fish slices in a large bowl of bright red chili oil, covered with dried chilies and Sichuan peppercorns over bean sprouts."}
+  - {cuisine: sichuan, batch: 2, zh: 麻辣香锅, en: Mala dry pot, visual: "A big wok-style dish of stir-fried lotus root, potato, mushrooms, sausage and shrimp coated in red mala spices and sesame."}
+  - {cuisine: sichuan, batch: 2, zh: 红油抄手, en: Wontons in chili oil, visual: "Plump pork wontons in a shallow bowl of red chili oil sauce with chopped scallions and sesame seeds."}
+  - {cuisine: sichuan, batch: 2, zh: 酸辣汤, en: Hot and sour soup, visual: "A thick brown hot and sour soup with tofu strips, wood ear mushroom, bamboo shoots and egg ribbons, white pepper on top."}
+  - {cuisine: sichuan, batch: 2, zh: 宫保虾球, en: Kung Pao shrimp, visual: "Plump shrimp stir-fried with roasted peanuts, dried chilies and scallion pieces in a glossy dark sauce."}
+
+  # ─── 粤菜 ───
+  - {cuisine: cantonese, batch: 2, zh: 腊味煲仔饭, en: Claypot rice with Chinese sausage, visual: "A clay pot of rice topped with sliced Chinese sausage, cured pork and blanched greens, with crispy rice edges and soy sauce."}
+  - {cuisine: cantonese, batch: 2, zh: 皮蛋瘦肉粥, en: Century egg and pork congee, visual: "A bowl of silky white rice congee with pieces of dark century egg and shredded pork, topped with scallions and ginger."}
+  - {cuisine: cantonese, batch: 2, zh: 西洋菜猪骨汤, en: Watercress and pork bone soup, visual: "A clear golden soup with watercress, pork bones and red dates in a ceramic tureen."}
+  - {cuisine: cantonese, batch: 2, zh: 豉汁凉瓜炒牛肉, en: Beef with bitter melon in black bean sauce, visual: "Sliced beef and pale green bitter melon stir-fried with fermented black beans and red chili."}
+  - {cuisine: cantonese, batch: 2, zh: 姜葱鸡, en: Ginger and scallion chicken, visual: "Chopped chicken pieces stir-fried with lots of ginger slices and scallion segments, glossy and golden."}
+  - {cuisine: cantonese, batch: 2, zh: 豉汁蒸鸡, en: Steamed chicken with black bean sauce, visual: "Chopped chicken pieces steamed with fermented black beans, garlic and red chili slices in a shallow dish."}
+  - {cuisine: cantonese, batch: 2, zh: 冬菇蒸鸡, en: Steamed chicken with shiitake mushrooms, visual: "Chicken pieces steamed with shiitake mushrooms, goji berries and ginger shreds in a light savory juice."}
+  - {cuisine: cantonese, batch: 2, zh: 白灼虾, en: Poached shrimp, visual: "Bright pink whole poached shrimp piled on a plate with a small dish of soy dipping sauce with chili and scallion."}
+  - {cuisine: cantonese, batch: 2, zh: 椒盐虾, en: Salt and pepper shrimp, visual: "Crispy fried shell-on shrimp tossed with fried garlic, chili and scallion bits."}
+  - {cuisine: cantonese, batch: 2, zh: 豉油皇炒面, en: Soy sauce fried noodles, visual: "Thin egg noodles stir-fried until golden with soy sauce, bean sprouts and scallion strips."}
+  - {cuisine: cantonese, batch: 2, zh: 水蒸蛋, en: Steamed egg custard, visual: "A smooth silky yellow steamed egg custard in a shallow bowl, drizzled with soy sauce, sesame oil and scallions."}
+  - {cuisine: cantonese, batch: 2, zh: 蛋炒饭, en: Egg fried rice, visual: "Fluffy golden egg fried rice with separate grains and chopped scallions, on a plate."}
+  - {cuisine: cantonese, batch: 2, zh: 鸡肉粥, en: Chicken congee, visual: "A bowl of creamy rice congee with shredded chicken, ginger shreds, scallions and fried shallots."}
+  - {cuisine: cantonese, batch: 2, zh: 白灼菜心, en: Blanched choy sum, visual: "Bright green choy sum stalks with yellow flowers, drizzled with soy sauce and hot oil, on a long plate."}
+  - {cuisine: cantonese, batch: 2, zh: 西兰花炒牛肉, en: Beef and broccoli, visual: "Tender beef slices and bright green broccoli florets in a glossy brown oyster sauce."}
+  - {cuisine: cantonese, batch: 2, zh: 蒜蓉粉丝蒸虾, en: Steamed shrimp with garlic and glass noodles, visual: "Butterflied shrimp on a bed of glass noodles topped with golden minced garlic, soy sauce and scallions."}
+  - {cuisine: cantonese, batch: 2, zh: 番茄牛腩, en: Tomato braised beef brisket, visual: "Tender beef brisket chunks braised with tomatoes in a rich red-orange sauce in a clay pot."}
+  - {cuisine: cantonese, batch: 2, zh: 粟米鸡蓉羹, en: Chicken and sweet corn soup, visual: "A thick pale yellow sweet corn soup with minced chicken and egg ribbons in a bowl."}
+  - {cuisine: cantonese, batch: 2, zh: 豆豉鲮鱼油麦菜, en: Romaine lettuce with fried dace and black beans, visual: "Stir-fried long green romaine lettuce leaves with pieces of canned fried dace fish and black beans."}
+  - {cuisine: cantonese, batch: 2, zh: 腊肠炒荷兰豆, en: Snow peas with Chinese sausage, visual: "Bright green snow peas stir-fried with thin slices of red Chinese sausage and garlic."}
+
+  # ─── 湘菜 ───
+  - {cuisine: hunan, batch: 2, zh: 干锅花菜, en: Dry-pot cauliflower, visual: "Cauliflower florets charred and tossed with pork belly slices and dried chilies in a small iron dry pot."}
+  - {cuisine: hunan, batch: 2, zh: 口味虾, en: Spicy crayfish (or shrimp), visual: "A heap of bright red crayfish in a spicy oily sauce with chilies, garlic and perilla leaves."}
+  - {cuisine: hunan, batch: 2, zh: 辣椒炒肉, en: Pork with green chilies, visual: "Sliced pork stir-fried with blistered green chilies and garlic, glossy and slightly charred."}
+  - {cuisine: hunan, batch: 2, zh: 剁椒蒸芋头, en: Steamed taro with chopped chilies, visual: "Soft steamed taro chunks topped with bright red chopped salted chilies and scallions in a bowl."}
+  - {cuisine: hunan, batch: 2, zh: 虎皮青椒, en: Tiger-skin peppers, visual: "Whole green peppers pan-blistered until wrinkled and charred, glazed in a dark vinegar soy sauce."}
+  - {cuisine: hunan, batch: 2, zh: 小炒黄牛肉, en: Hunan stir-fried beef, visual: "Thin tender beef slices stir-fried with lots of red and green chili rings, ginger, garlic and cilantro."}
+  - {cuisine: hunan, batch: 2, zh: 外婆菜炒蛋, en: Eggs with preserved greens, visual: "Fluffy scrambled eggs tossed with dark chopped preserved greens and red chili."}
+  - {cuisine: hunan, batch: 2, zh: 剁椒炒蛋, en: Eggs with chopped chilies, visual: "Golden scrambled egg pieces stir-fried with bright red chopped salted chilies and scallions."}
+  - {cuisine: hunan, batch: 2, zh: 香干炒肉, en: Smoked tofu with pork, visual: "Strips of brown smoked tofu stir-fried with sliced pork belly, green chilies and garlic."}
+  - {cuisine: hunan, batch: 2, zh: 啤酒鸭, en: Beer braised duck, visual: "Bone-in duck pieces braised in a dark glossy beer and chili sauce with ginger and star anise."}
+  - {cuisine: hunan, batch: 2, zh: 酸豆角炒牛肉, en: Beef with pickled long beans, visual: "Chopped pickled long beans stir-fried with minced beef and red chili, next to white rice."}
+  - {cuisine: hunan, batch: 2, zh: 干锅土豆片, en: Dry-pot potato slices, visual: "Thin potato slices fried until golden at the edges with pork belly, chilies and scallions in a small dry pot."}
+  - {cuisine: hunan, batch: 2, zh: 湘味小炒鸡, en: Hunan stir-fried chicken, visual: "Small chicken pieces stir-fried with red and green chilies, garlic and ginger, glossy and spicy."}
+
+  # ─── 江浙菜 ───
+  - {cuisine: jiangzhe, batch: 2, zh: 龙井虾仁, en: Shrimp with Longjing tea, visual: "Small translucent white shrimp stir-fried with green Longjing tea leaves on a white plate."}
+  - {cuisine: jiangzhe, batch: 2, zh: 雪菜毛豆, en: Edamame with pickled mustard greens, visual: "Bright green shelled edamame stir-fried with chopped pickled mustard greens."}
+  - {cuisine: jiangzhe, batch: 2, zh: 上海菜饭, en: Shanghai vegetable rice, visual: "Rice cooked with chopped bok choy and diced cured pork, glistening with lard, in a bowl."}
+  - {cuisine: jiangzhe, batch: 2, zh: 红烧排骨, en: Red-braised spare ribs, visual: "Pork spare ribs braised in a glossy dark red soy and sugar sauce with scallions."}
+  - {cuisine: jiangzhe, batch: 2, zh: 糯米排骨, en: Steamed spare ribs with glutinous rice, visual: "Pork ribs coated in plump glutinous rice grains steamed until translucent, in a bamboo steamer."}
+  - {cuisine: jiangzhe, batch: 2, zh: 清炒虾仁, en: Stir-fried shrimp, visual: "Small glossy white shrimp stir-fried simply with a few green peas on a white plate."}
+  - {cuisine: jiangzhe, batch: 2, zh: 西湖牛肉羹, en: West Lake beef soup, visual: "A thick light soup with minced beef, tofu cubes, egg white ribbons and cilantro in a bowl."}
+  - {cuisine: jiangzhe, batch: 2, zh: 扬州炒饭, en: Yangzhou fried rice, visual: "Golden fried rice with diced ham, shrimp, peas, carrot and egg on a plate."}
+  - {cuisine: jiangzhe, batch: 2, zh: 油面筋塞肉, en: Gluten puffs stuffed with pork, visual: "Round golden gluten puffs stuffed with pork, braised in a light brown sauce in a bowl."}
+  - {cuisine: jiangzhe, batch: 2, zh: 八宝辣酱, en: Shanghai eight-treasure chili sauce, visual: "Diced pork, shrimp, tofu, peanuts and bamboo shoots in a glossy red sweet chili bean sauce."}
+  - {cuisine: jiangzhe, batch: 2, zh: 上海罗宋汤, en: Shanghai-style borscht, visual: "A red-orange tomato soup with cabbage, potato, carrot and beef chunks in a bowl."}
+  - {cuisine: jiangzhe, batch: 2, zh: 葱烧大排, en: Pork chop braised with scallions, visual: "A pan-fried pork chop braised in a dark soy glaze with charred scallion segments on a plate."}
+  - {cuisine: jiangzhe, batch: 2, zh: 红烧带鱼, en: Red-braised hairtail fish, visual: "Pan-fried silver hairtail fish pieces braised in a glossy brown sweet soy sauce with scallions."}
+  - {cuisine: jiangzhe, batch: 2, zh: 荠菜馄饨, en: Shepherd's purse wontons, visual: "Large wontons with green shepherd's purse and pork filling in a clear broth with seaweed and egg strips."}
+
+  # ─── 北方家常菜 ───
+  - {cuisine: northern-home, batch: 2, zh: 猪肉白菜饺子, en: Pork and napa cabbage dumplings, visual: "Boiled crescent-shaped dumplings on a plate with a small dish of black vinegar and garlic."}
+  - {cuisine: northern-home, batch: 2, zh: 醋溜白菜, en: Vinegar-glazed napa cabbage, visual: "Napa cabbage pieces stir-fried in a glossy light sour-sweet sauce with dried chilies."}
+  - {cuisine: northern-home, batch: 2, zh: 木须肉, en: Moo shu pork, visual: "Sliced pork stir-fried with fluffy egg, wood ear mushrooms, cucumber slices and day lily buds."}
+  - {cuisine: northern-home, batch: 2, zh: 孜然羊肉, en: Cumin lamb, visual: "Thin lamb slices stir-fried with lots of cumin, chili flakes, onions and cilantro."}
+  - {cuisine: northern-home, batch: 2, zh: 西红柿鸡蛋汤, en: Tomato and egg drop soup, visual: "A light red tomato soup with silky yellow egg ribbons and chopped scallions in a bowl."}
+  - {cuisine: northern-home, batch: 2, zh: 西红柿鸡蛋面, en: Tomato and egg noodles, visual: "A bowl of wheat noodles topped with a saucy tomato and scrambled egg mixture and scallions."}
+  - {cuisine: northern-home, batch: 2, zh: 鸡蛋羹, en: Steamed egg custard, visual: "A smooth glossy yellow steamed egg custard in a bowl with soy sauce, sesame oil and chopped scallions."}
+  - {cuisine: northern-home, batch: 2, zh: 黄瓜拌鸡丝, en: Shredded chicken with cucumber, visual: "Shredded poached chicken over julienned cucumber, dressed with sesame sauce and chili oil."}
+  - {cuisine: northern-home, batch: 2, zh: 油焖大虾, en: Braised prawns, visual: "Large red prawns braised in a glossy sweet-savory reddish sauce on a plate."}
+  - {cuisine: northern-home, batch: 2, zh: 西红柿炖牛腩, en: Tomato beef brisket stew, visual: "Chunks of beef brisket stewed with tomatoes and potatoes in a rich red broth."}
+  - {cuisine: northern-home, batch: 2, zh: 土豆炖牛肉, en: Beef and potato stew, visual: "Beef chunks and potato pieces stewed in a dark savory brown sauce with carrots."}
+  - {cuisine: northern-home, batch: 2, zh: 红烧茄子, en: Red-braised eggplant, visual: "Fried eggplant pieces braised in a glossy dark brown garlic sauce with green peppers."}
+  - {cuisine: northern-home, batch: 2, zh: 韭菜炒鸡蛋, en: Chinese chives with eggs, visual: "Fluffy yellow scrambled eggs stir-fried with bright green garlic chive pieces."}
+  - {cuisine: northern-home, batch: 2, zh: 青椒土豆丝, en: Potato shreds with green peppers, visual: "Fine potato shreds stir-fried with green pepper strips, crisp and pale."}
+  - {cuisine: northern-home, batch: 2, zh: 拍黄瓜, en: Smashed cucumber salad, visual: "Smashed cucumber chunks dressed with garlic, vinegar and chili oil in a bowl."}
+  - {cuisine: northern-home, batch: 2, zh: 西红柿疙瘩汤, en: Tomato flour dumpling soup, visual: "A thick tomato soup with small irregular flour dumplings, egg ribbons and greens in a bowl."}
+  - {cuisine: northern-home, batch: 2, zh: 尖椒干豆腐, en: Dried tofu with green chilies, visual: "Thin dried tofu sheets cut into strips, stir-fried with green chili strips, on a plate."}
+  - {cuisine: northern-home, batch: 2, zh: 熘肉段, en: Crispy pork in savory sauce, visual: "Fried pork pieces coated in a glossy brown savory sauce with green peppers and carrot slices."}
+  - {cuisine: northern-home, batch: 2, zh: 猪肉大葱包子, en: Pork and scallion buns, visual: "Fluffy white steamed buns with pleated tops in a bamboo steamer, one torn open to show juicy pork filling."}
+
+  # ─── 日本料理 ───
+  - {cuisine: japanese, batch: 2, zh: 茶碗蒸, en: Chawanmushi (savory egg custard), original: 茶碗蒸し, visual: "A lidded cup of smooth pale egg custard with shrimp, shiitake and a mitsuba leaf on top."}
+  - {cuisine: japanese, batch: 2, zh: 盐烤三文鱼, en: Salt-grilled salmon, original: 鮭の塩焼き, visual: "A salt-grilled salmon fillet with crisp charred skin on a rectangular plate with grated daikon and lemon."}
+  - {cuisine: japanese, batch: 2, zh: 日式炒面, en: Yakisoba, original: 焼きそば, visual: "Stir-fried noodles with pork, cabbage and carrot in a dark sweet sauce, topped with aonori and pickled ginger."}
+  - {cuisine: japanese, batch: 2, zh: 筑前煮, en: Chikuzenni (simmered chicken and root vegetables), original: 筑前煮, visual: "Simmered chicken with carrot, lotus root, burdock, shiitake and snow peas glazed in soy in a bowl."}
+  - {cuisine: japanese, batch: 2, zh: 日式玉子烧, en: Tamagoyaki (rolled omelette), original: 卵焼き, visual: "Sliced golden rolled Japanese omelette showing thin layers, with grated daikon on a small plate."}
+  - {cuisine: japanese, batch: 2, zh: 照烧三文鱼, en: Teriyaki salmon, original: サーモンの照り焼き, visual: "Pan-seared salmon fillet glazed with shiny teriyaki sauce and sesame seeds, with blanched greens."}
+  - {cuisine: japanese, batch: 2, zh: 味噌烤三文鱼, en: Miso-glazed salmon, visual: "A salmon fillet broiled with a caramelized golden miso glaze on a plate with a lemon wedge."}
+  - {cuisine: japanese, batch: 2, zh: 日式鸡蛋杂炊, en: Zosui (Japanese rice soup), original: 雑炊, visual: "A bowl of soupy rice in dashi with softly set egg, chicken and scallions."}
+  - {cuisine: japanese, batch: 2, zh: 牛丼, en: Gyudon (beef rice bowl), original: 牛丼, visual: "A rice bowl topped with thinly sliced simmered beef and onions, with red pickled ginger."}
+  - {cuisine: japanese, batch: 2, zh: 日式汉堡排, en: Hambagu (Japanese hamburg steak), original: ハンバーグ, visual: "A juicy pan-fried hamburg steak in a glossy brown demi-glace sauce with steamed vegetables."}
+  - {cuisine: japanese, batch: 2, zh: 天妇罗, en: Tempura, original: 天ぷら, visual: "Light crisp tempura shrimp and vegetables on paper with a small bowl of tentsuyu dipping sauce."}
+  - {cuisine: japanese, batch: 2, zh: 猪排盖饭, en: Katsudon, original: カツ丼, visual: "A rice bowl topped with a sliced crispy pork cutlet simmered with onion and softly set egg."}
+  - {cuisine: japanese, batch: 2, zh: 日式乌冬面, en: Kake udon, original: かけうどん, visual: "Thick white udon noodles in a clear golden dashi broth with scallions and a slice of fish cake."}
+  - {cuisine: japanese, batch: 2, zh: 日式煎饺, en: Gyoza, original: 餃子, visual: "Pan-fried gyoza with crisp golden bottoms arranged in a row with a small dish of dipping sauce."}
+  - {cuisine: japanese, batch: 2, zh: 大阪烧, en: Okonomiyaki, original: お好み焼き, visual: "A thick savory cabbage pancake topped with brown sauce, mayonnaise zigzags, bonito flakes and aonori."}
+
+  # ─── 韩国料理 ───
+  - {cuisine: korean, batch: 2, zh: 泡菜煎饼, en: Kimchi pancake, original: 김치전, visual: "A crisp reddish-orange kimchi pancake cut into wedges with a small bowl of soy dipping sauce."}
+  - {cuisine: korean, batch: 2, zh: 嫩豆腐汤, en: Sundubu jjigae (soft tofu stew), original: 순두부찌개, visual: "A bubbling red stew with silky soft tofu, seafood and a raw egg in a black stone pot."}
+  - {cuisine: korean, batch: 2, zh: 参鸡汤, en: Samgyetang (ginseng chicken soup), original: 삼계탕, visual: "A whole small chicken stuffed with rice in a milky broth with ginseng, jujubes and scallions in a stone pot."}
+  - {cuisine: korean, batch: 2, zh: 拌菠菜, en: Seasoned spinach, original: 시금치나물, visual: "Blanched spinach seasoned with sesame oil, garlic and sesame seeds in a small dish."}
+  - {cuisine: korean, batch: 2, zh: 部队锅, en: Budae jjigae (army stew), original: 부대찌개, visual: "A shallow pot of spicy red stew with sausages, spam, kimchi, tofu, instant noodles and a slice of cheese."}
+  - {cuisine: korean, batch: 2, zh: 韩式辣炖鸡, en: Dakbokkeumtang (spicy braised chicken), original: 닭볶음탕, visual: "Bone-in chicken pieces braised with potatoes and carrots in a thick red gochugaru sauce."}
+  - {cuisine: korean, batch: 2, zh: 泡菜炒饭, en: Kimchi fried rice, original: 김치볶음밥, visual: "Reddish kimchi fried rice topped with a sunny-side-up egg, seaweed strips and sesame seeds."}
+  - {cuisine: korean, batch: 2, zh: 韩式蒸蛋, en: Gyeran jjim (steamed egg), original: 계란찜, visual: "A fluffy puffed steamed egg rising out of a small earthenware pot with scallions."}
+  - {cuisine: korean, batch: 2, zh: 韩式拌面, en: Bibim guksu (spicy cold noodles), original: 비빔국수, visual: "Thin wheat noodles tossed in a red sweet-spicy sauce topped with cucumber, half an egg and sesame."}
+  - {cuisine: korean, batch: 2, zh: 海带汤, en: Miyeokguk (seaweed soup), original: 미역국, visual: "A clear brown broth full of soft dark green seaweed and beef pieces in a bowl."}
+  - {cuisine: korean, batch: 2, zh: 韩式海鲜葱饼, en: Haemul pajeon (seafood scallion pancake), original: 해물파전, visual: "A large golden pancake with long scallions, squid and shrimp, cut into pieces with dipping sauce."}
+  - {cuisine: korean, batch: 2, zh: 韩式炖排骨, en: Galbi jjim (braised short ribs), original: 갈비찜, visual: "Braised beef short ribs with carrots, chestnuts and jujubes in a glossy sweet soy sauce."}
+  - {cuisine: korean, batch: 2, zh: 韩式炸酱面, en: Jajangmyeon, original: 짜장면, visual: "Thick noodles covered with glossy black bean sauce with diced pork, onion and cucumber strips."}
+
+  # ─── 泰国菜 ───
+  - {cuisine: thai, batch: 2, zh: 玛莎曼咖喱, en: Massaman curry, original: แกงมัสมั่น, visual: "A rich brown-orange coconut curry with beef chunks, potatoes and roasted peanuts in a bowl."}
+  - {cuisine: thai, batch: 2, zh: 泰式炒饭, en: Thai fried rice, original: ข้าวผัด, visual: "Jasmine fried rice with egg, onion and tomato, served with cucumber slices and a lime wedge."}
+  - {cuisine: thai, batch: 2, zh: 泰式肉末沙拉, en: Larb, original: ลาบ, visual: "Minced meat salad with mint, shallots, chili and toasted rice powder, with lettuce leaves alongside."}
+  - {cuisine: thai, batch: 2, zh: 青柠蒸鱼, en: Steamed fish with lime and chili, original: ปลานึ่งมะนาว, visual: "A whole steamed fish in a pool of clear lime-garlic-chili broth topped with cilantro, in an oval dish."}
+  - {cuisine: thai, batch: 2, zh: 泰式沙爹鸡串, en: Chicken satay with peanut sauce, visual: "Grilled turmeric-yellow chicken skewers with a bowl of peanut sauce and cucumber relish."}
+  - {cuisine: thai, batch: 2, zh: 打抛鸡肉饭, en: Pad kra pao gai (holy basil chicken), original: ผัดกะเพราไก่, visual: "Minced chicken stir-fried with holy basil and chilies over rice, topped with a crispy fried egg."}
+  - {cuisine: thai, batch: 2, zh: 泰式瀑布牛肉, en: Nam tok (grilled beef salad), original: น้ำตกเนื้อ, visual: "Sliced medium-rare grilled beef tossed with mint, shallots, chili and toasted rice powder."}
+  - {cuisine: thai, batch: 2, zh: 泰式酸咖喱鱼, en: Gaeng som (sour fish curry), original: แกงส้ม, visual: "A thin orange sour curry with fish pieces and vegetables in a bowl."}
+  - {cuisine: thai, batch: 2, zh: 菠萝炒饭, en: Pineapple fried rice, original: ข้าวผัดสับปะรด, visual: "Yellow fried rice with pineapple chunks, shrimp, cashews and raisins served in a hollowed pineapple."}
+  - {cuisine: thai, batch: 2, zh: 泰式炒空心菜, en: Stir-fried morning glory, original: ผัดผักบุ้ง, visual: "Long-stemmed water spinach stir-fried with garlic, chili and soybean paste, glossy green."}
+  - {cuisine: thai, batch: 2, zh: 芒果糯米饭, en: Mango sticky rice, original: ข้าวเหนียวมะม่วง, visual: "Sliced ripe yellow mango beside sweet sticky rice drizzled with coconut cream and mung beans."}
+  - {cuisine: thai, batch: 2, zh: 泰式烤猪颈肉, en: Grilled pork neck, original: คอหมูย่าง, visual: "Sliced charred grilled pork neck with a small bowl of spicy tamarind chili dipping sauce."}
+  - {cuisine: thai, batch: 2, zh: 泰式黄咖喱鸡, en: Yellow curry chicken, original: แกงกะหรี่ไก่, visual: "A mild golden-yellow coconut curry with chicken, potatoes and onions in a bowl."}
+  - {cuisine: thai, batch: 2, zh: 泰式酱油炒河粉, en: Pad see ew, original: ผัดซีอิ๊ว, visual: "Wide flat rice noodles stir-fried until charred with dark soy sauce, Chinese broccoli and egg."}
+
+  # ─── 越南菜 ───
+  - {cuisine: vietnamese, batch: 2, zh: 碎米饭配烤猪排, en: Broken rice with grilled pork chop, original: Cơm tấm sườn, visual: "Broken rice with a caramelized grilled pork chop, a fried egg, pickles and a small bowl of fish sauce."}
+  - {cuisine: vietnamese, batch: 2, zh: 越南酸鱼汤, en: Sour fish soup, original: Canh chua cá, visual: "A tangy tamarind broth with fish, pineapple, tomato, okra and herbs in a bowl."}
+  - {cuisine: vietnamese, batch: 2, zh: 越式蒜香骰子牛肉, en: Shaking beef, original: Bò lúc lắc, visual: "Seared cubes of beef with onions and peppers over watercress with tomato slices."}
+  - {cuisine: vietnamese, batch: 2, zh: 越南鸡肉河粉, en: Pho ga (chicken pho), original: Phở gà, visual: "A bowl of clear chicken broth with rice noodles, shredded chicken, herbs and lime."}
+  - {cuisine: vietnamese, batch: 2, zh: 越南烤肉米粉, en: Bun thit nuong, original: Bún thịt nướng, visual: "A bowl of rice vermicelli with grilled lemongrass pork, herbs, pickled carrot, peanuts and fish sauce."}
+  - {cuisine: vietnamese, batch: 2, zh: 顺化牛肉粉, en: Bun bo Hue, original: Bún bò Huế, visual: "A spicy red lemongrass beef broth with thick round rice noodles, beef shank slices and herbs."}
+  - {cuisine: vietnamese, batch: 2, zh: 越南鸡肉沙拉, en: Vietnamese chicken salad, original: Gỏi gà, visual: "Shredded chicken tossed with cabbage, carrot, herbs and fried shallots, topped with peanuts."}
+  - {cuisine: vietnamese, batch: 2, zh: 越南番茄豆腐, en: Tofu in tomato sauce, original: Đậu phụ sốt cà chua, visual: "Fried golden tofu cubes in a bright red tomato sauce with scallions."}
+  - {cuisine: vietnamese, batch: 2, zh: 越南炒河粉, en: Stir-fried pho noodles with beef, original: Phở xào bò, visual: "Wide rice noodles stir-fried with beef, Chinese greens and onions."}
+  - {cuisine: vietnamese, batch: 2, zh: 越南咖喱鸡, en: Vietnamese chicken curry, original: Cà ri gà, visual: "A golden coconut chicken curry with sweet potato and lemongrass, served with a baguette."}
+  - {cuisine: vietnamese, batch: 2, zh: 越南蒜香炒空心菜, en: Garlic stir-fried water spinach, original: Rau muống xào tỏi, visual: "Bright green water spinach stir-fried with lots of golden garlic on a plate."}
+  - {cuisine: vietnamese, batch: 2, zh: 越南鸡肉粥, en: Chicken rice porridge, original: Cháo gà, visual: "A bowl of rice porridge with shredded chicken, ginger, fried shallots, herbs and black pepper."}
+
+  # ─── 印度菜 ───
+  - {cuisine: indian, batch: 2, zh: 克什米尔羊肉咖喱, en: Rogan josh, original: Rogan josh, visual: "Tender lamb pieces in a deep red aromatic Kashmiri chili gravy in a bowl."}
+  - {cuisine: indian, batch: 2, zh: 喀拉拉椰子鱼咖喱, en: Kerala fish curry, original: Meen curry, visual: "Fish pieces in a bright orange-red coconut tamarind curry with curry leaves in a clay pot."}
+  - {cuisine: indian, batch: 2, zh: 肉末豌豆, en: Keema matar, original: Keema matar, visual: "Spiced minced meat with green peas in a thick tomato-onion masala, cilantro on top."}
+  - {cuisine: indian, batch: 2, zh: 芸豆咖喱, en: Rajma, original: Rajma, visual: "Red kidney beans in a thick spiced tomato gravy served with basmati rice."}
+  - {cuisine: indian, batch: 2, zh: 印度炒蛋, en: Egg bhurji, original: Anda bhurji, visual: "Spiced scrambled eggs with onion, tomato, green chili and cilantro, with buttered pav bread."}
+  - {cuisine: indian, batch: 2, zh: 印度提卡马萨拉鸡, en: Chicken tikka masala, visual: "Charred chicken tikka pieces in a creamy orange spiced tomato sauce with cilantro."}
+  - {cuisine: indian, batch: 2, zh: 印度鸡肉咖喱, en: Indian chicken curry, visual: "Bone-in chicken pieces in a brown onion-tomato curry gravy garnished with cilantro."}
+  - {cuisine: indian, batch: 2, zh: 印度咖喱角, en: Samosas, visual: "Crisp golden triangular samosas with green mint chutney and tamarind sauce."}
+  - {cuisine: indian, batch: 2, zh: 印度烤奶酪, en: Paneer tikka, visual: "Charred marinated paneer cubes with peppers and onions on skewers, lemon and mint chutney alongside."}
+  - {cuisine: indian, batch: 2, zh: 果阿咖喱虾, en: Goan prawn curry, visual: "Prawns in a vibrant orange coconut curry with kokum, served with rice."}
+  - {cuisine: indian, batch: 2, zh: 印度茄子泥, en: Baingan bharta, visual: "Smoky mashed roasted eggplant cooked with onion, tomato and spices, cilantro on top."}
+  - {cuisine: indian, batch: 2, zh: 印度炸蔬菜饼, en: Pakora, visual: "Crisp golden gram flour fritters of onion and vegetables with green chutney."}
+  - {cuisine: indian, batch: 2, zh: 印度土豆豌豆咖喱, en: Aloo matar, original: Aloo matar, visual: "Potato cubes and green peas in a light spiced tomato curry in a bowl."}
+  - {cuisine: indian, batch: 2, zh: 印度蒜香烤饼, en: Garlic naan, visual: "Blistered soft naan bread brushed with garlic butter and cilantro on a board."}
+
+  # ─── 黎凡特与土耳其菜 ───
+  - {cuisine: levant-turkish, batch: 2, zh: 土耳其酸奶蛋, en: Çılbır (Turkish eggs), original: Çılbır, visual: "Poached eggs on garlicky yogurt drizzled with red Aleppo pepper butter, with bread."}
+  - {cuisine: levant-turkish, batch: 2, zh: 土耳其红扁豆汤, en: Turkish red lentil soup, original: Mercimek çorbası, visual: "A smooth orange lentil soup with a drizzle of red pepper butter and a lemon wedge."}
+  - {cuisine: levant-turkish, batch: 2, zh: 法图什沙拉, en: Fattoush, original: فتوش, visual: "A chopped salad of tomato, cucumber, radish and herbs with crisp pita pieces and sumac."}
+  - {cuisine: levant-turkish, batch: 2, zh: 扁豆饭, en: Mujaddara, original: مجدرة, visual: "Rice and brown lentils topped with a pile of deeply caramelized crispy onions."}
+  - {cuisine: levant-turkish, batch: 2, zh: 土耳其镶茄子, en: Imam bayıldı, original: İmam bayıldı, visual: "Halved eggplants stuffed with soft onion, tomato and garlic, glistening with olive oil."}
+  - {cuisine: levant-turkish, batch: 2, zh: 土耳其炒蛋, en: Menemen, original: Menemen, visual: "Soft scrambled eggs with tomatoes and green peppers in a small copper pan with bread."}
+  - {cuisine: levant-turkish, batch: 2, zh: 中东烤鸡肉串, en: Shish tawook, original: شيش طاووق, visual: "Grilled marinated chicken cubes on skewers with garlic sauce, pickles and flatbread."}
+  - {cuisine: levant-turkish, batch: 2, zh: 土耳其薄饼披萨, en: Lahmacun, original: Lahmacun, visual: "A thin round flatbread topped with spiced minced meat, with parsley, onion and lemon on top."}
+  - {cuisine: levant-turkish, batch: 2, zh: 中东翻转饭, en: Maqluba, original: مقلوبة, visual: "An upside-down rice cake with layers of fried eggplant, cauliflower and chicken, topped with nuts."}
+  - {cuisine: levant-turkish, batch: 2, zh: 土耳其茄子镶肉, en: Karnıyarık, original: Karnıyarık, visual: "Fried eggplants split open and filled with spiced minced meat, tomato and green pepper."}
+  - {cuisine: levant-turkish, batch: 2, zh: 黎巴嫩芝麻酱烤鱼, en: Samke harra (baked fish with tahini), visual: "A baked white fish fillet covered with tahini sauce, toasted pine nuts and parsley."}
+  - {cuisine: levant-turkish, batch: 2, zh: 黎巴嫩香草煎蛋饼, en: Ejjeh (Lebanese herb omelette), original: عجة, visual: "Small thick green herb and onion omelette patties with flatbread and yogurt."}
+  - {cuisine: levant-turkish, batch: 2, zh: 中东番茄炖羊肉, en: Lamb and tomato stew, visual: "Lamb chunks stewed in a spiced tomato sauce with chickpeas, served with rice."}
+
+  # ─── 意大利菜 ───
+  - {cuisine: italian, batch: 2, zh: 意式蔬菜汤, en: Minestrone, original: Minestrone, visual: "A chunky vegetable soup with beans, small pasta, tomato and herbs in a bowl with Parmesan."}
+  - {cuisine: italian, batch: 2, zh: 焗茄子, en: Eggplant parmigiana, original: Parmigiana di melanzane, visual: "Layered baked eggplant with tomato sauce and melted bubbly mozzarella in a baking dish."}
+  - {cuisine: italian, batch: 2, zh: 阿马特里切意面, en: Bucatini all'amatriciana, original: Bucatini all'amatriciana, visual: "Thick hollow bucatini in a tomato and guanciale sauce with grated pecorino."}
+  - {cuisine: italian, batch: 2, zh: 意式柠檬鸡排, en: Chicken piccata, original: Pollo al limone, visual: "Thin golden chicken cutlets in a lemon butter caper sauce with parsley."}
+  - {cuisine: italian, batch: 2, zh: 意式蒜香烤虾, en: Garlic butter roasted shrimp, original: Gamberi all'aglio, visual: "Roasted shrimp in garlic butter with parsley and lemon in a baking dish with crusty bread."}
+  - {cuisine: italian, batch: 2, zh: 意式纸包烤三文鱼, en: Salmon baked in parchment, original: Salmone al cartoccio, visual: "An opened parchment parcel with a salmon fillet, cherry tomatoes, olives and lemon slices."}
+  - {cuisine: italian, batch: 2, zh: 西兰花烘蛋, en: Broccoli frittata, original: Frittata di broccoli, visual: "A thick golden frittata studded with broccoli and cheese in a skillet, one wedge cut."}
+  - {cuisine: italian, batch: 2, zh: 意大利肉丸意面, en: Spaghetti and meatballs, visual: "Spaghetti in tomato sauce topped with large meatballs, basil and grated Parmesan."}
+  - {cuisine: italian, batch: 2, zh: 玛格丽特披萨, en: Margherita pizza, original: Pizza Margherita, visual: "A round pizza with blistered crust, tomato sauce, melted mozzarella and fresh basil leaves."}
+  - {cuisine: italian, batch: 2, zh: 蛤蜊意面, en: Spaghetti alle vongole, original: Spaghetti alle vongole, visual: "Spaghetti tossed with small open clams, garlic, white wine and parsley."}
+  - {cuisine: italian, batch: 2, zh: 番茄罗勒烤面包, en: Bruschetta, original: Bruschetta al pomodoro, visual: "Toasted bread slices topped with diced tomato, basil and olive oil on a board."}
+  - {cuisine: italian, batch: 2, zh: 意式金枪鱼意面, en: Tuna pasta, original: Pasta al tonno, visual: "Short pasta in a light tomato sauce with flakes of tuna, capers and parsley."}
+  - {cuisine: italian, batch: 2, zh: 卡普里沙拉, en: Caprese salad, original: Insalata caprese, visual: "Alternating slices of tomato and fresh mozzarella with basil leaves and olive oil."}
+
+  # ─── 法国菜 ───
+  - {cuisine: french, batch: 2, zh: 黄油柠檬煎鱼, en: Fish meunière, original: Sole meunière, visual: "A pan-fried golden white fish fillet in brown butter with lemon and parsley."}
+  - {cuisine: french, batch: 2, zh: 红酒炖鸡, en: Coq au vin, original: Coq au vin, visual: "Chicken pieces braised in a dark red wine sauce with mushrooms, pearl onions and bacon in a pot."}
+  - {cuisine: french, batch: 2, zh: 法式蛋卷, en: French omelette, original: Omelette, visual: "A smooth pale yellow rolled omelette with no browning, sprinkled with chives, on a plate."}
+  - {cuisine: french, batch: 2, zh: 黑胡椒牛排, en: Steak au poivre, original: Steak au poivre, visual: "A peppercorn-crusted seared steak with creamy brandy pepper sauce and fries."}
+  - {cuisine: french, batch: 2, zh: 尼斯沙拉, en: Salade niçoise, original: Salade niçoise, visual: "A composed salad with tuna, halved boiled eggs, green beans, potatoes, olives and tomatoes."}
+  - {cuisine: french, batch: 2, zh: 法式芥末奶油鸡, en: Chicken with Dijon cream sauce, original: Poulet à la moutarde, visual: "Seared chicken thighs in a creamy pale Dijon mustard sauce with herbs in a skillet."}
+  - {cuisine: french, batch: 2, zh: 法式蔬菜浓汤, en: Potage (French vegetable soup), original: Potage de légumes, visual: "A smooth pale orange puréed vegetable soup with a swirl of cream and croutons."}
+  - {cuisine: french, batch: 2, zh: 法式可丽饼, en: Crêpes, original: Crêpes, visual: "Thin folded golden crêpes with butter, sugar and lemon on a plate."}
+  - {cuisine: french, batch: 2, zh: 法式吐司, en: French toast, original: Pain perdu, visual: "Thick golden custard-soaked toast slices with powdered sugar, berries and maple syrup."}
+  - {cuisine: french, batch: 2, zh: 普罗旺斯炖牛肉, en: Daube provençale, original: Daube provençale, visual: "Beef chunks stewed in red wine with carrots, olives and orange peel in a pot."}
+  - {cuisine: french, batch: 2, zh: 法式煎鸭胸, en: Pan-seared duck breast, original: Magret de canard, visual: "Sliced pink duck breast with crisp rendered skin and a glossy fruit sauce."}
+  - {cuisine: french, batch: 2, zh: 法式火腿奶酪三明治, en: Croque monsieur, original: Croque monsieur, visual: "A toasted ham sandwich topped with bubbly browned béchamel and Gruyère cheese."}
+  - {cuisine: french, batch: 2, zh: 洛林乳蛋饼, en: Quiche lorraine, original: Quiche lorraine, visual: "A golden quiche with bacon and custard filling in a fluted crust, one slice cut."}
+
+  # ─── 墨西哥菜 ───
+  - {cuisine: mexican, batch: 2, zh: 牧场早餐蛋, en: Huevos rancheros, original: Huevos rancheros, visual: "Fried eggs on crisp tortillas smothered in red ranchero salsa with beans and avocado."}
+  - {cuisine: mexican, batch: 2, zh: 莎莎玉米片, en: Chilaquiles, original: Chilaquiles, visual: "Tortilla chips simmered in red salsa topped with crema, crumbled cheese, onion and a fried egg."}
+  - {cuisine: mexican, batch: 2, zh: 墨西哥番茄饭, en: Mexican red rice, original: Arroz rojo, visual: "Fluffy orange-red tomato rice with peas and diced carrot in a bowl."}
+  - {cuisine: mexican, batch: 2, zh: 墨西哥玉米饼汤, en: Tortilla soup, original: Sopa de tortilla, visual: "A red tomato-chili broth topped with crispy tortilla strips, avocado, cheese and crema."}
+  - {cuisine: mexican, batch: 2, zh: 墨西哥炖牛肉, en: Beef barbacoa, original: Barbacoa de res, visual: "Tender shredded braised beef in a dark chili sauce with tortillas, onion and cilantro."}
+  - {cuisine: mexican, batch: 2, zh: 墨西哥土豆炒蛋, en: Papas con huevo, original: Papas con huevo, visual: "Scrambled eggs with golden diced potatoes in a skillet with warm tortillas and salsa."}
+  - {cuisine: mexican, batch: 2, zh: 墨西哥玉米猪肉汤, en: Pozole rojo, original: Pozole rojo, visual: "A red chili broth with hominy and pork, topped with shredded cabbage, radish and lime."}
+  - {cuisine: mexican, batch: 2, zh: 尤卡坦慢烤猪肉, en: Cochinita pibil, original: Cochinita pibil, visual: "Shredded bright orange achiote pork with pickled red onions and tortillas."}
+  - {cuisine: mexican, batch: 2, zh: 墨西哥鸡肉法吉塔, en: Chicken fajitas, original: Fajitas de pollo, visual: "Sizzling strips of chicken with colorful peppers and onions in a cast-iron skillet with tortillas."}
+  - {cuisine: mexican, batch: 2, zh: 墨西哥卷饼, en: Burrito, visual: "A large flour tortilla burrito cut in half showing rice, beans, meat and salsa."}
+  - {cuisine: mexican, batch: 2, zh: 墨西哥奶酪薄饼, en: Quesadilla, original: Quesadilla, visual: "Golden toasted quesadilla wedges with melted cheese oozing, salsa and guacamole alongside."}
+  - {cuisine: mexican, batch: 2, zh: 墨西哥烤牛肉塔可, en: Carne asada tacos, original: Tacos de carne asada, visual: "Small corn tortillas topped with chopped charred grilled steak, onion, cilantro and lime."}
+  - {cuisine: mexican, batch: 2, zh: 墨西哥黑豆汤, en: Black bean soup, original: Sopa de frijoles negros, visual: "A thick dark black bean soup topped with crema, avocado and cilantro."}

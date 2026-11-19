@@ -1,8 +1,8 @@
 {
   "slug": "northern-home-tomato-and-egg",
-  "status": "draft",
-  "reviewed_by": null,
-  "reviewed_at": null,
+  "status": "reviewed",
+  "reviewed_by": "nalaxu",
+  "reviewed_at": "2026-11-19",
   "cuisine_id": "northern-home",
   "generated_at": "2026-11-19T08:14:10.419Z",
   "model": "gpt-6.1-sol",

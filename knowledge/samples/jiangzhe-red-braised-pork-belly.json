@@ -1,8 +1,8 @@
 {
   "slug": "jiangzhe-red-braised-pork-belly",
-  "status": "draft",
-  "reviewed_by": null,
-  "reviewed_at": null,
+  "status": "reviewed",
+  "reviewed_by": "nalaxu",
+  "reviewed_at": "2026-11-19",
   "cuisine_id": "jiangzhe",
   "generated_at": "2026-11-19T08:13:46.729Z",
   "model": "gpt-6.1-sol",

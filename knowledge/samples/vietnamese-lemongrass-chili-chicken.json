@@ -1,8 +1,8 @@
 {
   "slug": "vietnamese-lemongrass-chili-chicken",
-  "status": "draft",
-  "reviewed_by": null,
-  "reviewed_at": null,
+  "status": "reviewed",
+  "reviewed_by": "nalaxu",
+  "reviewed_at": "2026-11-19",
   "cuisine_id": "vietnamese",
   "generated_at": "2026-11-19T08:14:52.329Z",
   "model": "gpt-6.1-sol",
