@@ -155,8 +155,9 @@ export async function runRecommend(
       summary: d.summary,
       totalMinutes: d.total_minutes,
       difficulty: d.difficulty,
-      uses: d.uses,
-      toBuy: d.to_buy,
+      // 过敏原检查（checkDish）已用全文做过；展示时截短，带长备注的名字不撑破卡片
+      uses: d.uses.map((u) => clipName(u)),
+      toBuy: d.to_buy.map((t) => ({ ...t, name: clipName(t.name) })),
       imageUrl: ref.imageUrl,
     };
     accepted.push(dish);
@@ -260,4 +261,10 @@ async function saveRun(
   // 推荐时已有图片的菜的比例即图片库命中率（PRD 第 9 节）
   await logEvent(db, userId, "recommend_run", { runId: row.id, dishes: dishes.length, ...stats });
   return row.id;
+}
+
+/** 展示用：去掉括号里的备注，仍然太长就截断 */
+export function clipName(name: string, max = 24): string {
+  const bare = name.replace(/[（(][^）)]*[）)]/g, "").trim() || name;
+  return bare.length > max ? `${bare.slice(0, max - 1)}…` : bare;
 }

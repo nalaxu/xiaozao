@@ -97,9 +97,9 @@ export const rawDishSchema = z.object({
   total_minutes: z.number().int().min(1).max(600),
   difficulty: z.union([z.literal(1), z.literal(2), z.literal(3)]),
   // 参与过敏原检查的字段只放宽、不截断（截断可能截掉关键词）；只用于展示的字段超长就截断
-  uses: z.array(z.string().max(60)).max(30),
-  key_ingredients: z.array(z.string().max(80)).max(40),
-  to_buy: z.array(z.object({ name: z.string().max(80), required: z.boolean() })).max(15),
+  uses: z.array(z.string().max(200)).max(30),
+  key_ingredients: z.array(z.string().max(200)).max(40),
+  to_buy: z.array(z.object({ name: z.string().max(200), required: z.boolean() })).max(15),
   visual: z.string().transform((s) => clip(s, 300)),
 });
 

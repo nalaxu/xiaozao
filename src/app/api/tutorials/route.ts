@@ -8,7 +8,7 @@ import { enqueueImage } from "@/server/images/queue";
 import { guardModelRoute } from "@/server/model-guard";
 import { existingTutorial, findRunDish, runTutorial } from "@/server/tutorial/run";
 
-export const maxDuration = 120;
+export const maxDuration = 150;
 
 const body = z.object({ runId: z.string().uuid(), dishId: z.string().uuid() });
 

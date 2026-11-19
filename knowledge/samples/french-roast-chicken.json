@@ -1,0 +1,243 @@
+{
+  "slug": "french-roast-chicken",
+  "status": "draft",
+  "reviewed_by": null,
+  "reviewed_at": null,
+  "cuisine_id": "french",
+  "generated_at": "2026-11-19T08:27:41.320Z",
+  "model": "gpt-6.1-sol",
+  "content": {
+    "overview": {
+      "name_zh": "法式烤鸡",
+      "name_en": "Roast Chicken — Stovetop Adaptation",
+      "name_original": "Poulet rôti",
+      "cuisine_id": "french",
+      "flavor_desc": "鸡皮焦香、肉嫩多汁，带黄油和百里香香气，少许柠檬提清爽。",
+      "total_minutes": 50,
+      "active_minutes": 20,
+      "difficulty": 2,
+      "servings": 2
+    },
+    "ingredients": [
+      {
+        "group": "main",
+        "name_zh": "带皮带骨全鸡腿",
+        "name_en": "Bone-in, skin-on whole chicken legs",
+        "amount": 650,
+        "unit": "g",
+        "prep": "约2只，去除多余油脂，擦干表面",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "蒜",
+        "name_en": "Garlic",
+        "amount": 4,
+        "unit": "clove",
+        "prep": "去皮，轻拍裂",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "新鲜百里香",
+        "name_en": "Fresh thyme",
+        "amount": 2,
+        "unit": "g",
+        "prep": "洗净并擦干",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "无盐黄油",
+        "name_en": "Unsalted butter",
+        "amount": 25,
+        "unit": "g",
+        "prep": "切小块",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "橄榄油",
+        "name_en": "Olive oil",
+        "amount": 5,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "盐",
+        "name_en": "Salt",
+        "amount": 5,
+        "unit": "g",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "黑胡椒粉",
+        "name_en": "Ground black pepper",
+        "amount": 0.25,
+        "unit": "tsp",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "水",
+        "name_en": "Water",
+        "amount": 60,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "柠檬汁",
+        "name_en": "Lemon juice",
+        "amount": 10,
+        "unit": "ml",
+        "prep": null,
+        "optional": true
+      }
+    ],
+    "substitutions": [
+      {
+        "for": "新鲜百里香2g",
+        "substitute": "干百里香0.5 tsp，普通超市香料区可买到",
+        "difference": "干百里香香气更集中、少一点清新感；最后与黄油一起加入即可。"
+      },
+      {
+        "for": "带皮带骨全鸡腿650g",
+        "substitute": "带皮带骨鸡上腿650g，约4块",
+        "difference": "鸡上腿更容易平贴锅底、熟得更均匀，但没有完整鸡腿的外形；仍以中心达到74°C判断熟度。"
+      }
+    ],
+    "equipment": [
+      "普通炉灶",
+      "带盖平底锅，能平铺两只鸡腿",
+      "菜刀和砧板",
+      "锅铲",
+      "盘子",
+      "厨房纸；没有可用干净的专用厨房布"
+    ],
+    "steps": [
+      {
+        "action": "将盐和黑胡椒均匀抹在鸡腿两面。",
+        "heat": null,
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "鸡皮表面干爽，调料分布均匀，没有成堆的盐粒。",
+        "warning": "接触生鸡肉后洗手，勿直接触碰调料瓶和熟食。"
+      },
+      {
+        "action": "将橄榄油倒入平底锅，以中火预热。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": 60,
+        "cue": "油能轻松流动、表面略有波纹，但没有冒烟。",
+        "warning": null
+      },
+      {
+        "action": "将鸡腿皮朝下放入锅中，煎约8—10分钟。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": 540,
+        "cue": "鸡皮呈均匀金黄色，边缘略脆，用锅铲轻推能自然松动。",
+        "warning": "轻放入锅，防止热油溅起；若皮尚粘锅，不要强行铲起。"
+      },
+      {
+        "action": "将鸡腿翻到肉面朝下，煎2分钟。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": 120,
+        "cue": "肉面由粉红转为浅白，接触锅底处略有浅金色。",
+        "warning": null
+      },
+      {
+        "action": "关火后，沿锅边缓慢加入60ml水。",
+        "heat": "off",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "锅底形成一层浅水，水位没有淹到朝上的鸡皮。",
+        "warning": "锅中油脂仍热，分次缓慢加水，脸和手避开蒸汽。"
+      },
+      {
+        "action": "盖锅，以小火焖煮18—22分钟。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": 1200,
+        "cue": "锅内保持轻微咕嘟声；鸡肉最厚处达到74°C，靠骨处不带粉红色。若锅底提前干了，沿边少量补水。",
+        "warning": "大小不同的鸡腿熟得快慢不同，时间只作参考；未熟透要继续焖。"
+      },
+      {
+        "action": "揭盖后以中火收干锅底水分。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": 180,
+        "cue": "大而透明的水泡消失，声音由咕嘟转成清晰的煎油声，锅底只余油脂。",
+        "warning": "开盖时避开热蒸汽；水分收干后不要继续空烧。"
+      },
+      {
+        "action": "将鸡腿再次翻到皮朝下，复煎2—4分钟。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": 180,
+        "cue": "鸡皮颜色加深至金棕色，轻触边缘有硬脆感。",
+        "warning": "若锅底开始冒烟或鸡皮快速变深，立即调低火力。"
+      },
+      {
+        "action": "将鸡腿翻回皮朝上。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "两只鸡腿鸡皮完整、朝上，肉面贴着锅底。",
+        "warning": null
+      },
+      {
+        "action": "将黄油、蒜和百里香放入锅中，低火加热。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": 60,
+        "cue": "黄油融化起细泡，闻到蒜和香草香，乳固体保持浅金色而非黑褐色。",
+        "warning": "黄油容易焦，出现黑点或刺鼻气味时立即离火。"
+      },
+      {
+        "action": "用锅铲将香草黄油反复淋在鸡腿肉面和侧面。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": 60,
+        "cue": "鸡肉侧面裹上薄薄亮汁，黄油香明显，鸡皮顶部尽量保持干爽。",
+        "warning": "无需倾斜热锅，避免热油流出。"
+      },
+      {
+        "action": "将鸡腿盛到干净盘中，皮朝上静置5分钟。",
+        "heat": "off",
+        "oven_c": null,
+        "timer_seconds": 300,
+        "cue": "肉汁不再大量流出，鸡皮裸露、不被盖住。",
+        "warning": "不要使用装过生鸡肉且未清洗的盘子。"
+      },
+      {
+        "action": "将锅中香草黄油汁淋在鸡肉旁，喜欢清爽口味可同时加入柠檬汁。",
+        "heat": "off",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "盘底有少量亮泽酱汁，鸡皮顶部没有被酱汁浸湿。",
+        "warning": null
+      }
+    ],
+    "key_points": [
+      "鸡皮要擦干，入锅后先别挪动；皮煎定型后才容易完整翻面。",
+      "先盖锅把肉焖熟，再收干水分复煎鸡皮，别为了皮脆而把里面留生。",
+      "黄油、蒜和香草最后低火加入，避免黄油焦黑、蒜发苦；出锅后不盖住鸡皮。"
+    ],
+    "background": "法式烤鸡讲究鸡皮上色、肉汁保留，再用黄油和香草提香。你没有烤箱，这里用带盖平底锅做炉灶版，选带皮带骨鸡腿，更适合两人份；成品保留黄油香草风味，鸡皮接触锅底的部分能煎脆，但不会像烤箱整鸡那样全身酥脆。",
+    "safety_notes": [
+      "鸡肉最厚处中心温度必须至少达到74°C，测量时避开骨头。没有温度计时，切开最厚、靠骨处检查，肉应完全不透明、不能带粉红色；颜色判断不如温度计可靠，有疑虑就继续加热。",
+      "生鸡肉不要冲洗，避免水花传播细菌；处理后洗净双手、刀具和砧板，熟鸡肉换用干净盘子。",
+      "热锅加水和翻动鸡腿时注意油花，开盖时让蒸汽朝远离身体的方向散出。",
+      "剩余鸡肉应在烹调完成后2小时内冷藏，不要放在室温下彻底放凉。"
+    ]
+  }
+}

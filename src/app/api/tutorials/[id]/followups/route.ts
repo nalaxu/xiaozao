@@ -5,7 +5,7 @@ import { jsonError, readJson } from "@/server/http";
 import { guardModelRoute } from "@/server/model-guard";
 import { askFollowup } from "@/server/tutorial/followup";
 
-export const maxDuration = 40;
+export const maxDuration = 60;
 
 const body = z.object({ question: z.string().trim().min(1).max(input.maxFreeTextLength) });
 

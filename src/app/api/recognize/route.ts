@@ -8,7 +8,7 @@ import { jsonError, readJson } from "@/server/http";
 import { guardModelRoute } from "@/server/model-guard";
 import { nextReset, refundQuota, reserveQuota } from "@/server/usage";
 
-export const maxDuration = 20;
+export const maxDuration = 30;
 
 // 前端已缩到长边 1024 像素的 JPEG，单张约 100–400 KB；上限留足余量
 const MAX_DATA_URL = 1_600_000;

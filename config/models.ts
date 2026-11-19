@@ -54,13 +54,13 @@ export const imageQuality = () => env("IMAGE_QUALITY", "medium");
  */
 export const imageConcurrency = () => Math.max(1, Number(process.env.IMAGE_CONCURRENCY) || 2);
 
-/** 调用前用于预占全站预算的单次估算成本（PRD 6.3 的估算值，实测后更新） */
+/** 调用前用于预占全站预算的单次成本，取 2026-11-19 评测实测平均值并略向上取整（PRD 6.3） */
 export const estimateUsd: Record<Feature, number> = {
   recognize: 0.0025,
-  recommend: 0.0065,
-  tutorial: 0.025,
-  followup: 0.005,
-  image: 0.04,
+  recommend: 0.007,
+  tutorial: 0.03,
+  followup: 0.003,
+  image: 0.012,
 };
 
 export function textCostUsd(

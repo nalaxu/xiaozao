@@ -4,7 +4,8 @@ import { buildIngredientIndex } from "@/lib/ingredients";
 import { kb } from "@/lib/kb";
 import type { ModelRequest } from "./types";
 
-export const RECOGNIZE_TIMEOUT_MS = 8000;
+// 实测 6–8 秒（2026-11-19），原来的 8 秒太紧
+export const RECOGNIZE_TIMEOUT_MS = 25_000;
 
 export const RECOGNIZE_SYSTEM = `你是厨房助手，任务是从用户拍的冰箱、台面或购物袋照片里认出可以用来做菜的食材。
 

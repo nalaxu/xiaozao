@@ -9,7 +9,8 @@ import { followups, tutorials } from "../db/schema";
 import { BudgetPausedError, callModel } from "../ai/call";
 import type { ModelRequest } from "../ai/types";
 
-export const FOLLOWUP_TIMEOUT_MS = 30_000;
+// 实测中位 4 秒；留出首包卡住后重试一次的时间
+export const FOLLOWUP_TIMEOUT_MS = 45_000;
 
 export const FOLLOWUP_SYSTEM = `你是“小灶”的家常菜老师。用户正在照着下面这份菜谱做菜，回答他关于这道菜的问题。
 

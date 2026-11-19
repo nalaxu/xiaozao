@@ -122,14 +122,19 @@ export function tutorialSchema() {
 }
 
 const str = (max: number) => z.string().max(max);
+/** 只用于展示的文字：超长就截断，不因为一句话太长让整份教程失败（2026-11-19 评测里厨具名超长导致过失败） */
+const text = (max: number) => z.string().transform((s) => (s.length > max ? `${s.slice(0, max - 1)}…` : s));
+/** 只用于展示的列表：超出条数就截掉 */
+const list = <T extends z.ZodType>(item: T, max: number) => z.array(item).transform((a) => a.slice(0, max));
+// 参与过敏原检查的字段（食材名、替代品）只放宽上限、不截断，避免截掉关键词
 
 export const tutorialContentSchema = z.object({
   overview: z.object({
     name_zh: str(40).min(1),
-    name_en: str(100),
-    name_original: str(100).nullable(),
+    name_en: text(100),
+    name_original: text(100).nullable(),
     cuisine_id: z.string(),
-    flavor_desc: str(200),
+    flavor_desc: text(200),
     total_minutes: z.number().int().min(1).max(2880),
     active_minutes: z.number().int().min(0).max(2880),
     difficulty: z.union([z.literal(1), z.literal(2), z.literal(3)]),
@@ -139,34 +144,34 @@ export const tutorialContentSchema = z.object({
     .array(
       z.object({
         group: z.enum(["main", "aux", "seasoning"]),
-        name_zh: str(40).min(1),
-        name_en: str(80),
+        name_zh: str(200).min(1),
+        name_en: str(200),
         amount: z.number().min(0).max(100000).nullable(),
         unit: z.enum(UNITS),
-        prep: str(60).nullable(),
+        prep: text(80).nullable(),
         optional: z.boolean(),
       }),
     )
     .min(1)
     .max(40),
-  substitutions: z.array(z.object({ for: str(40), substitute: str(120), difference: str(200) })).max(15),
-  equipment: z.array(str(40)).max(15),
+  substitutions: z.array(z.object({ for: text(60), substitute: str(300), difference: text(200) })).max(15),
+  equipment: list(text(40), 15),
   steps: z
     .array(
       z.object({
-        action: str(300).min(1),
+        action: text(300).pipe(z.string().min(1)),
         heat: z.enum(HEATS).nullable(),
         oven_c: z.number().int().min(30).max(320).nullable(),
         timer_seconds: z.number().int().min(1).max(86400).nullable(),
-        cue: str(200),
-        warning: str(200).nullable(),
+        cue: text(200),
+        warning: text(200).nullable(),
       }),
     )
     .min(1)
     .max(25),
-  key_points: z.array(str(200)).max(5),
-  background: str(600),
-  safety_notes: z.array(str(200)).max(8),
+  key_points: list(text(200), 5),
+  background: text(600),
+  safety_notes: list(text(200), 8),
 }) satisfies z.ZodType<TutorialContent>;
 
 export interface TutorialParams {

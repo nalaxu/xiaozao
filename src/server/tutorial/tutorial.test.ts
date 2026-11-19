@@ -10,6 +10,7 @@ import { dailySpend, dishes, followups, preferences, recommendationRuns, tutoria
 import { testDb } from "../test-utils";
 import { quotaStatus, utcDay } from "../usage";
 import { askFollowup } from "./followup";
+import { tutorialContentSchema } from "./model";
 import { existingTutorial, findRunDish, runTutorial } from "./run";
 
 const content = (over: Partial<TutorialContent> = {}): TutorialContent => ({
@@ -192,5 +193,14 @@ describe("askFollowup", () => {
     const [t] = await db.select().from(tutorials);
     const [other] = await db.insert(users).values({ email: "x@example.test" }).returning();
     expect(await askFollowup(db, other.id, t.id, "hi")).toMatchObject({ ok: false, status: 404 });
+  });
+});
+
+describe("tutorialContentSchema", () => {
+  it("clips over-long display text instead of failing the whole tutorial", () => {
+    const long = "空气炸锅（没有的话用烤箱 200°C 代替，时间延长 5 分钟，中途翻面一次，注意观察颜色）";
+    const parsed = tutorialContentSchema.parse({ ...content(), equipment: [long], key_points: ["a", "b", "c", "d", "e", "f"] });
+    expect(parsed.equipment[0].length).toBeLessThanOrEqual(40);
+    expect(parsed.key_points).toHaveLength(5);
   });
 });

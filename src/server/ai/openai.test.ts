@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { openAiClient } from "./openai";
+import { openAiClient, STALL_MS } from "./openai";
 import type { ModelRequest } from "./types";
 
 const req: ModelRequest = {
@@ -38,6 +38,20 @@ describe("openAiClient retries", () => {
     await vi.advanceTimersByTimeAsync(2500);
     const r = await run;
     expect(r.text).toBe('{"a":1}');
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
+  it("retries when the relay sends nothing for STALL_MS", async () => {
+    vi.useFakeTimers({ toFake: ["setTimeout"] });
+    const hang = (_url: string, init: RequestInit) =>
+      new Promise<Response>((_resolve, reject) =>
+        init.signal?.addEventListener("abort", () => reject(new DOMException("aborted", "AbortError"))),
+      );
+    const fetchMock = vi.fn().mockImplementationOnce(hang).mockResolvedValueOnce(ok());
+    vi.stubGlobal("fetch", fetchMock);
+    const run = openAiClient("k").run(req);
+    await vi.advanceTimersByTimeAsync(STALL_MS + 2500);
+    expect((await run).text).toBe('{"a":1}');
     expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 

@@ -34,7 +34,13 @@ function readUsage(u: unknown): Usage {
 }
 
 /** 中转站或 OpenAI 暂时拒绝（并发或频率上限）：还没输出任何内容时可以安全重试 */
-const RETRYABLE = /concurrency limit|rate limit|too many requests|overloaded|\b429\b/i;
+const RETRYABLE = /concurrency limit|rate limit|too many requests|overloaded|\b429\b|stalled/i;
+
+/**
+ * 首包超时：这么久一个事件都没收到就断开重试。2026-11-19 评测里约 13% 的请求在中转站卡住、
+ * 60 秒零输出，而正常请求几秒内就开始输出。
+ */
+export const STALL_MS = 20_000;
 const MAX_RETRIES = 2;
 
 export function openAiClient(apiKey: string): ModelClient {
@@ -72,6 +78,11 @@ async function runOnce(
 ): Promise<{ text: string; usage: Usage }> {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+  let stalled = false;
+  const stallTimer = setTimeout(() => {
+    stalled = true;
+    ctrl.abort();
+  }, Math.min(STALL_MS, timeoutMs));
   const body = {
     model: req.model,
     instructions: req.system,
@@ -106,6 +117,7 @@ async function runOnce(
     }
     let completed = false;
     for await (const event of sseEvents(res.body)) {
+      clearTimeout(stallTimer);
       if (event.type === "response.output_text.delta" && typeof event.delta === "string") {
         text += event.delta;
         onDelta(event.delta);
@@ -133,10 +145,12 @@ async function runOnce(
     return { text, usage };
   } catch (e) {
     if (e instanceof ModelError) throw e;
+    if (stalled) throw new ModelError(`upstream stalled: ${STALL_MS / 1000} 秒没有响应`, "error", usage);
     if (ctrl.signal.aborted) throw new ModelError("模型调用超时", "timeout", usage);
     throw new ModelError(e instanceof Error ? e.message : String(e), "error", usage);
   } finally {
     clearTimeout(timer);
+    clearTimeout(stallTimer);
   }
 }
 

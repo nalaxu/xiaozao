@@ -10,7 +10,7 @@ import { testDb } from "../test-utils";
 import { quotaStatus, utcDay } from "../usage";
 import { pickCuisines } from "./candidates";
 import { checkDish, type RawDish } from "./model";
-import { runRecommend } from "./run";
+import { clipName, runRecommend } from "./run";
 
 const dish = (over: Partial<RawDish>): RawDish => ({
   name_zh: "酸辣土豆丝",
@@ -199,5 +199,12 @@ describe("pickCuisines", () => {
   });
   it("picks six cuisines when nothing is chosen", () => {
     expect(pickCuisines({ main: [], flavors: [], cuisine: null, random: () => 0.5 })).toHaveLength(6);
+  });
+});
+
+describe("clipName", () => {
+  it("drops parenthetical notes and caps length for display", () => {
+    expect(clipName("勃艮第红酒（或其他干红葡萄酒，约 750ml）")).toBe("勃艮第红酒");
+    expect(clipName("a".repeat(40)).length).toBe(24);
   });
 });
