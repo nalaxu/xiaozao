@@ -1,0 +1,348 @@
+{
+  "slug": "indian-butter-chicken",
+  "status": "draft",
+  "reviewed_by": null,
+  "reviewed_at": null,
+  "cuisine_id": "indian",
+  "generated_at": "2026-11-19T08:17:08.519Z",
+  "model": "gpt-6.1-sol",
+  "content": {
+    "overview": {
+      "name_zh": "黄油鸡",
+      "name_en": "Butter Chicken",
+      "name_original": "Murgh makhani",
+      "cuisine_id": "indian",
+      "flavor_desc": "番茄奶油酱浓郁顺滑，奶香柔和，香料不冲，带轻微酸甜。",
+      "total_minutes": 70,
+      "active_minutes": 30,
+      "difficulty": 2,
+      "servings": 2
+    },
+    "ingredients": [
+      {
+        "group": "main",
+        "name_zh": "去骨去皮鸡腿肉",
+        "name_en": "Boneless skinless chicken thighs",
+        "amount": 400,
+        "unit": "g",
+        "prep": "切成约3厘米块",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "无糖原味酸奶",
+        "name_en": "Plain yogurt",
+        "amount": 60,
+        "unit": "g",
+        "prep": "用于腌鸡肉",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "无调味细腻番茄泥",
+        "name_en": "Tomato passata",
+        "amount": 250,
+        "unit": "ml",
+        "prep": "选不含罗勒等香草的款式，不是番茄膏或番茄沙司",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "淡奶油",
+        "name_en": "Heavy cream",
+        "amount": 80,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "姜",
+        "name_en": "Ginger",
+        "amount": 10,
+        "unit": "g",
+        "prep": "剁成细泥，腌料与酱汁各用一半",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "蒜",
+        "name_en": "Garlic",
+        "amount": 3,
+        "unit": "clove",
+        "prep": "剁成细泥，腌料与酱汁各用一半",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "水",
+        "name_en": "Water",
+        "amount": 80,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "无盐黄油",
+        "name_en": "Unsalted butter",
+        "amount": 30,
+        "unit": "g",
+        "prep": "分成20克与10克两份",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "中性植物油",
+        "name_en": "Neutral cooking oil",
+        "amount": 10,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "柠檬汁",
+        "name_en": "Lemon juice",
+        "amount": 5,
+        "unit": "ml",
+        "prep": "用于腌鸡肉",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "葛拉姆马萨拉",
+        "name_en": "Garam masala",
+        "amount": 1,
+        "unit": "tsp",
+        "prep": "腌料与酱汁各用半茶匙，选不含辣椒或辣度低的款式",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "芫荽籽粉",
+        "name_en": "Ground coriander",
+        "amount": 1,
+        "unit": "tsp",
+        "prep": "用于酱汁",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "孜然粉",
+        "name_en": "Ground cumin",
+        "amount": 0.5,
+        "unit": "tsp",
+        "prep": "用于腌料",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "姜黄粉",
+        "name_en": "Ground turmeric",
+        "amount": 0.25,
+        "unit": "tsp",
+        "prep": "用于腌料",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "克什米尔辣椒粉",
+        "name_en": "Kashmiri chili powder",
+        "amount": 0.5,
+        "unit": "tsp",
+        "prep": "用于酱汁，怕辣可省略",
+        "optional": true
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "干葫芦巴叶",
+        "name_en": "Dried fenugreek leaves / Kasuri methi",
+        "amount": 1,
+        "unit": "tsp",
+        "prep": "用前用手搓碎",
+        "optional": true
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "盐",
+        "name_en": "Salt",
+        "amount": 0.75,
+        "unit": "tsp",
+        "prep": "腌料用半茶匙，酱汁用四分之一茶匙",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "白糖",
+        "name_en": "Sugar",
+        "amount": 1,
+        "unit": "tsp",
+        "prep": "番茄偏酸时使用",
+        "optional": true
+      }
+    ],
+    "substitutions": [
+      {
+        "for": "克什米尔辣椒粉",
+        "substitute": "等量超市甜椒粉（sweet paprika，不选烟熏款）",
+        "difference": "颜色接近，甜椒香更明显，辣度更低，适合这版温和口味。"
+      },
+      {
+        "for": "干葫芦巴叶",
+        "substitute": "直接省略",
+        "difference": "少了黄油鸡标志性的草本回甘，但番茄奶油主体风味仍在。"
+      },
+      {
+        "for": "葛拉姆马萨拉",
+        "substitute": "全量用半茶匙孜然粉加一小撮肉桂粉代替，分两次使用",
+        "difference": "香气层次较简单，但有肉桂的暖香；不要用大量咖喱粉替代，以免姜黄味过重。"
+      },
+      {
+        "for": "无调味细腻番茄泥",
+        "substitute": "等量罐装碎番茄，用锅铲尽量压细",
+        "difference": "成品会带细小番茄颗粒，不如细腻番茄泥顺滑；炒酱时间可能需要略延长。"
+      }
+    ],
+    "equipment": [
+      "普通家用炉灶",
+      "平底锅或厚底炒锅",
+      "碗",
+      "刀和砧板",
+      "锅铲或汤勺"
+    ],
+    "steps": [
+      {
+        "action": "将鸡肉与酸奶、柠檬汁、一半姜蒜泥、半茶匙葛拉姆马萨拉、孜然粉、姜黄粉和半茶匙盐拌匀。",
+        "heat": null,
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "每块鸡肉都裹上一层浅黄色腌料，没有干粉团。",
+        "warning": "接触生鸡肉后洗手，避免污染调料瓶。"
+      },
+      {
+        "action": "将鸡肉盖好，放冰箱冷藏腌30分钟。",
+        "heat": null,
+        "oven_c": null,
+        "timer_seconds": 1800,
+        "cue": "腌料贴附在肉块表面，颜色均匀。",
+        "warning": "不要放在室温下腌制。"
+      },
+      {
+        "action": "在平底锅中加入植物油，中大火预热。",
+        "heat": "medium_high",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "油变得流动顺畅、微微发亮，但没有冒烟。",
+        "warning": null
+      },
+      {
+        "action": "将鸡肉夹入锅中单层煎约3分钟，碗底多余腌料不用。",
+        "heat": "medium_high",
+        "oven_c": null,
+        "timer_seconds": 180,
+        "cue": "鸡肉底面出现金褐色斑点，能较轻松地从锅底铲起。",
+        "warning": "湿腌料入热油会溅，贴近锅面轻放；不要挤满锅。"
+      },
+      {
+        "action": "将鸡肉翻面，再煎约2分钟。",
+        "heat": "medium_high",
+        "oven_c": null,
+        "timer_seconds": 120,
+        "cue": "另一面也有焦斑，肉块外层变白，中心此时可以尚未熟透。",
+        "warning": "这一步只是上色，不能直接食用。"
+      },
+      {
+        "action": "把煎过的鸡肉盛到待回锅的碗里。",
+        "heat": "off",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "锅底留下棕褐色煎香痕迹，而不是大片黑色焦渣。",
+        "warning": "盛放半熟鸡肉的碗不能直接用来装成品。"
+      },
+      {
+        "action": "将锅转小火，加入20克黄油融化。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "黄油融化并出现细泡，颜色仍是浅黄色。",
+        "warning": "若锅底有黑色焦渣，先离火擦净；黄油不要烧成深褐色。"
+      },
+      {
+        "action": "加入剩余姜蒜泥，小火炒约45秒。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": 45,
+        "cue": "闻到姜蒜香气，蒜泥没有明显变褐。",
+        "warning": null
+      },
+      {
+        "action": "加入芫荽籽粉和可选的克什米尔辣椒粉，翻炒约15秒。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": 15,
+        "cue": "香料与油脂混合成湿润糊状，香味明显散出。",
+        "warning": "粉状香料很容易糊，闻到香气后立即进入下一步。"
+      },
+      {
+        "action": "加入番茄泥，中小火炒煮8至10分钟。",
+        "heat": "medium_low",
+        "oven_c": null,
+        "timer_seconds": 600,
+        "cue": "番茄泥从鲜红变为较深的砖红色，明显变稠，锅边出现少量油光，生酸味减弱。",
+        "warning": "番茄酱会冒泡飞溅，降低火力并经常刮动锅底。"
+      },
+      {
+        "action": "加入水、剩余四分之一茶匙盐及可选的白糖，搅匀酱底。",
+        "heat": "medium_low",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "酱汁能缓慢流动，锅底的棕褐色香味物质被刮入酱中。",
+        "warning": null
+      },
+      {
+        "action": "将鸡肉和碗中肉汁倒回酱里，小火炖煮8至10分钟。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": 600,
+        "cue": "酱汁轻轻冒泡，最大肉块中心达到74°C，切开无粉红色。",
+        "warning": "肉块大小和炉火会影响熟透时间，不要只按计时判断。"
+      },
+      {
+        "action": "加入淡奶油，轻轻搅拌并小火加热约2分钟。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": 120,
+        "cue": "酱汁变成均匀的橙红色，能薄薄挂在勺背上，边缘只有小泡。",
+        "warning": "不要大火滚煮，以免油水分离。"
+      },
+      {
+        "action": "加入剩余半茶匙葛拉姆马萨拉和可选的干葫芦巴叶，搅匀。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "闻到柔和的复合香料香和淡淡草本香，叶碎均匀散开。",
+        "warning": null
+      },
+      {
+        "action": "关火，拌入剩余10克黄油。",
+        "heat": "off",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "黄油完全融化，酱汁表面细腻发亮，没有明显浮油层。",
+        "warning": null
+      }
+    ],
+    "key_points": [
+      "鸡肉表面留薄薄一层腌料即可；锅不够大就分批煎，否则容易出水变成煮鸡肉。",
+      "番茄泥要先炒到颜色变深、酸生味退去，再加奶油；不要靠大量加糖掩盖生番茄味。",
+      "奶油下锅后只保持轻微冒泡，最后用余温融化黄油，酱汁更顺滑。"
+    ],
+    "background": "黄油鸡是北印度经典的番茄奶油咖喱，重点是温和香料、番茄酸味和奶香的平衡。这版用锅煎代替馕坑烤制，用细腻的番茄泥做酱底，不用搅拌机也能做出顺滑口感。",
+    "safety_notes": [
+      "生鸡肉不要冲洗，处理后清洗双手、刀具和砧板；接触过生鸡肉的腌料不要直接当成品酱汁使用。",
+      "鸡肉中心温度必须达到至少74°C，内部不能带粉红色；有食品温度计时以实测温度为准。",
+      "腌鸡肉须放冰箱，不要在室温久放。剩菜放凉后应在2小时内冷藏，再吃时彻底加热。"
+    ]
+  }
+}

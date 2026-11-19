@@ -1,0 +1,328 @@
+{
+  "slug": "sichuan-mapo-tofu",
+  "status": "draft",
+  "reviewed_by": null,
+  "reviewed_at": null,
+  "cuisine_id": "sichuan",
+  "generated_at": "2026-11-19T08:13:39.581Z",
+  "model": "gpt-6.1-sol",
+  "content": {
+    "overview": {
+      "name_zh": "麻婆豆腐",
+      "name_en": "Mapo tofu",
+      "name_original": null,
+      "cuisine_id": "sichuan",
+      "flavor_desc": "麻辣烫嫩，最下饭的豆腐；咸鲜酱香重，留有适合拌米饭的浓汁。",
+      "total_minutes": 25,
+      "active_minutes": 20,
+      "difficulty": 2,
+      "servings": 2
+    },
+    "ingredients": [
+      {
+        "group": "main",
+        "name_zh": "嫩豆腐（非内酯豆腐）",
+        "name_en": "Soft tofu, not silken",
+        "amount": 400,
+        "unit": "g",
+        "prep": "切成约2厘米方块",
+        "optional": false
+      },
+      {
+        "group": "main",
+        "name_zh": "牛肉末",
+        "name_en": "Ground beef",
+        "amount": 100,
+        "unit": "g",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "大蒜",
+        "name_en": "Garlic",
+        "amount": 3,
+        "unit": "clove",
+        "prep": "切末",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "生姜",
+        "name_en": "Ginger",
+        "amount": 5,
+        "unit": "g",
+        "prep": "切末",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "小葱",
+        "name_en": "Scallion",
+        "amount": 10,
+        "unit": "g",
+        "prep": "切葱花",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "郫县豆瓣酱",
+        "name_en": "Pixian doubanjiang (broad bean chili paste)",
+        "amount": 25,
+        "unit": "g",
+        "prep": "剁细",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "豆豉",
+        "name_en": "Fermented black beans",
+        "amount": 5,
+        "unit": "g",
+        "prep": "切碎",
+        "optional": true
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "中性食用油",
+        "name_en": "Neutral cooking oil",
+        "amount": 20,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "辣椒面",
+        "name_en": "Chili powder",
+        "amount": 0.5,
+        "unit": "tsp",
+        "prep": null,
+        "optional": true
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "花椒粉",
+        "name_en": "Ground Sichuan pepper",
+        "amount": 0.5,
+        "unit": "tsp",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "生抽",
+        "name_en": "Light soy sauce",
+        "amount": 5,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "白糖",
+        "name_en": "Sugar",
+        "amount": 0.25,
+        "unit": "tsp",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "玉米淀粉",
+        "name_en": "Cornstarch",
+        "amount": 8,
+        "unit": "g",
+        "prep": "与30 ml冷水调成水淀粉",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "烧豆腐用水",
+        "name_en": "Water",
+        "amount": 250,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "调芡用冷水",
+        "name_en": "Cold water",
+        "amount": 30,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "焯豆腐用水",
+        "name_en": "Water",
+        "amount": 1000,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "焯豆腐用盐",
+        "name_en": "Salt",
+        "amount": 1,
+        "unit": "tsp",
+        "prep": null,
+        "optional": false
+      }
+    ],
+    "substitutions": [
+      {
+        "for": "嫩豆腐",
+        "substitute": "海外超市的medium tofu",
+        "difference": "口感稍紧实，但比内酯豆腐更耐煮；避免用特硬豆腐，容易失去嫩滑感。"
+      },
+      {
+        "for": "郫县豆瓣酱25 g",
+        "substitute": "韩式辣椒酱15 g加味噌10 g",
+        "difference": "更甜，缺少郫县豆瓣的发酵豆香和红油；省去原配方白糖，生抽先减半。"
+      },
+      {
+        "for": "豆豉",
+        "substitute": "直接省略",
+        "difference": "少一层发酵鲜香，但不影响成菜。"
+      },
+      {
+        "for": "中式辣椒面",
+        "substitute": "海外超市的纯cayenne pepper粉，不用含孜然的混合chili seasoning",
+        "difference": "辣味更直接、香气较单一；怕辣可减至原量一半。"
+      },
+      {
+        "for": "花椒粉",
+        "substitute": "买不到可省略，不用黑胡椒冒充",
+        "difference": "没有麻感，成菜只能保留香辣味，不是完整的麻婆风味。"
+      }
+    ],
+    "equipment": [
+      "普通炒锅或深平底锅",
+      "小锅（焯豆腐，也可用炒锅先焯后炒）",
+      "锅铲",
+      "菜刀和砧板",
+      "小碗"
+    ],
+    "steps": [
+      {
+        "action": "将玉米淀粉与30 ml冷水搅成水淀粉。",
+        "heat": null,
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "碗底没有干粉或粉团，液体均匀呈乳白色。",
+        "warning": null
+      },
+      {
+        "action": "把焯豆腐用水和盐加热至微沸。",
+        "heat": "high",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "锅底不断冒小泡，水面轻轻波动而非剧烈翻滚。",
+        "warning": null
+      },
+      {
+        "action": "放入豆腐，用小火焯2分钟。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": 120,
+        "cue": "豆腐块轻轻晃动、整体热透，边角仍完整。",
+        "warning": "贴近水面轻放，避免热水溅起。"
+      },
+      {
+        "action": "将豆腐捞出沥水。",
+        "heat": "off",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "不再有水连续流下，豆腐表面仍湿润。",
+        "warning": "不要挤压豆腐；若复用这口锅，倒掉焯水并擦干再加油。"
+      },
+      {
+        "action": "将食用油倒入炒锅，加热至微微流动。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "油变稀、轻晃锅能迅速铺开，尚未冒烟。",
+        "warning": null
+      },
+      {
+        "action": "加入牛肉末，铲散炒熟。",
+        "heat": "medium_high",
+        "oven_c": null,
+        "timer_seconds": 180,
+        "cue": "肉末散成小粒、没有粉红色，水汽减少并开始出现褐色边缘；中心温度达到71°C。",
+        "warning": "肉末带水时可能溅油，贴近锅面下锅。"
+      },
+      {
+        "action": "加入豆瓣酱，小火炒出红油。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": 60,
+        "cue": "油逐渐变红，豆瓣颜色稍深，闻到浓郁酱香。",
+        "warning": "豆瓣易糊，持续推炒，不能炒黑。"
+      },
+      {
+        "action": "加入姜末、蒜末、豆豉和可选的辣椒面炒香。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": 30,
+        "cue": "蒜香明显，辣椒面融入红油，没有焦黑颗粒。",
+        "warning": null
+      },
+      {
+        "action": "倒入250 ml水、生抽和白糖，煮开成汤汁。",
+        "heat": "medium_high",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "锅中汤汁均匀呈红褐色，表面持续冒泡。",
+        "warning": "加水时贴近锅边缓慢倒入，防止热油飞溅。"
+      },
+      {
+        "action": "放入豆腐，小火烧入味。",
+        "heat": "medium_low",
+        "oven_c": null,
+        "timer_seconds": 300,
+        "cue": "汤汁保持轻微冒泡，豆腐表面逐渐染上红色。",
+        "warning": "用锅铲背轻推，不要用铲边切拌。"
+      },
+      {
+        "action": "将水淀粉重新搅匀后淋入一半，轻推至芡汁煮开。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": 30,
+        "cue": "汤汁略变浓，开始薄薄挂在豆腐表面。",
+        "warning": null
+      },
+      {
+        "action": "按稠度少量补入剩余水淀粉，煮至酱汁浓亮。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": 30,
+        "cue": "酱汁能裹住豆腐，晃锅仍能流动，边缘浮出少量红油；已达状态就不必加完。",
+        "warning": "不要一次倒完，过稠会糊口、粘锅。"
+      },
+      {
+        "action": "关火撒上花椒粉和葱花。",
+        "heat": "off",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "表面有均匀花椒粉和翠绿葱花，能闻到明显麻香。",
+        "warning": null
+      }
+    ],
+    "key_points": [
+      "豆瓣一定用小火炒到油色转红、闻不到生酱味；炒黑会苦。",
+      "豆腐下锅后只轻推或晃锅，不来回翻炒，保持完整。",
+      "水淀粉分两次加，每次煮开再判断；目标是汁能挂住豆腐、盘底仍有流动的酱汁，不是结成糊。"
+    ],
+    "background": "麻婆豆腐是川菜麻辣味型的代表，讲究豆腐嫩、肉末酥香、红油亮，最后用花椒粉提麻香。家常做法不必放很多油，豆瓣炒透、芡汁分次收好，也能做出适合拌饭的浓香汤汁。",
+    "safety_notes": [
+      "牛肉末必须充分炒熟，中心温度达到71°C；有食品温度计时以测温为准。",
+      "豆腐和浓芡汁很烫，入口前稍晾，避免烫伤。",
+      "剩豆腐和米饭应在做好后2小时内冷藏，不要放在室温下过夜；再次食用时彻底热透。"
+    ]
+  }
+}

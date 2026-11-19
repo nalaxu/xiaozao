@@ -1,0 +1,176 @@
+{
+  "slug": "vietnamese-lemongrass-chili-chicken",
+  "status": "draft",
+  "reviewed_by": null,
+  "reviewed_at": null,
+  "cuisine_id": "vietnamese",
+  "generated_at": "2026-11-19T08:14:52.329Z",
+  "model": "gpt-6.1-sol",
+  "content": {
+    "overview": {
+      "name_zh": "香茅辣椒炒鸡",
+      "name_en": "Lemongrass Chili Chicken",
+      "name_original": "Gà xào sả ớt",
+      "cuisine_id": "vietnamese",
+      "flavor_desc": "香茅清香，咸甜微辣，鸡肉嫩而略带焦边。",
+      "total_minutes": 18,
+      "active_minutes": 18,
+      "difficulty": 1,
+      "servings": 2
+    },
+    "ingredients": [
+      {
+        "group": "main",
+        "name_zh": "去骨去皮鸡腿肉",
+        "name_en": "Boneless skinless chicken thighs",
+        "amount": 350,
+        "unit": "g",
+        "prep": "切成约2厘米小块",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "香茅",
+        "name_en": "Lemongrass",
+        "amount": 2,
+        "unit": "piece",
+        "prep": "去掉硬外皮和上段绿叶，仅取下端嫩白芯，约25g，切极细末",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "蒜",
+        "name_en": "Garlic",
+        "amount": 3,
+        "unit": "clove",
+        "prep": "切末",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "鲜红辣椒",
+        "name_en": "Fresh red chili",
+        "amount": 0.5,
+        "unit": "piece",
+        "prep": "去籽切末；用普通长红辣椒，避免用同量小米椒",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "鱼露",
+        "name_en": "Fish sauce",
+        "amount": 15,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "白糖",
+        "name_en": "Sugar",
+        "amount": 1,
+        "unit": "tsp",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "水",
+        "name_en": "Water",
+        "amount": 15,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "中性食用油",
+        "name_en": "Neutral cooking oil",
+        "amount": 15,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      }
+    ],
+    "substitutions": [
+      {
+        "for": "鲜香茅嫩白芯约25g",
+        "substitute": "普通超市冷藏管装香茅蓉25g",
+        "difference": "香气通常比鲜香茅弱一些，但口感更细，也能省去切末时间；优先选无盐、无额外调味的产品。"
+      },
+      {
+        "for": "鲜香茅",
+        "substitute": "普通超市柠檬的黄色皮屑1 tsp",
+        "difference": "缺少香茅特有的草本香，柠檬香更直接；只刨黄色外皮，最后一步加入，避免白色内皮带来苦味。"
+      }
+    ],
+    "equipment": [
+      "普通家用炉灶",
+      "炒锅或平底锅",
+      "菜刀和砧板",
+      "小碗",
+      "锅铲"
+    ],
+    "steps": [
+      {
+        "action": "将香茅嫩白芯、蒜和去籽红辣椒切成细末。",
+        "heat": null,
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "香茅末接近粗砂粒大小，里面没有硬绿叶或明显的长纤维。",
+        "warning": "辣椒切好后洗手，不要揉眼睛。"
+      },
+      {
+        "action": "将鸡腿肉切成约2厘米的小块。",
+        "heat": null,
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "肉块大小基本一致，没有厚大的整块肉。",
+        "warning": "切完生鸡肉后洗手，并清洗刀和砧板。"
+      },
+      {
+        "action": "在小碗中将鱼露、白糖和水搅匀。",
+        "heat": null,
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "碗底基本看不到糖粒。",
+        "warning": null
+      },
+      {
+        "action": "锅中倒入食用油，用中小火炒香香茅末、蒜末和辣椒末。",
+        "heat": "medium_low",
+        "oven_c": null,
+        "timer_seconds": 45,
+        "cue": "香茅清香明显，蒜末刚开始变浅金黄，尚未变褐。",
+        "warning": "香料不要炒黑；如果上色太快，立即调低火力。"
+      },
+      {
+        "action": "加入鸡肉，转中大火翻炒约5分钟。",
+        "heat": "medium_high",
+        "oven_c": null,
+        "timer_seconds": 300,
+        "cue": "鸡肉表面全部变白，部分边缘浅金黄，锅底没有大量积水。",
+        "warning": "鸡肉入锅时可能溅油，贴近锅面轻放。"
+      },
+      {
+        "action": "倒入鱼露汁，用中火继续翻炒约2至3分钟至鸡肉熟透。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": 180,
+        "cue": "汁水收成薄薄一层裹在鸡肉上；最大肉块切开无粉红色，中心温度至少74°C。",
+        "warning": "若鸡肉尚未熟透而锅底已干，加少量水继续炒熟，不要为收汁把糖炒焦。"
+      }
+    ],
+    "key_points": [
+      "香茅只用嫩白芯，并切得足够细；硬外皮即使炒熟也会像木屑。",
+      "香料只炒出香气，不要炒到深褐色；蒜末焦了会发苦。",
+      "鸡肉切成约2厘米的小块，才能在快炒时间内熟透；鱼露汁最后放，避免糖过早焦煳。"
+    ],
+    "background": "香茅、鱼露和少量糖是越南家常炒肉常见的搭配，香气清亮，咸鲜里带一点甜。这版用鸡腿肉快炒，辣椒只放少量，保留香茅的清香，配米饭很合适。",
+    "safety_notes": [
+      "鸡肉中心温度至少达到74°C，内部不能带粉红色；有食品温度计时以测温为准。",
+      "生鸡肉不要冲洗，避免水花传播细菌；处理后洗手，刀和砧板清洗干净再接触熟食。",
+      "剩菜放凉后应在2小时内冷藏，配餐米饭也一样。"
+    ]
+  }
+}

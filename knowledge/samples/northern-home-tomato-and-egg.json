@@ -1,0 +1,156 @@
+{
+  "slug": "northern-home-tomato-and-egg",
+  "status": "draft",
+  "reviewed_by": null,
+  "reviewed_at": null,
+  "cuisine_id": "northern-home",
+  "generated_at": "2026-11-19T08:14:10.419Z",
+  "model": "gpt-6.1-sol",
+  "content": {
+    "overview": {
+      "name_zh": "西红柿炒鸡蛋",
+      "name_en": "Tomato and egg stir-fry",
+      "name_original": "西红柿炒鸡蛋",
+      "cuisine_id": "northern-home",
+      "flavor_desc": "酸甜带汁，鸡蛋嫩香，拌饭一流。",
+      "total_minutes": 15,
+      "active_minutes": 15,
+      "difficulty": 1,
+      "servings": 2
+    },
+    "ingredients": [
+      {
+        "group": "main",
+        "name_zh": "西红柿",
+        "name_en": "Tomato",
+        "amount": 400,
+        "unit": "g",
+        "prep": "洗净去蒂，切成约3厘米的块，保留切出的汁",
+        "optional": false
+      },
+      {
+        "group": "main",
+        "name_zh": "鸡蛋",
+        "name_en": "Egg",
+        "amount": 3,
+        "unit": "piece",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "小葱",
+        "name_en": "Scallion",
+        "amount": 10,
+        "unit": "g",
+        "prep": "洗净切葱花",
+        "optional": true
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "中性食用油",
+        "name_en": "Neutral cooking oil",
+        "amount": 25,
+        "unit": "ml",
+        "prep": "炒蛋用15 ml，炒番茄用10 ml",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "细盐",
+        "name_en": "Fine salt",
+        "amount": 0.5,
+        "unit": "tsp",
+        "prep": "蛋液用四分之一，其余炒番茄时用",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "白糖",
+        "name_en": "Sugar",
+        "amount": 1,
+        "unit": "tsp",
+        "prep": "番茄很甜时可省略",
+        "optional": true
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "水",
+        "name_en": "Water",
+        "amount": 30,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      }
+    ],
+    "substitutions": [],
+    "equipment": [
+      "普通家用炉灶",
+      "炒锅或平底锅",
+      "锅铲",
+      "菜刀和砧板",
+      "碗和盘子"
+    ],
+    "steps": [
+      {
+        "action": "将西红柿洗净去蒂，切成约3厘米的块；可选的小葱切成葱花。",
+        "heat": null,
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "番茄块大小接近，切出的汁一起留用。",
+        "warning": "番茄表面光滑，切时放稳，手指蜷起避开刀刃。"
+      },
+      {
+        "action": "将鸡蛋打入碗中，加入四分之一的盐，搅打均匀。",
+        "heat": null,
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "蛋白和蛋黄混合均匀，没有明显成团的蛋白。",
+        "warning": null
+      },
+      {
+        "action": "锅中放15 ml油，中大火加热至油流动顺畅但不冒烟，倒入蛋液，用锅铲推成大块后盛到盘中。",
+        "heat": "medium_high",
+        "oven_c": null,
+        "timer_seconds": 45,
+        "cue": "鸡蛋大体凝固、表面仍润泽，没有明显流动的蛋液。",
+        "warning": "沿锅边低处倒入蛋液，避免热油溅起。"
+      },
+      {
+        "action": "原锅加入余下10 ml油，放入番茄、剩余盐和可选的糖，中火翻炒出汁。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": 180,
+        "cue": "番茄边缘变软、部分果肉散开，锅底出现浓稠红汁。",
+        "warning": "番茄带水，下锅时可能溅油，不要把脸靠近锅口。"
+      },
+      {
+        "action": "加入30 ml水，中火煨煮。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": 60,
+        "cue": "汤汁持续冒小泡，番茄用锅铲轻压就能散开，锅底仍留有流动汤汁。",
+        "warning": null
+      },
+      {
+        "action": "将鸡蛋回锅，加入可选的葱花，轻轻翻拌至裹匀汤汁后关火盛出。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": 60,
+        "cue": "鸡蛋内外完全凝固、没有流动蛋液，表面裹着红亮汤汁，盘底能留下一些汁。",
+        "warning": null
+      }
+    ],
+    "key_points": [
+      "鸡蛋刚凝固就盛出，最后回锅熟透；一直留在锅里炒容易发硬。",
+      "番茄先炒软出汁再加水，汤汁才浓，不会像清水泡番茄。",
+      "最后合炒只需让鸡蛋裹汁，不要把汤汁收干。"
+    ],
+    "background": "西红柿炒鸡蛋是北方家常饭桌上的快手菜，调味简单，靠番茄汁和蛋香撑起味道。先炒蛋、再炒番茄，最后合锅，鸡蛋嫩而熟透，汤汁也适合拌饭。",
+    "safety_notes": [
+      "鸡蛋最终应完全凝固、没有流动蛋液；孕妇、儿童、老人和免疫力低下者尤其不要吃未熟透的蛋。",
+      "接触生蛋后洗手，并清洗接触过蛋液的碗和工具。",
+      "剩菜及搭配的熟米饭应及时分装降温，最迟在做好后2小时内放入冰箱冷藏。"
+    ]
+  }
+}

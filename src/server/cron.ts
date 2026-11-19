@@ -3,11 +3,12 @@ import { lt, or, isNotNull } from "drizzle-orm";
 import type { Db } from "./db/client";
 import { emailOtps, pendingSignups, rateLimits, recommendationCache, sessions } from "./db/schema";
 import { processAlertJobs } from "./alerts";
+import { imageConcurrency } from "@config/models";
 import { processImageJobs, reclaimStaleJobs } from "./images/jobs";
 
 export async function tick(db: Db, now = new Date()) {
   const reclaimed = await reclaimStaleJobs(db, now);
-  const images = await processImageJobs(db, { limit: 4, now });
+  const images = await processImageJobs(db, { limit: imageConcurrency(), now });
   const alerts = await processAlertJobs(db, { now });
 
   const dayAgo = new Date(now.getTime() - 86400_000);

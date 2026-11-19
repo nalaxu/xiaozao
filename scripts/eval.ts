@@ -70,7 +70,7 @@ interface CaseResult {
   input: Case;
   candidates: string[];
   calls: Call[];
-  dishes: { name: string; cuisine: string; minutes: number; toBuy: string[]; reject: RejectReason | null }[];
+  dishes: { name: string; cuisine: string; minutes: number; toBuy: string[]; reject: RejectReason | null; detail?: string }[];
   tutorial?: {
     dish: string;
     steps: number;
@@ -172,7 +172,8 @@ async function runCase(db: Db, c: Case, withTutorial: boolean): Promise<CaseResu
     for (const item of raw) {
       const parsed = rawDishSchema.safeParse(item);
       if (!parsed.success) {
-        res.dishes.push({ name: String((item as { name_zh?: string }).name_zh ?? "?"), cuisine: "?", minutes: 0, toBuy: [], reject: "invalid" });
+        const detail = parsed.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`).join("; ");
+        res.dishes.push({ name: String((item as { name_zh?: string }).name_zh ?? "?"), cuisine: "?", minutes: 0, toBuy: [], reject: "invalid", detail });
         continue;
       }
       const d = parsed.data;
@@ -358,7 +359,9 @@ async function main() {
   const issues: string[] = [];
   for (const r of results) {
     for (const e of r.errors) issues.push(`${r.id}：${e}`);
-    for (const d of r.dishes.filter((d) => d.reject)) issues.push(`${r.id}：推荐「${d.name}」被后检查拒绝（${d.reject}）`);
+    for (const d of r.dishes.filter((d) => d.reject)) {
+      issues.push(`${r.id}：推荐「${d.name}」被后检查拒绝（${d.reject}${d.detail ? `：${d.detail}` : ""}）`);
+    }
     if (r.tutorial?.restrictedHit) issues.push(`${r.id}：教程「${r.tutorial.dish}」含忌口/过敏原关键词「${r.tutorial.restrictedHit}」（线上会重试一次）`);
     if (r.tutorial?.sceneIssue) issues.push(`${r.id}：教程「${r.tutorial.dish}」不符合场景：${r.tutorial.sceneIssue}`);
     if (r.tutorial?.missingCue) issues.push(`${r.id}：教程有 ${r.tutorial.missingCue} 步没有判断标准`);

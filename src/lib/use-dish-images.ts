@@ -1,10 +1,10 @@
 "use client";
 
-// 没有图的菜每 4 秒查询一次，最多 90 秒，拿到地址即替换（技术方案 8.3）。
+// 没有图的菜每 4 秒查询一次，最多 150 秒，拿到地址即替换（技术方案 8.3）。图片按 2 张并发生成，5 道菜约需 1 分钟。
 import { useEffect, useState } from "react";
 
 const INTERVAL_MS = 4000;
-const MAX_MS = 90_000;
+const MAX_MS = 150_000;
 
 export function useDishImages(dishes: { dishId: string; imageUrl: string | null }[], size: 384 | 768 = 384) {
   const [found, setFound] = useState<Record<string, string>>({});

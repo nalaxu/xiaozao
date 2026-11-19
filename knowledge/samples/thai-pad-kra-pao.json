@@ -1,0 +1,208 @@
+{
+  "slug": "thai-pad-kra-pao",
+  "status": "draft",
+  "reviewed_by": null,
+  "reviewed_at": null,
+  "cuisine_id": "thai",
+  "generated_at": "2026-11-19T08:14:53.551Z",
+  "model": "gpt-6.1-sol",
+  "content": {
+    "overview": {
+      "name_zh": "打抛猪肉饭",
+      "name_en": "Pad kra pao (holy basil stir-fry)",
+      "name_original": "ผัดกะเพรา",
+      "cuisine_id": "thai",
+      "flavor_desc": "罗勒辛香、蒜辣咸鲜，略带甜味，配一只脆边煎蛋。",
+      "total_minutes": 18,
+      "active_minutes": 18,
+      "difficulty": 1,
+      "servings": 2
+    },
+    "ingredients": [
+      {
+        "group": "main",
+        "name_zh": "猪肉末",
+        "name_en": "Ground pork",
+        "amount": 300,
+        "unit": "g",
+        "prep": "选略带肥肉的，炒前拨散",
+        "optional": false
+      },
+      {
+        "group": "main",
+        "name_zh": "鸡蛋",
+        "name_en": "Egg",
+        "amount": 2,
+        "unit": "piece",
+        "prep": "分别打入小碗",
+        "optional": false
+      },
+      {
+        "group": "main",
+        "name_zh": "熟米饭",
+        "name_en": "Cooked rice",
+        "amount": 400,
+        "unit": "g",
+        "prep": "准备即食米饭或已热透的米饭；20分钟不含从生米煮饭",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "圣罗勒叶",
+        "name_en": "Holy basil",
+        "amount": 25,
+        "unit": "g",
+        "prep": "摘叶、洗净并充分沥干",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "蒜",
+        "name_en": "Garlic",
+        "amount": 4,
+        "unit": "clove",
+        "prep": "拍碎后粗切",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "小米辣",
+        "name_en": "Bird's eye chili",
+        "amount": 2,
+        "unit": "piece",
+        "prep": "切碎；怕辣用半只或省略",
+        "optional": true
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "中性食用油",
+        "name_en": "Neutral cooking oil",
+        "amount": 30,
+        "unit": "ml",
+        "prep": "煎蛋用20 ml，炒肉用10 ml",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "鱼露",
+        "name_en": "Fish sauce",
+        "amount": 10,
+        "unit": "ml",
+        "prep": "与蚝油、糖和水混成调味汁",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "蚝油",
+        "name_en": "Oyster sauce",
+        "amount": 10,
+        "unit": "ml",
+        "prep": "加入调味汁",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "白糖",
+        "name_en": "White sugar",
+        "amount": 0.5,
+        "unit": "tsp",
+        "prep": "加入调味汁",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "水",
+        "name_en": "Water",
+        "amount": 20,
+        "unit": "ml",
+        "prep": "加入调味汁并搅匀",
+        "optional": false
+      }
+    ],
+    "substitutions": [
+      {
+        "for": "圣罗勒叶25 g",
+        "substitute": "普通超市的意大利甜罗勒25 g",
+        "difference": "甜罗勒更柔和，缺少圣罗勒的胡椒、丁香般辛香，但仍适合这道快炒。"
+      },
+      {
+        "for": "小米辣2只",
+        "substitute": "普通超市的鲜红辣椒半只至1只",
+        "difference": "辣度通常低一些、果香更明显，可按耐辣程度调整。"
+      },
+      {
+        "for": "鱼露10 ml",
+        "substitute": "生抽10 ml",
+        "difference": "咸鲜味仍在，但少了鱼露的发酵海味；普通生抽通常含小麦。"
+      }
+    ],
+    "equipment": [
+      "普通炒锅或平底锅",
+      "锅铲",
+      "菜刀和砧板",
+      "碗和餐盘"
+    ],
+    "steps": [
+      {
+        "action": "煎脆边蛋：锅内放20 ml油，中大火烧热后轻轻滑入两只鸡蛋，转中火煎熟，盛出备用。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": 240,
+        "cue": "蛋白边缘金黄起泡、底部酥脆，蛋白和蛋黄完全凝固；需要时用锅铲翻面煎熟蛋黄。",
+        "warning": "鸡蛋下热油会溅，碗口靠近锅面再滑入；油不要烧到冒烟。"
+      },
+      {
+        "action": "爆香蒜椒：锅内留或补至约10 ml油，中火炒蒜碎和辣椒。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": 20,
+        "cue": "蒜香明显、蒜粒边缘刚泛浅金色，不要炒到深褐色。",
+        "warning": "辣椒油烟可能呛人，开抽油烟机，避免脸贴近锅口。"
+      },
+      {
+        "action": "炒熟肉末：加入猪肉末，转中大火摊开后用锅铲压散、翻炒。",
+        "heat": "medium_high",
+        "oven_c": null,
+        "timer_seconds": 240,
+        "cue": "肉末散成小粒，水汽明显减少，部分边缘微黄；肉末彻底熟透，中心达到71°C。",
+        "warning": "不要只凭表面变色判断绞肉已熟。"
+      },
+      {
+        "action": "收进调味汁：倒入预先混好的调味汁，中大火翻炒。",
+        "heat": "medium_high",
+        "oven_c": null,
+        "timer_seconds": 45,
+        "cue": "酱汁冒大泡后逐渐收浓，肉粒表面油亮，锅底只留少量汁水。",
+        "warning": null
+      },
+      {
+        "action": "拌入圣罗勒：加入沥干的叶片，快速翻匀后关火。",
+        "heat": "medium_high",
+        "oven_c": null,
+        "timer_seconds": 15,
+        "cue": "叶片刚变软、仍有绿色，能闻到明显的辛香草本味。",
+        "warning": null
+      },
+      {
+        "action": "装盘：将肉末分到两份热米饭旁，每份放一只脆边煎蛋。",
+        "heat": null,
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "米饭热气明显，肉汁少量渗入米饭，煎蛋脆边保持露在外面。",
+        "warning": null
+      }
+    ],
+    "key_points": [
+      "先用约5分钟按食材栏备好料、调好汁；米饭用现成的，才能把总时间控制在20分钟内。",
+      "肉末入锅后先摊开再炒散，炒到水汽明显减少再加汁，避免变成水煮肉末。",
+      "圣罗勒最后下锅，刚萎蔫就停火，别把香气久炒掉。"
+    ],
+    "background": "打抛是泰国家常快炒，灵魂是圣罗勒的辛香，配蒜、辣椒和咸鲜酱汁，不靠浓重甜味。这里做猪肉末版，每人配一只脆边煎蛋；用现成米饭，备料到上桌约18分钟。",
+    "safety_notes": [
+      "猪肉末必须彻底熟透，中心温度达到71°C；如有食品温度计，以测温为准，不只看颜色。",
+      "此版本把鸡蛋煎至蛋白、蛋黄完全凝固，尤其适合孕妇、儿童、老人和免疫力低下者；不要为了流心效果提前出锅。",
+      "隔夜米饭须是煮熟后及时冷藏、未在室温久放的米饭，食用前彻底热透。剩余饭菜放凉后须在2小时内冷藏。",
+      "切过生猪肉或接触其包装后洗手，生肉用具不要接触熟饭和煎蛋。"
+    ]
+  }
+}

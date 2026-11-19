@@ -1,0 +1,182 @@
+{
+  "slug": "hunan-stir-fried-pork-with-chilies",
+  "status": "draft",
+  "reviewed_by": null,
+  "reviewed_at": null,
+  "cuisine_id": "hunan",
+  "generated_at": "2026-11-19T08:13:37.728Z",
+  "model": "gpt-6.1-sol",
+  "content": {
+    "overview": {
+      "name_zh": "农家小炒肉",
+      "name_en": "Hunan stir-fried pork with chilies",
+      "name_original": null,
+      "cuisine_id": "hunan",
+      "flavor_desc": "辣椒带焦香，肉片咸香下饭，鲜辣而不麻。",
+      "total_minutes": 19,
+      "active_minutes": 16,
+      "difficulty": 1,
+      "servings": 2
+    },
+    "ingredients": [
+      {
+        "group": "main",
+        "name_zh": "去皮五花肉",
+        "name_en": "Pork belly",
+        "amount": 120,
+        "unit": "g",
+        "prep": "切成约2毫米厚的薄片",
+        "optional": false
+      },
+      {
+        "group": "main",
+        "name_zh": "猪前腿瘦肉",
+        "name_en": "Pork shoulder",
+        "amount": 130,
+        "unit": "g",
+        "prep": "逆纹切成约2毫米厚的薄片",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "螺丝椒或青尖椒",
+        "name_en": "Long green chilies",
+        "amount": 200,
+        "unit": "g",
+        "prep": "洗净擦干，去蒂，斜切成大片",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "蒜",
+        "name_en": "Garlic",
+        "amount": 3,
+        "unit": "clove",
+        "prep": "切片",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "豆豉",
+        "name_en": "Fermented black beans",
+        "amount": 5,
+        "unit": "g",
+        "prep": "略切碎",
+        "optional": true
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "中性食用油",
+        "name_en": "Neutral cooking oil",
+        "amount": 5,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "生抽",
+        "name_en": "Light soy sauce",
+        "amount": 10,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "老抽",
+        "name_en": "Dark soy sauce",
+        "amount": 2,
+        "unit": "ml",
+        "prep": null,
+        "optional": true
+      }
+    ],
+    "substitutions": [
+      {
+        "for": "螺丝椒或青尖椒200g",
+        "substitute": "海外超市的Anaheim青椒180g加jalapeño辣椒20g",
+        "difference": "Anaheim椒肉较厚、辣度较低，配少量jalapeño补辣；椒香与螺丝椒不同，但同样能煸出焦香。"
+      },
+      {
+        "for": "豆豉5g",
+        "substitute": "直接省略，蒜增加1clove",
+        "difference": "少一点发酵咸香，但蒜香和肉香仍然够用，不必专门买豆豉酱。"
+      },
+      {
+        "for": "老抽2ml",
+        "substitute": "直接省略",
+        "difference": "颜色更浅，味道基本不受影响；不必额外补生抽，以免太咸。"
+      }
+    ],
+    "equipment": [
+      "普通家用炒锅",
+      "炉灶",
+      "锅铲",
+      "菜刀和砧板",
+      "盛辣椒的盘子",
+      "熟食盘"
+    ],
+    "steps": [
+      {
+        "action": "按食材表完成切配，先切辣椒、蒜和豆豉，再切猪肉；两种肉分开放。",
+        "heat": null,
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "辣椒表面没有水珠，肉片薄厚接近，瘦肉能看见被切断的纹理。",
+        "warning": "辣椒切完不要揉眼睛；处理生肉后洗净双手和刀板。"
+      },
+      {
+        "action": "将辣椒放入无油的热锅中干煸约3分钟，炒好盛出。",
+        "heat": "medium_high",
+        "oven_c": null,
+        "timer_seconds": 180,
+        "cue": "辣椒略塌软，表皮出现零星褐色焦斑，能闻到明显椒香。",
+        "warning": "保持通风；若锅里冒浓烟，立即调低火力，别把辣椒炒黑。"
+      },
+      {
+        "action": "锅中加入食用油和五花肉，煸炒约2分钟。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": 120,
+        "cue": "五花肉从不透明变得略透亮，边缘微黄，锅底出现一层析出的油。",
+        "warning": "肉片表面不要带水，防止热油飞溅。"
+      },
+      {
+        "action": "加入瘦肉、蒜片和豆豉，摊散翻炒约2分钟。",
+        "heat": "medium_high",
+        "oven_c": null,
+        "timer_seconds": 120,
+        "cue": "瘦肉片分散、不再成团，表面全部变色，蒜香和豆豉香散出。",
+        "warning": "肉片变色不等于中心温度达标，下一步仍需继续炒熟。"
+      },
+      {
+        "action": "倒回辣椒，加入生抽和可选的老抽，合炒约1分钟至熟。",
+        "heat": "high",
+        "oven_c": null,
+        "timer_seconds": 60,
+        "cue": "肉片均匀挂上薄薄的酱色，辣椒油亮，锅底没有明显积汁；猪肉中心至少达到63°C，未达标则继续加热。",
+        "warning": "家用炉火较弱或肉片切厚时，需延长加热，不要只按时间出锅。"
+      },
+      {
+        "action": "盛入干净的熟食盘，静置3分钟后食用。",
+        "heat": "off",
+        "oven_c": null,
+        "timer_seconds": 180,
+        "cue": "肉片仍然温热，盘底只有少量油汁，不是一汪水。",
+        "warning": "静置不能代替充分加热；必须先达到猪肉安全中心温度。"
+      }
+    ],
+    "key_points": [
+      "辣椒擦干后先干煸，出现焦斑再盛出；带水下锅容易变成焖辣椒。",
+      "五花肉先出油，瘦肉再入锅；肉片切薄、摊开炒，别堆成一团。",
+      "豆豉和生抽都有咸味，先不加盐；最后只炒到调味汁裹住食材，不留一汪汤。"
+    ],
+    "background": "农家小炒肉是湘菜里典型的鲜辣小炒，靠辣椒的焦香和猪肉煸出的油香撑起味道，不走麻辣路线。五花肉先煸、瘦肉后下，既有油润香气，也能保住嫩度。",
+    "safety_notes": [
+      "生猪肉与辣椒等食材分开处理；接触过生肉的刀、砧板和手须清洗，熟肉不要放回盛生肉的盘子。",
+      "猪肉中心温度须至少达到63°C，出锅后静置3分钟再吃。有食品温度计时以测温为准，肉片变色只能作为辅助判断。",
+      "剩菜和搭配的米饭应在烹调后2小时内冷藏，不要长时间放在室温下。"
+    ]
+  }
+}

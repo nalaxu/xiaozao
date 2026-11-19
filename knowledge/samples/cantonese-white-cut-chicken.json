@@ -1,0 +1,252 @@
+{
+  "slug": "cantonese-white-cut-chicken",
+  "status": "draft",
+  "reviewed_by": null,
+  "reviewed_at": null,
+  "cuisine_id": "cantonese",
+  "generated_at": "2026-11-19T08:14:02.533Z",
+  "model": "gpt-6.1-sol",
+  "content": {
+    "overview": {
+      "name_zh": "白切鸡",
+      "name_en": "White-cut chicken",
+      "name_original": "白切雞",
+      "cuisine_id": "cantonese",
+      "flavor_desc": "鸡皮爽滑、鸡肉嫩而清鲜，姜葱油咸香不抢味。",
+      "total_minutes": 60,
+      "active_minutes": 25,
+      "difficulty": 2,
+      "servings": 2
+    },
+    "ingredients": [
+      {
+        "group": "main",
+        "name_zh": "带骨带皮鸡全腿",
+        "name_en": "Bone-in, skin-on whole chicken legs",
+        "amount": 700,
+        "unit": "g",
+        "prep": "约2只，完全解冻，剪去多余脂肪",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "生姜",
+        "name_en": "Fresh ginger",
+        "amount": 45,
+        "unit": "g",
+        "prep": "25 g切片用于煮鸡，20 g切细末用于蘸料",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "小葱",
+        "name_en": "Scallions",
+        "amount": 35,
+        "unit": "g",
+        "prep": "15 g切长段用于煮鸡，20 g切细末用于蘸料",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "煮鸡用水",
+        "name_en": "Water",
+        "amount": 2000,
+        "unit": "ml",
+        "prep": "以能没过鸡腿约2 cm为准",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "冷饮用水",
+        "name_en": "Cold drinking water",
+        "amount": 1500,
+        "unit": "ml",
+        "prep": "提前冷藏，用于煮熟后的鸡腿降温",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "食用冰块",
+        "name_en": "Ice cubes",
+        "amount": 300,
+        "unit": "g",
+        "prep": "加入冷饮用水中",
+        "optional": true
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "中性食用油",
+        "name_en": "Neutral cooking oil",
+        "amount": 30,
+        "unit": "ml",
+        "prep": "菜籽油或其他味道清淡的食用油",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "盐",
+        "name_en": "Salt",
+        "amount": 1,
+        "unit": "tsp",
+        "prep": "煮鸡用",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "盐",
+        "name_en": "Salt",
+        "amount": 0.5,
+        "unit": "tsp",
+        "prep": "姜葱油用",
+        "optional": false
+      }
+    ],
+    "substitutions": [
+      {
+        "for": "整只鸡",
+        "substitute": "海外超市常见的带骨带皮鸡全腿（whole chicken legs / leg quarters），本方已采用",
+        "difference": "熟度更容易一致，份量也合适；少了整鸡不同部位的口感变化，仍能做出白切鸡的清鲜和爽皮。"
+      },
+      {
+        "for": "食用冰块",
+        "substitute": "提前冷藏的饮用水",
+        "difference": "鸡皮收紧的效果稍弱；用足量冷水，并在水变温后换一次，仍可避免余热继续焖老鸡肉。"
+      }
+    ],
+    "equipment": [
+      "家用炉灶",
+      "带盖汤锅，能放下鸡腿并让水没过鸡腿",
+      "小锅，用于加热姜葱油",
+      "大碗、筷子、汤勺",
+      "刀和砧板，生熟分开使用或彻底清洗后再用",
+      "食品温度计（如有，用来确认鸡肉中心温度）"
+    ],
+    "steps": [
+      {
+        "action": "将煮鸡用水、姜片、葱段和煮鸡用盐放入汤锅煮开。",
+        "heat": "high",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "水面连续翻滚，能闻到姜葱香。",
+        "warning": null
+      },
+      {
+        "action": "将鸡腿轻轻放入沸水中。",
+        "heat": "high",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "鸡腿全部浸在水下，水面高出鸡腿约2 cm。",
+        "warning": "贴近水面慢慢放入，避免热水溅起。"
+      },
+      {
+        "action": "把火力调至能维持微沸的程度。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "锅边有细泡上升，水面轻轻晃动而不翻滚。",
+        "warning": null
+      },
+      {
+        "action": "锅盖留缝，将鸡腿微沸煮15分钟。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": 900,
+        "cue": "鸡皮逐渐绷紧变浅黄，水面始终只有轻微波动。",
+        "warning": "不同炉灶火力不同，若完全没有细泡，略微调高火力。"
+      },
+      {
+        "action": "用干净筷子轻轻翻转鸡腿。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "原本贴锅底的一面朝上，鸡皮没有被夹破。",
+        "warning": "不要夹着鸡皮提起，以免滑落溅汤。"
+      },
+      {
+        "action": "继续微沸煮15分钟。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": 900,
+        "cue": "鸡腿整体颜色均匀，关节处的皮肉开始收紧。",
+        "warning": "外表变色不代表内部已经熟透。"
+      },
+      {
+        "action": "检查鸡腿最厚处的熟度。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "有温度计时中心至少74°C且探针不碰骨；没有时切开最厚处，肉应完全不透明、没有粉红色。未熟则以每次3分钟继续微沸煮至达标。",
+        "warning": "不要只看流出的汁水是否清澈来判断熟度。"
+      },
+      {
+        "action": "把熟鸡腿捞入装有冷饮用水的大碗中，有冰块可一同加入，浸5分钟。",
+        "heat": "off",
+        "oven_c": null,
+        "timer_seconds": 300,
+        "cue": "鸡皮摸起来凉而紧实，鸡腿不再明显冒热气。",
+        "warning": "使用干净的熟食筷子和容器，避免重新污染。"
+      },
+      {
+        "action": "将鸡腿捞出沥水5分钟。",
+        "heat": null,
+        "oven_c": null,
+        "timer_seconds": 300,
+        "cue": "表面不再持续滴水，鸡皮保持完整。",
+        "warning": null
+      },
+      {
+        "action": "将姜末、葱末和蘸料用盐拌在耐热碗中。",
+        "heat": null,
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "姜葱分布均匀，没有明显大块姜粒，碗底没有积水。",
+        "warning": "姜葱洗后先擦干再切，减少泼油飞溅。"
+      },
+      {
+        "action": "用小锅加热食用油。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "油面微微起纹、流动变快，但还没有冒烟。",
+        "warning": "锅内应干燥；若油冒烟，先关火降温，不要立刻泼出。"
+      },
+      {
+        "action": "关火后把热油缓缓淋入姜葱碗中。",
+        "heat": "off",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "姜葱发出轻微滋啦声，香味明显，葱末仍保持绿色。",
+        "warning": "碗放在稳固台面上，脸和手避开碗口，防止热油飞溅。"
+      },
+      {
+        "action": "沿骨头将鸡腿肉切下并切成宽条。",
+        "heat": null,
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "肉条带着完整鸡皮，切面完全熟透、没有粉红色。",
+        "warning": "使用清洁后的刀和砧板；沿骨切肉即可，不必用普通菜刀硬剁骨头。"
+      },
+      {
+        "action": "将鸡肉装盘，配姜葱油上桌。",
+        "heat": null,
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "鸡皮朝上、肉条整齐，姜葱油单独放在旁边供蘸食。",
+        "warning": null
+      }
+    ],
+    "key_points": [
+      "下鸡后只维持锅边细泡、水面轻动；持续大滚容易让鸡皮破、鸡肉柴。",
+      "时间只能作参考，鸡腿粗细会影响熟度；不能为了嫩滑保留粉红色鸡肉。",
+      "姜葱末尽量切细，油只加热到微微起纹，不烧到冒烟，避免蘸料焦苦。"
+    ],
+    "background": "白切鸡是粤菜突出鸡肉本味的代表，靠微沸浸煮保住嫩滑，再配姜葱油提香。两人份用带骨带皮鸡腿做家常版，比整鸡更好掌握熟度，也不容易剩。",
+    "safety_notes": [
+      "生鸡肉不要在水龙头下冲洗，避免飞溅污染；接触生鸡肉后的手、刀、砧板和筷子应彻底清洗。",
+      "禽肉最厚处中心温度必须达到至少74°C，测量时避开骨头，鸡肉不能带粉红色。没有温度计时切开最厚处检查，若仍粉红或半透明，必须继续加热；颜色判断不能完全替代测温。",
+      "过凉只用可直接饮用的冷水、食用冰和洁净容器，不使用接触过生鸡肉的水或器具。",
+      "姜葱热油和煮鸡热汤都可能烫伤，操作时让容器放稳，远离水滴。",
+      "熟鸡做好后尽快食用；剩余鸡肉及鸡汤应在2小时内分装冷藏，食用前彻底加热。"
+    ]
+  }
+}

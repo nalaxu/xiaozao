@@ -1,0 +1,191 @@
+{
+  "slug": "japanese-oyakodon",
+  "status": "draft",
+  "reviewed_by": null,
+  "reviewed_at": null,
+  "cuisine_id": "japanese",
+  "generated_at": "2026-11-19T08:14:21.743Z",
+  "model": "gpt-6.1-sol",
+  "content": {
+    "overview": {
+      "name_zh": "亲子丼",
+      "name_en": "Oyakodon (chicken and egg rice bowl)",
+      "name_original": "親子丼",
+      "cuisine_id": "japanese",
+      "flavor_desc": "甜咸酱汁裹着嫩鸡肉与柔软蛋层；使用巴氏杀菌鸡蛋时可按喜好保留半熟口感。",
+      "total_minutes": 18,
+      "active_minutes": 12,
+      "difficulty": 1,
+      "servings": 2
+    },
+    "ingredients": [
+      {
+        "group": "main",
+        "name_zh": "去骨去皮鸡腿肉",
+        "name_en": "Boneless skinless chicken thigh",
+        "amount": 300,
+        "unit": "g",
+        "prep": "切成约2厘米的小块",
+        "optional": false
+      },
+      {
+        "group": "main",
+        "name_zh": "鸡蛋",
+        "name_en": "Eggs",
+        "amount": 4,
+        "unit": "piece",
+        "prep": "想保留半熟口感时优先选巴氏杀菌鸡蛋",
+        "optional": false
+      },
+      {
+        "group": "main",
+        "name_zh": "热熟米饭",
+        "name_en": "Hot cooked rice",
+        "amount": 400,
+        "unit": "g",
+        "prep": "使用现成热米饭；若用冷藏剩饭，须先彻底加热至中心热透",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "洋葱",
+        "name_en": "Onion",
+        "amount": 150,
+        "unit": "g",
+        "prep": "切成约3毫米厚的丝",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "小葱",
+        "name_en": "Scallion",
+        "amount": 5,
+        "unit": "g",
+        "prep": "切葱花",
+        "optional": true
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "无盐日式出汁",
+        "name_en": "Unsalted dashi",
+        "amount": 150,
+        "unit": "ml",
+        "prep": "用现成液体出汁，或按包装比例提前冲好",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "日式酱油",
+        "name_en": "Japanese soy sauce",
+        "amount": 25,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "味醂",
+        "name_en": "Mirin",
+        "amount": 25,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "白糖",
+        "name_en": "Sugar",
+        "amount": 1,
+        "unit": "tsp",
+        "prep": null,
+        "optional": false
+      }
+    ],
+    "substitutions": [
+      {
+        "for": "150ml无盐日式出汁",
+        "substitute": "150ml无盐或低盐鸡高汤",
+        "difference": "鲜味更偏鸡汤，少了昆布与鲣鱼的海味；若高汤有盐，酱油先减至20ml。"
+      },
+      {
+        "for": "25ml味醂",
+        "substitute": "25ml水加8g白糖，配方原有的1tsp白糖照放",
+        "difference": "能补甜味，但少了味醂的发酵香和圆润感。"
+      },
+      {
+        "for": "25ml日式酱油",
+        "substitute": "20ml普通生抽加5ml水",
+        "difference": "颜色和咸度略有差别；不要用老抽等量替换。"
+      }
+    ],
+    "equipment": [
+      "普通炉灶",
+      "带盖平底锅或浅锅（直径约24厘米）",
+      "菜刀与砧板",
+      "小碗与筷子",
+      "两只饭碗",
+      "食品温度计（建议使用）"
+    ],
+    "steps": [
+      {
+        "action": "在锅中混合出汁、酱油、味醂和白糖。",
+        "heat": "off",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "白糖化开，锅底没有明显糖粒。",
+        "warning": null
+      },
+      {
+        "action": "在小碗里轻轻打散鸡蛋。",
+        "heat": null,
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "蛋黄散开，仍留少量蛋白纹路，表面没有大量泡沫。",
+        "warning": "接触蛋壳或生蛋液后洗手。"
+      },
+      {
+        "action": "把洋葱加入酱汁，中火煮约3分钟。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": 180,
+        "cue": "酱汁持续轻沸，洋葱边缘变透明、开始变软。",
+        "warning": null
+      },
+      {
+        "action": "把鸡肉平铺进锅，中小火煮约6分钟至熟透。",
+        "heat": "medium_low",
+        "oven_c": null,
+        "timer_seconds": 360,
+        "cue": "酱汁保持小泡，最大鸡块中心达到74°C，切开没有粉红色。",
+        "warning": "鸡块不要叠放；未达到74°C就继续煮，不能直接进入加蛋步骤。"
+      },
+      {
+        "action": "将蛋液绕圈淋入锅中，加盖小火焖约2分钟。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": 120,
+        "cue": "蛋层边缘凝固、中央柔软；全熟版继续焖至中央也完全凝固，没有流动蛋液。",
+        "warning": "半熟版仅建议使用巴氏杀菌鸡蛋，且不适合高风险人群；开盖时避开蒸汽。"
+      },
+      {
+        "action": "将鸡肉、蛋层和酱汁分盛到两碗热米饭上，按喜好点缀葱花。",
+        "heat": "off",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "蛋层盖住米饭，少量酱汁渗入饭粒，碗底不积大量汤汁。",
+        "warning": null
+      }
+    ],
+    "key_points": [
+      "20分钟以已有熟米饭为前提，备料约5分钟；从生米开始煮会超时。",
+      "鸡肉切小块、平铺煮熟后再加蛋，不能靠最后焖蛋的时间把鸡肉焖熟。",
+      "蛋液只打散，不必打得完全均匀；入锅后不翻炒，才能形成柔软蛋层。"
+    ],
+    "background": "亲子丼是日本家常盖饭，用甜咸出汁煮鸡肉，再以蛋液包住，连汁盖在米饭上。“亲子”指鸡肉与鸡蛋，做好吃的关键是鸡肉熟透、蛋层嫩而不干。",
+    "safety_notes": [
+      "鸡肉中心温度须达到至少74°C，切开不能带粉红色；颜色不能代替测温。处理生鸡肉后清洗双手、刀具与砧板，不要冲洗生鸡肉。",
+      "半熟蛋存在食源性疾病风险，使用巴氏杀菌鸡蛋也不能完全消除风险。孕妇、儿童、老人及免疫力低下者应将蛋液完全煮凝固，不留流动蛋液。",
+      "米饭及其他熟食应在做好后2小时内放入冰箱冷藏，不要一直放在室温等待自然冷透；冷藏剩饭食用前应彻底加热。"
+    ]
+  }
+}

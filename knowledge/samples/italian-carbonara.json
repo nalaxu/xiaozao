@@ -1,0 +1,172 @@
+{
+  "slug": "italian-carbonara",
+  "status": "draft",
+  "reviewed_by": null,
+  "reviewed_at": null,
+  "cuisine_id": "italian",
+  "generated_at": "2026-11-19T08:15:43.472Z",
+  "model": "gpt-6.1-sol",
+  "content": {
+    "overview": {
+      "name_zh": "卡邦尼意面",
+      "name_en": "Spaghetti Carbonara",
+      "name_original": "Spaghetti alla carbonara",
+      "cuisine_id": "italian",
+      "flavor_desc": "蛋黄奶酪酱浓滑裹面，猪颊肉带来咸香，黑胡椒提味，不加奶油。",
+      "total_minutes": 20,
+      "active_minutes": 18,
+      "difficulty": 2,
+      "servings": 2
+    },
+    "ingredients": [
+      {
+        "group": "main",
+        "name_zh": "干直条意面",
+        "name_en": "Spaghetti",
+        "amount": 180,
+        "unit": "g",
+        "prep": "选包装煮制时间为8–10分钟的",
+        "optional": false
+      },
+      {
+        "group": "main",
+        "name_zh": "风干猪颊肉",
+        "name_en": "Guanciale",
+        "amount": 80,
+        "unit": "g",
+        "prep": "去硬皮，切约1厘米宽的小条",
+        "optional": false
+      },
+      {
+        "group": "main",
+        "name_zh": "巴氏杀菌蛋黄",
+        "name_en": "Pasteurized egg yolks",
+        "amount": 3,
+        "unit": "piece",
+        "prep": "按3个大号鸡蛋的蛋黄计；液体产品约用55g",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "佩科里诺罗马诺奶酪",
+        "name_en": "Pecorino Romano",
+        "amount": 45,
+        "unit": "g",
+        "prep": "擦成细末",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "现磨黑胡椒",
+        "name_en": "Freshly ground black pepper",
+        "amount": 0.5,
+        "unit": "tsp",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "盐",
+        "name_en": "Salt",
+        "amount": 10,
+        "unit": "g",
+        "prep": "用于煮面水；肉和奶酪都咸，不另加盐",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "水",
+        "name_en": "Water",
+        "amount": 1500,
+        "unit": "ml",
+        "prep": "用于煮面，其中留取约200ml作收汁用",
+        "optional": false
+      }
+    ],
+    "substitutions": [
+      {
+        "for": "风干猪颊肉80g",
+        "substitute": "海外超市的意式培根（pancetta）80g，或厚切未烟熏培根80g",
+        "difference": "脂香比猪颊肉温和；若使用烟熏培根，会多出烟熏味，不是传统风味。均需按包装充分加热。"
+      },
+      {
+        "for": "佩科里诺罗马诺奶酪45g",
+        "substitute": "整块帕玛森奶酪（Parmesan）45g，现擦细末",
+        "difference": "羊奶香和咸味更轻，整体更温和；先尝成品，再决定是否补盐。"
+      },
+      {
+        "for": "巴氏杀菌蛋黄3个",
+        "substitute": "超市冷藏巴氏杀菌液体蛋黄55g，确认包装注明 pasteurized",
+        "difference": "口感基本一致。普通未杀菌生蛋不是同等安全的替代品；买不到巴氏杀菌蛋制品时，不建议照此余温法制作。"
+      }
+    ],
+    "equipment": [
+      "普通家用炉灶",
+      "煮面锅",
+      "平底锅",
+      "碗、叉子和汤勺",
+      "刀和砧板"
+    ],
+    "steps": [
+      {
+        "action": "将1500ml水和10g盐放入煮面锅，大火烧开；等水开时完成食材表中的切肉和擦奶酪准备。",
+        "heat": "high",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "水面持续翻滚，盐已溶解；肉条大小基本一致，奶酪呈细碎蓬松状。",
+        "warning": "切肉时擦干手和砧板，避免油脂打滑。"
+      },
+      {
+        "action": "把猪颊肉放入冷平底锅，中小火煎约5分钟，煎好后整锅移离炉灶；锅内留约20ml析出的油，多余的舀走。",
+        "heat": "medium_low",
+        "oven_c": null,
+        "timer_seconds": 300,
+        "cue": "肉条析出明显油脂，肥肉变半透明、边缘金黄，瘦肉部分熟透；以包装要求和安全温度为准。",
+        "warning": "不用额外加油；肉中水分遇热油可能飞溅，不要凑近锅面。"
+      },
+      {
+        "action": "用叉子将蛋黄、奶酪和黑胡椒在碗中搅成均匀的浓糊。",
+        "heat": null,
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "看不到分离的蛋黄液，奶酪均匀湿润，酱糊可以缓慢滑落。",
+        "warning": null
+      },
+      {
+        "action": "将意面放入沸水中，按包装时间煮8–10分钟，捞出前用汤勺留取约200ml煮面水。",
+        "heat": "high",
+        "oven_c": null,
+        "timer_seconds": 540,
+        "cue": "面条能弯曲，咬开没有硬白芯，中心仍有弹性。",
+        "warning": "计时以包装及口感为准；舀水时避开蒸汽，避免烫伤。"
+      },
+      {
+        "action": "将煮好的意面捞进离火的肉锅，拌匀后停约30秒散热。",
+        "heat": "off",
+        "oven_c": null,
+        "timer_seconds": 30,
+        "cue": "面条裹上薄薄的油光，锅里没有煎炸的滋滋声，只剩轻微热气。",
+        "warning": "如果锅仍很烫，继续等到滋滋声消失，不能直接倒入蛋黄酱。"
+      },
+      {
+        "action": "倒入蛋黄奶酪糊，离火持续翻拌约45秒，同时每次加入15ml煮面水，通常共需45–75ml，拌好即装盘。",
+        "heat": "off",
+        "oven_c": null,
+        "timer_seconds": 45,
+        "cue": "酱汁从厚糊变成有光泽的薄稠酱，均匀包住面条，锅底没有大滩水，也没有颗粒状炒蛋。",
+        "warning": "不要重新开火猛炒；水要少量加，避免酱汁一下变稀。"
+      }
+    ],
+    "key_points": [
+      "先烧水，趁水加热时切肉、擦奶酪；选8–10分钟能煮好的意面，总时间才能控制在20分钟内。",
+      "拌蛋黄酱前必须离火并让锅降温，锅里不能还在滋滋响，否则容易变成炒蛋。",
+      "煮面水少量多次加，成品要有光泽、能流动；刚拌好略松一点，装盘后还会变稠。"
+    ],
+    "background": "卡邦尼是罗马的经典家常意面，靠蛋黄、硬质奶酪和猪颊肉油脂形成浓滑酱汁，不加奶油。最后离火拌面，让余温把酱汁带稠，是这道菜的关键。",
+    "safety_notes": [
+      "蛋黄酱只靠余温增稠，不能保证普通生蛋达到安全温度，因此本方使用巴氏杀菌蛋黄。孕妇、儿童、老人和免疫力低下者应避免未充分加热的蛋类，宜选择完全熟透的版本。",
+      "风干猪颊肉并非都可直接食用，按包装要求充分加热；猪肉中心至少达到63°C，并在食用前静置至少3分钟。本方煎好后离火放置，等待意面煮熟。",
+      "沥面和加煮面水时注意蒸汽与热油飞溅。剩余熟食应在2小时内冷藏，不要在室温下久放。"
+    ]
+  }
+}

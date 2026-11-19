@@ -1,0 +1,221 @@
+{
+  "slug": "jiangzhe-red-braised-pork-belly",
+  "status": "draft",
+  "reviewed_by": null,
+  "reviewed_at": null,
+  "cuisine_id": "jiangzhe",
+  "generated_at": "2026-11-19T08:13:46.729Z",
+  "model": "gpt-6.1-sol",
+  "content": {
+    "overview": {
+      "name_zh": "红烧肉",
+      "name_en": "Shanghai red-braised pork belly",
+      "name_original": null,
+      "cuisine_id": "jiangzhe",
+      "flavor_desc": "浓油赤酱，甜咸鲜香，肉皮软糯、肥而不腻。",
+      "total_minutes": 110,
+      "active_minutes": 25,
+      "difficulty": 2,
+      "servings": 2
+    },
+    "ingredients": [
+      {
+        "group": "main",
+        "name_zh": "带皮五花肉",
+        "name_en": "Skin-on pork belly",
+        "amount": 500,
+        "unit": "g",
+        "prep": "切成约3厘米见方的块",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "姜",
+        "name_en": "Ginger",
+        "amount": 15,
+        "unit": "g",
+        "prep": "切厚片",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "小葱",
+        "name_en": "Scallions",
+        "amount": 2,
+        "unit": "piece",
+        "prep": "打结",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "绍兴黄酒",
+        "name_en": "Shaoxing wine",
+        "amount": 30,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "生抽",
+        "name_en": "Light soy sauce",
+        "amount": 25,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "老抽",
+        "name_en": "Dark soy sauce",
+        "amount": 5,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "冰糖",
+        "name_en": "Rock sugar",
+        "amount": 20,
+        "unit": "g",
+        "prep": "大块敲小",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "热水",
+        "name_en": "Hot water",
+        "amount": 600,
+        "unit": "ml",
+        "prep": "另备少量热水，焖煮时按需补充",
+        "optional": false
+      }
+    ],
+    "substitutions": [
+      {
+        "for": "绍兴黄酒",
+        "substitute": "干型雪莉酒（dry sherry）",
+        "difference": "酒香略带坚果气息，不如黄酒的米香明显，但适合焖肉；用等量替换。"
+      },
+      {
+        "for": "冰糖",
+        "substitute": "白砂糖（granulated sugar）",
+        "difference": "甜度相近，成品同样能收出光泽；用等量替换即可。"
+      },
+      {
+        "for": "老抽",
+        "substitute": "普通酱油（regular soy sauce）",
+        "difference": "可以用5ml普通酱油替代5ml老抽，并将原有生抽减至20ml；颜色会浅一些，不要为追求深色继续加酱油。"
+      }
+    ],
+    "equipment": [
+      "普通家用炉灶",
+      "带盖炖锅或深炒锅",
+      "刀和砧板",
+      "锅铲、漏勺和碗"
+    ],
+    "steps": [
+      {
+        "action": "把五花肉放入锅中，加冷水没过肉块，以中大火煮沸后继续焯煮3分钟。",
+        "heat": "medium_high",
+        "oven_c": null,
+        "timer_seconds": 180,
+        "cue": "肉块外表变白，水面浮起灰白色浮沫。",
+        "warning": "生肉不要在水龙头下冲洗，以免飞溅污染周围。"
+      },
+      {
+        "action": "捞出五花肉，用温水洗去浮沫并充分沥干。",
+        "heat": "off",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "肉块表面无明显浮沫，提起时不再连续滴水。",
+        "warning": "肉块和焯肉水都很烫，用漏勺操作。"
+      },
+      {
+        "action": "将沥干的肉放进洗净、擦干的锅，中小火煸约6分钟，间或翻面。",
+        "heat": "medium_low",
+        "oven_c": null,
+        "timer_seconds": 360,
+        "cue": "锅底析出一层清亮猪油，肉块两三面微黄，尚未变成硬壳。",
+        "warning": "肉块有水会溅油；猪皮朝下时尤其要小心。"
+      },
+      {
+        "action": "关火，用勺舀出多余猪油，只留约10ml在锅中。",
+        "heat": "off",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "锅底只留薄薄一层油，不见明显油洼。",
+        "warning": "热油用耐热碗盛接，不要端锅倾倒。"
+      },
+      {
+        "action": "放入姜片和葱结，中小火翻炒约30秒。",
+        "heat": "medium_low",
+        "oven_c": null,
+        "timer_seconds": 30,
+        "cue": "闻到姜葱香味，葱色仍绿、没有焦黑。",
+        "warning": null
+      },
+      {
+        "action": "倒入黄酒，翻动肉块约30秒。",
+        "heat": "medium_low",
+        "oven_c": null,
+        "timer_seconds": 30,
+        "cue": "锅中冒出蒸汽，刺鼻酒气减弱。",
+        "warning": "先把酒量入小碗再倒入，勿从酒瓶直接向明火旁倾倒。"
+      },
+      {
+        "action": "加入生抽、老抽、冰糖和600ml热水，中大火煮开。",
+        "heat": "medium_high",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "汤汁接近没过肉块，颜色呈红褐色，表面开始持续冒泡。",
+        "warning": "热水沿锅边缓慢加入，避免蒸汽烫伤。"
+      },
+      {
+        "action": "盖上锅盖，转小火焖约70分钟，中途查看水量；若肉还硬，每次延长10分钟，汤少时补热水。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": 4200,
+        "cue": "汤面仅轻微冒泡；焖好时肉皮柔软，筷子能轻松插入瘦肉部分，肉块仍完整。",
+        "warning": "不要任其烧干；开盖时避开迎面蒸汽。"
+      },
+      {
+        "action": "挑出葱结和姜片。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "锅中不再留有软烂葱结和大片姜。",
+        "warning": null
+      },
+      {
+        "action": "敞盖转中大火收汁约8分钟，不时轻推肉块并把汤汁浇到肉上。",
+        "heat": "medium_high",
+        "oven_c": null,
+        "timer_seconds": 480,
+        "cue": "气泡由细密变大，汤汁红亮，能薄薄挂在肉块和锅铲上，锅底仍有流动的汁。",
+        "warning": "临近收浓时糖汁容易糊底，需守在锅边；不要用力翻搅软烂的肉。"
+      },
+      {
+        "action": "关火静置3分钟后盛出。",
+        "heat": "off",
+        "oven_c": null,
+        "timer_seconds": 180,
+        "cue": "汤汁停止翻滚，略微变稠，肉块表面油亮。",
+        "warning": null
+      }
+    ],
+    "key_points": [
+      "选五花层次分明的带皮肉；煸到表面微黄即可，过度煸炒会让瘦肉发柴。",
+      "焖煮只保持轻微冒泡，先焖到筷子能轻松插入，再开始收汁；水少了就补热水。",
+      "收汁不要收干：汤汁能薄薄挂住肉块就停火，冷却后还会更稠。"
+    ],
+    "background": "红烧肉是上海本帮菜浓油赤酱的代表，靠酱油、糖和黄酒焖出甜咸鲜香。家里做不必炒糖色，直接加糖慢焖，再收浓汤汁，也能做出红亮、软糯而不油腻的口感。",
+    "safety_notes": [
+      "猪肉中心温度至少达到63°C，并静置3分钟；本菜还需继续焖至软糯，不能只凭酱色判断是否熟透。",
+      "处理生猪肉后，清洗双手、刀具和砧板；不要用接触过生肉的碗直接盛熟肉。",
+      "焯过的肉沥干后再煸，避免水分遇热油飞溅；煸出的猪油稍凉后再处理，不要倒入水槽。",
+      "剩菜放凉后应在2小时内冷藏，再吃时充分热透。"
+    ]
+  }
+}

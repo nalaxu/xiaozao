@@ -6,10 +6,16 @@ export const openAiBaseUrl = () => (process.env.OPENAI_BASE_URL || "https://api.
 
 function toInput(req: ModelRequest) {
   const content = req.user.map((c) =>
-    c.type === "text" ? { type: "input_text", text: c.text } : { type: "input_image", image_url: c.dataUrl, detail: "auto" },
+    c.type === "text"
+      ? { type: "input_text", text: c.text }
+      : { type: "input_image", image_url: c.dataUrl, detail: "auto" },
   );
   const messages: unknown[] = [];
-  if (req.context) messages.push({ role: "developer", content: [{ type: "input_text", text: req.context }] });
+  if (req.context)
+    messages.push({
+      role: "developer",
+      content: [{ type: "input_text", text: req.context }],
+    });
   messages.push({ role: "user", content });
   return messages;
 }
@@ -27,65 +33,111 @@ function readUsage(u: unknown): Usage {
   };
 }
 
+/** 中转站或 OpenAI 暂时拒绝（并发或频率上限）：还没输出任何内容时可以安全重试 */
+const RETRYABLE = /concurrency limit|rate limit|too many requests|overloaded|\b429\b/i;
+const MAX_RETRIES = 2;
+
 export function openAiClient(apiKey: string): ModelClient {
   return {
     async run(req, onDelta) {
-      const ctrl = new AbortController();
-      const timer = setTimeout(() => ctrl.abort(), req.timeoutMs);
-      const body = {
-        model: req.model,
-        instructions: req.system,
-        input: toInput(req),
-        stream: true,
-        store: false,
-        text: { format: { type: "json_schema", name: req.schema.name, schema: req.schema.schema, strict: true } },
-        ...(req.reasoning ? { reasoning: { effort: req.reasoning } } : {}),
-      };
-      let text = "";
-      let usage: Usage = ZERO_USAGE;
-      try {
-        const res = await fetch(`${openAiBaseUrl()}/responses`, {
-          method: "POST",
-          headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-          signal: ctrl.signal,
-        });
-        if (!res.ok || !res.body) {
-          const detail = await res.text().catch(() => "");
-          throw new ModelError(`OpenAI ${res.status}: ${detail.slice(0, 300)}`, "error");
+      const deadline = Date.now() + req.timeoutMs;
+      for (let attempt = 0; ; attempt++) {
+        let emitted = false;
+        try {
+          return await runOnce(apiKey, req, Math.max(1000, deadline - Date.now()), (chunk) => {
+            emitted = true;
+            onDelta?.(chunk);
+          });
+        } catch (e) {
+          const retry =
+            e instanceof ModelError &&
+            e.kind === "error" &&
+            !emitted &&
+            attempt < MAX_RETRIES &&
+            RETRYABLE.test(e.message) &&
+            deadline - Date.now() > 15_000;
+          if (!retry) throw e;
+          await new Promise((r) => setTimeout(r, 2000 * (attempt + 1)));
         }
-        let completed = false;
-        for await (const event of sseEvents(res.body)) {
-          if (event.type === "response.output_text.delta" && typeof event.delta === "string") {
-            text += event.delta;
-            onDelta?.(event.delta);
-          } else if (event.type === "response.completed") {
-            const r = event.response as { usage?: unknown };
-            usage = readUsage(r?.usage);
-            completed = true;
-          } else if (event.type === "response.incomplete" || event.type === "response.failed") {
-            const r = event.response as { usage?: unknown; error?: { message?: string }; incomplete_details?: unknown };
-            usage = readUsage(r?.usage);
-            throw new ModelError(
-              `OpenAI ${event.type}: ${r?.error?.message ?? JSON.stringify(r?.incomplete_details ?? {})}`,
-              "error",
-              usage,
-            );
-          } else if (event.type === "error") {
-            throw new ModelError(`OpenAI error: ${JSON.stringify(event).slice(0, 300)}`, "error", usage);
-          }
-        }
-        if (!completed) throw new ModelError("OpenAI 流意外结束", "error", usage);
-        return { text, usage };
-      } catch (e) {
-        if (e instanceof ModelError) throw e;
-        if (ctrl.signal.aborted) throw new ModelError("模型调用超时", "timeout", usage);
-        throw new ModelError(e instanceof Error ? e.message : String(e), "error", usage);
-      } finally {
-        clearTimeout(timer);
       }
     },
   };
+}
+
+async function runOnce(
+  apiKey: string,
+  req: ModelRequest,
+  timeoutMs: number,
+  onDelta: (chunk: string) => void,
+): Promise<{ text: string; usage: Usage }> {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+  const body = {
+    model: req.model,
+    instructions: req.system,
+    input: toInput(req),
+    stream: true,
+    store: false,
+    text: {
+      format: {
+        type: "json_schema",
+        name: req.schema.name,
+        schema: req.schema.schema,
+        strict: true,
+      },
+    },
+    ...(req.reasoning ? { reasoning: { effort: req.reasoning } } : {}),
+  };
+  let text = "";
+  let usage: Usage = ZERO_USAGE;
+  try {
+    const res = await fetch(`${openAiBaseUrl()}/responses`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+      signal: ctrl.signal,
+    });
+    if (!res.ok || !res.body) {
+      const detail = await res.text().catch(() => "");
+      throw new ModelError(`OpenAI ${res.status}: ${detail.slice(0, 300)}`, "error");
+    }
+    let completed = false;
+    for await (const event of sseEvents(res.body)) {
+      if (event.type === "response.output_text.delta" && typeof event.delta === "string") {
+        text += event.delta;
+        onDelta(event.delta);
+      } else if (event.type === "response.completed") {
+        const r = event.response as { usage?: unknown };
+        usage = readUsage(r?.usage);
+        completed = true;
+      } else if (event.type === "response.incomplete" || event.type === "response.failed") {
+        const r = event.response as {
+          usage?: unknown;
+          error?: { message?: string };
+          incomplete_details?: unknown;
+        };
+        usage = readUsage(r?.usage);
+        throw new ModelError(
+          `OpenAI ${event.type}: ${r?.error?.message ?? JSON.stringify(r?.incomplete_details ?? {})}`,
+          "error",
+          usage,
+        );
+      } else if (event.type === "error") {
+        throw new ModelError(`OpenAI error: ${JSON.stringify(event).slice(0, 300)}`, "error", usage);
+      }
+    }
+    if (!completed) throw new ModelError("OpenAI 流意外结束", "error", usage);
+    return { text, usage };
+  } catch (e) {
+    if (e instanceof ModelError) throw e;
+    if (ctrl.signal.aborted) throw new ModelError("模型调用超时", "timeout", usage);
+    throw new ModelError(e instanceof Error ? e.message : String(e), "error", usage);
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 /** 解析 text/event-stream，逐个产出 data 字段的 JSON */

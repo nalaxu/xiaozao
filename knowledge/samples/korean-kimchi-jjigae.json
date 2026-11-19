@@ -1,0 +1,235 @@
+{
+  "slug": "korean-kimchi-jjigae",
+  "status": "draft",
+  "reviewed_by": null,
+  "reviewed_at": null,
+  "cuisine_id": "korean",
+  "generated_at": "2026-11-19T08:16:44.360Z",
+  "model": "gpt-6.1-sol",
+  "content": {
+    "overview": {
+      "name_zh": "泡菜锅",
+      "name_en": "Kimchi jjigae (kimchi stew)",
+      "name_original": "김치찌개",
+      "cuisine_id": "korean",
+      "flavor_desc": "酸辣热乎，带泡菜发酵鲜味和五花肉香，一锅配一碗饭。",
+      "total_minutes": 40,
+      "active_minutes": 15,
+      "difficulty": 1,
+      "servings": 2
+    },
+    "ingredients": [
+      {
+        "group": "main",
+        "name_zh": "白菜泡菜",
+        "name_en": "Napa cabbage kimchi",
+        "amount": 300,
+        "unit": "g",
+        "prep": "选偏酸的熟泡菜，剪或切成约3厘米段",
+        "optional": false
+      },
+      {
+        "group": "main",
+        "name_zh": "去皮五花肉",
+        "name_en": "Skinless pork belly",
+        "amount": 180,
+        "unit": "g",
+        "prep": "切成约3毫米厚片，生肉最后处理",
+        "optional": false
+      },
+      {
+        "group": "main",
+        "name_zh": "嫩豆腐",
+        "name_en": "Soft tofu",
+        "amount": 250,
+        "unit": "g",
+        "prep": "沥水，切成约2厘米厚块",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "洋葱",
+        "name_en": "Onion",
+        "amount": 100,
+        "unit": "g",
+        "prep": "切粗丝",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "蒜",
+        "name_en": "Garlic",
+        "amount": 2,
+        "unit": "clove",
+        "prep": "切末",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "小葱",
+        "name_en": "Spring onion",
+        "amount": 1,
+        "unit": "piece",
+        "prep": "切段",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "水",
+        "name_en": "Water",
+        "amount": 600,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "泡菜汁",
+        "name_en": "Kimchi brine",
+        "amount": 60,
+        "unit": "ml",
+        "prep": "取泡菜包装中的汁液；没有则用等量水",
+        "optional": true
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "中性食用油",
+        "name_en": "Neutral cooking oil",
+        "amount": 1,
+        "unit": "tsp",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "韩式辣椒粉",
+        "name_en": "Gochugaru",
+        "amount": 1,
+        "unit": "tsp",
+        "prep": "按泡菜辣度决定是否加入",
+        "optional": true
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "酱油",
+        "name_en": "Soy sauce",
+        "amount": 1,
+        "unit": "tsp",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "白糖",
+        "name_en": "Sugar",
+        "amount": 0.5,
+        "unit": "tsp",
+        "prep": "泡菜过酸时使用",
+        "optional": true
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "盐",
+        "name_en": "Salt",
+        "amount": null,
+        "unit": "to_taste",
+        "prep": "最后尝味后再决定是否添加",
+        "optional": true
+      }
+    ],
+    "substitutions": [
+      {
+        "for": "韩式辣椒粉",
+        "substitute": "海外普通超市的甜红椒粉（sweet paprika）加少量卡宴辣椒粉（cayenne pepper）",
+        "difference": "可用红椒粉0.75 tsp加卡宴辣椒粉一小撮替代本方用量；颜色接近，但少了韩式辣椒粉的果香，辣度也更尖。"
+      },
+      {
+        "for": "韩式熟白菜泡菜",
+        "substitute": "海外超市冷藏区的白菜泡菜（napa cabbage kimchi）",
+        "difference": "选冷藏、自然发酵的白菜泡菜，不用甜味沙拉式产品。若酸度不足，成品会更清淡，少一点经典泡菜锅的酸香。"
+      }
+    ],
+    "equipment": [
+      "普通炉灶",
+      "一口中号汤锅或深锅",
+      "菜刀、砧板、锅铲"
+    ],
+    "steps": [
+      {
+        "action": "锅中放食用油和五花肉片，中火煸炒。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": 240,
+        "cue": "肉片散开、表面变色，肥肉开始透明，锅底出现油脂。",
+        "warning": "肉表面水分尽量擦干，入锅时轻放，避免热油溅起。"
+      },
+      {
+        "action": "加入洋葱和蒜末，翻炒。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": 120,
+        "cue": "洋葱边缘变透明，闻到蒜香但蒜末没有变深褐色。",
+        "warning": null
+      },
+      {
+        "action": "加入泡菜，继续翻炒。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": 240,
+        "cue": "泡菜梗略微变软，锅底油脂呈橙红色，酸香明显。",
+        "warning": "若锅底开始干黏，可从量好的水中取少量加入，别硬炒到焦。"
+      },
+      {
+        "action": "加入水、泡菜汁、酱油和可选的韩式辣椒粉，煮开。",
+        "heat": "high",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "汤色均匀变红，锅面出现连续翻滚的气泡。",
+        "warning": null
+      },
+      {
+        "action": "转中小火，不盖锅盖炖煮15分钟。",
+        "heat": "medium_low",
+        "oven_c": null,
+        "timer_seconds": 900,
+        "cue": "汤面保持小泡，泡菜梗明显软化，肉片熟透，汤有融合的酸辣肉香。",
+        "warning": "若汤面下降太快，调小火力，避免煮干。"
+      },
+      {
+        "action": "把豆腐块轻轻放入汤中，继续小火煮。",
+        "heat": "medium_low",
+        "oven_c": null,
+        "timer_seconds": 300,
+        "cue": "豆腐中心热透，边缘略染红色，汤面重新冒小泡。",
+        "warning": "用锅铲轻推即可，大力翻动容易把嫩豆腐搅碎。"
+      },
+      {
+        "action": "尝汤后按需加入盐或可选的白糖，轻轻搅匀。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "汤入口酸辣鲜咸，酸味不刺口，也没有明显甜味。",
+        "warning": "取少量汤稍放凉再尝，避免烫伤。"
+      },
+      {
+        "action": "撒入葱段，关火。",
+        "heat": "off",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "葱段受热变得鲜绿，能闻到清新的葱香。",
+        "warning": null
+      }
+    ],
+    "key_points": [
+      "选偏酸的熟泡菜；先炒到菜梗稍软、油色变红，再加水，汤味才厚。",
+      "保持小沸炖煮，不要大火一直滚，否则水分跑得快，汤容易越煮越咸。",
+      "泡菜和泡菜汁咸度差异很大，盐留到最后；糖只用来缓和尖酸，不要煮成甜汤。"
+    ],
+    "background": "泡菜锅是韩国家常炖锅，用偏酸的熟泡菜煮出酸辣鲜味，比刚腌好的泡菜更适合。五花肉先煸香，再和泡菜同炒，最后加水炖，普通汤锅就能做出一锅配饭的热乎菜。",
+    "safety_notes": [
+      "处理生猪肉后洗手，并清洗刀和砧板，避免接触即食食材。猪肉中心温度至少达到63°C，并在达到该温度后静置3分钟；本菜随后持续炖煮，会进一步充分加热。",
+      "泡菜属于发酵食品，孕妇、儿童、老人及免疫力低下者应选正规冷藏产品，并像本菜一样充分煮热；出现霉斑或异常腐败气味的泡菜应丢弃。",
+      "剩下的泡菜锅应分装到浅容器，出锅后2小时内冷藏，不要整锅放在室温下过夜。"
+    ]
+  }
+}

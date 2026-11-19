@@ -48,6 +48,12 @@ export const tutorialFallbackModel = () => env("MODEL_TUTORIAL_FALLBACK", "gpt-6
 
 export const imageQuality = () => env("IMAGE_QUALITY", "medium");
 
+/**
+ * 同时生成的图片数。中转站对每个账号有并发上限，图片一张约 30 秒，并发太高会挤占用户的文字请求
+ * （2026-11-19 评测时出现过 “Concurrency limit exceeded”）。
+ */
+export const imageConcurrency = () => Math.max(1, Number(process.env.IMAGE_CONCURRENCY) || 2);
+
 /** 调用前用于预占全站预算的单次估算成本（PRD 6.3 的估算值，实测后更新） */
 export const estimateUsd: Record<Feature, number> = {
   recognize: 0.0025,

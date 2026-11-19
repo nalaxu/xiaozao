@@ -1,0 +1,261 @@
+{
+  "slug": "levant-turkish-shakshuka",
+  "status": "draft",
+  "reviewed_by": null,
+  "reviewed_at": null,
+  "cuisine_id": "levant-turkish",
+  "generated_at": "2026-11-19T08:15:17.379Z",
+  "model": "gpt-6.1-sol",
+  "content": {
+    "overview": {
+      "name_zh": "番茄炖蛋",
+      "name_en": "Shakshuka",
+      "name_original": "Shakshuka",
+      "cuisine_id": "levant-turkish",
+      "flavor_desc": "番茄酸甜、甜椒柔甜，带孜然暖香；浓酱里卧着嫩蛋白和溏心蛋黄。",
+      "total_minutes": 35,
+      "active_minutes": 18,
+      "difficulty": 1,
+      "servings": 2
+    },
+    "ingredients": [
+      {
+        "group": "main",
+        "name_zh": "鸡蛋",
+        "name_en": "Eggs",
+        "amount": 4,
+        "unit": "piece",
+        "prep": "优先选巴氏杀菌带壳蛋",
+        "optional": false
+      },
+      {
+        "group": "main",
+        "name_zh": "罐装碎番茄",
+        "name_en": "Canned crushed tomatoes",
+        "amount": 400,
+        "unit": "g",
+        "prep": "连汁使用，选无调味款",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "红甜椒",
+        "name_en": "Red bell pepper",
+        "amount": 1,
+        "unit": "piece",
+        "prep": "去蒂去籽，切约1厘米小丁",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "洋葱",
+        "name_en": "Onion",
+        "amount": 120,
+        "unit": "g",
+        "prep": "切小丁",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "大蒜",
+        "name_en": "Garlic",
+        "amount": 2,
+        "unit": "clove",
+        "prep": "切末",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "平叶欧芹",
+        "name_en": "Flat-leaf parsley",
+        "amount": 5,
+        "unit": "g",
+        "prep": "洗净擦干，切碎",
+        "optional": true
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "橄榄油",
+        "name_en": "Olive oil",
+        "amount": 20,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "孜然粉",
+        "name_en": "Ground cumin",
+        "amount": 1,
+        "unit": "tsp",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "甜椒粉",
+        "name_en": "Sweet paprika",
+        "amount": 1,
+        "unit": "tsp",
+        "prep": "选不辣款",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "盐",
+        "name_en": "Salt",
+        "amount": 0.5,
+        "unit": "tsp",
+        "prep": "先用一半，余下按番茄咸度添加",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "黑胡椒粉",
+        "name_en": "Ground black pepper",
+        "amount": 1,
+        "unit": "pinch",
+        "prep": null,
+        "optional": false
+      }
+    ],
+    "substitutions": [
+      {
+        "for": "阿勒颇辣椒粉",
+        "substitute": "本配方使用的甜椒粉",
+        "difference": "普通海外超市即可买到，不必专门找中东辣椒粉；甜椒粉更温和，果香和微辣感较少。"
+      },
+      {
+        "for": "400 g罐装碎番茄",
+        "substitute": "500 g熟透鲜番茄，去蒂切小丁，连汁使用",
+        "difference": "鲜番茄味道更清爽，但水分更多，收汁通常要多花5—10分钟；冬季番茄可能偏淡。"
+      },
+      {
+        "for": "平叶欧芹",
+        "substitute": "等量香菜，或直接省略",
+        "difference": "香菜香气更鲜明，会改变原来的香草风味；不放也不影响酱汁和鸡蛋成形。"
+      }
+    ],
+    "equipment": [
+      "一口约24厘米、带盖的深平底锅或宽口炖锅",
+      "菜刀、砧板、锅铲和汤匙"
+    ],
+    "steps": [
+      {
+        "action": "锅中倒入橄榄油，以中火预热。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": 45,
+        "cue": "油流动变快、略有波纹，但没有冒烟。",
+        "warning": null
+      },
+      {
+        "action": "加入洋葱丁，翻炒约4分钟。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": 240,
+        "cue": "洋葱变软、边缘半透明，没有明显焦黑。",
+        "warning": null
+      },
+      {
+        "action": "加入红甜椒丁，翻炒约5分钟。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": 300,
+        "cue": "甜椒颜色更鲜亮，边缘变软，闻得到甜香。",
+        "warning": null
+      },
+      {
+        "action": "加入蒜末，翻炒约30秒。",
+        "heat": "medium_low",
+        "oven_c": null,
+        "timer_seconds": 30,
+        "cue": "蒜香出来，蒜末仍呈浅色。",
+        "warning": null
+      },
+      {
+        "action": "加入孜然粉和甜椒粉，翻炒约15秒。",
+        "heat": "medium_low",
+        "oven_c": null,
+        "timer_seconds": 15,
+        "cue": "油被染成红色，能闻到明显香料味。",
+        "warning": "香料粉容易焦，出现焦味前就要进入下一步。"
+      },
+      {
+        "action": "加入罐装碎番茄、先用的一半盐和黑胡椒，搅匀。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": 60,
+        "cue": "番茄与香料油混合均匀，锅边开始冒小泡。",
+        "warning": "番茄接触热油可能溅起，贴近锅面缓慢倒入。"
+      },
+      {
+        "action": "转中小火，不盖盖煨煮约10分钟，期间偶尔铲动锅底。",
+        "heat": "medium_low",
+        "oven_c": null,
+        "timer_seconds": 600,
+        "cue": "酱汁明显浓稠，用锅铲划过锅底，痕迹能保持约2秒；甜椒已软。",
+        "warning": "若开始粘底，立即调小火，不要硬熬。"
+      },
+      {
+        "action": "尝一下酱汁，按需要加入剩余盐。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "番茄酸甜清楚，咸味略足但不齁，能给未加盐的鸡蛋提味。",
+        "warning": "用干净汤匙取少量酱汁，吹凉后再尝。"
+      },
+      {
+        "action": "用汤匙在酱汁中压出4个浅窝。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "浅窝分布均匀，底下仍有薄薄一层酱汁，不露锅底。",
+        "warning": null
+      },
+      {
+        "action": "把4只鸡蛋逐个打入浅窝。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "每只蛋黄保持完整，蛋白留在周围，没有铺满整口锅。",
+        "warning": "小心热酱溅手；若掉入蛋壳，用干净汤匙捞出。"
+      },
+      {
+        "action": "盖上锅盖，以小火焖约5—7分钟，从第5分钟开始检查。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": 300,
+        "cue": "蛋白全部变白、不再透明，轻晃锅时蛋黄仍轻轻颤动；若要全熟，继续焖至蛋黄也凝固。",
+        "warning": "溏心状态不代表鸡蛋已充分杀菌；高风险人群请做全熟版本。开盖时避开蒸汽。"
+      },
+      {
+        "action": "关火并将锅移离热炉头。",
+        "heat": "off",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "酱汁的大气泡逐渐停下，蛋黄表面仍有光泽。",
+        "warning": "锅柄和锅底仍很烫，用隔热布拿取。"
+      },
+      {
+        "action": "按喜好撒上欧芹碎，直接连锅上桌。",
+        "heat": "off",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "绿色香草散在红酱和鸡蛋上，趁热舀取时酱汁浓而不水。",
+        "warning": "锅底需垫耐热垫，不要直接放在不耐热桌面上。"
+      }
+    ],
+    "key_points": [
+      "先把番茄酱收至能留下铲痕，再放鸡蛋；酱太稀，蛋白容易散开。",
+      "卧蛋后保持小火、加盖焖，不翻动；蛋白刚凝固就离火，锅内余热还会继续加热。",
+      "甜椒粉只短暂炒香，闻到香味就加番茄，炒焦会发苦。"
+    ],
+    "background": "番茄炖蛋在地中海东岸的家常餐桌上很常见：先把番茄、甜椒煨成浓酱，再直接卧蛋。这个版本只用一口带盖平底锅，孜然和甜椒粉提香，蛋黄保留溏心。",
+    "safety_notes": [
+      "溏心蛋仍有食源性疾病风险，优先选巴氏杀菌带壳蛋，但不能视为完全无风险。孕妇、儿童、老人和免疫力低下者应将蛋白、蛋黄全部煮至凝固，不吃溏心版本。",
+      "鸡蛋直接打入锅中时，手不要贴近热酱；碰过生蛋和蛋壳后洗手，并清洁接触表面。",
+      "剩余熟食应在做好后2小时内冷藏，不要等到完全凉透；再吃时彻底加热，溏心口感会消失。"
+    ]
+  }
+}

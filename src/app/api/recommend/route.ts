@@ -4,6 +4,7 @@ import { input as limits } from "@config/limits";
 import { kb } from "@/lib/kb";
 import type { RecommendEvent } from "@/lib/recommend-types";
 import { jsonError, readJson } from "@/server/http";
+import { imageConcurrency } from "@config/models";
 import { processImageJobs } from "@/server/images/jobs";
 import { guardModelRoute } from "@/server/model-guard";
 import { runRecommend } from "@/server/recommend/run";
@@ -40,7 +41,11 @@ export async function POST(req: NextRequest) {
   const queued = new Promise<string[]>((r) => (resolveQueued = r));
   after(async () => {
     const ids = await queued;
-    if (ids.length) await processImageJobs(db, { dishIds: ids, limit: 5 });
+    // 按并发上限分轮生成，避免一次占满中转站的并发、挤掉用户接着要的教程请求
+    for (let round = 0; ids.length && round < ids.length; round++) {
+      const r = await processImageJobs(db, { dishIds: ids, limit: imageConcurrency() });
+      if (r.done + r.failed === 0 || r.postponed) break;
+    }
   });
 
   const encoder = new TextEncoder();

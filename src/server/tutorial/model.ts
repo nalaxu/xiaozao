@@ -6,7 +6,8 @@ import { HEATS, UNITS, type TutorialContent } from "@/lib/tutorial-types";
 import type { RecommendedDish } from "@/lib/recommend-types";
 import type { ModelRequest } from "../ai/types";
 
-export const TUTORIAL_TIMEOUT_MS = 90_000;
+// 实测中位 55 秒、最长 74 秒（2026-11-19 评测），留足余量
+export const TUTORIAL_TIMEOUT_MS = 120_000;
 
 export const TUTORIAL_SYSTEM = `你是“小灶”的家常菜老师，为会做饭、住在海外的华人写一份照着就能做成的菜谱。
 

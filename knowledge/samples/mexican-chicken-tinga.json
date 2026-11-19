@@ -1,0 +1,253 @@
+{
+  "slug": "mexican-chicken-tinga",
+  "status": "draft",
+  "reviewed_by": null,
+  "reviewed_at": null,
+  "cuisine_id": "mexican",
+  "generated_at": "2026-11-19T08:15:44.043Z",
+  "model": "gpt-6.1-sol",
+  "content": {
+    "overview": {
+      "name_zh": "奇波特雷手撕鸡",
+      "name_en": "Chicken Tinga",
+      "name_original": "Tinga de pollo",
+      "cuisine_id": "mexican",
+      "flavor_desc": "烟熏微辣的番茄酱裹住嫩鸡丝，洋葱带甜，配玉米脆饼和青柠清爽解腻。",
+      "total_minutes": 45,
+      "active_minutes": 25,
+      "difficulty": 1,
+      "servings": 2
+    },
+    "ingredients": [
+      {
+        "group": "main",
+        "name_zh": "去骨去皮鸡腿肉",
+        "name_en": "Boneless skinless chicken thighs",
+        "amount": 350,
+        "unit": "g",
+        "prep": "修去多余脂肪",
+        "optional": false
+      },
+      {
+        "group": "main",
+        "name_zh": "玉米脆饼",
+        "name_en": "Tostada shells",
+        "amount": 6,
+        "unit": "piece",
+        "prep": "选即食原味款",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "罐装碎番茄",
+        "name_en": "Canned crushed tomatoes",
+        "amount": 300,
+        "unit": "g",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "洋葱",
+        "name_en": "Onion",
+        "amount": 150,
+        "unit": "g",
+        "prep": "切细丝",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "蒜",
+        "name_en": "Garlic",
+        "amount": 2,
+        "unit": "clove",
+        "prep": "切末",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "阿多波酱汁罐装奇波特雷辣椒",
+        "name_en": "Chipotle peppers in adobo",
+        "amount": 10,
+        "unit": "g",
+        "prep": "连少量附着酱汁剁细；怕辣先用一半",
+        "optional": false
+      },
+      {
+        "group": "aux",
+        "name_zh": "青柠",
+        "name_en": "Lime",
+        "amount": 1,
+        "unit": "piece",
+        "prep": "切角",
+        "optional": true
+      },
+      {
+        "group": "aux",
+        "name_zh": "芫荽",
+        "name_en": "Cilantro",
+        "amount": 5,
+        "unit": "g",
+        "prep": "切碎",
+        "optional": true
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "中性食用油",
+        "name_en": "Neutral cooking oil",
+        "amount": 15,
+        "unit": "ml",
+        "prep": null,
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "盐",
+        "name_en": "Salt",
+        "amount": 0.5,
+        "unit": "tsp",
+        "prep": "分次加入，按罐头咸度调整",
+        "optional": false
+      },
+      {
+        "group": "seasoning",
+        "name_zh": "干牛至",
+        "name_en": "Dried oregano",
+        "amount": 0.5,
+        "unit": "tsp",
+        "prep": null,
+        "optional": true
+      },
+      {
+        "group": "aux",
+        "name_zh": "水",
+        "name_en": "Water",
+        "amount": 700,
+        "unit": "ml",
+        "prep": "煮鸡用，以刚没过鸡肉为准；留100 ml煮鸡水做酱",
+        "optional": false
+      }
+    ],
+    "substitutions": [
+      {
+        "for": "10 g罐装奇波特雷辣椒",
+        "substitute": "烟熏甜椒粉1 tsp＋卡宴辣椒粉1 pinch＋番茄膏1 tsp",
+        "difference": "烟熏味接近，但少了罐装辣椒的醋香和醇厚果香；辣度可用卡宴辣椒粉调整。"
+      },
+      {
+        "for": "玉米脆饼",
+        "substitute": "海外超市常见的原味玉米片约100 g",
+        "difference": "玉米片同样酥脆、有玉米香，但块小，适合边舀边吃，不如整张脆饼能承托馅料。"
+      }
+    ],
+    "equipment": [
+      "普通炉灶",
+      "煮锅",
+      "平底锅",
+      "刀和砧板",
+      "两把叉子",
+      "碗和量勺"
+    ],
+    "steps": [
+      {
+        "action": "将鸡腿肉放入煮锅，加水至刚没过鸡肉，中大火加热。",
+        "heat": "medium_high",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "锅边连续冒小泡，水面刚开始轻轻翻动。",
+        "warning": "生鸡肉不要冲洗，接触过的手和用具及时清洁。"
+      },
+      {
+        "action": "调小火，将鸡肉保持微沸煮约15—20分钟。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": 1200,
+        "cue": "最厚处中心达到74°C，切开内部无粉红色；未熟就继续煮。",
+        "warning": "计时只作参考，鸡肉厚度不同，必须确认熟透。"
+      },
+      {
+        "action": "将鸡肉捞入碗中晾约5分钟，锅中煮鸡水留用。",
+        "heat": "off",
+        "oven_c": null,
+        "timer_seconds": 300,
+        "cue": "鸡肉不再大量冒蒸汽，能安全用叉子操作。",
+        "warning": "捞出时小心热汤滴落。"
+      },
+      {
+        "action": "用两把叉子将鸡肉顺着纹理撕成粗丝。",
+        "heat": null,
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "鸡丝粗细大致均匀，没有大块肉心。",
+        "warning": null
+      },
+      {
+        "action": "平底锅加入食用油和洋葱丝，中火炒约7分钟。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": 420,
+        "cue": "洋葱变软、半透明，边缘略带浅金色，闻到甜香。",
+        "warning": "洋葱边缘若迅速变褐，调低火力，避免炒苦。"
+      },
+      {
+        "action": "加入蒜末，中小火炒约30秒。",
+        "heat": "medium_low",
+        "oven_c": null,
+        "timer_seconds": 30,
+        "cue": "闻到明显蒜香，蒜末仍呈浅色。",
+        "warning": null
+      },
+      {
+        "action": "加入碎番茄、奇波特雷辣椒、100 ml煮鸡水、干牛至和先用一半的盐，中火煮开。",
+        "heat": "medium",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "酱汁均匀冒泡，颜色呈红褐色。",
+        "warning": "番茄酱入热锅可能飞溅，贴近锅面缓缓加入。"
+      },
+      {
+        "action": "转中小火，不加盖熬酱约10分钟，间歇搅动。",
+        "heat": "medium_low",
+        "oven_c": null,
+        "timer_seconds": 600,
+        "cue": "番茄的生酸味减弱，锅铲划过锅底后，酱汁缓慢合拢。",
+        "warning": "酱汁变稠后容易糊底，及时搅动。"
+      },
+      {
+        "action": "加入鸡丝，小火翻拌煨约4分钟。",
+        "heat": "low",
+        "oven_c": null,
+        "timer_seconds": 240,
+        "cue": "每根鸡丝都裹上红酱，整体热透，锅底没有明显游离汤水。",
+        "warning": "若酱太干，加少量留存的煮鸡水，不要一直干炒。"
+      },
+      {
+        "action": "尝味后按需要补入剩余盐。",
+        "heat": "off",
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "咸度适中，能尝到烟熏香和番茄酸甜，而非只有咸辣。",
+        "warning": null
+      },
+      {
+        "action": "临吃前将鸡丝分放在玉米脆饼上，可撒芫荽并配青柠角。",
+        "heat": null,
+        "oven_c": null,
+        "timer_seconds": null,
+        "cue": "鸡丝湿润但不滴汤，脆饼仍保持酥脆。",
+        "warning": null
+      }
+    ],
+    "key_points": [
+      "鸡肉保持微沸煮熟，不要持续大滚；熟后稍凉再顺纹撕，鸡丝更嫩。",
+      "奇波特雷不同品牌辣度差别大，怕辣先放一半，尝过酱汁再补。",
+      "酱汁收到浓稠再拌鸡丝；临吃才放上脆饼，避免回软。"
+    ],
+    "background": "奇波特雷手撕鸡是墨西哥常见的家常菜，用番茄、洋葱和奇波特雷辣椒炖出烟熏微辣的酱汁，再拌入鸡丝。这里配现成玉米脆饼，酱汁收得能挂住鸡肉、又不流汤，吃起来最合适。",
+    "safety_notes": [
+      "鸡肉中心温度至少达到74°C，内部不能带粉红色；有食品温度计时测最厚处，颜色不能代替测温。",
+      "处理生鸡肉后清洗双手、刀和砧板；不要冲洗生鸡肉，以免水花传播细菌。",
+      "鸡肉和酱汁等熟食在做好后2小时内放入冰箱冷藏，不必等到完全凉透；再次食用时彻底热透。"
+    ]
+  }
+}
