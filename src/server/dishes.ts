@@ -84,3 +84,12 @@ export async function dishImages(
     .where(inArray(dishes.id, ids));
   return Object.fromEntries(rows.map((r) => [r.id, r.imageStatus === "ready" ? imageUrl(r.imageKey, size) : null]));
 }
+
+/** 图片库里这道菜的图（示例教程用）；没有或还没生成返回 null */
+export async function findDishImage(db: Db, cuisineId: string, nameZh: string, size: 384 | 768 = 768) {
+  const [row] = await db
+    .select({ id: dishes.id, imageKey: dishes.imageKey, imageStatus: dishes.imageStatus })
+    .from(dishes)
+    .where(and(eq(dishes.cuisineId, cuisineId), eq(dishes.nameZhNorm, dishNameNorm(nameZh))));
+  return row ? { id: row.id, imageUrl: row.imageStatus === "ready" ? imageUrl(row.imageKey, size) : null } : null;
+}

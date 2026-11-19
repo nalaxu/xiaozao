@@ -12,7 +12,7 @@ const TABS = [
 ] as const;
 
 // 推荐、教程、烹饪模式等页面隐藏标签栏（设计文档第 2 节）
-const HIDDEN_PREFIXES = ["/recommend", "/t/", "/login", "/welcome", "/admin"];
+const HIDDEN_PREFIXES = ["/recommend", "/t/", "/samples/", "/login", "/welcome", "/admin"];
 
 function isActive(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);

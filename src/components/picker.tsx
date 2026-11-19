@@ -353,7 +353,12 @@ function IngredientStep({
 
       {notice && (
         <Sheet onClose={() => setNotice(false)} title="拍照识别食材">
-          <p className="text-text-muted">照片会发送给模型服务商识别食材，识别后不保存。一次最多 3 张。</p>
+          <p className="text-text-muted">
+            照片会发送给模型服务商识别食材，识别后不保存。一次最多 3 张。
+            <a href="/privacy" target="_blank" rel="noreferrer" className="ml-1 underline underline-offset-2">
+              隐私政策
+            </a>
+          </p>
           <Button
             className="mt-6"
             onClick={() => {

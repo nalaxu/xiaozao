@@ -1,6 +1,7 @@
 "use client";
 
 // 做好了之后的评价（设计文档 4.7）：点一下就记下，原因可选。
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { recordRating } from "@/lib/cook-events";
@@ -11,12 +12,15 @@ export function CookDone({
   dishName,
   exitHref,
   ratingsRecorded,
+  sample = false,
   onBack,
 }: {
   tutorialId: string;
   dishName: string;
   exitHref: string;
   ratingsRecorded: boolean;
+  /** 示例教程：不评价，引导登录 */
+  sample?: boolean;
   onBack: () => void;
 }) {
   const router = useRouter();
@@ -39,6 +43,27 @@ export function CookDone({
     router.push(exitHref);
     router.refresh();
   };
+
+  if (sample) {
+    return (
+      <div className="mx-auto flex h-full max-w-[560px] flex-col justify-center overflow-y-auto px-6 py-6 text-center">
+        <p className="text-[48px] leading-none" aria-hidden>
+          🍽
+        </p>
+        <h1 className="mt-3 font-serif text-display font-black">做好了，开吃吧</h1>
+        <p className="mt-6 text-text-muted">这是示例教程。登录后可以按你手头的食材和口味生成，做完还能记下好不好吃。</p>
+        <Link
+          href="/login"
+          className="mt-8 flex h-[52px] w-full items-center justify-center rounded-control bg-primary font-bold text-primary-contrast"
+        >
+          登录
+        </Link>
+        <Link href={exitHref} className="mt-2 flex h-11 items-center justify-center text-text-muted">
+          回到教程
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto flex h-full max-w-[560px] flex-col justify-center overflow-y-auto px-6 py-6 text-center">

@@ -251,6 +251,13 @@ export function LoginPanel({
       </form>
 
       <p className="mt-6 text-small text-text-muted">小灶目前凭邀请码注册，已注册的邮箱直接登录即可。</p>
+      <p className="mt-2 text-small text-text-muted">
+        登录即表示你同意我们按
+        <Link href="/privacy" className="underline underline-offset-2">
+          隐私政策
+        </Link>
+        处理你的邮箱等信息。
+      </p>
     </div>
   );
 }

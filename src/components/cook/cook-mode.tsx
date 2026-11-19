@@ -24,6 +24,8 @@ interface Props {
   offlineRecord?: Omit<OfflineTutorial, "openedAt">;
   /** 评价记录开关；离线时不知道，按开着处理（关着的话服务端不会保存） */
   ratingsRecorded?: boolean;
+  /** 示例教程：未登录也能用，不记录开始/完成，也不评价 */
+  sample?: boolean;
 }
 
 const BIG_KEY = "xz_cook_big";
@@ -35,6 +37,7 @@ export function CookMode({
   exitHref,
   offlineRecord,
   ratingsRecorded = true,
+  sample = false,
 }: Props) {
   const steps = content.steps;
   const total = steps.length;
@@ -71,7 +74,7 @@ export function CookMode({
 
     if (!started.current) {
       started.current = true;
-      void flushCookEvents().then(() => recordCookEvent(tutorialId, "start"));
+      if (!sample) void flushCookEvents().then(() => recordCookEvent(tutorialId, "start"));
       if (offlineRecord) void saveOffline(offlineRecord);
     }
     const onOnline = () => void flushCookEvents();
@@ -174,7 +177,7 @@ export function CookMode({
     (delta: 1 | -1) => {
       if (delta === 1 && index === total - 1) {
         setFinished(true);
-        void recordCookEvent(tutorialId, "complete");
+        if (!sample) void recordCookEvent(tutorialId, "complete");
         try {
           sessionStorage.removeItem(stepKey);
         } catch {}
@@ -185,7 +188,7 @@ export function CookMode({
       setDir(delta === 1 ? "next" : "prev");
       setIndex(next);
     },
-    [index, total, tutorialId, stepKey],
+    [index, total, tutorialId, stepKey, sample],
   );
 
   // 键盘：← → 翻页，空格下一步（设计文档 5）
@@ -284,6 +287,7 @@ export function CookMode({
             dishName={content.overview.name_zh}
             exitHref={exitHref}
             ratingsRecorded={ratingsRecorded}
+            sample={sample}
             onBack={() => setFinished(false)}
           />
         ) : (

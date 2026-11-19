@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
   ButtonLink,
   Card,
@@ -12,6 +12,7 @@ import {
   cuisineColor,
 } from "@/components/ui";
 import { CUISINE_GROUP_LABELS, getCuisine, getFlavor, getScene, kb } from "@/lib/kb";
+import { publicSamples } from "@/server/samples";
 
 export function generateStaticParams() {
   return kb.cuisines.map((c) => ({ cuisine: c.id }));
@@ -102,6 +103,27 @@ export default async function CuisinePage({ params }: Props) {
           ))}
         </dl>
       </Card>
+
+      {publicSamples(cuisine.id).length > 0 && (
+        <>
+          <SectionTitle sub="不用登录，可以进烹饪模式">示例教程</SectionTitle>
+          <ul className="space-y-2.5">
+            {publicSamples(cuisine.id).map((s) => (
+              <li key={s.slug}>
+                <Link href={`/samples/${s.slug}`} className="block">
+                  <Card className="flex items-center justify-between gap-3 p-4 active:bg-surface-muted">
+                    <div className="min-w-0">
+                      <p className="font-bold">{s.content.overview.name_zh}</p>
+                      <p className="line-clamp-1 text-small text-text-muted">{s.content.overview.flavor_desc}</p>
+                    </div>
+                    <ChevronRight size={20} className="shrink-0 text-text-muted" aria-hidden />
+                  </Card>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
 
       <SectionTitle sub={`${cuisine.representative_dishes.length} 道`}>代表菜</SectionTitle>
       <ul className="grid gap-3 sm:grid-cols-2">

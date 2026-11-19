@@ -65,6 +65,8 @@ export interface TutorialViewProps {
   offline?: boolean;
   /** 在线打开已生成的教程时传入，存一份离线副本 */
   offlineRecord?: Omit<OfflineTutorial, "openedAt">;
+  /** 示例教程（未登录可看）：顶部横幅，“开始做”进示例的烹饪模式，不能追问 */
+  sample?: { cookHref: string; draft?: boolean };
 }
 
 export function TutorialView(props: TutorialViewProps) {
@@ -131,6 +133,16 @@ export function TutorialView(props: TutorialViewProps) {
 
   return (
     <div className="pb-28 lg:-mx-[120px] lg:grid lg:grid-cols-[320px_1fr] lg:gap-10">
+      {props.sample && (
+        <div className="-mx-4 -mt-4 mb-4 bg-primary-soft px-4 py-3 text-small lg:col-span-2 lg:mx-0 lg:mt-0 lg:rounded-card">
+          {props.sample.draft && <strong className="mr-1 text-primary">[草稿，仅管理员可见]</strong>}
+          这是示例教程。
+          <Link href="/login" className="font-bold text-primary underline underline-offset-2">
+            登录
+          </Link>
+          后可以按你的食材生成。
+        </div>
+      )}
       {/* 左栏（桌面固定）：图片、概览、食材 */}
       <div className="lg:sticky lg:top-20 lg:max-h-[calc(100dvh-96px)] lg:self-start lg:overflow-y-auto lg:pb-8">
         <div className="relative -mx-4 -mt-4 lg:mx-0 lg:mt-0">
@@ -288,7 +300,7 @@ export function TutorialView(props: TutorialViewProps) {
           <Button disabled>{props.status ?? "正在写步骤…"}</Button>
         ) : (
           <div className="flex gap-3">
-            {!props.offline && (
+            {!props.offline && !props.sample && (
               <Button
                 variant="secondary"
                 className="flex-1"
@@ -298,9 +310,9 @@ export function TutorialView(props: TutorialViewProps) {
                 <MessageCircleQuestion size={18} aria-hidden /> 问一问
               </Button>
             )}
-            {props.tutorialId ? (
+            {props.tutorialId || props.sample ? (
               <Link
-                href={`/t/${props.tutorialId}/cook${servings !== null && servings !== baseServings ? `?servings=${servings}` : ""}`}
+                href={`${props.sample?.cookHref ?? `/t/${props.tutorialId}/cook`}${servings !== null && servings !== baseServings ? `?servings=${servings}` : ""}`}
                 className="flex h-[54px] flex-[2] items-center justify-center gap-1 rounded-control bg-primary text-[17px] font-bold text-primary-contrast shadow-cta active:brightness-90"
               >
                 开始做 <ChevronRight size={20} aria-hidden />

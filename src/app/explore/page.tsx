@@ -4,6 +4,7 @@ import wokImage from "@/assets/wok.webp";
 import { ChevronRight } from "lucide-react";
 import { Card, SectionTitle, cuisineColor, stampColor } from "@/components/ui";
 import { cuisinesByGroup, getCuisine, moreFlavors, primaryFlavors, type Flavor } from "@/lib/kb";
+import { publicSamples } from "@/server/samples";
 
 export const metadata: Metadata = { title: "探索菜系" };
 
@@ -41,6 +42,29 @@ export default function ExplorePage() {
           </span>
         </div>
       </Link>
+
+      {publicSamples().length > 0 && (
+        <section aria-labelledby="samples-title">
+          <SectionTitle sub="不用登录，可以进烹饪模式">
+            <span id="samples-title">示例教程</span>
+          </SectionTitle>
+          <ul className="-mx-4 flex gap-2.5 overflow-x-auto px-4 pb-1">
+            {publicSamples().map((s) => (
+              <li key={s.slug} className="w-[150px] shrink-0">
+                <Link href={`/samples/${s.slug}`} className="block h-full">
+                  <Card className="h-full p-3 active:bg-surface-muted">
+                    <p className="text-caption text-text-muted">{getCuisine(s.cuisine_id)?.name.zh}</p>
+                    <p className="mt-0.5 font-bold">{s.content.overview.name_zh}</p>
+                    <p className="mt-1 text-caption text-text-muted">
+                      {s.content.overview.total_minutes} 分钟 · {s.content.steps.length} 步
+                    </p>
+                  </Card>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {groups.map(({ group, label, cuisines }) => (
         <section key={group} aria-labelledby={`g-${group}`}>

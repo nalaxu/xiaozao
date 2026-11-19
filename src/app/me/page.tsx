@@ -86,6 +86,7 @@ export default async function MePage() {
             <UnitsToggle initial={prefs?.units ?? "metric"} />
           </li>
           <MenuItem href="/me/privacy" title="数据与隐私" sub="记录开关、导出、删除、注销" />
+          <MenuItem href="/privacy" title="隐私政策" />
           {user.role === "admin" && <MenuItem href="/admin" title="管理后台" />}
         </ul>
       </Card>
