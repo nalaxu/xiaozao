@@ -45,5 +45,5 @@ export default async function HomePage() {
         : null,
     };
   }
-  return <Picker options={options()} account={account} />;
+  return <Picker options={options()} account={account} board3d={process.env.ENABLE_3D_BOARD === "1"} />;
 }

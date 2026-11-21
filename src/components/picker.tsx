@@ -8,6 +8,7 @@ import fridgeImage from "@/assets/fridge.webp";
 import { Button } from "@/components/form";
 import { ToggleChip } from "@/components/toggle-chip";
 import { ActionBar, Sheet } from "@/components/overlay";
+import { KitchenBoard, useBoard3d } from "@/components/board/kitchen-board";
 import { emptyDraft, loadDraft, resetTimeLabel, saveDraft, type Draft, type DraftItem } from "@/lib/draft";
 import { buildIngredientIndex } from "@/lib/ingredients";
 import type { Ingredient } from "@/lib/kb/schema";
@@ -35,7 +36,16 @@ const MAX_FLAVORS = 3;
 const MAX_PHOTOS = 3;
 const PHOTO_NOTICE_KEY = "xz_photo_notice";
 
-export function Picker({ options, account }: { options: PickerOptions; account: Account | null }) {
+export function Picker({
+  options,
+  account,
+  board3d = false,
+}: {
+  options: PickerOptions;
+  account: Account | null;
+  /** 服务端开关 ENABLE_3D_BOARD：默认显示 3D 砧板（试验，见 docs/xiaozao-3d-interaction-plan.md） */
+  board3d?: boolean;
+}) {
   const router = useRouter();
   const params = useSearchParams();
   const step = params.get("step") === "2" ? 2 : 1;
@@ -62,6 +72,7 @@ export function Picker({ options, account }: { options: PickerOptions; account: 
       account={account}
       draft={draft}
       update={update}
+      board3d={board3d}
       onNext={() => router.push("/?step=2", { scroll: true })}
     />
   ) : (
@@ -76,15 +87,18 @@ function IngredientStep({
   account,
   draft,
   update,
+  board3d,
   onNext,
 }: {
   options: PickerOptions;
   account: Account | null;
   draft: Draft;
   update: (fn: (d: Draft) => Draft) => void;
+  board3d: boolean;
   onNext: () => void;
 }) {
   const router = useRouter();
+  const board = useBoard3d(board3d);
   const index = useMemo(() => buildIngredientIndex(options.ingredients), [options.ingredients]);
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -325,10 +339,20 @@ function IngredientStep({
           </h2>
           {draft.items.length > 0 && (
             <span className="text-caption text-text-muted">
-              点一下切换主料 · 主料 {mainCount}/{MAX_MAIN}
+              {board.active ? "点食材设主料" : "点一下切换主料"} · 主料 {mainCount}/{MAX_MAIN}
             </span>
           )}
         </div>
+        {board.active && (
+          <KitchenBoard
+            items={draft.items}
+            maxMain={MAX_MAIN}
+            onToggleMain={toggleMain}
+            onRemove={remove}
+            onFail={board.fail}
+            onTurnOff={board.turnOff}
+          />
+        )}
         {draft.items.length > 0 ? (
           <ul className="mt-2.5 flex flex-wrap gap-2">
             {draft.items.map((i) => (
@@ -337,7 +361,7 @@ function IngredientStep({
               </li>
             ))}
           </ul>
-        ) : (
+        ) : board.active ? null : (
           <p className="mt-2 rounded-control border-[1.5px] border-dashed border-border-strong px-3 py-4 text-center text-small text-text-muted">
             砧板还空着。拍一下，或者从上面点几样。
           </p>
