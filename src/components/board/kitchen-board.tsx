@@ -1,12 +1,12 @@
 "use client";
 
-// 3D 砧板的外壳（docs/xiaozao-3d-interaction-plan.md 第 9.2、9.5、12.3 节）。本文件不引用 three.js：
+// 3D 工作台的外壳（docs/xiaozao-3d-interaction-plan.md 第 9.2、9.5、12.3 节）。本文件不引用 three.js：
 // 是否启用、WebGL 检测、加载占位、出错回退都在这里，场景本身按需加载。任何失败都只是不显示 3D，
 // 下方的 HTML 食材标签一直完整可用，选择数据不受影响。
 import dynamic from "next/dynamic";
 import { Component, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { Star, X } from "lucide-react";
-import { boardLayout } from "@/lib/board-layout";
+import { ArrowLeftRight, X } from "lucide-react";
+import { boardLayout, dropResult } from "@/lib/board-layout";
 import type { DraftItem } from "@/lib/draft";
 
 const BoardScene = dynamic(() => import("./board-scene"), { ssr: false });
@@ -79,20 +79,22 @@ class SceneBoundary extends Component<{ onError: () => void; children: ReactNode
 export function KitchenBoard({
   items,
   maxMain,
-  onToggleMain,
+  onPlace,
   onRemove,
   onFail,
   onTurnOff,
 }: {
   items: DraftItem[];
   maxMain: number;
-  onToggleMain: (name: string) => void;
+  /** 设为主料（上砧板）或配菜（进菜盆）；swapWith 为同时反向移动的另一样，用于砧板满时互换 */
+  onPlace: (name: string, main: boolean, swapWith?: string) => void;
   onRemove: (name: string) => void;
   onFail: () => void;
   onTurnOff: () => void;
 }) {
   const { slots, hidden } = useMemo(() => boardLayout(items), [items]);
   const [picked, setPicked] = useState<string | null>(null);
+  const [notice, setNotice] = useState("");
   const [ready, setReady] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const labels = useRef(new Map<string, HTMLElement>());
@@ -108,9 +110,21 @@ export function KitchenBoard({
   // 被删掉（包括从下方标签删掉）的食材不再保持选中
   const selected = picked && items.find((i) => i.name === picked);
   const mainCount = items.filter((i) => i.main).length;
+  const basinCount = slots.filter((s) => s.zone === "basin").length;
+
+  function drop(name: string, x: number, z: number) {
+    const r = dropResult(items, slots, name, x, z, maxMain);
+    if (r.type === "place") {
+      onPlace(r.name, r.main);
+      setNotice(r.main ? `${r.name}放上砧板，设为主料` : `${r.name}放进菜盆，改为配菜`);
+    } else if (r.type === "swap") {
+      onPlace(r.toMain, true, r.toSide);
+      setNotice(`${r.toMain}和${r.toSide}换了位置：${r.toMain}设为主料`);
+    }
+  }
 
   return (
-    <div className="relative mt-2.5 h-[196px] overflow-hidden rounded-[14px] bg-[color-mix(in_srgb,var(--kraft)_78%,#8a5a33)] lg:h-[230px]">
+    <div className="relative mt-2.5 h-[230px] overflow-hidden rounded-[14px] bg-[color-mix(in_srgb,var(--kraft)_78%,#8a5a33)] lg:h-[280px]">
       {/* 同尺寸占位：场景加载前不跳动 */}
       {!ready && <div className="absolute inset-x-6 inset-y-8 animate-pulse rounded-[12px] bg-[#c8955b]/45" aria-hidden />}
       <div className={`absolute inset-0 transition-opacity duration-300 ${ready ? "opacity-100" : "opacity-0"}`}>
@@ -119,6 +133,7 @@ export function KitchenBoard({
             slots={slots}
             selected={selected ? selected.name : null}
             onSelect={setPicked}
+            onDrop={drop}
             reducedMotion={reducedMotion}
             labels={labels.current}
             onReady={() => setReady(true)}
@@ -127,7 +142,7 @@ export function KitchenBoard({
         </SceneBoundary>
       </div>
 
-      {/* 名称标签：位置由场景每帧写入；主料除颜色外还有“主”字，不只靠颜色区分。读屏用下方的标签清单 */}
+      {/* 名称标签：位置由场景每帧写入。主料与配菜靠摆放位置（砧板 / 菜盆）和标签深浅区分。读屏用下方的标签清单 */}
       <div
         className={`pointer-events-none absolute inset-0 z-10 transition-opacity duration-300 ${ready ? "opacity-100" : "opacity-0"}`}
         aria-hidden
@@ -135,38 +150,62 @@ export function KitchenBoard({
         {slots.map((s) => (
           <span
             key={s.name}
+            // 菜盆里食材挤在一起，超过 3 样时只给点中的那样显示名字，免得标签把食材盖住
+            hidden={s.zone === "basin" && basinCount > 3 && !(selected && selected.name === s.name)}
             ref={(el) => {
               if (el) labels.current.set(s.name, el);
               else labels.current.delete(s.name);
             }}
             style={{ opacity: 0 }}
-            className={`absolute left-0 top-0 whitespace-nowrap rounded-full px-2 py-0.5 text-[12px] leading-[18px] shadow-sm ${
+            className={`absolute left-0 top-0 whitespace-nowrap rounded-full px-1.5 text-[11px] leading-[17px] shadow-sm ${
               s.main ? "bg-ink font-bold text-ink-contrast" : "bg-surface text-text"
             } ${selected && selected.name === s.name ? "ring-2 ring-primary" : ""}`}
           >
-            {s.main && <span className="mr-0.5 text-marker">主</span>}
             {s.name}
           </span>
         ))}
+        {/* 区域标题：拖到可放下的区域时高亮 */}
+        {(
+          [
+            ["board", "砧板 · 主料"],
+            ["basin", "菜盆 · 配菜和辅料"],
+          ] as const
+        ).map(([zone, text]) => (
+          <span
+            key={zone}
+            ref={(el) => {
+              if (el) labels.current.set(`zone:${zone}`, el);
+              else labels.current.delete(`zone:${zone}`);
+            }}
+            style={{ opacity: 0 }}
+            className="absolute left-0 top-0 whitespace-nowrap rounded-full bg-[#4a3018]/70 px-2 py-0.5 text-[11px] leading-[16px] text-[#fff8ee] transition-colors data-[active=1]:bg-primary data-[active=1]:font-bold"
+          >
+            {text}
+          </span>
+        ))}
       </div>
+      <p className="sr-only" aria-live="polite">
+        {notice}
+      </p>
 
       {items.length === 0 && (
         <p className="pointer-events-none absolute inset-x-0 top-1/2 z-20 -translate-y-1/2 text-center text-small font-bold text-[#4a3018]">
-          砧板还空着。拍一下，或者从上面点几样。
+          工作台还空着。拍一下，或者从上面点几样。
         </p>
       )}
-      {hidden > 0 && (
-        <span className="pointer-events-none absolute left-2.5 top-2.5 z-20 rounded-full bg-surface/90 px-2 py-0.5 text-caption text-text-muted">
-          另有 {hidden} 样，见下方清单
-        </span>
-      )}
-      <button
-        type="button"
-        onClick={onTurnOff}
-        className="absolute right-2 top-2 z-20 rounded-full bg-surface/85 px-2.5 py-1 text-caption text-text-muted active:bg-surface"
-      >
-        简洁
-      </button>
+      {/* 左上角是砧板后面的空台面（菜盆在右后方），放开关和溢出提示 */}
+      <div className="absolute left-2 top-2 z-20 flex items-center gap-1.5">
+        <button
+          type="button"
+          onClick={onTurnOff}
+          className="rounded-full bg-surface/85 px-2.5 py-1 text-caption text-text-muted active:bg-surface"
+        >
+          简洁
+        </button>
+        {hidden > 0 && (
+          <span className="pointer-events-none rounded-full bg-surface/85 px-2 py-1 text-caption text-text-muted">另有 {hidden} 样，见下方</span>
+        )}
+      </div>
 
       {selected && (
         <div
@@ -176,16 +215,16 @@ export function KitchenBoard({
         >
           <span className="min-w-0 flex-1 truncate font-bold">
             {selected.name}
-            <span className="ml-1.5 text-small font-normal text-text-muted">{selected.main ? "主料" : "手头还有"}</span>
+            <span className="ml-1.5 text-small font-normal text-text-muted">{selected.main ? "主料" : "配菜"}</span>
           </span>
           <button
             type="button"
-            onClick={() => onToggleMain(selected.name)}
+            onClick={() => onPlace(selected.name, !selected.main)}
             disabled={!selected.main && mainCount >= maxMain}
             className="inline-flex h-9 items-center gap-1 rounded-[10px] border border-border-strong px-2.5 text-small active:bg-surface-muted disabled:opacity-50"
           >
-            <Star size={14} aria-hidden />
-            {selected.main ? "改为手头还有" : mainCount >= maxMain ? `主料已满 ${maxMain} 样` : "设为主料"}
+            <ArrowLeftRight size={14} aria-hidden />
+            {selected.main ? "放进菜盆" : mainCount >= maxMain ? "砧板满了，拖上去换" : "放上砧板"}
           </button>
           <button
             type="button"

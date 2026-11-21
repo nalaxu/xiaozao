@@ -148,6 +148,20 @@ function IngredientStep({
     });
   }
 
+  /** 3D 工作台拖放：设为主料或配菜；swapWith 同时反向移动，用于主料已满时互换 */
+  function place(name: string, main: boolean, swapWith?: string) {
+    update((d) => {
+      const others = d.items.filter((i) => i.main && i.name !== name && i.name !== swapWith).length;
+      if (main && !swapWith && others >= MAX_MAIN) return d;
+      const items = d.items.map((i) => (i.name === name ? { ...i, main } : i.name === swapWith ? { ...i, main: !main } : i));
+      // 互换时连同顺序一起换，换上来的食材正好落在被换下那样的位置
+      const a = items.findIndex((i) => i.name === name);
+      const b = items.findIndex((i) => i.name === swapWith);
+      if (a >= 0 && b >= 0) [items[a], items[b]] = [items[b], items[a]];
+      return { ...d, items };
+    });
+  }
+
   const remove = (name: string) =>
     update((d) => {
       const gone = d.items.find((i) => i.name === name);
@@ -347,11 +361,12 @@ function IngredientStep({
       <section className="mt-4 rounded-[18px] bg-kraft p-3 pb-3.5" aria-labelledby="board-title">
         <div className="flex items-baseline justify-between gap-2 px-0.5">
           <h2 id="board-title" className="font-serif font-bold">
-            砧板上{draft.items.length > 0 && ` · ${draft.items.length} 样`}
+            {board.active ? "工作台" : "砧板上"}
+            {draft.items.length > 0 && ` · ${draft.items.length} 样`}
           </h2>
           {draft.items.length > 0 && (
             <span className="text-caption text-text-muted">
-              {board.active ? "点食材设主料" : "点一下切换主料"} · 主料 {mainCount}/{MAX_MAIN}
+              {board.active ? "拖上砧板设主料" : "点一下切换主料"} · 主料 {mainCount}/{MAX_MAIN}
             </span>
           )}
         </div>
@@ -359,7 +374,7 @@ function IngredientStep({
           <KitchenBoard
             items={draft.items}
             maxMain={MAX_MAIN}
-            onToggleMain={toggleMain}
+            onPlace={place}
             onRemove={remove}
             onFail={board.fail}
             onTurnOff={board.turnOff}
