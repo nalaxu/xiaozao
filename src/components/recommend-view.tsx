@@ -4,12 +4,13 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Check, ChevronLeft, ChevronRight, Clock, RotateCw, ShoppingBag } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight, Clock, Flame, RotateCw, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/form";
 import { DishImage } from "@/components/dish-image";
 import { DifficultyDots, Stamp } from "@/components/ui";
 import { loadDraft, resetTimeLabel, type Draft } from "@/lib/draft";
 import type { RecommendEvent, RecommendInput, RecommendedDish } from "@/lib/recommend-types";
+import { formatNutrient } from "@/lib/nutrition";
 import { useDishImages } from "@/lib/use-dish-images";
 import type { QuotaStatus } from "@/server/usage";
 
@@ -314,6 +315,16 @@ function DishCard({
           </span>
           {cuisine && !dish.imageUrl && <span className="text-text-muted">{cuisine.zh}</span>}
         </p>
+        {dish.nutrition && (
+          <p className="mt-1.5 flex items-center gap-1 text-small text-text-muted" aria-label="一人份营养估算">
+            <Flame size={15} aria-hidden />
+            <span className="tabular">
+              每人约 <b className="text-text">{formatNutrient("kcal", dish.nutrition.kcal)} kcal</b>
+              {" · "}蛋白质 {formatNutrient("protein_g", dish.nutrition.protein_g)}g · 脂肪{" "}
+              {formatNutrient("fat_g", dish.nutrition.fat_g)}g · 碳水 {formatNutrient("carbs_g", dish.nutrition.carbs_g)}g
+            </span>
+          </p>
+        )}
         <div className="mt-3 flex items-start gap-2 rounded-[10px] border-t-[1.5px] border-dashed border-border-strong bg-surface-muted px-3 py-2.5 text-small">
           {dish.toBuy.length === 0 ? (
             <>

@@ -28,7 +28,9 @@ import {
 import { VERDICT_LABELS, type Verdict } from "@/lib/preference-options";
 import { saveOffline, setOfflineFavorite, type OfflineTutorial } from "@/lib/offline";
 import { formatAmount, formatDuration, formatTemp, type UnitSystem } from "@/lib/units";
+import { parseIngredientNutrition } from "@/lib/nutrition";
 import { FollowupSheet, type Followup } from "./followup-sheet";
+import { NutritionPanel } from "./nutrition-panel";
 
 type DeepPartial<T> = T extends (infer U)[] ? DeepPartial<U>[] : T extends object ? { [K in keyof T]?: DeepPartial<T[K]> } : T;
 export type PartialContent = DeepPartial<TutorialContent>;
@@ -264,6 +266,10 @@ export function TutorialView(props: TutorialViewProps) {
             <p className="mt-4 animate-pulse text-small text-text-muted">{props.status ?? "正在写步骤…"}</p>
           )}
         </section>
+
+        {done && overview?.servings && content?.nutrition?.length ? (
+          <NutritionPanel items={parseIngredientNutrition(content.nutrition)} servings={overview.servings} />
+        ) : null}
 
         {done && content?.background && (
           <details className="group mt-6 border-b border-border">

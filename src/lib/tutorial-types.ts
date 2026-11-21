@@ -1,4 +1,5 @@
 // 教程内容结构（技术方案 7.4），前后端共用。模型按此结构输出，教程生成后不可变。
+import type { IngredientNutrition } from "./nutrition";
 
 export const UNITS = ["g", "kg", "ml", "l", "piece", "clove", "slice", "tbsp", "tsp", "pinch", "to_taste"] as const;
 export type Unit = (typeof UNITS)[number];
@@ -54,6 +55,8 @@ export interface TutorialContent {
   key_points: string[];
   background: string;
   safety_notes: string[];
+  /** 按每样食材实际用量估的营养（整道菜），页面汇总后按人数平分；旧教程没有 */
+  nutrition?: IngredientNutrition[];
 }
 
 /** 流式事件（NDJSON） */

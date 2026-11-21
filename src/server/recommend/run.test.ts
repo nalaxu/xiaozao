@@ -24,6 +24,7 @@ const dish = (over: Partial<RawDish>): RawDish => ({
   uses: ["土豆"],
   key_ingredients: ["土豆", "干辣椒", "醋"],
   to_buy: [],
+  nutrition: null,
   visual: "shredded potato",
   ...over,
 });

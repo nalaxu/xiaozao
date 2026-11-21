@@ -4,6 +4,7 @@ import { findRestricted, type Restrictions } from "@/lib/restrictions";
 import { getCuisine, getScene, kb } from "@/lib/kb";
 import { defaultServingsFor } from "@/lib/servings";
 import { HEATS, UNITS, type TutorialContent } from "@/lib/tutorial-types";
+import { NUTRIENTS, parseIngredientNutrition } from "@/lib/nutrition";
 import type { RecommendedDish } from "@/lib/recommend-types";
 import type { ModelRequest } from "../ai/types";
 import { profileLines, type CookingProfile } from "../preferences";
@@ -30,6 +31,7 @@ export const TUTORIAL_SYSTEM = `你是“小灶”的家常菜老师，为会做
 10. 只用用户说有的厨具；没提到的特殊厨具要给出普通厨具的替代做法。常备调料优先用用户已有的。
 11. 文风像会做饭的朋友，简短直接，不用感叹号。
 12. 给了“做饭经验”或“吃辣”时，按其中的要求调整步骤详略和辣度；食品安全和忌口的要求不受影响。
+13. nutrition 按 ingredients 里的实际用量逐项算整道菜的营养，每样食材一条，name_zh 与 ingredients 一致（可省的、“适量”的按常见用量算，香菜葱花这类点缀可以不列）。grams 是吃进去的可食部分重量：带骨肉去骨、虾去壳；1 tbsp 约 15 ml、1 tsp 约 5 ml，按食材密度换算成克。热量 kcal，蛋白质、脂肪、碳水、膳食纤维按克，钠按毫克，参照《中国食物成分表》或 USDA 的常见数值。炒菜的油按留在菜里的量算（通常是用量的七八成），油炸只算吸进去的油（约为食材重量的 5–15%），焯水、泡发后倒掉的水和料不算。高汤、酱料里的钠要算进去。
 
 食品安全（必须遵守，并在 safety_notes 中提示相关的条目）：
 - 禽肉中心温度至少 74°C、不能带粉红色；猪肉至少 63°C 并静置 3 分钟，绞肉 71°C；牛羊绞肉 71°C。
@@ -51,7 +53,18 @@ export function tutorialSchema() {
       type: "object",
       additionalProperties: false,
       // 属性顺序即生成顺序：key_points 放在 steps 前面，页面上“做之前看一眼”在步骤之前，流式时也先出来
-      required: ["overview", "ingredients", "substitutions", "equipment", "key_points", "steps", "background", "safety_notes"],
+      // nutrition 放在最后：不拖慢步骤的流式显示
+      required: [
+        "overview",
+        "ingredients",
+        "substitutions",
+        "equipment",
+        "key_points",
+        "steps",
+        "background",
+        "safety_notes",
+        "nutrition",
+      ],
       properties: {
         overview: {
           type: "object",
@@ -125,6 +138,19 @@ export function tutorialSchema() {
         },
         background: { type: "string" },
         safety_notes: { type: "array", items: { type: "string" } },
+        nutrition: {
+          type: "array",
+          items: {
+            type: "object",
+            additionalProperties: false,
+            required: ["name_zh", "grams", ...NUTRIENTS],
+            properties: {
+              name_zh: { type: "string" },
+              grams: { type: "number" },
+              ...Object.fromEntries(NUTRIENTS.map((k) => [k, { type: "number" }])),
+            },
+          },
+        },
       },
     },
   };
@@ -181,6 +207,11 @@ export const tutorialContentSchema = z.object({
   key_points: list(text(200), 5),
   background: text(600),
   safety_notes: list(text(200), 8),
+  // 只用于展示：不合理的单项跳过，整份教程不因营养数据失败
+  nutrition: z
+    .unknown()
+    .optional()
+    .transform((v) => parseIngredientNutrition(v).slice(0, 40)),
 }) satisfies z.ZodType<TutorialContent>;
 
 export interface TutorialParams {

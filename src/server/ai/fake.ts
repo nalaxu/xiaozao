@@ -66,6 +66,14 @@ function fakeRecommend(req: ModelRequest): string {
       uses: meta.main.slice(0, 2),
       key_ingredients: meta.main.slice(0, 2),
       to_buy: meta.scene === "clear-fridge" ? [] : [{ name: c.core_seasonings[0].zh, required: true }],
+      nutrition: {
+        kcal: 320 + d.difficulty * 90,
+        protein_g: 18 + d.difficulty * 4,
+        fat_g: 14 + d.difficulty * 5,
+        carbs_g: 20 + d.difficulty * 6,
+        fiber_g: 3,
+        sodium_mg: 900,
+      },
       visual: `${d.en}, home-style plating`,
     })),
   });
@@ -134,6 +142,17 @@ function fakeTutorial(req: ModelRequest): string {
     ],
     background: c.overview,
     safety_notes: ["禽肉中心温度至少 74°C，切开不能带粉红色。"],
+    // 整道菜的逐项营养，主料按人数放大
+    nutrition: [
+      ...main.map((name, i) => {
+        const [g, kcal, p, f, carbs, fiber, na] = i === 0 ? [150, 180, 30, 6, 0, 0, 100] : [60, 30, 1, 0.2, 6, 1.5, 5];
+        const n = servings;
+        return { name_zh: name, grams: g * n, kcal: kcal * n, protein_g: p * n, fat_g: f * n, carbs_g: carbs * n, fiber_g: fiber * n, sodium_mg: na * n };
+      }),
+      { name_zh: "蒜", grams: 9, kcal: 13, protein_g: 0.6, fat_g: 0, carbs_g: 3, fiber_g: 0.2, sodium_mg: 2 },
+      { name_zh: "食用油", grams: 10 * servings, kcal: 90 * servings, protein_g: 0, fat_g: 10 * servings, carbs_g: 0, fiber_g: 0, sodium_mg: 0 },
+      { name_zh: c.core_seasonings[0].zh, grams: 15, kcal: 10, protein_g: 1, fat_g: 0, carbs_g: 1.5, fiber_g: 0, sodium_mg: 850 },
+    ],
   });
 }
 

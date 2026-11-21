@@ -364,11 +364,22 @@ function IngredientStep({
             {board.active ? "工作台" : "砧板上"}
             {draft.items.length > 0 && ` · ${draft.items.length} 样`}
           </h2>
-          {draft.items.length > 0 && (
-            <span className="text-caption text-text-muted">
-              {board.active ? "拖上砧板设主料" : "点一下切换主料"} · 主料 {mainCount}/{MAX_MAIN}
-            </span>
-          )}
+          <div className="flex items-center gap-2">
+            {draft.items.length > 0 && (
+              <span className="text-caption text-text-muted">
+                {board.active ? "拖上砧板设主料" : "点一下切换主料"} · 主料 {mainCount}/{MAX_MAIN}
+              </span>
+            )}
+            {board.canTurnOn && (
+              <button
+                type="button"
+                onClick={board.turnOn}
+                className="shrink-0 rounded-full bg-surface/85 px-2.5 py-1 text-caption text-text-muted active:bg-surface"
+              >
+                3D
+              </button>
+            )}
+          </div>
         </div>
         {board.active && (
           <KitchenBoard

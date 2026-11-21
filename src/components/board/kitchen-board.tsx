@@ -39,25 +39,35 @@ function hasWebGL() {
 
 /**
  * 是否显示 3D 砧板。服务端开关 ENABLE_3D_BOARD=1 时默认开启；试用时可在网址加 ?board3d=1 / ?board3d=0
- * 单独为这台设备打开或关闭（记在 localStorage）。用户点“简洁”关闭后同样记住。
+ * 单独为这台设备打开或关闭（记在 localStorage）。用户点“简洁”关闭、点“3D”打开后同样记住。
  */
 export function useBoard3d(flag: boolean) {
   const [state, setState] = useState<"off" | "on" | "failed">("off");
+  // 能否切回 3D：浏览器支持 WebGL，且这台设备用得上（服务端已开启，或试用时打开过）
+  const [switchable, setSwitchable] = useState(false);
 
   useEffect(() => {
     const q = new URLSearchParams(window.location.search).get("board3d");
     if (q === "1" || q === "0") writePref(q === "1");
-    const want = readPref() ?? flag;
+    const pref = readPref();
     // 首次挂载时读取浏览器能力与偏好，服务端渲染时一律按关闭处理
-    if (want && hasWebGL()) setState("on");
+    const ok = hasWebGL();
+    setSwitchable(ok && (flag || pref !== null));
+    if ((pref ?? flag) && ok) setState("on");
   }, [flag]);
 
   return {
     active: state === "on",
+    /** 点过“简洁”后显示“3D”按钮切回；出过错（failed）的这次不再提供 */
+    canTurnOn: state === "off" && switchable,
     fail: () => setState("failed"),
     turnOff: () => {
       writePref(false);
       setState("off");
+    },
+    turnOn: () => {
+      writePref(true);
+      setState("on");
     },
   };
 }

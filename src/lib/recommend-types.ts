@@ -1,4 +1,5 @@
 // 推荐接口的请求与流式事件，前后端共用。
+import type { Nutrition } from "./nutrition";
 
 export interface RecommendInput {
   main: string[];
@@ -25,6 +26,8 @@ export interface RecommendedDish {
   difficulty: 1 | 2 | 3;
   uses: string[];
   toBuy: { name: string; required: boolean }[];
+  /** 一人份营养粗估（模型给的不合理时为 null；旧记录没有这个字段） */
+  nutrition?: Nutrition | null;
   imageUrl: string | null;
 }
 

@@ -165,6 +165,7 @@ export async function runRecommend(
       // 过敏原检查（checkDish）已用全文做过；展示时截短，带长备注的名字不撑破卡片
       uses: d.uses.map((u) => clipName(u)),
       toBuy: d.to_buy.map((t) => ({ ...t, name: clipName(t.name) })),
+      nutrition: d.nutrition,
       imageUrl: ref.imageUrl,
     };
     accepted.push(dish);

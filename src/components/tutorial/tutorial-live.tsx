@@ -121,7 +121,13 @@ export function TutorialLive(props: Props) {
                   const parsed = parsePartialJson<PartialContent>(text);
                   if (parsed) {
                     setContent(parsed);
-                    setStatus(parsed.steps?.length ? "正在写步骤…" : "正在列食材…");
+                    setStatus(
+                      parsed.nutrition !== undefined
+                        ? "正在算营养…"
+                        : parsed.steps?.length
+                          ? "正在写步骤…"
+                          : "正在列食材…",
+                    );
                   }
                 }, 80);
               }
