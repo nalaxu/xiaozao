@@ -2,6 +2,7 @@
 import { z } from "zod";
 import { findRestricted, type Restrictions } from "@/lib/restrictions";
 import { getCuisine, getScene, kb } from "@/lib/kb";
+import { defaultServingsFor } from "@/lib/servings";
 import { HEATS, UNITS, type TutorialContent } from "@/lib/tutorial-types";
 import type { RecommendedDish } from "@/lib/recommend-types";
 import type { ModelRequest } from "../ai/types";
@@ -13,17 +14,22 @@ export const TUTORIAL_TIMEOUT_MS = 120_000;
 export const TUTORIAL_SYSTEM = `你是“小灶”的家常菜老师，为会做饭、住在海外的华人写一份照着就能做成的菜谱。
 
 写法：
-1. 菜名、菜系与推荐时一致。份量按给定人数。
+1. 菜名、菜系与推荐时一致。份量按给定人数，直接写出这个人数下的实际用量（页面不会再按人数换算）。
 2. 食材分 main（主料）、aux（辅料、香料、配菜）、seasoning（调料）三组。每项写中文名和英文常用名。
 3. 用量一律用公制：固体用 g，液体用 ml，整个计数的用 piece / clove / slice，少量调料用 tbsp / tsp / pinch。只有“适量”时 amount 为 null、unit 为 to_taste。prep 写处理方式（切丝、室温软化），没有则 null。可以省略的标 optional: true。
-4. 海外不好买的食材写进 substitutions：替代品写海外超市能买到的，difference 说清味道或口感差在哪。
-5. 步骤每步只做一个动作，写明火力（heat，无关时为 null）、烤箱温度（oven_c，不用烤箱为 null）、需要计时的写 timer_seconds（否则 null）。
-6. 每一步都要有 cue：用看得到、闻得到、摸得到的判断标准（“炒到边缘微焦、油变红”），不要只写时间。
-7. 容易出错或有危险的地方写进 warning（热油溅、刀工），没有则 null。
-8. key_points 写 1–3 条这道菜最容易失败的地方。background 用两三句话讲这道菜或这种技法在该菜系里的位置。
-9. 只用用户说有的厨具；没提到的特殊厨具要给出普通厨具的替代做法。常备调料优先用用户已有的。
-10. 文风像会做饭的朋友，简短直接，不用感叹号。
-11. 给了“做饭经验”或“吃辣”时，按其中的要求调整步骤详略和辣度；食品安全和忌口的要求不受影响。
+4. 用量不要从 2 人份按人数线性放大，要按这个人数实际怎么做来定：
+   - 主料、主食大致按人数加，整个计数的取整（鸡蛋、蒜瓣不写小数）。
+   - 盐、酱油、糖、香料、辣椒等调料随锅里的总量增加，但明显慢于人数：人数翻倍时调料约为 1.5 倍；底油、爆香的葱姜蒜只要能铺满锅底、出香味就够，增加更少。调味宁少勿多，在最后一步提醒尝味补盐。
+   - 1 人份不要缩到不好操作的量（例如半个鸡蛋），可以说明剩下的怎么处理。
+   - 人数多时考虑家用锅的容量：炒菜一锅超过约 500 g 主料就分两批炒，炖煮加大锅、相应延长时间；步骤里写清楚分批和时间的变化。
+5. 海外不好买的食材写进 substitutions：替代品写海外超市能买到的，difference 说清味道或口感差在哪。
+6. 步骤每步只做一个动作，写明火力（heat，无关时为 null）、烤箱温度（oven_c，不用烤箱为 null）、需要计时的写 timer_seconds（否则 null）。
+7. 每一步都要有 cue：用看得到、闻得到、摸得到的判断标准（“炒到边缘微焦、油变红”），不要只写时间。
+8. 容易出错或有危险的地方写进 warning（热油溅、刀工），没有则 null。
+9. key_points 写 1–3 条这道菜最容易失败的地方，用户开火前会先看这几条，要具体可操作（“下锅前把水分擦干，不然油会炸”），不要空话。background 用两三句话讲这道菜或这种技法在该菜系里的位置。
+10. 只用用户说有的厨具；没提到的特殊厨具要给出普通厨具的替代做法。常备调料优先用用户已有的。
+11. 文风像会做饭的朋友，简短直接，不用感叹号。
+12. 给了“做饭经验”或“吃辣”时，按其中的要求调整步骤详略和辣度；食品安全和忌口的要求不受影响。
 
 食品安全（必须遵守，并在 safety_notes 中提示相关的条目）：
 - 禽肉中心温度至少 74°C、不能带粉红色；猪肉至少 63°C 并静置 3 分钟，绞肉 71°C；牛羊绞肉 71°C。
@@ -44,7 +50,8 @@ export function tutorialSchema() {
     schema: {
       type: "object",
       additionalProperties: false,
-      required: ["overview", "ingredients", "substitutions", "equipment", "steps", "key_points", "background", "safety_notes"],
+      // 属性顺序即生成顺序：key_points 放在 steps 前面，页面上“做之前看一眼”在步骤之前，流式时也先出来
+      required: ["overview", "ingredients", "substitutions", "equipment", "key_points", "steps", "background", "safety_notes"],
       properties: {
         overview: {
           type: "object",
@@ -99,6 +106,7 @@ export function tutorialSchema() {
           },
         },
         equipment: { type: "array", items: { type: "string" } },
+        key_points: { type: "array", items: { type: "string" } },
         steps: {
           type: "array",
           items: {
@@ -115,7 +123,6 @@ export function tutorialSchema() {
             },
           },
         },
-        key_points: { type: "array", items: { type: "string" } },
         background: { type: "string" },
         safety_notes: { type: "array", items: { type: "string" } },
       },
@@ -187,12 +194,9 @@ export interface TutorialParams {
   profile?: CookingProfile;
 }
 
-/** 默认份量：按平时几个人吃（没填为 2 人）；宴客至少 4 人；夜宵按 1 人，平时 1–2 人吃的按实际人数 */
+/** 用户没选人数时的默认份量：按平时几个人吃（没填为 2 人）；宴客至少 4 人；夜宵按 1 人，平时 1–2 人吃的按实际人数 */
 export function defaultServings(scene: string | null, household: number | null = null): number {
-  const c = scene ? getScene(scene)?.constraints : undefined;
-  if (c?.min_servings) return Math.max(c.min_servings, household ?? 0);
-  if (c?.max_servings) return household && household <= c.max_servings ? household : 1;
-  return household ?? 2;
+  return defaultServingsFor(scene ? getScene(scene)?.constraints : undefined, household);
 }
 
 /** 完整的菜系条目作为上下文（去掉与做法无关的字段） */

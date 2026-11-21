@@ -141,12 +141,13 @@ async function runCase(db: Db, c: Case, withTutorial: boolean): Promise<CaseResu
   const res: CaseResult = { id: c.id, input: c, candidates: [], calls: [], dishes: [], errors: [] };
   const keywords: RestrictionRule[] = buildRestrictions(c.avoid, c.allergens, kb.allergens, expand);
   const summary = summaryFor(c);
-  const params = { main: c.main, other: c.other, flavors: c.flavors, scene: c.scene, cuisine: c.cuisine ?? null };
+  const cuisines = c.cuisine ? [c.cuisine] : [];
+  const params = { main: c.main, other: c.other, flavors: c.flavors, scene: c.scene, cuisines, servings: null };
 
   // ─── 推荐 ───
   let seed = 7;
   const random = () => ((seed = (seed * 9301 + 49297) % 233280) / 233280);
-  res.candidates = pickCuisines({ main: c.main, flavors: c.flavors, cuisine: c.cuisine ?? null, random });
+  res.candidates = pickCuisines({ main: c.main, flavors: c.flavors, cuisines, random });
   const library = await libraryDishes(db, res.candidates, c.main);
   const context = buildContext({ candidates: res.candidates, scene: c.scene, libraryDishes: library });
   const req = recommendRequest({ params, candidates: res.candidates, context, summary, exclude: [], count: MAX_DISHES });

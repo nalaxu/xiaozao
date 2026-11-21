@@ -5,7 +5,10 @@ export interface RecommendInput {
   other: string[];
   flavors: string[];
   scene: string | null;
-  cuisine: string | null;
+  /** 用户选的菜系，可多选；空数组表示不限 */
+  cuisines: string[];
+  /** 几个人吃；null 表示按习惯和场景默认，具体用量由教程按人数决定 */
+  servings: number | null;
   /** 本次会话已展示过的菜名（换一批，F12） */
   exclude: string[];
 }

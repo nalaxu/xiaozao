@@ -33,13 +33,16 @@ export async function POST(req: NextRequest) {
   // 推荐时没排上的图，这里补一次
   if (await enqueueImage(db, dishId)) after(() => processImageJobs(db, { dishIds: [dishId] }));
 
-  const scene = (found.run.input as RecommendInput).scene ?? null;
+  const runInput = found.run.input as Partial<RecommendInput>;
+  const scene = runInput.scene ?? null;
+  // 首页第二步选的人数；旧的推荐记录没有，按习惯和场景默认
+  const servings = runInput.servings ?? null;
   const encoder = new TextEncoder();
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
       const emit = (e: TutorialEvent) => controller.enqueue(encoder.encode(`${JSON.stringify(e)}\n`));
       try {
-        await runTutorial(db, user, { runId, dish: found.dish, scene }, emit);
+        await runTutorial(db, user, { runId, dish: found.dish, scene, servings }, emit);
       } catch (e) {
         console.error("tutorial route failed", e);
         emit({ type: "error", code: "model", error: "这次没生成出来，请稍后再试", refunded: false });

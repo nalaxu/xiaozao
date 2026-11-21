@@ -157,6 +157,7 @@ export async function purgeCategory(db: Db, userId: string, key: PrivacyKey) {
           lastFlavors: [],
           lastScene: null,
           lastCuisine: null,
+          lastCuisines: [],
           skill: null,
           timeBudget: null,
           spice: null,
@@ -270,7 +271,7 @@ export async function exportData(db: Db, userId: string) {
           household: prefs.household,
           lastFlavors: prefs.lastFlavors,
           lastScene: prefs.lastScene,
-          lastCuisine: prefs.lastCuisine,
+          lastCuisines: prefs.lastCuisines,
         }
       : null,
     privacy: Object.fromEntries(PRIVACY_KEYS.map((k) => [k, privacy[k]])),

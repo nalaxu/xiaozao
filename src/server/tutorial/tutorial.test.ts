@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { eq } from "drizzle-orm";
-import { budget } from "@config/limits";
+import { budget, quota } from "@config/limits";
 import type { RecommendedDish } from "@/lib/recommend-types";
 import type { TutorialContent, TutorialEvent } from "@/lib/tutorial-types";
 import { setModelClientForTests } from "../ai/call";
@@ -165,25 +165,44 @@ describe("runTutorial", () => {
 });
 
 describe("askFollowup", () => {
-  it("answers up to 5 questions per tutorial and refunds failures", async () => {
+  it("answers up to the per-tutorial limit and refunds failures", async () => {
+    const limit = quota.followupsPerTutorial;
     const { client } = scripted([content()]);
     setModelClientForTests(client);
     await generate();
     const [t] = await db.select().from(tutorials);
 
-    const answers = Array.from({ length: 6 }, (_, i) => ({ answer: `回答 ${i}`, on_topic: true }));
+    const answers = Array.from({ length: limit + 1 }, (_, i) => ({ answer: `回答 ${i}`, on_topic: true }));
     const ask = scripted([new ModelError("boom", "error"), ...answers]);
     setModelClientForTests(ask.client);
 
     expect(await askFollowup(db, user.id, t.id, "失败的问题")).toMatchObject({ ok: false, code: "model" });
-    for (let i = 0; i < 5; i++) {
-      expect(await askFollowup(db, user.id, t.id, `问题 ${i}`)).toMatchObject({ ok: true, remaining: 4 - i });
+    for (let i = 0; i < limit; i++) {
+      expect(await askFollowup(db, user.id, t.id, `问题 ${i}`)).toMatchObject({ ok: true, remaining: limit - 1 - i });
     }
-    expect(await askFollowup(db, user.id, t.id, "第六个")).toMatchObject({ ok: false, code: "quota" });
-    expect(await db.select().from(followups).where(eq(followups.tutorialId, t.id))).toHaveLength(5);
+    expect(await askFollowup(db, user.id, t.id, "超出的")).toMatchObject({ ok: false, code: "quota" });
+    expect(await db.select().from(followups).where(eq(followups.tutorialId, t.id))).toHaveLength(limit);
     // 最近 3 轮作为上下文
-    expect(JSON.stringify(ask.calls.at(-1)!.user)).toContain("问题 3");
+    expect(JSON.stringify(ask.calls.at(-1)!.user)).toContain(`问题 ${limit - 2}`);
     expect(JSON.stringify(ask.calls.at(-1)!.user)).not.toContain("问题 0");
+  });
+
+  it("passes the current cooking step and photo to the model without storing the photo", async () => {
+    const { client } = scripted([content()]);
+    setModelClientForTests(client);
+    await generate();
+    const [t] = await db.select().from(tutorials);
+    const ask = scripted([{ answer: "颜色刚好，可以下一步", on_topic: true }]);
+    setModelClientForTests(ask.client);
+    const image = "data:image/jpeg;base64,AAAA";
+    expect(await askFollowup(db, user.id, t.id, "现在这样对吗", { step: 0, image })).toMatchObject({ ok: true });
+    const call = ask.calls[0];
+    expect(call.user.find((c) => c.type === "image")).toEqual({ type: "image", dataUrl: image });
+    const text = call.user.map((c) => (c.type === "text" ? c.text : "")).join("");
+    expect(text).toContain("正在做第 1 步");
+    const [row] = await db.select().from(followups).where(eq(followups.tutorialId, t.id));
+    expect(row).toMatchObject({ step: 0, withPhoto: true, question: "现在这样对吗" });
+    expect(JSON.stringify(row)).not.toContain("base64");
   });
 
   it("refuses other users' tutorials", async () => {
@@ -204,10 +223,20 @@ describe("cooking habits", () => {
     await generate();
     const text = calls[0].user.map((c) => (c.type === "text" ? c.text : "")).join("");
     expect(text).toContain("份量：4 人份");
+    expect(calls[0].system).toContain("不要从 2 人份按人数线性放大");
     expect(text).toContain("做饭经验：刚开始学做饭");
     expect(text).toContain("吃辣：不吃辣");
     const [t] = await db.select().from(tutorials);
     expect(t.params).toMatchObject({ servings: 4, profile: { skill: "beginner", household: 4 } });
+  });
+
+  it("uses the headcount picked on the taste step over the household default", async () => {
+    await db.insert(preferences).values({ userId: user.id, household: 4 });
+    const { client, calls } = scripted([content()]);
+    setModelClientForTests(client);
+    await runTutorial(db, user, { runId, dish, scene: null, servings: 1 }, () => {});
+    const text = calls[0].user.map((c) => (c.type === "text" ? c.text : "")).join("");
+    expect(text).toContain("份量：1 人份");
   });
 
   it("defaults servings from scene and household", () => {

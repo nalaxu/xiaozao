@@ -10,7 +10,8 @@ export const quota = {
   recommendPerDay: num("QUOTA_RECOMMEND", 3),
   tutorialPerDay: num("QUOTA_TUTORIAL", 3),
   recognizePerDay: num("QUOTA_RECOGNIZE", 3),
-  followupsPerTutorial: num("QUOTA_FOLLOWUP", 5),
+  // 烹饪模式里每一步都能问、能拍照问，5 次不够用（2026-11-20 由 5 调到 10）
+  followupsPerTutorial: num("QUOTA_FOLLOWUP", 10),
 };
 
 export const budget = {

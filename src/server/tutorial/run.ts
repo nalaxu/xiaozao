@@ -58,7 +58,7 @@ export async function existingTutorial(db: Db, userId: string, runId: string, di
 export async function runTutorial(
   db: Db,
   user: RunUser,
-  target: { runId: string; dish: RecommendedDish; scene: string | null },
+  target: { runId: string; dish: RecommendedDish; scene: string | null; servings?: number | null },
   emit: Emit,
   now = new Date(),
 ) {
@@ -78,7 +78,7 @@ export async function runTutorial(
   const keywords = restrictionKeywords(prefs);
   const profile = cookingProfile(prefs, privacy);
   const params: TutorialParams = {
-    servings: defaultServings(target.scene, profile.household),
+    servings: target.servings ?? defaultServings(target.scene, profile.household),
     units: prefs?.units ?? "metric",
     equipment: privacy.recordEquipment ? (prefs?.equipment ?? []) : [],
     pantry: privacy.recordPantry ? (prefs?.pantry ?? []) : [],

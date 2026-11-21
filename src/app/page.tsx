@@ -18,7 +18,12 @@ function options(): PickerOptions {
     ingredients: kb.ingredients.map(({ zh, aliases, en, category }) => ({ zh, aliases, en, category, pairs: [] })),
     common: COMMON.filter((n) => known.has(n)),
     flavors: kb.flavors.map(({ id, zh, tier, description }) => ({ id, zh, tier, description })),
-    scenes: kb.scenes.map(({ id, zh, guidance }) => ({ id, zh, guidance })),
+    scenes: kb.scenes.map(({ id, zh, guidance, constraints }) => ({
+      id,
+      zh,
+      guidance,
+      servings: { min_servings: constraints?.min_servings, max_servings: constraints?.max_servings },
+    })),
     cuisineGroups: (Object.keys(CUISINE_GROUP_LABELS) as (keyof typeof CUISINE_GROUP_LABELS)[]).map((g) => ({
       label: CUISINE_GROUP_LABELS[g],
       cuisines: kb.cuisines.filter((c) => c.group === g).map((c) => ({ id: c.id, zh: c.name.zh })),
@@ -41,8 +46,9 @@ export default async function HomePage() {
       quota,
       paused: spent >= budget.hardCapUsd,
       last: prefs
-        ? { flavors: prefs.lastFlavors, scene: prefs.lastScene, cuisine: prefs.lastCuisine }
+        ? { flavors: prefs.lastFlavors, scene: prefs.lastScene, cuisines: prefs.lastCuisines }
         : null,
+      household: prefs?.household ?? null,
     };
   }
   return <Picker options={options()} account={account} board3d={process.env.ENABLE_3D_BOARD === "1"} />;

@@ -123,6 +123,7 @@ describe("preferenceSummary", () => {
       lastFlavors: [],
       lastScene: null,
       lastCuisine: null,
+      lastCuisines: [],
       onboardedAt: null,
       updatedAt: new Date(),
       ...over,

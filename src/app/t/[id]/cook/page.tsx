@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { quota } from "@config/limits";
 import { notFound, redirect } from "next/navigation";
 import { CookMode } from "@/components/cook/cook-mode";
 import { toOfflineRecord } from "@/lib/offline";
@@ -28,6 +29,9 @@ export default async function CookPage({ params }: Props) {
       units={prefs?.units ?? t.units}
       exitHref={`/t/${t.id}`}
       ratingsRecorded={privacy.recordRatings}
+      followups={t.followups}
+      followupLimit={quota.followupsPerTutorial}
+      dishImage={t.dish.imageUrl}
       offlineRecord={toOfflineRecord({ ...t, cuisine: cuisineMeta(t.dish.cuisineId) }) ?? undefined}
     />
   );

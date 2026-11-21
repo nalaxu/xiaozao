@@ -1,15 +1,25 @@
 "use client";
 
-// 首页两步：① 食材（拍照 / 输入 / 常用）→ ② 口味（味型 · 场景 · 菜系）。设计文档 4.1–4.3。
+// 首页两步：① 食材（拍照 / 输入 / 常用）→ ② 口味（味型 · 场景 · 人数 · 菜系）。设计文档 4.1–4.3。
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Camera, Check, ChevronDown, ChevronLeft, ChevronRight, Flame, Plus, Search, X } from "lucide-react";
+import { Camera, Check, ChevronDown, ChevronLeft, ChevronRight, Flame, Minus, Plus, Search, Users, X } from "lucide-react";
 import fridgeImage from "@/assets/fridge.webp";
 import { Button } from "@/components/form";
 import { ToggleChip } from "@/components/toggle-chip";
 import { ActionBar, Sheet } from "@/components/overlay";
 import { KitchenBoard, useBoard3d } from "@/components/board/kitchen-board";
-import { emptyDraft, loadDraft, resetTimeLabel, saveDraft, type Draft, type DraftItem } from "@/lib/draft";
+import {
+  MAX_CUISINES,
+  MAX_SERVINGS,
+  emptyDraft,
+  loadDraft,
+  resetTimeLabel,
+  saveDraft,
+  type Draft,
+  type DraftItem,
+} from "@/lib/draft";
+import { defaultServingsFor, type ServingRule } from "@/lib/servings";
 import { buildIngredientIndex } from "@/lib/ingredients";
 import type { Ingredient } from "@/lib/kb/schema";
 import { shrinkPhoto } from "@/lib/photo";
@@ -19,7 +29,7 @@ export interface PickerOptions {
   ingredients: Ingredient[];
   common: string[];
   flavors: { id: string; zh: string; tier: "primary" | "more"; description: string }[];
-  scenes: { id: string; zh: string; guidance: string }[];
+  scenes: { id: string; zh: string; guidance: string; servings: ServingRule }[];
   cuisineGroups: { label: string; cuisines: { id: string; zh: string }[] }[];
 }
 
@@ -27,7 +37,9 @@ interface Account {
   quota: QuotaStatus;
   /** 全站当日预算已用完（PRD 6.3 达 $100） */
   paused?: boolean;
-  last: { flavors: string[]; scene: string | null; cuisine: string | null } | null;
+  last: { flavors: string[]; scene: string | null; cuisines: string[] } | null;
+  /** “做饭习惯”里平时几个人吃 */
+  household: number | null;
 }
 
 const MAX_MAIN = 5;
@@ -523,7 +535,21 @@ function TasteStep({
   const [cuisineOpen, setCuisineOpen] = useState(false);
   const flavors = options.flavors.filter((f) => f.tier === "primary" || showMore);
   const picked = draft.flavors.map((id) => options.flavors.find((f) => f.id === id)).filter((f) => f !== undefined);
-  const cuisineName = options.cuisineGroups.flatMap((g) => g.cuisines).find((c) => c.id === draft.cuisine)?.zh;
+  const allCuisines = options.cuisineGroups.flatMap((g) => g.cuisines);
+  const cuisineNames = draft.cuisines.map((id) => allCuisines.find((c) => c.id === id)?.zh).filter(Boolean);
+  const sceneRule = options.scenes.find((s) => s.id === draft.scene)?.servings;
+  const fallbackServings = defaultServingsFor(sceneRule, account?.household ?? null);
+  const servings = draft.servings ?? fallbackServings;
+  const setServings = (n: number) =>
+    update((d) => ({ ...d, servings: Math.min(MAX_SERVINGS, Math.max(1, n)) }));
+
+  function toggleCuisine(id: string) {
+    update((d) => {
+      if (d.cuisines.includes(id)) return { ...d, cuisines: d.cuisines.filter((c) => c !== id) };
+      if (d.cuisines.length >= MAX_CUISINES) return d;
+      return { ...d, cuisines: [...d.cuisines, id] };
+    });
+  }
 
   function toggleFlavor(id: string) {
     update((d) => {
@@ -533,7 +559,7 @@ function TasteStep({
     });
   }
 
-  const nothing = !draft.items.length && !draft.flavors.length && !draft.scene && !draft.cuisine;
+  const nothing = !draft.items.length && !draft.flavors.length && !draft.scene && !draft.cuisines.length;
   const quota = account?.quota;
   const left = quota ? (quota.unlimited ? null : quota.remaining.recommend) : null;
   const exhausted = left === 0;
@@ -637,19 +663,61 @@ function TasteStep({
         })}
       </div>
 
+      <div className="mt-7 flex items-baseline justify-between">
+        <h2 className="font-serif text-h2 font-bold">几个人吃</h2>
+        <span className="text-small text-text-muted">{draft.servings === null ? "按平时，可改" : "用量会按人数来定"}</span>
+      </div>
+      <div className="mt-2.5 flex items-center gap-2">
+        <div className="flex h-[52px] flex-1 items-center rounded-control border border-border bg-surface">
+          <button
+            type="button"
+            aria-label="少一个人"
+            disabled={servings <= 1}
+            onClick={() => setServings(servings - 1)}
+            className="flex h-full w-14 items-center justify-center disabled:opacity-30"
+          >
+            <Minus size={18} aria-hidden />
+          </button>
+          <span className="flex flex-1 items-center justify-center gap-1.5 text-[17px] font-bold" aria-live="polite">
+            <Users size={18} className="text-text-muted" aria-hidden />
+            <span className="tabular">{servings} 人</span>
+          </span>
+          <button
+            type="button"
+            aria-label="多一个人"
+            disabled={servings >= MAX_SERVINGS}
+            onClick={() => setServings(servings + 1)}
+            className="flex h-full w-14 items-center justify-center disabled:opacity-30"
+          >
+            <Plus size={18} aria-hidden />
+          </button>
+        </div>
+        {draft.servings !== null && draft.servings !== fallbackServings && (
+          <button
+            type="button"
+            onClick={() => update((d) => ({ ...d, servings: null }))}
+            className="h-[52px] shrink-0 px-2 text-small text-text-muted"
+          >
+            按平时
+          </button>
+        )}
+      </div>
+
       <button
         type="button"
         onClick={() => setCuisineOpen(true)}
         className="mt-6 flex h-[52px] w-full items-center gap-2.5 rounded-control border border-border bg-surface px-3.5 text-[15px] active:bg-surface-muted"
       >
-        <span className="font-bold">菜系</span>
-        <span className="flex gap-1" aria-hidden>
+        <span className="shrink-0 font-bold">菜系</span>
+        <span className="flex shrink-0 gap-1" aria-hidden>
           <span className="h-2 w-2 rounded-full bg-[var(--group-chinese)]" />
           <span className="h-2 w-2 rounded-full bg-[var(--group-east-southeast-asia)]" />
           <span className="h-2 w-2 rounded-full bg-[var(--group-south-asia-middle-east)]" />
           <span className="h-2 w-2 rounded-full bg-[var(--group-europe-americas)]" />
         </span>
-        <span className="flex-1 text-right text-text-muted">{cuisineName ?? "不限，可不选"}</span>
+        <span className={`min-w-0 flex-1 truncate text-right ${cuisineNames.length ? "text-text" : "text-text-muted"}`}>
+          {cuisineNames.length ? cuisineNames.join("、") : "不限，可多选"}
+        </span>
         <ChevronDown size={18} className="text-text-muted" aria-hidden />
       </button>
 
@@ -669,36 +737,37 @@ function TasteStep({
 
       {cuisineOpen && (
         <Sheet title="选菜系" onClose={() => setCuisineOpen(false)}>
+          <p className="-mt-2 mb-4 text-small text-text-muted">
+            可以多选，最多 {MAX_CUISINES} 个，推荐会在这几个菜系里挑 · 已选 {draft.cuisines.length}
+          </p>
           <div className="space-y-4">
-            <ToggleChip
-              on={!draft.cuisine}
-              onClick={() => {
-                update((d) => ({ ...d, cuisine: null }));
-                setCuisineOpen(false);
-              }}
-            >
+            <ToggleChip on={!draft.cuisines.length} onClick={() => update((d) => ({ ...d, cuisines: [] }))}>
               不限
             </ToggleChip>
             {options.cuisineGroups.map((g) => (
               <div key={g.label}>
                 <p className="mb-2 text-small text-text-muted">{g.label}</p>
                 <div className="flex flex-wrap gap-2">
-                  {g.cuisines.map((c) => (
-                    <ToggleChip
-                      key={c.id}
-                      on={draft.cuisine === c.id}
-                      onClick={() => {
-                        update((d) => ({ ...d, cuisine: c.id }));
-                        setCuisineOpen(false);
-                      }}
-                    >
-                      {c.zh}
-                    </ToggleChip>
-                  ))}
+                  {g.cuisines.map((c) => {
+                    const on = draft.cuisines.includes(c.id);
+                    return (
+                      <ToggleChip
+                        key={c.id}
+                        on={on}
+                        disabled={!on && draft.cuisines.length >= MAX_CUISINES}
+                        onClick={() => toggleCuisine(c.id)}
+                      >
+                        {c.zh}
+                      </ToggleChip>
+                    );
+                  })}
                 </div>
               </div>
             ))}
           </div>
+          <Button className="mt-6" onClick={() => setCuisineOpen(false)}>
+            {draft.cuisines.length ? `好了 · ${draft.cuisines.length} 个菜系` : "好了 · 不限菜系"}
+          </Button>
         </Sheet>
       )}
     </div>

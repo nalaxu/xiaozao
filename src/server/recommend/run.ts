@@ -48,7 +48,8 @@ export function cacheKey(parts: {
   other: string[];
   flavors: string[];
   scene: string | null;
-  cuisine: string | null;
+  cuisines: string[];
+  servings: number | null;
   summary: string;
   profile?: string[];
   exclude: string[];
@@ -60,7 +61,8 @@ export function cacheKey(parts: {
       sorted(parts.other),
       sorted(parts.flavors),
       parts.scene,
-      parts.cuisine,
+      sorted(parts.cuisines),
+      parts.servings,
       parts.summary,
       parts.profile ?? [],
       sorted(parts.exclude),
@@ -101,7 +103,7 @@ export async function runRecommend(
   const candidates = pickCuisines({
     main: input.main,
     flavors: input.flavors,
-    cuisine: input.cuisine,
+    cuisines: input.cuisines,
     recentCuisines: recent.cuisines,
   });
 
@@ -201,9 +203,9 @@ export async function runRecommend(
   let failure: unknown = null;
   try {
     await attempt(MAX_DISHES);
-    // 不足 3 道，或没指定菜系却都来自同一菜系：补一次，不另扣额度
+    // 不足 3 道，或候选不止一个菜系（没指定，或指定了多个）却都来自同一菜系：补一次，不另扣额度
     const cuisines = new Set(accepted.map((d) => d.cuisineId));
-    const needDiversity = !input.cuisine && candidates.length > 1 && accepted.length > 0 && cuisines.size < 2;
+    const needDiversity = candidates.length > 1 && accepted.length > 0 && cuisines.size < 2;
     if (accepted.length < MIN_DISHES || needDiversity) {
       const count = Math.max(1, MAX_DISHES - accepted.length);
       await attempt(count, needDiversity ? [...cuisines] : undefined);

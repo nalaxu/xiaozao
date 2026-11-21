@@ -111,7 +111,7 @@ function fakeTutorial(req: ModelRequest): string {
         group: "seasoning",
         name_zh: s.zh,
         name_en: s.en,
-        amount: [1, 2, 0.5][i],
+        amount: Math.round([1, 2, 0.5][i] * Math.sqrt(servings / 2) * 2) / 2,
         unit: ["tbsp", "tsp", "tsp"][i],
         prep: null,
         optional: false,
@@ -120,6 +120,7 @@ function fakeTutorial(req: ModelRequest): string {
     ],
     substitutions: c.overseas.slice(0, 2).map((o) => ({ for: o.item, substitute: o.substitute, difference: o.difference })),
     equipment: ["炒锅", "砧板"],
+    key_points: ["这是本地假模型生成的示例，只用来检查页面", "火候以判断标准为准，不要只看时间"],
     steps: [
       ...c.techniques.slice(0, 3).map((t, i) => ({
         action: `${t.name}：${t.key_points}`,
@@ -131,15 +132,18 @@ function fakeTutorial(req: ModelRequest): string {
       })),
       { action: "出锅装盘，撒上香菜。", heat: "off", oven_c: null, timer_seconds: null, cue: "趁热吃", warning: null },
     ],
-    key_points: ["这是本地假模型生成的示例，只用来检查页面", "火候以判断标准为准，不要只看时间"],
     background: c.overview,
     safety_notes: ["禽肉中心温度至少 74°C，切开不能带粉红色。"],
   });
 }
 
-function fakeFollowup(): string {
+function fakeFollowup(req: ModelRequest): string {
+  const photo = req.user.some((c) => c.type === "image");
   return JSON.stringify({
-    answer: "（本地假模型的示例回答）可以。没有的话用手头相近的调料代替，味道会淡一些，出锅前尝一下再补盐。",
+    answer: photo
+      ? "（本地假模型的示例回答）从照片看锅里颜色已经开始变深，边缘有点焦黄，火可以调小一档，再翻炒半分钟就能进行下一步。"
+      : "（本地假模型的示例回答）可以。没有的话用手头相近的调料代替，味道会淡一些，出锅前尝一下再补盐。",
+    on_topic: true,
   });
 }
 
@@ -153,7 +157,7 @@ export function fakeClient(): ModelClient {
           : req.feature === "tutorial"
             ? fakeTutorial(req)
             : req.feature === "followup"
-              ? fakeFollowup()
+              ? fakeFollowup(req)
               : fakeRecommend(req);
       await emit(text, onDelta);
       return { text, usage: ZERO_USAGE };

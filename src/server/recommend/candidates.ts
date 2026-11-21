@@ -7,7 +7,8 @@ export const MAX_CANDIDATES = 6;
 export interface CandidateInput {
   main: string[];
   flavors: string[];
-  cuisine: string | null;
+  /** 用户选定的菜系（可多选），选了就只在这些里面挑 */
+  cuisines: string[];
   /** 近期推荐过的菜系，什么都没选时往后排 */
   recentCuisines?: string[];
   random?: () => number;
@@ -20,7 +21,8 @@ function overlap(c: Cuisine, ingredients: string[]): number {
 }
 
 export function pickCuisines(input: CandidateInput): string[] {
-  if (input.cuisine && kb.cuisines.some((c) => c.id === input.cuisine)) return [input.cuisine];
+  const chosen = input.cuisines.filter((id) => kb.cuisines.some((c) => c.id === id));
+  if (chosen.length) return [...new Set(chosen)].slice(0, MAX_CANDIDATES);
   const random = input.random ?? Math.random;
 
   if (input.flavors.length) {

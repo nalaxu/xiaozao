@@ -212,6 +212,211 @@ body {
   animation: cook-alarm 0.8s step-end infinite;
 }
 
+/* 做好了的庆祝动画：光芒、闪光圈、成品徽章、火花、三颗星、标题。时间轴约 2 秒，点一下跳到结尾 */
+.cel-root {
+  --gold: #f6d58a;
+  --gold-deep: #e0a43c;
+  --ember: #ff8a4c;
+}
+.cel-backdrop {
+  background:
+    radial-gradient(circle at 50% 30%, rgba(255, 186, 92, 0.28), transparent 55%),
+    radial-gradient(circle at 50% 30%, rgba(255, 138, 76, 0.18), transparent 75%);
+  animation: cel-fade 600ms ease-out both;
+}
+.cel-rays {
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  width: 220vmax;
+  height: 220vmax;
+  margin: -110vmax 0 0 -110vmax;
+  background: repeating-conic-gradient(from 0deg, rgba(246, 213, 138, 0.2) 0deg 5deg, transparent 5deg 15deg);
+  -webkit-mask-image: radial-gradient(circle, #000 0%, rgba(0, 0, 0, 0.6) 12%, transparent 30%);
+  mask-image: radial-gradient(circle, #000 0%, rgba(0, 0, 0, 0.6) 12%, transparent 30%);
+  animation:
+    cel-fade 900ms 250ms ease-out both,
+    cel-spin 28s linear infinite;
+}
+.cel-flash {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 180px;
+  height: 180px;
+  margin: -90px 0 0 -90px;
+  border-radius: 9999px;
+  border: 3px solid var(--gold);
+  box-shadow: 0 0 40px 10px rgba(246, 213, 138, 0.55);
+  animation: cel-flash 900ms 180ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+.cel-medal {
+  position: relative;
+  width: 168px;
+  height: 168px;
+  border-radius: 9999px;
+  padding: 5px;
+  background: conic-gradient(from 210deg, var(--gold), #fff3cf, var(--gold-deep), var(--gold), #fff3cf, var(--gold));
+  box-shadow:
+    0 0 0 6px rgba(246, 213, 138, 0.16),
+    0 0 48px 6px rgba(255, 186, 92, 0.45);
+  animation:
+    cel-pop 750ms 150ms cubic-bezier(0.18, 1.4, 0.4, 1) both,
+    cel-glow 2.6s 1.2s ease-in-out infinite;
+}
+.cel-medal-inner {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 50% 40%, #4a3020, #221a14);
+}
+/* 徽章上扫过的一道高光 */
+.cel-medal-inner::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background: linear-gradient(115deg, transparent 40%, rgba(255, 245, 220, 0.55) 50%, transparent 60%);
+  transform: translateX(-120%);
+  animation: cel-shine 1100ms 750ms ease-in-out both;
+}
+.cel-spark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--s, 10px);
+  height: var(--s, 10px);
+  margin: calc(var(--s, 10px) / -2) 0 0 calc(var(--s, 10px) / -2);
+  background: var(--c, var(--gold));
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  opacity: 0;
+  animation: cel-spark 1600ms var(--d, 300ms) cubic-bezier(0.15, 0.8, 0.35, 1) both;
+}
+.cel-star {
+  color: var(--gold);
+  filter: drop-shadow(0 0 8px rgba(246, 213, 138, 0.7));
+  animation: cel-star 520ms var(--d, 900ms) cubic-bezier(0.2, 1.6, 0.4, 1) both;
+}
+.cel-title {
+  animation: cel-rise 600ms 1150ms ease-out both;
+}
+.cel-line {
+  height: 2px;
+  width: 56px;
+  background: linear-gradient(90deg, transparent, var(--gold));
+  animation: cel-line 600ms 1250ms ease-out both;
+}
+.cel-line-r {
+  background: linear-gradient(270deg, transparent, var(--gold));
+}
+.cel-sub {
+  animation: cel-rise 600ms 1400ms ease-out both;
+}
+.cel-after {
+  animation: cel-rise 600ms 1800ms ease-out both;
+}
+/* 点一下跳到结尾 */
+.cel-skip .cel-backdrop,
+.cel-skip .cel-flash,
+.cel-skip .cel-medal,
+.cel-skip .cel-medal-inner::after,
+.cel-skip .cel-spark,
+.cel-skip .cel-star,
+.cel-skip .cel-title,
+.cel-skip .cel-line,
+.cel-skip .cel-sub,
+.cel-skip .cel-after {
+  animation-delay: 0ms !important;
+  animation-duration: 1ms !important;
+}
+
+@keyframes cel-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes cel-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes cel-flash {
+  from {
+    opacity: 1;
+    transform: scale(0.3);
+  }
+  to {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+}
+@keyframes cel-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.2) rotate(-25deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes cel-glow {
+  50% {
+    box-shadow:
+      0 0 0 10px rgba(246, 213, 138, 0.1),
+      0 0 64px 12px rgba(255, 186, 92, 0.55);
+  }
+}
+@keyframes cel-shine {
+  to {
+    transform: translateX(120%);
+  }
+}
+@keyframes cel-spark {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.2) rotate(0deg);
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--x), var(--y)) scale(1) rotate(180deg);
+  }
+}
+@keyframes cel-star {
+  from {
+    opacity: 0;
+    transform: scale(0) rotate(-90deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes cel-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes cel-line {
+  from {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @layer components {
 /* 判断标准：像在笔记本上用荧光笔划重点 */
 .marker {
@@ -251,5 +456,13 @@ body {
   *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+  /* 无限循环的动画缩到 0.01ms 会闪，直接停掉 */
+  .cel-rays,
+  .cel-medal {
+    animation: none !important;
+  }
+  .cel-spark {
+    display: none;
   }
 }

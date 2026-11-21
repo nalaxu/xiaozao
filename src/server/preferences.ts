@@ -148,10 +148,10 @@ export async function saveLastChoices(
   db: Db,
   userId: string,
   privacy: Pick<Privacy, "recordTaste">,
-  choice: { flavors: string[]; scene: string | null; cuisine: string | null },
+  choice: { flavors: string[]; scene: string | null; cuisines: string[] },
 ) {
   if (!privacy.recordTaste) return;
-  const values = { lastFlavors: choice.flavors, lastScene: choice.scene, lastCuisine: choice.cuisine, updatedAt: new Date() };
+  const values = { lastFlavors: choice.flavors, lastScene: choice.scene, lastCuisines: choice.cuisines, updatedAt: new Date() };
   await db
     .insert(preferences)
     .values({ userId, ...values })

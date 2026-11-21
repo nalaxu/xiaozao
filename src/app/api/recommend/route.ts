@@ -1,6 +1,7 @@
 import { after, type NextRequest } from "next/server";
 import { z } from "zod";
 import { input as limits } from "@config/limits";
+import { MAX_CUISINES, MAX_SERVINGS } from "@/lib/draft";
 import { kb } from "@/lib/kb";
 import type { RecommendEvent } from "@/lib/recommend-types";
 import { jsonError, readJson } from "@/server/http";
@@ -22,10 +23,17 @@ const body = z
     other: z.array(name).max(limits.maxIngredients),
     flavors: z.array(z.enum(flavorIds)).max(limits.maxFlavors),
     scene: z.enum(sceneIds).nullable(),
-    cuisine: z.enum(cuisineIds).nullable(),
+    cuisines: z.array(z.enum(cuisineIds)).max(MAX_CUISINES).default([]),
+    /** 旧版前端只传单选的 cuisine */
+    cuisine: z.enum(cuisineIds).nullable().optional(),
+    servings: z.number().int().min(1).max(MAX_SERVINGS).nullable().default(null),
     exclude: z.array(z.string().max(40)).max(60).default([]),
   })
-  .refine((b) => b.main.length + b.other.length <= limits.maxIngredients);
+  .refine((b) => b.main.length + b.other.length <= limits.maxIngredients)
+  .transform(({ cuisine, cuisines, ...rest }) => ({
+    ...rest,
+    cuisines: [...new Set(cuisines.length ? cuisines : cuisine ? [cuisine] : [])],
+  }));
 
 /** 以 NDJSON 流式返回 RecommendEvent，每行一个事件 */
 export async function POST(req: NextRequest) {

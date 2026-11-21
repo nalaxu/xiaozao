@@ -142,7 +142,9 @@ export const preferences = pgTable("preferences", {
   units: unitSystem("units").notNull().default("metric"),
   lastFlavors: text("last_flavors").array().notNull().default(sql`'{}'`),
   lastScene: text("last_scene"),
+  /** 已不再写入，由 lastCuisines 取代（0004 迁移时已复制过去），保留列以免丢旧数据 */
   lastCuisine: text("last_cuisine"),
+  lastCuisines: text("last_cuisines").array().notNull().default(sql`'{}'`),
   // 做饭习惯：欢迎页第一步问，可在“我的 → 做饭习惯”修改；取值见 lib/preference-options
   skill: text("skill"),
   timeBudget: smallint("time_budget"),
@@ -292,6 +294,10 @@ export const followups = pgTable(
       .references(() => users.id, { onDelete: "cascade" }),
     question: text("question").notNull(),
     answer: text("answer"),
+    /** 烹饪模式里在第几步问的（从 0 开始）；在教程页问的为 null */
+    step: smallint("step"),
+    /** 带了照片（照片本身不保存） */
+    withPhoto: boolean("with_photo").notNull().default(false),
     createdAt: createdAt(),
   },
   (t) => [index("followups_tutorial_idx").on(t.tutorialId)],

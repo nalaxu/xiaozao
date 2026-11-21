@@ -50,7 +50,8 @@ const input: RecommendInput = {
   other: [],
   flavors: ["sour-spicy"],
   scene: null,
-  cuisine: null,
+  cuisines: [],
+  servings: null,
   exclude: [],
 };
 
@@ -207,18 +208,24 @@ describe("checkDish", () => {
 
 describe("pickCuisines", () => {
   it("uses only the chosen cuisine when one is specified", () => {
-    expect(pickCuisines({ main: [], flavors: ["sour-spicy"], cuisine: "thai" })).toEqual(["thai"]);
+    expect(pickCuisines({ main: [], flavors: ["sour-spicy"], cuisines: ["thai"] })).toEqual(["thai"]);
+  });
+  it("uses exactly the chosen cuisines when several are specified", () => {
+    expect(pickCuisines({ main: [], flavors: ["sour-spicy"], cuisines: ["thai", "sichuan", "nope"] })).toEqual([
+      "thai",
+      "sichuan",
+    ]);
   });
   it("ranks cuisines by flavor matches and keeps at least two", () => {
-    const sourSpicy = pickCuisines({ main: [], flavors: ["sour-spicy"], cuisine: null });
+    const sourSpicy = pickCuisines({ main: [], flavors: ["sour-spicy"], cuisines: [] });
     expect(sourSpicy[0]).toBe("hunan");
     expect(sourSpicy.length).toBeLessThanOrEqual(6);
-    const numbing = pickCuisines({ main: [], flavors: ["numbing-spicy"], cuisine: null });
+    const numbing = pickCuisines({ main: [], flavors: ["numbing-spicy"], cuisines: [] });
     expect(numbing[0]).toBe("sichuan");
     expect(numbing.length).toBeGreaterThanOrEqual(2);
   });
   it("picks six cuisines when nothing is chosen", () => {
-    expect(pickCuisines({ main: [], flavors: [], cuisine: null, random: () => 0.5 })).toHaveLength(6);
+    expect(pickCuisines({ main: [], flavors: [], cuisines: [], random: () => 0.5 })).toHaveLength(6);
   });
 });
 

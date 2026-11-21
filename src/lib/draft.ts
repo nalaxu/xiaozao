@@ -17,23 +17,37 @@ export interface Draft {
   photoStats?: { recognized: number; removed: number };
   flavors: string[];
   scene: string | null;
-  cuisine: string | null;
+  /** 可多选；空数组表示不限 */
+  cuisines: string[];
+  /** 几个人吃；null 表示按“做饭习惯”里的人数和场景默认 */
+  servings: number | null;
 }
+
+export const MAX_CUISINES = 5;
+export const MAX_SERVINGS = 12;
 
 const KEY = "xz_draft";
 
-export const emptyDraft = (): Draft => ({ items: [], flavors: [], scene: null, cuisine: null });
+export const emptyDraft = (): Draft => ({ items: [], flavors: [], scene: null, cuisines: [], servings: null });
 
 export function loadDraft(): Draft | null {
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return null;
-    const d = JSON.parse(raw) as Partial<Draft>;
+    const d = JSON.parse(raw) as Partial<Draft> & { cuisine?: unknown };
+    // 旧草稿只有单选的 cuisine
+    const cuisines = Array.isArray(d.cuisines)
+      ? d.cuisines.filter((c): c is string => typeof c === "string")
+      : typeof d.cuisine === "string"
+        ? [d.cuisine]
+        : [];
+    const servings = Number.isInteger(d.servings) && d.servings! >= 1 && d.servings! <= MAX_SERVINGS ? d.servings! : null;
     return {
       items: Array.isArray(d.items) ? d.items.filter((i) => typeof i?.name === "string").slice(0, 30) : [],
       flavors: Array.isArray(d.flavors) ? d.flavors.slice(0, 3) : [],
       scene: typeof d.scene === "string" ? d.scene : null,
-      cuisine: typeof d.cuisine === "string" ? d.cuisine : null,
+      cuisines: cuisines.slice(0, MAX_CUISINES),
+      servings,
     };
   } catch {
     return null;

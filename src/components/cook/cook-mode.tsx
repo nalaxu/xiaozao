@@ -4,11 +4,24 @@
 // 进入后不依赖网络：内容由页面一次性传入，记录事件失败时存在本机稍后补发。
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, type TouchEvent } from "react";
-import { AlertTriangle, ChevronLeft, ChevronRight, ListChecks, Thermometer, Timer, Type, X } from "lucide-react";
+import {
+  AlertTriangle,
+  Camera,
+  ChevronLeft,
+  ChevronRight,
+  ListChecks,
+  MessageCircleQuestion,
+  Thermometer,
+  Timer,
+  Type,
+  X,
+} from "lucide-react";
 import { Sheet } from "@/components/overlay";
 import { HeatBadge } from "@/components/ui";
 import { CookDone } from "./cook-done";
 import { Ingredients } from "@/components/tutorial/tutorial-view";
+import { FollowupSheet, type Followup } from "@/components/tutorial/followup-sheet";
+import { shrinkPhoto } from "@/lib/photo";
 import { flushCookEvents, recordCookEvent } from "@/lib/cook-events";
 import { saveOffline, type OfflineTutorial } from "@/lib/offline";
 import { HEAT_LABELS, type TutorialContent, type TutorialStep } from "@/lib/tutorial-types";
@@ -24,8 +37,13 @@ interface Props {
   offlineRecord?: Omit<OfflineTutorial, "openedAt">;
   /** 评价记录开关；离线时不知道，按开着处理（关着的话服务端不会保存） */
   ratingsRecorded?: boolean;
-  /** 示例教程：未登录也能用，不记录开始/完成，也不评价 */
+  /** 示例教程：未登录也能用，不记录开始/完成，也不评价，也不能问 AI */
   sample?: boolean;
+  /** 已有的追问；传入 followupLimit 才能在每一步问 AI（离线外壳里不传） */
+  followups?: Followup[];
+  followupLimit?: number;
+  /** 成品图，做好了的动画里用 */
+  dishImage?: string | null;
 }
 
 const BIG_KEY = "xz_cook_big";
@@ -38,19 +56,28 @@ export function CookMode({
   offlineRecord,
   ratingsRecorded = true,
   sample = false,
+  followups: initialFollowups = [],
+  followupLimit,
+  dishImage = null,
 }: Props) {
   const steps = content.steps;
   const total = steps.length;
   const stepKey = `xz_cook_step_${tutorialId}`;
+  const startKey = `xz_cook_start_${tutorialId}`;
 
   const [index, setIndex] = useState(0);
   const [dir, setDir] = useState<"next" | "prev">("next");
-  const [servings, setServings] = useState(content.overview.servings);
   const [units, setUnits] = useState<UnitSystem>(defaultUnits);
   const [big, setBig] = useState(false);
   const [sheet, setSheet] = useState(false);
   const [finished, setFinished] = useState(false);
+  const [minutes, setMinutes] = useState<number | null>(null);
   const [wakeNote, setWakeNote] = useState(false);
+  const canAsk = !sample && followupLimit !== undefined;
+  const [chat, setChat] = useState<{ photo: string | null } | null>(null);
+  const [followups, setFollowups] = useState<Followup[]>(initialFollowups);
+  const [photoBusy, setPhotoBusy] = useState(false);
+  const photoRef = useRef<HTMLInputElement>(null);
   const [timers, setTimers] = useState<CookTimer[]>([]);
   const [now, setNow] = useState(() => Date.now());
   const fired = useRef(new Set<string>());
@@ -66,9 +93,9 @@ export function CookMode({
       const u = localStorage.getItem("xz_units");
       if (u === "metric" || u === "us") setUnits(u);
       setBig(localStorage.getItem(BIG_KEY) === "1");
+      // 记下开始做的时间，做好了时显示用时（刷新页面不重置）
+      if (!sessionStorage.getItem(startKey)) sessionStorage.setItem(startKey, String(Date.now()));
     } catch {}
-    const s = Number(new URLSearchParams(window.location.search).get("servings"));
-    if (Number.isInteger(s) && s >= 1 && s <= 12) setServings(s);
     setTimers(loadTimers(tutorialId));
     for (const t of loadTimers(tutorialId)) if (t.endsAt <= Date.now() - 60_000) fired.current.add(t.id);
 
@@ -173,14 +200,36 @@ export function CookMode({
   const cancelTimer = (id: string) => updateTimers((list) => list.filter((t) => t.id !== id));
   const dismissRinging = () => updateTimers((list) => list.filter((t) => t.endsAt > Date.now()));
 
+  // 步骤页上直接拍照：缩图后打开对话层，照片已附上
+  const onPhoto = async (files: FileList | null) => {
+    const file = files?.[0];
+    if (photoRef.current) photoRef.current.value = "";
+    if (!file) return;
+    setPhotoBusy(true);
+    try {
+      setChat({ photo: await shrinkPhoto(file) });
+    } catch {
+      setChat({ photo: null });
+    } finally {
+      setPhotoBusy(false);
+    }
+  };
+
   const go = useCallback(
     (delta: 1 | -1) => {
       if (delta === 1 && index === total - 1) {
+        let took: number | null = null;
+        try {
+          const started = Number(sessionStorage.getItem(startKey));
+          const m = started ? Math.round((Date.now() - started) / 60_000) : 0;
+          // 中途离开很久的不算
+          took = m >= 1 && m <= 240 ? m : null;
+          sessionStorage.removeItem(stepKey);
+          sessionStorage.removeItem(startKey);
+        } catch {}
+        setMinutes(took);
         setFinished(true);
         if (!sample) void recordCookEvent(tutorialId, "complete");
-        try {
-          sessionStorage.removeItem(stepKey);
-        } catch {}
         return;
       }
       const next = Math.min(total - 1, Math.max(0, index + delta));
@@ -188,13 +237,13 @@ export function CookMode({
       setDir(delta === 1 ? "next" : "prev");
       setIndex(next);
     },
-    [index, total, tutorialId, stepKey, sample],
+    [index, total, tutorialId, stepKey, startKey, sample],
   );
 
   // 键盘：← → 翻页，空格下一步（设计文档 5）
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (sheet || finished || ringing.length) return;
+      if (sheet || chat || finished || ringing.length) return;
       if (e.target instanceof HTMLElement && e.target.closest("button, a, input, textarea")) {
         if (e.key === " ") return;
       }
@@ -208,7 +257,7 @@ export function CookMode({
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [go, sheet, finished, ringing.length]);
+  }, [go, sheet, chat, finished, ringing.length]);
 
   const onTouchStart = (e: TouchEvent) => {
     touch.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
@@ -233,7 +282,6 @@ export function CookMode({
 
   const step = steps[index];
   const stepTimers = timers.filter((t) => t.step === index && t.endsAt > now);
-  const factor = servings / (content.overview.servings || 1);
 
   return (
     <div className="cook-contrast fixed inset-0 z-30 flex flex-col bg-bg text-text">
@@ -243,8 +291,8 @@ export function CookMode({
           <Link href={exitHref} aria-label="退出烹饪模式" className="flex h-11 w-11 items-center justify-center">
             <X size={24} aria-hidden />
           </Link>
-          <p className="tabular flex-1 text-center font-bold" aria-live="polite">
-            {finished ? "做好了" : `第 ${index + 1} 步 / 共 ${total} 步`}
+          <p className="tabular min-w-0 flex-1 whitespace-nowrap text-center font-bold" aria-live="polite">
+            {finished ? "做好了" : `第 ${index + 1} / ${total} 步`}
           </p>
           <button
             type="button"
@@ -255,6 +303,16 @@ export function CookMode({
           >
             <Type size={22} aria-hidden />
           </button>
+          {canAsk && !finished && (
+            <button
+              type="button"
+              onClick={() => setChat({ photo: null })}
+              aria-label="问问 AI"
+              className="flex h-11 w-11 items-center justify-center"
+            >
+              <MessageCircleQuestion size={22} aria-hidden />
+            </button>
+          )}
           <button
             type="button"
             onClick={() => setSheet(true)}
@@ -285,6 +343,8 @@ export function CookMode({
           <CookDone
             tutorialId={tutorialId}
             dishName={content.overview.name_zh}
+            dishImage={dishImage ?? offlineRecord?.dish.imageUrl ?? null}
+            stats={{ steps: total, minutes }}
             exitHref={exitHref}
             ratingsRecorded={ratingsRecorded}
             sample={sample}
@@ -354,6 +414,30 @@ export function CookMode({
                   )}
                 </div>
               ) : null}
+              {canAsk && (
+                <div className="mt-8 rounded-card border border-dashed border-border-strong p-3">
+                  <p className="px-1 text-small text-text-muted">拿不准现在锅里的状态？</p>
+                  <div className="mt-2 grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => photoRef.current?.click()}
+                      disabled={photoBusy}
+                      className="flex h-14 items-center justify-center gap-2 rounded-control bg-surface-muted font-bold active:brightness-95"
+                    >
+                      <Camera size={20} className={photoBusy ? "animate-pulse" : ""} aria-hidden />
+                      拍一下锅里
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setChat({ photo: null })}
+                      className="flex h-14 items-center justify-center gap-2 rounded-control bg-surface-muted font-bold active:brightness-95"
+                    >
+                      <MessageCircleQuestion size={20} aria-hidden />
+                      问一句
+                    </button>
+                  </div>
+                </div>
+              )}
             </article>
           </div>
         )}
@@ -424,9 +508,32 @@ export function CookMode({
         </nav>
       )}
 
+      {canAsk && (
+        <input
+          ref={photoRef}
+          type="file"
+          accept="image/*"
+          capture="environment"
+          hidden
+          onChange={(e) => onPhoto(e.target.files)}
+        />
+      )}
+
+      {chat && canAsk && (
+        <FollowupSheet
+          tutorialId={tutorialId}
+          initial={followups}
+          limit={followupLimit!}
+          onChange={setFollowups}
+          onClose={() => setChat(null)}
+          step={{ index, action: step.action }}
+          initialPhoto={chat.photo}
+        />
+      )}
+
       {sheet && (
-        <Sheet title={`食材 · ${servings} 人份`} onClose={() => setSheet(false)}>
-          <Ingredients content={content} factor={factor} units={units} />
+        <Sheet title={`食材 · ${content.overview.servings} 人份`} onClose={() => setSheet(false)}>
+          <Ingredients content={content} factor={1} units={units} />
         </Sheet>
       )}
 

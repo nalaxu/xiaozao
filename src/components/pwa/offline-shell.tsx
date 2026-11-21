@@ -40,7 +40,9 @@ export function OfflineShell() {
   if (state.kind === "tutorial") {
     const { t } = state;
     if (state.cook) {
-      return <CookMode tutorialId={t.id} content={t.content} units={t.units} exitHref={`/t/${t.id}`} />;
+      return (
+        <CookMode tutorialId={t.id} content={t.content} units={t.units} exitHref={`/t/${t.id}`} dishImage={t.dish.imageUrl} />
+      );
     }
     return (
       <TutorialView

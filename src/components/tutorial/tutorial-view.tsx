@@ -11,8 +11,6 @@ import {
   ChevronLeft,
   ChevronRight,
   MessageCircleQuestion,
-  Minus,
-  Plus,
   ShieldCheck,
   Thermometer,
   Timer,
@@ -72,12 +70,9 @@ export interface TutorialViewProps {
 export function TutorialView(props: TutorialViewProps) {
   const { content, streaming, cuisine } = props;
   const overview = content?.overview;
-  const baseServings = overview?.servings && overview.servings > 0 ? overview.servings : 2;
-  const [servings, setServings] = useState<number | null>(null);
   const [units, setUnits] = useState<UnitSystem>(props.units);
   const [askOpen, setAskOpen] = useState(false);
-  const shown = servings ?? baseServings;
-  const factor = shown / baseServings;
+  const [followups, setFollowups] = useState(props.followups);
 
   useEffect(() => {
     try {
@@ -129,6 +124,7 @@ export function TutorialView(props: TutorialViewProps) {
   };
 
   const steps = (content?.steps ?? []).filter((s): s is DeepPartial<TutorialStep> => Boolean(s?.action));
+  const keyPoints = (content?.key_points ?? []).filter((k): k is string => Boolean(k));
   const done = !streaming;
 
   return (
@@ -211,18 +207,15 @@ export function TutorialView(props: TutorialViewProps) {
 
         <section className="mt-7" aria-labelledby="ingredients-title">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <h2 id="ingredients-title" className="font-serif text-h1 font-black">
-              备料
-            </h2>
+            <div>
+              <h2 id="ingredients-title" className="font-serif text-h1 font-black">
+                备料
+              </h2>
+              {overview?.servings ? (
+                <p className="text-small text-text-muted">按 {overview.servings} 人份算好，调料不是按人数直接翻倍</p>
+              ) : null}
+            </div>
             <div className="flex items-center gap-3">
-              <Stepper
-                value={shown}
-                onChange={setServings}
-                min={1}
-                max={12}
-                label={(n) => `${n} 人份`}
-                disabled={!overview?.servings}
-              />
               <Segmented
                 value={units}
                 onChange={changeUnits}
@@ -233,13 +226,31 @@ export function TutorialView(props: TutorialViewProps) {
               />
             </div>
           </div>
-          <Ingredients content={content} factor={factor} units={units} />
+          <Ingredients content={content} factor={1} units={units} />
         </section>
       </div>
 
-      {/* 右栏：步骤、关键点、背景 */}
+      {/* 右栏：开火前看一眼、步骤、背景 */}
       <div>
-        <section className="mt-8 lg:mt-0" aria-labelledby="steps-title">
+        {keyPoints.length > 0 && (
+          <section className="mt-8 lg:mt-0" aria-labelledby="keypoints-title">
+            <h2 id="keypoints-title" className="mb-3 font-serif text-h1 font-black">
+              做之前看一眼
+            </h2>
+            <ul className="space-y-2.5">
+              {keyPoints.map((k, i) => (
+                <li key={i} className="flex gap-3 rounded-[4px_16px_16px_16px] bg-primary-soft px-4 py-3.5">
+                  <span className="shrink-0 font-brush text-[24px] leading-[26px] text-primary" aria-hidden>
+                    {NUMERALS[i] ?? i + 1}
+                  </span>
+                  <span className="text-[15px] leading-[23px]">{k}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        <section className={keyPoints.length > 0 ? "mt-8" : "mt-8 lg:mt-0"} aria-labelledby="steps-title">
           <h2 id="steps-title" className="mb-1 font-serif text-h1 font-black">
             开火
           </h2>
@@ -253,24 +264,6 @@ export function TutorialView(props: TutorialViewProps) {
             <p className="mt-4 animate-pulse text-small text-text-muted">{props.status ?? "正在写步骤…"}</p>
           )}
         </section>
-
-        {done && !!content?.key_points?.length && (
-          <section className="mt-8" aria-labelledby="keypoints-title">
-            <h2 id="keypoints-title" className="mb-3 font-serif text-h1 font-black">
-              做之前看一眼
-            </h2>
-            <ul className="space-y-2.5">
-              {content.key_points.map((k, i) => (
-                <li key={i} className="flex gap-3 rounded-[4px_16px_16px_16px] bg-primary-soft px-4 py-3.5">
-                  <span className="shrink-0 font-brush text-[24px] leading-[26px] text-primary" aria-hidden>
-                    {NUMERALS[i] ?? i + 1}
-                  </span>
-                  <span className="text-[15px] leading-[23px]">{k}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
 
         {done && content?.background && (
           <details className="group mt-6 border-b border-border">
@@ -312,7 +305,7 @@ export function TutorialView(props: TutorialViewProps) {
             )}
             {props.tutorialId || props.sample ? (
               <Link
-                href={`${props.sample?.cookHref ?? `/t/${props.tutorialId}/cook`}${servings !== null && servings !== baseServings ? `?servings=${servings}` : ""}`}
+                href={props.sample?.cookHref ?? `/t/${props.tutorialId}/cook`}
                 className="flex h-[54px] flex-[2] items-center justify-center gap-1 rounded-control bg-primary text-[17px] font-bold text-primary-contrast shadow-cta active:brightness-90"
               >
                 开始做 <ChevronRight size={20} aria-hidden />
@@ -329,8 +322,9 @@ export function TutorialView(props: TutorialViewProps) {
       {askOpen && props.tutorialId && (
         <FollowupSheet
           tutorialId={props.tutorialId}
-          initial={props.followups}
+          initial={followups}
           limit={props.followupLimit}
+          onChange={setFollowups}
           onClose={() => setAskOpen(false)}
         />
       )}
@@ -486,48 +480,6 @@ function Badge({ icon, children, muted = false }: { icon: ReactNode; children: R
       {icon}
       {children}
     </span>
-  );
-}
-
-function Stepper({
-  value,
-  onChange,
-  min,
-  max,
-  label,
-  disabled,
-}: {
-  value: number;
-  onChange: (n: number) => void;
-  min: number;
-  max: number;
-  label: (n: number) => string;
-  disabled?: boolean;
-}) {
-  return (
-    <div className="flex h-11 items-center rounded-full border border-border bg-surface">
-      <button
-        type="button"
-        aria-label="减少份量"
-        disabled={disabled || value <= min}
-        onClick={() => onChange(value - 1)}
-        className="flex h-11 w-10 items-center justify-center disabled:opacity-30"
-      >
-        <Minus size={16} />
-      </button>
-      <span className="tabular min-w-[4em] text-center text-small" aria-live="polite">
-        {label(value)}
-      </span>
-      <button
-        type="button"
-        aria-label="增加份量"
-        disabled={disabled || value >= max}
-        onClick={() => onChange(value + 1)}
-        className="flex h-11 w-10 items-center justify-center disabled:opacity-30"
-      >
-        <Plus size={16} />
-      </button>
-    </div>
   );
 }
 

@@ -81,7 +81,8 @@ export function RecommendView({
         other: d.items.filter((i) => !i.main).map((i) => i.name),
         flavors: d.flavors,
         scene: d.scene,
-        cuisine: d.cuisine,
+        cuisines: d.cuisines,
+        servings: d.servings,
         exclude: more ? shownRef.current.slice(-60) : [],
       };
       if (!more) shownRef.current = [];
@@ -189,7 +190,12 @@ export function RecommendView({
 
   const ingredientsText = draft?.items.filter((i) => i.main).map((i) => i.name).join(" · ") || "不限食材";
   const tasteText =
-    [...(draft?.flavors.map((f) => flavors[f] ?? f) ?? []), draft?.scene ? scenes[draft.scene] : null, draft?.cuisine ? cuisines[draft.cuisine]?.zh : null]
+    [
+      ...(draft?.flavors.map((f) => flavors[f] ?? f) ?? []),
+      draft?.scene ? scenes[draft.scene] : null,
+      draft?.servings ? `${draft.servings} 人` : null,
+      draft?.cuisines.length ? draft.cuisines.map((c) => cuisines[c]?.zh ?? c).join("、") : null,
+    ]
       .filter(Boolean)
       .join(" · ") || "口味不限";
 

@@ -14,7 +14,7 @@ export interface TutorialView {
   servings: number;
   units: "metric" | "us";
   dish: { id: string; nameZh: string; cuisineId: string; imageUrl: string | null; imageStatus: string };
-  followups: { id: string; question: string; answer: string | null }[];
+  followups: { id: string; question: string; answer: string | null; step: number | null; withPhoto: boolean }[];
   favorite: boolean;
   cookedAt: string | null;
   rating: "good" | "ok" | "never" | null;
@@ -30,7 +30,13 @@ export async function readTutorial(db: Db, userId: string, id: string): Promise<
     .where(and(eq(tutorials.id, id), eq(tutorials.userId, userId)));
   if (!row) return null;
   const qs = await db
-    .select({ id: followups.id, question: followups.question, answer: followups.answer })
+    .select({
+      id: followups.id,
+      question: followups.question,
+      answer: followups.answer,
+      step: followups.step,
+      withPhoto: followups.withPhoto,
+    })
     .from(followups)
     .where(eq(followups.tutorialId, id))
     .orderBy(asc(followups.createdAt));

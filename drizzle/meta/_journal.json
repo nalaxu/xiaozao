@@ -29,6 +29,13 @@
       "when": 1795080109091,
       "tag": "0003_cooking_habits",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1795243168122,
+      "tag": "0004_step_chat_and_cuisines",
+      "breakpoints": true
     }
   ]
 }
